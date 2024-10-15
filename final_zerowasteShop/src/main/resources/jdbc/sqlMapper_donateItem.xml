@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.donateitem.DonateItemMapper">
+
+	<select id = "selectAll" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from DonateItem order by donateItem_num desc
+	</select>
+	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from DonateItem order by donateItem_num desc limit #{startRow},#{pageBlock}
+	</select>
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from DonateItem 
+	</select>
+	<select id="selectOne" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from DonateItem where donateItem_num=#{donateItem_num}
+	</select>
+
+</mapper>

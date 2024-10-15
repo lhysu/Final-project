@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+</head>
+<body >
+
+	<h1>기부가능 물품 신청</h1>
+	
+	<form action="/donateItem/searchList">
+    <select name="searchKey">
+        <option value="member_id">작성자</option>
+        <option value="donateItem_item">기부 물품</option>
+    </select>
+    <input type="text" name="searchWord" value="admin">
+    <input type="submit" value="검색">
+    </form>
+    <table border="1">
+        <thead>
+        <th>글번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일자</th>
+        <th>처리상태</th>
+        </thead>
+        <tbody>
+        <th:block th:each="vo:${list}">
+            <tr><td>[[${vo.donateItem_num}]]</td>
+                <td><a th:href="|/donateItem/d_selectOne?donateItem_num=${vo.donateItem_num}|">[[${vo.donateItem_title}]]</a></td>
+                <td>[[${vo.member_id}]]</td>
+                <td>[[${vo.donateItem_wdate}]]</td>
+                <td>[[${vo.donate_state}]]</td>
+            </tr>
+		</th:block>
+        </tbody>
+        <tfoot>
+        <td colspan="5">
+      	<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+      		<th:block th:if="${param.searchKey==null}">
+		      	<a th:href="|/donateItem/d_selectAll?cpage=${i}|">[[${i}]]</a>
+			</th:block>
+      		<th:block th:if="${param.searchKey!=null}">
+      			<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+		      	<a th:href="|/donateItem/d_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+				</th:block>
+			</th:block>
+			   	
+      	</th:block>
+      </td>
+        </tfoot>
+
+    </table>
+   
+
+
+
+
+
+	
+</body>
+</html>
