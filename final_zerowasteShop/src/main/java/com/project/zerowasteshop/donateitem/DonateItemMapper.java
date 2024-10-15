@@ -29,4 +29,8 @@ public interface DonateItemMapper {
 
 	public int updateOK(DonateItemVO vo);
 
+	public int deleteOK(DonateItemVO vo);
+
+	public int insertOK(DonateItemVO vo);
+
 }

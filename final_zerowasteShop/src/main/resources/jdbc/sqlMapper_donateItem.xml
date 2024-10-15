@@ -54,4 +54,11 @@
 	<update id="updateOK">
 		update donateitem set donate_state=#{donate_state} where donateItem_num=#{donateItem_num} 
 	</update>
+	<delete id="deleteOK">
+		delete from donateitem where donateItem_num=#{donateItem_num}
+	</delete> 
+	<insert id="insertOK">
+		insert into donateitem(member_id,donateItem_title,donateItem_content,donateItem_address,donateItem_item) 
+		values(#{member_id},#{donateItem_title},#{donateItem_content},#{donateItem_address},#{donateItem_item})
+	</insert>
 </mapper>

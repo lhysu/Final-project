@@ -69,4 +69,14 @@ public class DonateItemService {
 	public int updateOK(DonateItemVO vo) {
 		return mapper.updateOK(vo);
 	}
+
+	public int deleteOK(DonateItemVO vo) {
+		return mapper.deleteOK(vo);
+		
+	}
+
+	public int insertOK(DonateItemVO vo) {
+		return mapper.insertOK(vo);
+		
+	}
 }

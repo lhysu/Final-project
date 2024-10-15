@@ -44,7 +44,9 @@
           
         
 	</table>
-	<a href="/donateItem/delete?donateItem_num=${vo2.donateItem_num}">회원삭제</a>
+	
+	<!-- 게시글 삭제 -->
+	<a th:href="|/donateItem/d_deleteOK?donateItem_num=${vo2.donateItem_num}|">신청내역 삭제</a>
 
 	<!-- 처리상태 변경 -->
 	<form action="/donateItem/d_updateOK">

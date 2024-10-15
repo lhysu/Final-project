@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
@@ -109,5 +110,43 @@ public class DonateItemController {
 		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
 	}
 	
+	@GetMapping({"/donateItem/d_deleteOK"})
+	public String d_deleteOK(Model model,DonateItemVO vo) {
+		log.info("/donateItem/d_deleteOK");
+		log.info("vo:{}",vo);
+		int result = service.deleteOK(vo);
+		log.info("result:{}",result);
+		
+		if(result==1) {
+			return "redirect:/donateItem/d_selectAll";			
+		}else {
+			return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();	
+			
+		}
+		
+	}
+	
+	@GetMapping({"/donateItem/d_insert"})
+	public String d_insert() {
+		log.info("/donateItem/d_insert");
+		return "community/donateItem/insert";
+		
+	}
+	
+	@PostMapping({"/donateItem/d_insertOK"})
+	public String d_insertOK(Model model,DonateItemVO vo) {
+		log.info("/donateItem/d_insertOK");
+		log.info("vo:{}",vo);
+		
+		int result = service.insertOK(vo);
+		
+		if(result==1) {
+			return "redirect:/donateItem/d_selectAll";		
+		}else {
+			return "redirect:/donateItem/insert";		
+			
+		}
+
+	}
 
 }
