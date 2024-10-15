@@ -1,6 +1,8 @@
 package com.project.zerowasteshop.coupon;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -9,9 +11,11 @@ public class CouponVO {
 	private String coupon_code;
 	private String member_id;
 	private String coupon_name;
-	private Date use_sdate;
-	private Date use_edate;
+	private Timestamp use_sdate;
+	private Timestamp use_edate;
 	private int discount_rate;
+	private boolean used;
+	private MultipartFile file;
 
 	
 }
