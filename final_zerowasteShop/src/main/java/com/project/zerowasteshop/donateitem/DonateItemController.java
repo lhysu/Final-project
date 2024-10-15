@@ -99,5 +99,15 @@ public class DonateItemController {
 		return "community/donateItem/selectAll";
 	}
 	
+	@GetMapping({"/donateItem/d_updateOK"})
+	public String d_updateOK(Model model,DonateItemVO vo) {
+		log.info("/donateItem/d_updateOK");
+		log.info("vo:{}",vo);
+		int result = service.updateOK(vo);
+		log.info("result:{}",result);
+		
+		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
+	}
+	
 
 }

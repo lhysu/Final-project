@@ -65,4 +65,8 @@ public class DonateItemService {
 			return mapper.getSearchTotalRowsItem("%"+searchWord+"%");		
 		}
 	}
+
+	public int updateOK(DonateItemVO vo) {
+		return mapper.updateOK(vo);
+	}
 }

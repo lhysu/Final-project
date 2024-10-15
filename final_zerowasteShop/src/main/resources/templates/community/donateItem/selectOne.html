@@ -38,9 +38,7 @@
         
         <tr>
         <th>처리상태</th>
-        <td>[[${vo2.donate_state}]]
-        <button type="button" onclick="location.href='/donateItem/d_update?donateItem_num=${vo2.donateItem_num}&donate_state=승인'"> 승인</button>
-		<button type="button" onclick="location.href='/donateItem/d_update?donateItem_num=${vo2.donateItem_num}&donate_state=거절'"> 거절</button>	
+        <td>[[${vo2.donate_state}]]	
         </td>
         </tr>
           
@@ -49,6 +47,13 @@
 	<a href="/donateItem/delete?donateItem_num=${vo2.donateItem_num}">회원삭제</a>
 
 	<!-- 처리상태 변경 -->
+	<form action="/donateItem/d_updateOK">
+	<input type="radio" value="승인" name="donate_state"> 승인 </input>
+	<input type="radio" value="거절" name="donate_state"> 거절 </input>
+	<input type="radio" value="처리중" name="donate_state"> 처리중 </input>
+	<input type="hidden" name="donateItem_num" id="donateItem_num" th:value="${vo2.donateItem_num}">
+	<input type="submit" value="확인"> 
+	</form>
 	
 </body>
 </html>
