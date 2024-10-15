@@ -35,4 +35,34 @@ public class DonateItemService {
 	public DonateItemVO selectOne(DonateItemVO vo) {
 		return mapper.selectOne(vo);
 	}
+
+	public List<DonateItemVO> searchList(String searchKey, String searchWord) {
+		if(searchKey.equals("member_id")) {
+			return mapper.searchListId("%"+searchWord+"%");
+		}else {
+			return mapper.searchListItem("%"+searchWord+"%");
+		}
+		
+		
+	}
+
+	public List<DonateItemVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
+		int startRow=(cpage-1)*pageBlock;	//mysql은 limit처리 시 0행부터 시작 (+1 안해도 됨)
+		log.info("startRow:{}",startRow);
+		log.info("pageBlock:{}",pageBlock);
+		
+		if(searchKey.equals("member_id")) {
+			return mapper.searchListPageBlockId("%"+searchWord+"%",startRow,pageBlock);
+		}else {
+			return mapper.searchListPageBlockItem("%"+searchWord+"%",startRow,pageBlock);		
+		}
+	}
+
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		if(searchKey.equals("member_id")) {
+			return mapper.getSearchTotalRowsId("%"+searchWord+"%");
+		}else {
+			return mapper.getSearchTotalRowsItem("%"+searchWord+"%");		
+		}
+	}
 }

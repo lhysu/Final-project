@@ -15,4 +15,16 @@ public interface DonateItemMapper {
 
 	public DonateItemVO selectOne(DonateItemVO vo);
 
+	public List<DonateItemVO> searchListId(String searchWord);
+
+	public List<DonateItemVO> searchListItem(String searchWord);
+
+	public List<DonateItemVO> searchListPageBlockId(String searchWord, int startRow, int pageBlock);
+
+	public List<DonateItemVO> searchListPageBlockItem(String searchWord, int startRow, int pageBlock);
+
+	public int getSearchTotalRowsId(String searchWord);
+
+	public int getSearchTotalRowsItem(String searchWord);
+
 }

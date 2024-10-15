@@ -8,14 +8,15 @@
 
 	<h1>기부가능 물품 신청</h1>
 	
-	<form action="/donateItem/searchList">
+	<form action="/donateItem/d_searchList">
     <select name="searchKey">
         <option value="member_id">작성자</option>
-        <option value="donateItem_item">기부 물품</option>
+        <option value="donateItem_item">기부물품</option>
     </select>
-    <input type="text" name="searchWord" value="admin">
+    <input type="text" name="searchWord" value="user">
     <input type="submit" value="검색">
     </form>
+    
     <table border="1">
         <thead>
         <th>글번호</th>
