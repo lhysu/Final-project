@@ -68,4 +68,13 @@ public class AdminService {
 		}
 	}
 
+	public int insertOK(MemberVO vo) {
+		return mapper.insertOK(vo);
+	}
+
+	public int updateOK(MemberVO vo) {
+		return mapper.updateOK(vo);
+		
+	}
+
 }

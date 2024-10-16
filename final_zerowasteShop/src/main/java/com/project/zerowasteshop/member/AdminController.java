@@ -1,12 +1,19 @@
 package com.project.zerowasteshop.member;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.zerowasteshop.donateitem.DonateItemVO;
@@ -100,6 +107,55 @@ public class AdminController {
 		
 		model.addAttribute("vo2", vo2);
 		return "admin/member/selectOne";
+	}
+	
+	@GetMapping({"/admin/ad_insert"})
+	public String ad_insert() {
+		log.info("/admin/ad_insert");
+		return "admin/member/insert";
+		
+	}
+	
+	@PostMapping({"/admin/ad_insertOK"})
+	public String ad_insertOK(Model model,MemberVO vo) {
+		log.info("/admin/ad_insertOK");
+		log.info("vo:{}",vo);
+		
+		int result = service.insertOK(vo);
+		
+		if(result==1) {
+			return "redirect:/admin/ad_selectAll";		
+		}else {
+			return "redirect:/admin/ad_insert";		
+			
+		}
+	}
+	
+	@GetMapping("/admin/ad_update")
+	public String ad_update(MemberVO vo, Model model) {
+		log.info("/admin/ad_update");
+		log.info("vo:{}",vo);
+		MemberVO vo2 = service.selectOne(vo);
+		log.info("vo2:{}",vo2);
+		
+		model.addAttribute("vo2",vo2);
+		return "admin/member/update";	
+	}
+	
+	@PostMapping("/admin/ad_updateOK")
+	public String ad_updateOK(MemberVO vo){
+		log.info("/admin/ad_updateOK");
+		log.info("vo:{}",vo);
+		
+		int result = service.updateOK(vo);
+		log.info("result:{}",result);
+		if(result==1) {
+			return "redirect:/admin/ad_selectOne?member_num="+vo.getMember_num();			
+		}else {
+			return "redirect:/admin/ad_update?member_num="+vo.getMember_num();		
+			
+		}
+	
 	}
 	
 

@@ -54,5 +54,14 @@
 	<select id="selectOne" resultType="com.project.zerowasteshop.member.MemberVO">
 		select * from member where member_num=#{member_num}
 	</select>
+	
+	<insert id="insertOK">
+		insert into member(member_id,name,pw,email,phone_number,address,adCheck) 
+		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{address},#{adCheck})
+	</insert>
+	
+	<update id="updateOK">
+		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},address=#{address} where member_num=#{member_num} 
+	</update>
 
 </mapper>

@@ -29,4 +29,8 @@ public interface AdminMapper {
 
 	public List<MemberVO> searchListPageBlockAdminId(String searchWord, int startRow, int pageBlock);
 
+	public int insertOK(MemberVO vo);
+
+	public int updateOK(MemberVO vo);
+
 }
