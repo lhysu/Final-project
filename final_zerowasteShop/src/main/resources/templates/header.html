@@ -1,71 +1,96 @@
-<div class="container-fluid fixed-top" th:fragment="header">
-    <div class="container topbar bg-primary d-none d-lg-block">
-        <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-            </div>
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">개인정보보호정책</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">이용약관</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">판매 및 환불</small></a>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제로씨 쇼핑몰</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul li {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        #menu {
+            font: bold 16px "malgun gothic";
+            width: 700px;
+            height: 50px;
+            background: #ccc;
+            color: black;
+            line-height: 50px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #menu > ul > li {
+            float: left;
+            width: 140px;
+            position: relative;
+        }
+
+        #menu > ul > li > ul {
+            width: 130px;
+            display: none;
+            position: absolute;
+            font-size: 14px;
+            background: skyblue;
+        }
+
+        #menu > ul > li:hover > ul {
+            display: block;
+        }
+
+        #menu > ul > li > ul > li:hover {
+            background: orange;
+            transition: ease 1s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="home">제로씨 쇼핑몰</a>
+            <div>
+                <a href="/user/login">로그인</a>
+                <a href="/user/myPage">마이페이지</a>
             </div>
         </div>
-    </div>
-    <div class="container px-0">
-        <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
-            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars text-primary"></span>
-            </button>
-            <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                <div class="navbar-nav mx-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="shop.html" class="nav-item nav-link">Shop</a>
-                    <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="cart.html" class="dropdown-item">Cart</a>
-                            <a href="chackout.html" class="dropdown-item">Chackout</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="d-flex m-3 me-0">
-                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                    <a href="#" class="position-relative me-4 my-auto">
-                        <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                    </a>
-                    <a href="#" class="my-auto">
-                        <i class="fas fa-user fa-2x"></i>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
 
+        <form action="/product/show">
+            <input type="text" name="searchWord" placeholder="검색어를 입력하세요">
+            <input type="submit" value="검색">
+        </form>
 
-    <!-- 검색 모달창 시작 -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">검색 모달창 타이틀</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control p-3" placeholder="키워드 입력란"
-                            aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                    </div>
-                </div>
-            </div>
+        <div id="menu">
+            <ul>
+                <li><a href="#">제품</a>
+                    <ul>
+                        <li><a href="#">베스트셀러</a></li>
+                        <li><a href="#">주방</a></li>
+                        <li><a href="#">욕실</a></li>
+                        <li><a href="#">문구</a></li>
+                        <li><a href="#">여행</a></li>
+                        <li><a href="#">비건</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">커뮤니티</a>
+                    <ul>
+                        <li><a href="#">나의 재활용 라이프</a></li>
+                        <li><a href="#">재활용품 분리방법 팁</a></li>
+                        <li><a href="#">기부가능 물품</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">이벤트</a></li>
+            </ul>
         </div>
-    </div>
-    <!-- 검색 모달창 끝 -->
+    </header>
+</body>
+</html>
