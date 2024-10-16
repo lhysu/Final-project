@@ -26,12 +26,12 @@
 	select * from coupon order by coupon_code desc limit #{startRow}, #{pageBlock}
 </select>
 
-<select id="searchListPageBlockTitle" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from board where title like #{searchWord} order by num desc limit #{startRow}, #{pageBlock}
+<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where member_id like #{searchWord} order by coupon_code desc limit #{startRow}, #{pageBlock}
 </select>
 
-<select id="searchListPageBlockContent" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from board where content like #{searchWord} order by num desc limit #{startRow}, #{pageBlock}
+<select id="searchListPageBlockUsed" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where used like #{searchWord} order by coupon_code desc limit #{startRow}, #{pageBlock}
 </select>
 
 <select id="getTotalRows" resultType="java.lang.Integer">
@@ -42,12 +42,12 @@
 	select * from board where title like #{searchWord} order by num desc
 </select>
 
-<select id="getSearchTotalRowsTitle" resultType="java.lang.Integer">
-	select count(*) total_rows from board where title like #{searchWord}
+<select id="getSearchTotalRowsId" resultType="java.lang.Integer">
+	select count(*) total_rows from coupon where member_id like #{searchWord}
 </select>
 
-<select id="getSearchTotalRowsContent" resultType="java.lang.Integer">
-	select count(*) total_rows from board where content like #{searchWord}
+<select id="getSearchTotalRowsUsed" resultType="java.lang.Integer">
+	select count(*) total_rows from coupon where used like #{searchWord}
 </select>
 
 <select id="searchListContent" resultType="com.project.zerowasteshop.coupon.CouponVO">

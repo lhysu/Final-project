@@ -437,7 +437,7 @@ INSERT INTO `finalproject`.`order` (order_num, product_num, member_id, coupon_co
   `use_sdate` DATETIME NOT NULL,
   `use_edate` DATETIME NOT NULL,
   `discount_rate` INT NULL,
-  `used` TINYINT NULL,
+  `used` TINYINT DEFAULT 0,
   PRIMARY KEY (`coupon_code`),
   UNIQUE INDEX `coupon_code_UNIQUE` (`coupon_code` ASC) VISIBLE);
 

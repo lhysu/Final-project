@@ -1,8 +1,6 @@
 package com.project.zerowasteshop.coupon;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +54,40 @@ public class CouponController {
 		int total_rows = service.getTotalRows();
 		log.info("total_rows:{}",total_rows);
 		
+		int totalPageCount; 
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가하기.
+		if(total_rows%pageBlock!=0) {
+			totalPageCount = (total_rows/pageBlock) +1;
+		} else {
+			totalPageCount = total_rows/pageBlock;
+		}
+		
+		model.addAttribute("totalPageCount",totalPageCount);
+		
+		return "admin/coupon/selectAll";
+	}
+	
+	@GetMapping("/admin/coupon/searchList")
+	public String searchList(Model model,
+			@RequestParam(defaultValue = "member_id")String searchKey,
+			@RequestParam(defaultValue = "9")String searchWord,
+			@RequestParam(defaultValue = "1")int cpage
+			,@RequestParam(defaultValue = "5")int pageBlock) {
+		log.info("/member/searchList");
+		log.info("searchKey:{}",searchKey);
+		log.info("searchWord:{}",searchWord);
+		log.info("cpage:{}",cpage);
+		log.info("pageBlock:{}",pageBlock);
+		
+		List<CouponVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
+		log.info("list.size():{}",list.size());
+		
+		model.addAttribute("list",list);
+			
+		int total_rows = service.getSearchTotalRows(searchKey,searchWord); //select count(*) total_rows from member;
+		log.info("total_rows:{}",total_rows);
+		//int pageBlock =5; //1개 페이지에서 보여질 행의 수. 파라미터로 받으면 됨.
 		int totalPageCount; 
 		
 		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가하기.
