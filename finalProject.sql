@@ -432,11 +432,12 @@ INSERT INTO `finalproject`.`order` (order_num, product_num, member_id, coupon_co
   # 쿠폰
   CREATE TABLE `finalproject`.`coupon` (
   `coupon_code` VARCHAR(100) NOT NULL,
-  `member_id` VARCHAR(255) NOT NULL,
+  `member_id` VARCHAR(255) NULL,
   `coupon_name` VARCHAR(45) NOT NULL,
   `use_sdate` DATETIME NOT NULL,
   `use_edate` DATETIME NOT NULL,
   `discount_rate` INT NULL,
+  `used` TINYINT NULL,
   PRIMARY KEY (`coupon_code`),
   UNIQUE INDEX `coupon_code_UNIQUE` (`coupon_code` ASC) VISIBLE);
 
@@ -444,7 +445,7 @@ ALTER TABLE `finalproject`.`coupon`
 CHANGE COLUMN `use_sdate` `use_sdate` TIMESTAMP NOT NULL ,
 CHANGE COLUMN `use_edate` `use_edate` TIMESTAMP NOT NULL ;
 
- # 쿠폰 더미값 20개
+# 쿠폰 더미값 20개
 INSERT INTO `finalproject`.`coupon` (coupon_code, member_id, coupon_name, use_sdate, use_edate, discount_rate) VALUES 
 ('COUPON1', 'user01', 'Coupon 1', '2024-10-17', '2024-12-14', 24),
 ('COUPON2', 'user02', 'Coupon 2', '2024-10-1', '2024-12-18', 20),
@@ -466,6 +467,14 @@ INSERT INTO `finalproject`.`coupon` (coupon_code, member_id, coupon_name, use_sd
 ('COUPON18', 'user18', 'Coupon 18', '2024-10-5', '2024-12-14', 24),
 ('COUPON19', 'user19', 'Coupon 19', '2024-10-8', '2024-12-6', 8),
 ('COUPON20', 'user20', 'Coupon 20', '2024-10-25', '2024-12-26', 14);
+
+# 쿠폰 생성 더미값 5개
+INSERT INTO `finalproject`.`coupon` (coupon_code, coupon_name, use_sdate, use_edate, discount_rate) VALUES 
+('COUPON21', 'Coupon 21', '2024-10-17', '2024-12-14', 24),
+('COUPON22', 'Coupon 22', '2024-10-1', '2024-12-18', 20),
+('COUPON23', 'Coupon 23', '2024-10-2', '2024-12-16', 20),
+('COUPON24', 'Coupon 24', '2024-10-28', '2024-12-10', 10),
+('COUPON25', 'Coupon 25', '2024-10-26', '2024-12-22', 21);
 
 # 리뷰
 CREATE TABLE `review` (
