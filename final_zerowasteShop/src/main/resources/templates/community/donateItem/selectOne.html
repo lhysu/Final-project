@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectOne.html</title>
+ 
+</head>
+<body>
+
+	<h1>기부가능 물품 신청 상세</h1>
+	<div>
+	<table border="1">
+    	<tr>
+        <th>제목</th>
+        <td>[[${vo2.donateItem_title}]]</td>
+        </tr>
+        
+        <tr>
+        <th>물품명</th>
+        <td>[[${vo2.donateItem_item}]]</td>
+        </tr>
+        
+        
+        <tr>
+        <th>물품 정보</th>
+        <td>[[${vo2.donateItem_content}]]</td>
+        </tr>
+        
+        <tr>
+        <th>이미지</th>
+        <td colspan=6><img th:src="|/uploadimgPath/${vo2.donateItem_img}|" width="300"></td>
+        </tr>
+        
+        <tr>
+        <th>작성일자</th>
+        <td>[[${vo2.donateItem_wdate}]]</td>
+        </tr>
+        
+        <tr>
+        <th>처리상태</th>
+        <td>[[${vo2.donate_state}]]	
+        </td>
+        </tr>
+          
+        
+	</table>
+	
+	<!-- 게시글 삭제 -->
+	<a th:href="|/donateItem/d_deleteOK?donateItem_num=${vo2.donateItem_num}|">신청내역 삭제</a>
+
+	<!-- 처리상태 변경 -->
+	<form action="/donateItem/d_updateOK">
+	<input type="radio" value="승인" name="donate_state"> 승인 </input>
+	<input type="radio" value="거절" name="donate_state"> 거절 </input>
+	<input type="radio" value="처리중" name="donate_state"> 처리중 </input>
+	<input type="hidden" name="donateItem_num" id="donateItem_num" th:value="${vo2.donateItem_num}">
+	<input type="submit" value="확인"> 
+	</form>
+	
+</body>
+</html>

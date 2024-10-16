@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // 폼의 submit 이벤트를 가로채서 AJAX 요청
+        $('#couponForm').on('submit', function(event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+
+            var couponCode = $('#couponCode').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/coupon/insertOK',
+                data: { couponCode: couponCode,member_id:'User19' },
+                success: function(response) {
+                    // 서버 응답 처리
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error: " + error);
+                    alert("서버 요청 중 오류가 발생했습니다.");
+                }
+            });
+        });
+    });
+</script>
+</head>
+<body>
+	<div>
+		<h1>내가 보유한 쿠폰</h1>
+		
+		<form id="couponForm" method="post">
+			<label for="couponCode"></label>
+			<input type="text" id="couponCode" name="couponCode" value="쿠폰 코드를 입력해주세요">
+			<input type="submit" value="쿠폰 등록">
+		</form>
+		
+		<table border=1>
+			<thead>
+				<tr>
+					<th>쿠폰명</th>
+					<th>할인율</th>
+					<th>사용조건</th>
+					<th>유효기간</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="vo:${list}">
+					<tr>
+						<td>[[${vo.coupon_name}]]</td>
+						<td>[[${vo.discount_rate}]]%</td>
+						<td>5000원 이상 구매시</td>
+						<td th:text="${#dates.format(vo.use_edate, 'yyyy-MM-dd')}"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
