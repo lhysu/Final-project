@@ -158,5 +158,21 @@ public class AdminController {
 	
 	}
 	
+	@GetMapping({"/admin/ad_deleteOK"})
+	public String ad_deleteOK(Model model,MemberVO vo) {
+		log.info("/admin/ad_deleteOK");
+		log.info("vo:{}",vo);
+		int result = service.deleteOK(vo);
+		log.info("result:{}",result);
+		
+		if(result==1) {
+			return "redirect:/admin/ad_selectAll";			
+		}else {
+			return "redirect:/admin/ad_selectOne?member_num="+vo.getMember_num();	
+			
+		}
+		
+	}
+	
 
 }

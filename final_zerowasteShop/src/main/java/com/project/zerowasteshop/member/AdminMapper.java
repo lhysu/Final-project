@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.zerowasteshop.donateitem.DonateItemVO;
+
 @Mapper
 public interface AdminMapper {
 
@@ -32,5 +34,7 @@ public interface AdminMapper {
 	public int insertOK(MemberVO vo);
 
 	public int updateOK(MemberVO vo);
+
+	public int deleteOK(MemberVO vo);
 
 }

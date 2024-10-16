@@ -63,5 +63,9 @@
 	<update id="updateOK">
 		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},address=#{address} where member_num=#{member_num} 
 	</update>
+	
+	<delete id="deleteOK">
+		delete from member where member_num=#{member_num}
+	</delete>
 
 </mapper>

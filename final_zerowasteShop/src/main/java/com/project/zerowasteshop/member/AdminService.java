@@ -77,4 +77,8 @@ public class AdminService {
 		
 	}
 
+	public int deleteOK(MemberVO vo) {
+		return mapper.deleteOK(vo);
+	}
+
 }
