@@ -1,0 +1,106 @@
+package com.project.zerowasteshop.member;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.zerowasteshop.donateitem.DonateItemVO;
+
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
+@Controller
+public class AdminController {
+	
+	@Autowired
+	AdminService service;
+	
+	@GetMapping({"/admin/ad_selectAll"})
+	public String ad_selectAll(Model model,
+			@RequestParam(defaultValue = "1")int cpage,
+			@RequestParam(defaultValue = "10")int pageBlock) {
+		log.info("/admin/ad_selectAll");
+		log.info("cpage:{}",cpage);
+		log.info("pageBlock:{}",pageBlock);
+		
+//		List<MemberVO> list = service.selectAll();
+		List<MemberVO> list = service.selectAllPageBlock(cpage,pageBlock);
+		log.info("list.size():{}",list.size());
+		
+		//DB로부터 얻은 검색결과의 모든 행수
+		int total_rows=service.getTotalRows();	
+		log.info("total_rows:{}",total_rows);
+		
+		//int pageBlock=5;	//1개페이지에서 보여질 행수-파라미터로 받으면 된다.
+		int totalPageCount=0;	
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가 
+		if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
+		
+		
+		model.addAttribute("totalPageCount",totalPageCount);
+		
+		model.addAttribute("list", list);
+		return "admin/member/selectAll";
+	}
+	
+	@GetMapping({"/admin/ad_searchList"})
+	public String ad_searchList(Model model,
+			@RequestParam(defaultValue = "member_id")String searchKey,
+			@RequestParam(defaultValue = "us")String searchWord,
+			@RequestParam(defaultValue = "1")int cpage,
+			@RequestParam(defaultValue = "10")int pageBlock) {
+		log.info("/admin/ad_searchList");
+		log.info("cpage:{}",cpage);
+		log.info("pageBlock:{}",pageBlock);
+
+//		List<MemberVO> list = service.searchList(searchKey,searchWord);
+		List<MemberVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
+		log.info("list.size():{}",list.size());
+		
+		//DB로부터 얻은 검색결과의 모든 행수
+		int total_rows=service.getSearchTotalRows(searchKey,searchWord);	
+		log.info("total_rows:{}",total_rows);
+		
+		//int pageBlock=5;	//1개페이지에서 보여질 행수-파라미터로 받으면 된다.
+		int totalPageCount=0;	
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가 
+		if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
+		
+		
+		model.addAttribute("totalPageCount",totalPageCount);
+		
+		model.addAttribute("list", list);
+		return "admin/member/selectAll";
+	}
+	
+	@GetMapping({"/admin/ad_selectOne"})
+	public String ad_selectOne(Model model,MemberVO vo) {
+		log.info("/admin/ad_selectOne");
+		log.info("vo:{}",vo);
+		MemberVO vo2 = service.selectOne(vo);
+		log.info("vo2:{}",vo2);
+		
+		model.addAttribute("vo2", vo2);
+		return "admin/member/selectOne";
+	}
+	
+
+}

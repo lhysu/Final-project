@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.member.AdminMapper">
+
+	<select id = "selectAll" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member order by member_num desc
+	</select>
+	
+	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member order by member_num desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from member 
+	</select>
+	
+	<select id="searchListId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} order by member_num desc
+	</select>
+	
+	<select id="searchListName" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where name like #{searchWord} order by member_num desc
+	</select>
+	
+	<select id="getSearchTotalRowsId" resultType="int">
+		select count(*) total_rows from member 
+		where member_id like #{searchWord}
+	</select>
+	
+	<select id="getSearchTotalRowsName" resultType="int">
+		select count(*) total_rows from member 
+		where name like #{searchWord}	
+	</select>
+	
+	<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} 
+		order by member_num desc limit #{startRow},#{pageBlock}
+		
+	</select>
+	
+	<select id="searchListPageBlockName" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where name like #{searchWord} 
+		order by member_num desc limit #{startRow},#{pageBlock}	
+	</select>
+	<select id="searchListPageBlockAdminId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} and adCheck=true
+		order by member_num desc limit #{startRow},#{pageBlock}	
+	</select>
+	
+	<select id="selectOne" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_num=#{member_num}
+	</select>
+
+</mapper>

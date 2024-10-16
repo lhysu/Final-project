@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Page</title>
+</head>
+<body >
+
+	<h1>회원관리 페이지</h1>
+	
+	<form action="/admin/ad_searchList">
+    <select name="searchKey">
+        <option value="member_id">아이디</option>
+        <option value="name">이름</option>
+        <option value="adCheck">관리자아이디</option>
+    </select>
+    <input type="text" name="searchWord" value="user">
+    <input type="submit" value="검색">
+    </form>
+    
+    <table border="1">
+        <thead>
+        <th>회원번호</th>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>보유포인트</th>
+        <th>관리자여부</th>
+        </thead>
+        <tbody>
+        <th:block th:each="vo:${list}">
+            <tr><td>[[${vo.member_num}]]</td>
+                <td><a th:href="|/admin/ad_selectOne?member_num=${vo.member_num}|">[[${vo.member_id}]]</a></td>
+                <td>[[${vo.name}]]</td>
+                <td>[[${vo.points}]]</td>
+                <td>[[${vo.adCheck}]]</td>
+            </tr>
+		</th:block>
+        </tbody>
+       <tfoot>
+        <td colspan="5">
+      	<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+      		<th:block th:if="${param.searchKey==null}">
+		      	<a th:href="|/admin/ad_selectAll?cpage=${i}|">[[${i}]]</a>
+			</th:block>
+      		<th:block th:if="${param.searchKey!=null}">
+      			<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+		      	<a th:href="|/admin/ad_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+				</th:block>
+			</th:block>
+			   	
+      	</th:block>
+      </td>
+        </tfoot>
+
+    </table> 
+   
+
+
+
+
+	
+</body>
+</html>
