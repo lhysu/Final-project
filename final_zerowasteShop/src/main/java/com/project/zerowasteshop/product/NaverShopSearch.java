@@ -19,22 +19,29 @@ import java.util.List;
 public class NaverShopSearch {
 
 
-    public String search() {
-        String text = "제로웨이스트";
+    public List<ProductVO> search() {
+    	String[] keywords = {"제로웨이스트 리빙", "제로웨이스트 주방", "제로웨이스트 욕실", "제로웨이스트 문구", "제로웨이스트 여행", "제로웨이스트 비건", "제로웨이스트 선물"};
+        List<ProductVO> allProducts = new ArrayList<>();
+        
         // https://openapi.naver.com/v1/search/shop.xml?query=%EC%A3%BC%EC%8B%9D&display=10&start=1&sort=sim
-        URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/shop")
-                .queryParam("query", text).queryParam("display", 50).queryParam("start", 1).queryParam("sort", "sim")
-                .encode().build().toUri();
+        for (String text : keywords) {
+	        URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/shop")
+	                .queryParam("query", text).queryParam("display", 50).queryParam("start", 1).queryParam("sort", "sim")
+	                .encode().build().toUri();
+	
+	        RestTemplate restTemplate = new RestTemplate();
+	        RequestEntity<Void> requestEntity = RequestEntity.get(uri).header("X-Naver-Client-Id", "DACQE7637DEXcMoTkySw")
+	                .header("X-Naver-Client-Secret", "Y0Wh2hISr6").build();
+	        ResponseEntity<String> result = restTemplate.exchange(requestEntity, String.class);
+	
+	
+	        String response = result.getBody();
+	        
+	        List<ProductVO> itemDtos = fromJSONtoItems(response);
+            allProducts.addAll(itemDtos);
+        }
 
-        RestTemplate restTemplate = new RestTemplate();
-        RequestEntity<Void> requestEntity = RequestEntity.get(uri).header("X-Naver-Client-Id", "DACQE7637DEXcMoTkySw")
-                .header("X-Naver-Client-Secret", "Y0Wh2hISr6").build();
-        ResponseEntity<String> result = restTemplate.exchange(requestEntity, String.class);
-
-
-        String response = result.getBody();
-
-        return response;
+        return allProducts;
     }
 
     public static void main(String[] args) {

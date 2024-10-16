@@ -1,0 +1,328 @@
+package com.project.zerowasteshop.product.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.zerowasteshop.product.NaverShopSearch;
+import com.project.zerowasteshop.product.model.ProductVO;
+import com.project.zerowasteshop.product.service.ProductService;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+@RequiredArgsConstructor // final 로 선언된 클래스를 자동으로 생성합니다.
+@Controller
+@Slf4j
+public class ProductController {
+
+    private final NaverShopSearch naverShopSearch;
+    private int check = 0;
+    
+    @Autowired
+    ProductService service;
+    
+    //메인페이지 접속 할 때 한 번만 db에 저장 되도록 서블릿 패스 설정 해야 됨
+    @GetMapping("/admin/product/zerowasteProduct/list")
+    public String getItems(Model model){
+        // ? 뒤에 오는 것을 쓰고 싶다면 @RequestParam
+    	// 여러 검색어에서 상품을 가져오기
+        List<ProductVO> itemDtos = naverShopSearch.search();
+    
+        if (check == 0) {
+        	// 데이터베이스에 저장
+        	service.saveProducts(itemDtos);
+        	check = 1;
+        }
+        
+        model.addAttribute("itemDtos", itemDtos);
+
+        return "admin/product/zerowasteProduct_list";
+    }
+    
+// // application.properties 에서 설정한 변수(file.dir)를 DI
+// 	@Value("${file.dir}")
+// 	private String realPath;
+//
+// 	@GetMapping("/member/insert")
+// 	public String insert() {
+// 		log.info("/member/insert");
+// 		return "member/insert";
+// 	}
+//
+// 	@GetMapping("/member/update")
+// 	public String update(MemberVO vo, Model model) {
+// 		log.info("/member/update");
+// 		log.info("vo:{}", vo);
+//
+// 		MemberVO vo2 = service.selectOne(vo);
+// 		log.info("vo2:{}", vo2);
+//
+// 		model.addAttribute("vo2", vo2);
+//
+// 		return "member/update";
+// 	}
+//
+// 	@GetMapping("/member/delete")
+// 	public String delete() {
+// 		log.info("/member/delete");
+// 		return "member/delete";
+// 	}
+//
+ 	@GetMapping("/product/show")
+ 	public String show(Model model, @RequestParam(defaultValue = "1") int cpage,
+ 			@RequestParam(defaultValue = "12") int pageBlock) {
+ 		log.info("/product/show");
+ 		log.info("cpage:{}", cpage);
+ 		log.info("pageBlock:{}", pageBlock);
+
+// 		List<MemberVO> list = service.selectAll();
+ 		List<ProductVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
+ 		log.info("list.size():{}", list.size());
+
+ 		model.addAttribute("list", list);
+
+ 		// 디비로부터 얻은 검색결과의 모든 행수
+ 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
+ 		log.info("total_rows:{}", total_rows);
+ 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
+ 		int totalPageCount = 0;
+
+ 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가하기
+ 		if (total_rows / pageBlock == 0) {
+ 			totalPageCount = 1;
+ 		} else if (total_rows % pageBlock == 0) {
+ 			totalPageCount = total_rows / pageBlock;
+ 		} else {
+ 			totalPageCount = total_rows / pageBlock + 1;
+ 		}
+ 		log.info("totalPageCount:{}", totalPageCount);
+
+ 		model.addAttribute("cpage", cpage);
+ 		model.addAttribute("totalPageCount", totalPageCount);
+ 		
+ 		// 페이지네이션 범위 계산	
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
+
+ 		return "product/show";
+ 	}
+ 	
+ 	@GetMapping("/admin/product/selectAll")
+ 	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
+ 			@RequestParam(defaultValue = "10") int pageBlock) {
+ 		log.info("/admin/product/selectAll");
+ 		log.info("cpage:{}", cpage);
+ 		log.info("pageBlock:{}", pageBlock);
+
+// 		List<MemberVO> list = service.selectAll();
+ 		List<ProductVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
+ 		log.info("list.size():{}", list.size());
+
+ 		model.addAttribute("list", list);
+
+ 		// 디비로부터 얻은 검색결과의 모든 행수
+ 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
+ 		log.info("total_rows:{}", total_rows);
+ 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
+ 		int totalPageCount = 0;
+
+ 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
+ 		if (total_rows / pageBlock == 0) {
+ 			totalPageCount = 1;
+ 		} else if (total_rows % pageBlock == 0) {
+ 			totalPageCount = total_rows / pageBlock;
+ 		} else {
+ 			totalPageCount = total_rows / pageBlock + 1;
+ 		}
+ 		log.info("totalPageCount:{}", totalPageCount);
+
+ 		model.addAttribute("cpage", cpage);
+ 		model.addAttribute("totalPageCount", totalPageCount);
+ 		
+ 		// 페이지네이션 범위 계산
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
+
+ 		return "admin/product/selectAll";
+ 	}
+ 	
+
+ 	@GetMapping("/admin/product/searchList")
+ 	public String searchList(Model model, @RequestParam(defaultValue = "company") String searchKey,
+ 			@RequestParam(defaultValue = "") String searchWord,
+ 			@RequestParam(defaultValue = "1") int cpage,
+ 			@RequestParam(defaultValue = "10") int pageBlock) {
+ 		log.info("/admin/product/searchList");
+ 		log.info("searchKey:{}", searchKey);
+ 		log.info("searchWord:{}", searchWord);
+ 		log.info("cpage:{}", cpage);
+ 		log.info("pageBlock:{}", pageBlock);
+
+// 		List<MemberVO> list = service.searchList(searchKey, searchWord);
+ 		List<ProductVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
+ 		log.info("list.size():{}", list.size());
+
+ 		model.addAttribute("list", list);
+
+ 		// 디비로부터 얻은 검색결과의 모든 행수
+// 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
+ 		// select count(*) total_rows from member where id like '%ad%';
+ 		// select count(*) total_rows from member where name like '%ki%';
+ 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
+ 		log.info("total_rows:{}", total_rows);
+ 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
+ 		int totalPageCount = 0;
+
+ 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
+ 		if (total_rows / pageBlock == 0) {
+ 			totalPageCount = 1;
+ 		} else if (total_rows % pageBlock == 0) {
+ 			totalPageCount = total_rows / pageBlock;
+ 		} else {
+ 			totalPageCount = total_rows / pageBlock + 1;
+ 		}
+ 		log.info("totalPageCount:{}", totalPageCount);
+
+ 		model.addAttribute("totalPageCount", totalPageCount);
+
+ 		return "admin/product/selectAll";
+ 	}
+//
+// 	@GetMapping("/member/selectOne")
+// 	public String selectOne(MemberVO vo, Model model) {
+// 		log.info("/member/selectOne");
+// 		log.info("vo:{}", vo);
+//
+// 		MemberVO vo2 = service.selectOne(vo);
+// 		log.info("vo2:{}", vo2);
+//
+// 		model.addAttribute("vo2", vo2);
+//
+// 		return "member/selectOne";
+// 	}
+//
+// 	@PostMapping("/member/insertOK")
+// 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
+// 		log.info("/member/insertOK");
+// 		log.info("vo:{}", vo);
+//
+// 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
+// 		// String realPath = context.getRealPath("resources/upload_img");
+//
+// 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
+// 		log.info(realPath);
+//
+// 		String originName = vo.getFile().getOriginalFilename();
+// 		log.info("originName:{}", originName);
+//
+// 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+// 			vo.setImg_name("default.png");
+// 		} else {
+// 			// 중복이미지 이름을 배제하기위한 처리
+// 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+// 			log.info("save_name:{}", save_name);
+// 			vo.setImg_name(save_name);
+//
+// 			File f = new File(realPath, save_name);
+// 			vo.getFile().transferTo(f);
+//
+// 			//// create thumbnail image/////////
+// 			BufferedImage original_buffer_img = ImageIO.read(f);
+// 			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+// 			Graphics2D graphic = thumb_buffer_img.createGraphics();
+// 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+//
+// 			File thumb_file = new File(realPath, "thumb_" + save_name);
+//
+// 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
+//
+// 		}
+//
+// 		int result = service.insertOK(vo);
+// 		log.info("result:{}", result);
+// 		if (result == 1) {
+// 			return "redirect:/member/selectAll";
+// 		} else {
+// 			return "redirect:/member/insert";
+// 		}
+// 	}
+//
+// 	@PostMapping("/member/updateOK")
+// 	public String updateOK(MemberVO vo) throws IllegalStateException, IOException {
+// 		log.info("/member/updateOK");
+// 		log.info("vo:{}", vo);
+//
+// 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
+// 		// String realPath = context.getRealPath("resources/upload_img");
+//
+// 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
+// 		log.info(realPath);
+//
+// 		String originName = vo.getFile().getOriginalFilename();
+// 		log.info("originName:{}", originName);
+//
+// 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+// 			vo.setImg_name(vo.getImg_name());
+// 		} else {
+// 			// 중복이미지 이름을 배제하기위한 처리
+// 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+// 			log.info("save_name:{}", save_name);
+// 			vo.setImg_name(save_name);
+//
+// 			File f = new File(realPath, save_name);
+// 			vo.getFile().transferTo(f);
+//
+// 			//// create thumbnail image/////////
+// 			BufferedImage original_buffer_img = ImageIO.read(f);
+// 			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+// 			Graphics2D graphic = thumb_buffer_img.createGraphics();
+// 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+//
+// 			File thumb_file = new File(realPath, "thumb_" + save_name);
+//
+// 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
+//
+// 		}
+//
+// 		int result = service.updateOK(vo);
+// 		log.info("result:{}", result);
+// 		if (result == 1) {
+// 			return "redirect:/member/selectOne?num=" + vo.getNum();
+// 		} else {
+// 			return "redirect:/member/update?num=" + vo.getNum();
+// 		}
+// 	}
+//
+// 	@PostMapping("/member/deleteOK")
+// 	public String deleteOK(MemberVO vo) {
+// 		log.info("/member/deleteOK");
+// 		log.info("vo:{}", vo);
+//
+// 		int result = service.deleteOK(vo);
+// 		log.info("result:{}", result);
+// 		if (result == 1) {
+// 			return "redirect:/member/selectAll";
+// 		} else {
+// 			return "redirect:/member/delete?num=" + vo.getNum();
+// 		}
+// 	}
+}

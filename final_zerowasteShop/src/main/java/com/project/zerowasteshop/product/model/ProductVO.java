@@ -26,4 +26,7 @@ public class ProductVO {
         this.product_img = itemJson.getString("image");
         this.category = itemJson.getString("category1");
     }
+
+    public ProductVO() {
+    }
 }

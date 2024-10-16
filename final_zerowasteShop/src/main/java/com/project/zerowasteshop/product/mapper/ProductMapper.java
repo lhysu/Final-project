@@ -23,17 +23,17 @@ public interface ProductMapper {
 //
 //	public List<CartVO> searchListName(String searchWord);
 //
-//	public int getTotalRows();
+	public int getTotalRows();
 //
-//	public List<CartVO> selectAllPageBlock(int startRow, int pageBlock);
+	public List<ProductVO> selectAllPageBlock(int startRow, int pageBlock);
 //
-//	public int getSearchTotalRowsId(String searchWord);
-//
-//	public int getSearchTotalRowsName(String searchWord);
-//
-//	public List<CartVO> searchListPageBlockId(String searchWord, int startRow, int endRow);
-//
-//	public List<CartVO> searchListPageBlockName(String searchWord, int startRow, int endRow);
+	public int getSearchTotalRowsCompany(String searchWord);
+
+	public int getSearchTotalRowsProduct_name(String searchWord);
+
+	public List<ProductVO> searchListPageBlockCompany(String searchWord, int startRow, int endRow);
+
+	public List<ProductVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
 	
 	// 상품 정보 저장
     void insertProduct(ProductVO product);

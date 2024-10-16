@@ -46,43 +46,43 @@ public class ProductService {
 //
 //	}
 //
-//	public int getTotalRows() {
-//		return mapper.getTotalRows();
-//	}
-//
-//	public List<ProductVO> selectAllPageBlock(int cpage, int pageBlock) {
-//		// MySql 인경우 limit 시작행을얻어내는 알고리즘이 필요하다.
-//		// 예:1페이지(0,pageBlock),2페이지(5,pageBlock),3페이지(10,pageBlock)
-//		int startRow = (cpage - 1) * pageBlock ;
-//		log.info("startRow:{}", startRow);
-//		log.info("pageBlock:{}", pageBlock);
-//
-//		return mapper.selectAllPageBlock(startRow, pageBlock);
-//	}
-//
-//	public int getSearchTotalRows(String searchKey, String searchWord) {
-//		if (searchKey.equals("id")) {
-//			return mapper.getSearchTotalRowsId("%" + searchWord + "%");
-//		} else {
-//			return mapper.getSearchTotalRowsName("%" + searchWord + "%");
-//		}
-//	}
-//
-//	public List<ProductVO> searchListPageBlock(String searchKey, String searchWord, 
-//			int cpage, int pageBlock) {
-//		// 오라클인경우 rownum으로 읽어 올 시작행과 끝행을 얻어내는 알고리즘이 필요하다.
-//		// 예:1페이지(1-5),2페이지(6-10),3페이지(11-15)
-//		int startRow = (cpage - 1) * pageBlock + 1;
-//		int endRow = startRow + pageBlock - 1;
-//		log.info("startRow:{}", startRow);
-//		log.info("endRow:{}", endRow);
-//
-//		if (searchKey.equals("id")) {
-//			return mapper.searchListPageBlockId("%" + searchWord + "%",startRow,endRow);
-//		} else {
-//			return mapper.searchListPageBlockName("%" + searchWord + "%",startRow,endRow);
-//		}
-//	}
+	public int getTotalRows() {
+		return mapper.getTotalRows();
+	}
+
+	public List<ProductVO> selectAllPageBlock(int cpage, int pageBlock) {
+		// MySql 인경우 limit 시작행을얻어내는 알고리즘이 필요하다.
+		// 예:1페이지(0,pageBlock),2페이지(5,pageBlock),3페이지(10,pageBlock)
+		int startRow = (cpage - 1) * pageBlock ;
+		log.info("startRow:{}", startRow);
+		log.info("pageBlock:{}", pageBlock);
+
+		return mapper.selectAllPageBlock(startRow, pageBlock);
+	}
+
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		if (searchKey.equals("company")) {
+			return mapper.getSearchTotalRowsCompany("%" + searchWord + "%");
+		} else {
+			return mapper.getSearchTotalRowsProduct_name("%" + searchWord + "%");
+		}
+	}
+
+	public List<ProductVO> searchListPageBlock(String searchKey, String searchWord, 
+			int cpage, int pageBlock) {
+		// 오라클인경우 rownum으로 읽어 올 시작행과 끝행을 얻어내는 알고리즘이 필요하다.
+		// 예:1페이지(1-5),2페이지(6-10),3페이지(11-15)
+		int startRow = (cpage - 1) * pageBlock + 1;
+		int endRow = startRow + pageBlock - 1;
+		log.info("startRow:{}", startRow);
+		log.info("endRow:{}", endRow);
+
+		if (searchKey.equals("company")) {
+			return mapper.searchListPageBlockCompany("%" + searchWord + "%",startRow,endRow);
+		} else {
+			return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
+		}
+	}
 	
 	// 상품 정보 저장
     public void saveProducts(List<ProductVO> products) {
