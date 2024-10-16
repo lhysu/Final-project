@@ -16,7 +16,7 @@ public class ProductService {
 
 	@Autowired
 	ProductMapper mapper;
-
+//	test
 //	public int insertOK(ProductVO vo) {
 //		return mapper.insertOK(vo);
 //	}
