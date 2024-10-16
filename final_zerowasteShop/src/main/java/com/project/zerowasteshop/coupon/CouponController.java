@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,23 +86,23 @@ public class CouponController {
 		// DateTimeFormatter 설정 (날짜 형식이 "yyyy-MM-dd"인 경우)
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
-		if (file.getOriginalFilename().endsWith(".xls") || file.getOriginalFilename().endsWith(".xlsx")) {
-		    Workbook workbook = new XSSFWorkbook(file.getInputStream());
-		    Sheet sheet = workbook.getSheetAt(0);
-		    
-		    for (Row row : sheet) {
-		        CouponVO coupon = new CouponVO();
-		        coupon.setCoupon_code(row.getCell(0).getStringCellValue());
-		        coupon.setCoupon_name(row.getCell(1).getStringCellValue());
-		        coupon.setDiscount_rate((int) row.getCell(2).getNumericCellValue());
-		        coupon.setUse_sdate(Timestamp.valueOf(LocalDate.parse(row.getCell(3).getStringCellValue(), formatter).atStartOfDay()));
-		        coupon.setUse_edate(Timestamp.valueOf(LocalDate.parse(row.getCell(4).getStringCellValue(), formatter).atStartOfDay()));
-		        list.add(coupon);
-		    }
-		    
-		    service.createCoupons(list);
-		    workbook.close();
-		}
+//		if (file.getOriginalFilename().endsWith(".xls") || file.getOriginalFilename().endsWith(".xlsx")) {
+//		    //Workbook workbook = new XSSFWorkbook(file.getInputStream());
+//		    Sheet sheet = workbook.getSheetAt(0);
+//		    
+//		    for (Row row : sheet) {
+//		        CouponVO coupon = new CouponVO();
+//		        coupon.setCoupon_code(row.getCell(0).getStringCellValue());
+//		        coupon.setCoupon_name(row.getCell(1).getStringCellValue());
+//		        coupon.setDiscount_rate((int) row.getCell(2).getNumericCellValue());
+//		        coupon.setUse_sdate(Timestamp.valueOf(LocalDate.parse(row.getCell(3).getStringCellValue(), formatter).atStartOfDay()));
+//		        coupon.setUse_edate(Timestamp.valueOf(LocalDate.parse(row.getCell(4).getStringCellValue(), formatter).atStartOfDay()));
+//		        list.add(coupon);
+//		    }
+//		    
+//		    service.createCoupons(list);
+//		    workbook.close();
+//		}
 		
 		return "redirect:/admin/coupon/selectAll";
 	}
