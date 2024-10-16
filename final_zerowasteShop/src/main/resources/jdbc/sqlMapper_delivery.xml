@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.zerowasteshop.delivery.DeliveryMapper">
+  
+	  <select id="selectAll" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	  	select * from delivery order by delivery_num desc
+	  </select>
+	  
+	  <select id="selectOne" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	  	select * from delivery where delivery_num=#{delivery_num} 
+	  </select>
+  
+  	  <select id="searchListProduct_name" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  		select * from delivery where product_name like #{searchWord} order by delivery_num desc
+  	  </select>
+  	  
+  	  <select id="searchListTracking_num" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  		select * from delivery where tracking_num like #{searchWord} order by delivery_num desc
+  	  </select>
+  
+  </mapper>
