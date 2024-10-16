@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+</head>
+<body>
+	<div>
+		<h1>관리자: 쿠폰 생성 페이지</h1>
+		<form id="uploadCouponForm" action="/admin/coupon/upload" method="post" enctype="multipart/form-data">
+			<label for="file">쿠폰 파일 업로드(CSV):</label>
+    		<input type="file" id="file" name="file" accept=".xls, .xlsx" required />
+    		<button type="submit">쿠폰 생성</button>
+		</form>
+	</div>
+</body>
+</html>

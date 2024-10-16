@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>insert.html</title>
+ 
+</head>
+<body>
+
+	<h1>기부가능 물품 신청</h1>
+	
+	<form action="/donateItem/d_insertOK" method="post" enctype="multipart/form-data">
+	<table border="1">
+    	<tr>
+        <th>제목</th>
+        <td><input type="text" id="donateItem_title" name="donateItem_title" value="title" placeholder="제목을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>물품명</th>
+        <td><input type="text" id="donateItem_item" name="donateItem_item" value="item" placeholder="제목을 입력하세요"></td>
+        </tr>
+        
+        
+        <tr>
+        <th>물품 정보</th>
+        <td><input type="text" id="donateItem_content" name="donateItem_content" value="content" placeholder="제목을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>지역</th>
+        <td><input type="text" id="donateItem_address" name="donateItem_address" value="Seoul" placeholder="주소를 입력하세요"></td>
+        </tr>
+        
+        
+        <!-- <tr>
+        	<th>이미지</th>
+			<td><label for="file">FILE</label></td>
+			<td><input type="file" id="file" name="file"></td>
+		</tr> -->
+        <tr>
+        <th>작성자</th>
+        <td>user01<input type="hidden" id="member_id" name="member_id" value="user01"></td>
+        </tr>
+        <tr>
+			<td colspan="2"><input type="submit" value="신청완료"></td>
+		</tr>
+                
+	</table>
+	</form>
+
+	
+</body>
+</html>

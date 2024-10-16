@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+</head>
+<body>
+	<div>
+		<h1>관리자: 쿠폰 관리 페이지</h1>
+		<form action="/coupon/searchList">
+			<select name="searchKey">
+				<option value="member_id">회원ID</option>
+				<option value="used">사용여부</option>
+			</select> 
+			<input type="text" name="searchWord"> 
+			<input type="submit" value="검색">
+		</form>
+		
+		<form action="/admin/coupon/create">
+			<label for="create">
+			<input type = "submit" value="쿠폰생성">
+		</form>
+		
+		<table border=1>
+			<thead>
+				<tr>
+					<th>쿠폰코드</th>
+					<th>회원ID</th>
+					<th>쿠폰명</th>
+					<th>사용가능 시작날짜</th>
+					<th>사용가능 종료날짜</th>
+					<th>할인율</th>
+					<th>사용여부</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="vo:${list}">				
+					<tr>
+						<td><a th:href="|/admin/coupon/selectOne?coupon_code=${vo.coupon_code}|">[[${vo.coupon_code}]]</a></td>
+						<td>[[${vo.member_id}]]</td>
+						<td>[[${vo.coupon_name}]]</td>
+						<td>[[${vo.use_sdate}]]</td>
+						<td>[[${vo.use_edate}]]</td>
+						<td>[[${vo.discount_rate}]]</td>
+						<td>[[${vo.used}]]</td>
+					</tr>				
+				</th:block>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="7">
+					<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+						<th:block th:if="${param.searchKey==null}">
+							<a th:href="|/admin/coupon/selectAll?cpage=${i}|">[[${i}]]</a>
+						</th:block>
+						<th:block th:if="${param.searchKey!=null}">
+							<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+							<a th:href="|/admin/coupon/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+							</th:block>	
+						</th:block>						
+					</th:block>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>
