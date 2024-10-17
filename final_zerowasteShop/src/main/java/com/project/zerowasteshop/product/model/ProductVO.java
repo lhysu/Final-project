@@ -14,7 +14,7 @@ public class ProductVO {
     private String company;
     private String product_img;
     private String category;
-    private int rating;
+    private double rating;
     private MultipartFile file;
     
 
@@ -25,5 +25,8 @@ public class ProductVO {
         this.company = itemJson.getString("brand");
         this.product_img = itemJson.getString("image");
         this.category = itemJson.getString("category1");
+    }
+
+    public ProductVO() {
     }
 }
