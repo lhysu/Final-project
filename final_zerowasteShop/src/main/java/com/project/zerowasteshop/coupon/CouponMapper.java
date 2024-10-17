@@ -20,4 +20,18 @@ public interface CouponMapper {
 
 	public void createCoupons(CouponVO coupon);
 
+	public List<CouponVO> searchListPageBlockId(String searchWord, int startRow, int pageBlock);
+
+	public List<CouponVO> searchListPageBlockUsed(String searchWord, int startRow, int pageBlock);
+
+	public int getSearchTotalRowsId(String searchWord);
+
+	public int getSearchTotalRowsUsed(String searchWord);
+
+	public CouponVO selectOne(CouponVO vo);
+
+	public int updateOK(CouponVO vo);
+
+	public int deleteCoupon(CouponVO vo);
+
 }

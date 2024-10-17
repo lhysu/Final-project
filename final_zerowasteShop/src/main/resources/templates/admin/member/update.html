@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Page</title>
+ 
+</head>
+<body>
+
+	<h1>회원 수정</h1>
+	
+	<form action="/admin/ad_updateOK" method="post">
+	<table border="1">
+	
+		<tr>
+        <th>회원번호</th>
+        <td>[[${param.member_num}]]<input type="hidden" id="member_num" name=member_num th:value="${param.member_num}" ></td>
+        </tr>
+	
+    	<tr>
+        <th>아이디</th>
+        <td><input type="text" id="member_id" name="member_id" th:value="${vo2.member_id}" placeholder="아이디를 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>이름</th>
+        <td><input type="text" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요"></td>
+        </tr>
+        
+        
+        <tr>
+        <th>비밀번호</th>
+        <td><input type="text" id="pw" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>이메일</th>
+        <td><input type="text" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>전화번호</th>
+        <td><input type="text" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>회원주소</th>
+        <td><input type="text" id="address" name="address" th:value="${vo2.address}" placeholder="주소를 입력하세요"></td>
+        </tr>
+        
+        
+        <tr>
+			<td colspan="2"><input type="submit" value="수정완료"></td>
+		</tr>
+                
+	</table>
+	</form>
+
+	
+</body>
+</html>
