@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>show.html</title>
+    <title>상품관리</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,6 +35,15 @@
     
     <style>
         .content { margin : 152px; }
+        
+        .position-relative {
+		    display: flex; /* 플렉스 박스 모델 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		}
+		
+		select {
+			margin-right : 5px;
+		}
     </style>
 </head>
 <body>
@@ -45,17 +54,24 @@
 	<div class ="content" th:fragment="content">
 		
 		
-		<form action="/admin/product/searchList" style = "margin-top : 160px ">
+		<form action="/admin/product/searchList" style = "margin-top : 160px;">
+    
+    	
+		<div class="position-relative mx-auto" style = "margin-left : 150px !important;">
 			<select name="searchKey">
 				<option value="company">제조사</option>
 				<option value="product_name">상품이름</option>
-			</select> <input type="text" name="searchWord" value=""> <input
-				type="submit" value="검색">
-		</form>
+			</select>
+	        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="text" name="searchWord" placeholder="Search">
+	        <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 18%;">Submit Now</button>
+	        <a th:href="|/admin/product/insert|" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 10%;">상품등록</a>
+	    </div>
+	    </form>
+	    
 		
 		
  
-		<table id="showTable">
+		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
 			<thead>
 				<tr>
 					<th>상품번호</th>
@@ -113,6 +129,7 @@
 						
 							</ul>
 						</nav>
+		
 					</td>
 				</tr>
 			</tfoot>

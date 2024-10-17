@@ -14,7 +14,7 @@ public class ProductVO {
     private String company;
     private String product_img;
     private String category;
-    private int rating;
+    private double rating;
     private MultipartFile file;
     
 

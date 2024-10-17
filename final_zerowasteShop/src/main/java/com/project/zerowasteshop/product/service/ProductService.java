@@ -24,11 +24,11 @@ public class ProductService {
 //	public List<ProductVO> selectAll() {
 //		return mapper.selectAll();
 //	}
-//
-//	public ProductVO selectOne(ProductVO vo) {
-//		return mapper.selectOne(vo);
-//	}
-//
+
+	public ProductVO selectOne(ProductVO vo) {
+		return mapper.selectOne(vo);
+	}
+
 //	public int updateOK(ProductVO vo) {
 //		return mapper.updateOK(vo);
 //	}

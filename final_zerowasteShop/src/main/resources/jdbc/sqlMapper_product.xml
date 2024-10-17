@@ -41,6 +41,11 @@
 		from product where product_name like #{searchWord} 
 	</select>
 	
+	<select id="selectOne"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		select * from product where product_num=#{product_num}
+	</select>
+	
 	<!-- <select id="selectAll"
 		resultType="com.project.zerowasteshop.cart.model.CartVO">
 		select * from cart order by num desc
@@ -61,10 +66,7 @@
 	
 
 
-	<select id="selectOne"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
-		select * from cart where num=#{num}
-	</select>
+	
 	
 	<select id="getSearchTotalRowsId" resultType="int">
 		select count(*) total_rows
