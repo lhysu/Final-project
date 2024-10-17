@@ -30,15 +30,15 @@ public class EventController {
     @Value("${file.dir}")
     private String realPath;
 
-    @GetMapping("/event/insert")
+    @GetMapping("/community/event/insert")
     public String e_insert() {
-        log.info("/event/insert");
-        return "event/insert";
+        log.info("/community/event/insert");
+        return "community/event/insert";
     }
 
-    @GetMapping("/event/update")
+    @GetMapping("/community/event/update")
     public String e_update(EventVO vo, Model model) {
-        log.info("/event/update");
+        log.info("/community/event/update");
         log.info("vo:{}", vo);
 
         EventVO vo2 = service.selectOne(vo);
@@ -46,16 +46,16 @@ public class EventController {
 
         model.addAttribute("vo2", vo2);
 
-        return "event/update";
+        return "community/event/update";
     }
 
-    @GetMapping("/event/delete")
+    @GetMapping("/community/event/delete")
     public String e_delete() {
         log.info("/event/delete");
         return "event/delete";
     }
 
-    @GetMapping("/event/selectOne")
+    @GetMapping("/community/event/selectOne")
     public String e_selectOne(EventVO vo, Model model) {
         log.info("/event/selectOne");
         log.info("vo:{}", vo);
@@ -65,26 +65,14 @@ public class EventController {
 
         model.addAttribute("vo2", vo2);
 
-        return "event/selectOne";
+        return "community/event/selectOne";
     }
 
-    @GetMapping("/event/selectAll")
-    public String e_selectAll(Model model) {
-        log.info("/event/selectAll");
-
-        List<EventVO> list = service.selectAll();
-        log.info("list.size():{}", list.size());
-
-        model.addAttribute("list", list);
-
-        return "event/selectAll";
-    }
-
-    @GetMapping("/event/selectAllPageBlock")
-    public String e_selectAllPageBlock(Model model,
-                                       @RequestParam(defaultValue = "1") int cpage,
-                                       @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/event/selectAllPageBlock");
+    @GetMapping("/community/event/selectAll")
+    public String e_selectAll(Model model,
+                              @RequestParam(defaultValue = "1") int cpage,
+                              @RequestParam(defaultValue = "5") int pageBlock) {
+        log.info("/community/event/selectAll");
         log.info("cpage:{}", cpage);
         log.info("pageBlock:{}", pageBlock);
 
@@ -93,16 +81,25 @@ public class EventController {
 
         model.addAttribute("list", list);
 
+        // 총 페이지 수 계산
         int total_rows = service.getTotalRows();
         log.info("total_rows:{}", total_rows);
+        int totalPageCount = 0;
 
-        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+        if (total_rows / pageBlock == 0) {
+            totalPageCount = 1;
+        } else if (total_rows % pageBlock == 0) {
+            totalPageCount = total_rows / pageBlock;
+        } else {
+            totalPageCount = total_rows / pageBlock + 1;
+        }
         log.info("totalPageCount:{}", totalPageCount);
 
         model.addAttribute("totalPageCount", totalPageCount);
 
-        return "event/selectAll";
+        return "community/event/selectAll";
     }
+    
 
     @GetMapping("/event/searchList")
     public String e_searchList(Model model,
@@ -115,7 +112,7 @@ public class EventController {
 
         model.addAttribute("list", list);
 
-        return "event/selectAll";
+        return "community/event/selectAll";
     }
 
     @GetMapping("/event/searchListPageBlock")
@@ -141,12 +138,12 @@ public class EventController {
 
         model.addAttribute("totalPageCount", totalPageCount);
 
-        return "event/selectAll";
+        return "community/event/selectAll";
     }
 
-    @PostMapping("/event/insertOK")
+    @PostMapping("/community/event/insertOK")
     public String e_insertOK(EventVO vo) throws IllegalStateException, IOException {
-        log.info("/event/insertOK");
+        log.info("/community/event/insertOK");
         log.info("vo:{}", vo);
 
         log.info(realPath);
@@ -179,29 +176,29 @@ public class EventController {
         int result = service.insertOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/event/selectAll";
+            return "redirect:community/event/selectAll";
         } else {
-            return "redirect:/event/insert";
+            return "redirect:community/event/insert";
         }
     }
 
-    @PostMapping("/event/deleteOK")
+    @PostMapping("/community/event/deleteOK")
     public String e_deleteOK(EventVO vo) {
-        log.info("/event/deleteOK");
+        log.info("/community/event/deleteOK");
         log.info("vo:{}", vo);
 
         int result = service.deleteOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/event/selectAll";
+            return "redirect:community/event/selectAll";
         } else {
-            return "redirect:/event/delete?event_num=" + vo.getEvent_num();
+            return "redirect:community/event/delete?event_num=" + vo.getEvent_num();
         }
     }
 
-    @PostMapping("/event/updateOK")
+    @PostMapping("/community/event/updateOK")
     public String e_updateOK(EventVO vo) throws IllegalStateException, IOException {
-        log.info("/event/updateOK");
+        log.info("/community/event/updateOK");
         log.info("vo:{}", vo);
 
         log.info(realPath);
@@ -234,9 +231,9 @@ public class EventController {
         int result = service.updateOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/event/selectOne?event_num=" + vo.getEvent_num();
+            return "redirect:community/event/selectOne?event_num=" + vo.getEvent_num();
         } else {
-            return "redirect:/event/update?event_num=" + vo.getEvent_num();
+            return "redirect:community/event/update?event_num=" + vo.getEvent_num();
         }
     }
 }
