@@ -39,13 +39,14 @@
 		
 		<form id="couponForm" method="post">
 			<label for="couponCode"></label>
-			<input type="text" id="couponCode" name="couponCode" value="쿠폰 코드를 입력해주세요">
+			<input type="text" id="couponCode" name="couponCode" placeholder="쿠폰 코드를 입력해주세요">
 			<input type="submit" value="쿠폰 등록">
 		</form>
 		
 		<table border=1>
 			<thead>
 				<tr>
+					<th>쿠폰코드</th>
 					<th>쿠폰명</th>
 					<th>할인율</th>
 					<th>사용조건</th>
@@ -55,10 +56,11 @@
 			<tbody>
 				<th:block th:each="vo:${list}">
 					<tr>
+						<td>[[${vo.coupon_code}]]</td>
 						<td>[[${vo.coupon_name}]]</td>
 						<td>[[${vo.discount_rate}]]%</td>
 						<td>5000원 이상 구매시</td>
-						<td th:text="${#dates.format(vo.use_edate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${vo.use_edate}"></td>
 					</tr>
 				</th:block>
 			</tbody>

@@ -355,13 +355,12 @@ CREATE TABLE `finalproject`.`donateitem` (
   `member_id` VARCHAR(45) NULL,
   `donateItem_title` VARCHAR(45) NOT NULL,
   `donateItem_content` VARCHAR(1000) NOT NULL,
-  `donateItem_img` VARCHAR(255) NOT NULL,
-  `donateItem_wdate` VARCHAR(45) NOT NULL,
+  `donateItem_img` VARCHAR(255) ,
+  `donateItem_wdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `donateItem_address` VARCHAR(255) NOT NULL,
   `donateItem_item` VARCHAR(45) NOT NULL,
   `donate_state` VARCHAR(45),
-  PRIMARY KEY (`donateItem_num`),
-  UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
+  PRIMARY KEY (`donateItem_num`));
   
 # 기부 가능 물품 더미값 20개
 INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem_content, donateItem_img, donateItem_wdate, donateItem_address, donateItem_item) VALUES 
@@ -437,7 +436,7 @@ INSERT INTO `finalproject`.`order` (order_num, product_num, member_id, coupon_co
   `use_sdate` DATETIME NOT NULL,
   `use_edate` DATETIME NOT NULL,
   `discount_rate` INT NULL,
-  `used` TINYINT NULL,
+  `used` TINYINT DEFAULT 0,
   PRIMARY KEY (`coupon_code`),
   UNIQUE INDEX `coupon_code_UNIQUE` (`coupon_code` ASC) VISIBLE);
 

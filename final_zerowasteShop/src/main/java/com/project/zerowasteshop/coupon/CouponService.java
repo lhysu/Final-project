@@ -51,5 +51,38 @@ public class CouponService {
 		}
 		
 	}
+
+	public List<CouponVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
+		int startRow = pageBlock*(cpage-1); //mysql은 limit 처리시 0행부터 시작
+		log.info("startRow:{}",startRow);
+		log.info("pageBlock:{}",pageBlock);
+		
+		
+		if(searchKey.equals("member_id")) {
+			return mapper.searchListPageBlockId("%"+searchWord+"%",startRow,pageBlock);
+		}else {
+			return mapper.searchListPageBlockUsed("%"+searchWord+"%",startRow,pageBlock);
+		}
+	}
+
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		if(searchKey.equals("member_id")) {
+			return mapper.getSearchTotalRowsId("%"+searchWord+"%");
+		}else {
+			return mapper.getSearchTotalRowsUsed("%"+searchWord+"%");
+		}
+	}
+
+	public CouponVO selectOne(CouponVO vo) {
+		return mapper.selectOne(vo);
+	}
+
+	public int updateOK(CouponVO vo) {
+		return mapper.updateOK(vo);
+	}
+
+	public int deleteCoupon(CouponVO vo) {
+		return mapper.deleteCoupon(vo);
+	}
 	
 }

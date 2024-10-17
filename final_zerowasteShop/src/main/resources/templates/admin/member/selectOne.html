@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Page</title>
+ 
+</head>
+<body>
+
+	<h1>회원 상세</h1>
+	<div>
+	<table border="1">
+    	<tr>
+        <th>회원번호</th>
+        <td>[[${vo2.member_num}]]</td>
+        </tr>
+        
+        <tr>
+        <th>아이디</th>
+        <td>[[${vo2.member_id}]]</td>
+        </tr>
+        
+        
+        <tr>
+        <th>이름</th>
+        <td>[[${vo2.name}]]</td>
+        </tr>
+        
+        
+        <tr>
+        <th>비밀번호</th>
+        <td>[[${vo2.pw}]]</td>
+        </tr>
+        
+        <tr>
+        <th>이메일</th>
+        <td>[[${vo2.email}]]	
+        </td>
+        </tr>
+        
+        <tr>
+        <th>전화번호</th>
+        <td>[[${vo2.phone_number}]]	
+        </td>
+        </tr>
+        
+        <tr>
+        <th>주소</th>
+        <td>[[${vo2.address}]]	
+        </td>
+        </tr>
+        
+        <tr>
+        <th>회원가입 일시</th>
+        <td>[[${vo2.signup_date}]]	
+        </td>
+        </tr>
+        
+        <tr>
+        <th>보유 포인트</th>
+        <td>[[${vo2.points}]]	
+        </td>
+        </tr>
+        
+        <tr>
+        <th>관리자 여부</th>
+        <td>[[${vo2.adCheck}]]	
+        </td>
+        </tr>
+          
+        
+	</table>
+
+	<a th:href="|/admin/ad_update?member_num=${vo2.member_num}|">회원 수정</a>
+	<a th:href="|/admin/ad_deleteOK?member_num=${vo2.member_num}|">회원 삭제</a>
+
+	
+</body>
+</html>

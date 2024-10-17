@@ -58,7 +58,7 @@
 		delete from donateitem where donateItem_num=#{donateItem_num}
 	</delete> 
 	<insert id="insertOK">
-		insert into donateitem(member_id,donateItem_title,donateItem_content,donateItem_address,donateItem_item) 
-		values(#{member_id},#{donateItem_title},#{donateItem_content},#{donateItem_address},#{donateItem_item})
+		insert into donateitem(member_id,donateItem_title,donateItem_content,donateItem_address,donateItem_item,donateItem_img) 
+		values(#{member_id},#{donateItem_title},#{donateItem_content},#{donateItem_address},#{donateItem_item},#{donateItem_img})
 	</insert>
 </mapper>
