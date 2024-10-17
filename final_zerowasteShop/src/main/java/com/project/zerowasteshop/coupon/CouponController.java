@@ -1,16 +1,14 @@
 package com.project.zerowasteshop.coupon;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +40,7 @@ public class CouponController {
 	}
 	
 	@GetMapping("/admin/coupon/selectAll")
-	public String ad_cpSelectAll(Model model,@RequestParam(defaultValue = "1")int cpage
+	public String ad_couponSelectAll(Model model,@RequestParam(defaultValue = "1")int cpage
 			,@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/admin/coupon/selectAll");
 		log.info("cpage:{}",cpage);
@@ -71,6 +69,40 @@ public class CouponController {
 		return "admin/coupon/selectAll";
 	}
 	
+	@GetMapping("/admin/coupon/searchList")
+	public String ad_couponSearchList(Model model,
+			@RequestParam(defaultValue = "member_id")String searchKey,
+			@RequestParam(defaultValue = "9")String searchWord,
+			@RequestParam(defaultValue = "1")int cpage
+			,@RequestParam(defaultValue = "5")int pageBlock) {
+		log.info("/member/searchList");
+		log.info("searchKey:{}",searchKey);
+		log.info("searchWord:{}",searchWord);
+		log.info("cpage:{}",cpage);
+		log.info("pageBlock:{}",pageBlock);
+		
+		List<CouponVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
+		log.info("list.size():{}",list.size());
+		
+		model.addAttribute("list",list);
+			
+		int total_rows = service.getSearchTotalRows(searchKey,searchWord); //select count(*) total_rows from member;
+		log.info("total_rows:{}",total_rows);
+		//int pageBlock =5; //1개 페이지에서 보여질 행의 수. 파라미터로 받으면 됨.
+		int totalPageCount; 
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가하기.
+		if(total_rows%pageBlock!=0) {
+			totalPageCount = (total_rows/pageBlock) +1;
+		} else {
+			totalPageCount = total_rows/pageBlock;
+		}
+		
+		model.addAttribute("totalPageCount",totalPageCount);
+		
+		return "admin/coupon/selectAll";
+	}
+	
 	@GetMapping("/admin/coupon/create")
 	public String ad_createCoupon() {
 		log.info("/admin/coupon/create");
@@ -79,31 +111,57 @@ public class CouponController {
 	}
 	
 	@PostMapping("/admin/coupon/upload")
-	public String uploadCoupons(@RequestParam("file")MultipartFile file,Model model) throws IOException {
+    public String ad_uploadCoupons(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+        List<CouponVO> list = new ArrayList<>();
+
+        // 엑셀 파일 처리
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트를 가져옴
+
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) { // 헤더는 건너뜀
+                    continue;
+                }
+
+                CouponVO coupon = new CouponVO();
+                coupon.setCoupon_code(row.getCell(0).getStringCellValue());
+                coupon.setCoupon_name(row.getCell(1).getStringCellValue());
+                coupon.setDiscount_rate((int) row.getCell(2).getNumericCellValue());
+
+                // member_id는 비어두기
+                coupon.setMember_id(null);
+
+                //날짜 필드
+                coupon.setUse_sdate(row.getCell(3).getStringCellValue());
+                coupon.setUse_edate(row.getCell(4).getStringCellValue());
+
+                // 사용 여부
+                if (row.getCell(5) != null) {
+                    coupon.setUsed(row.getCell(5).getBooleanCellValue());
+                } else {
+                    coupon.setUsed(false); // 기본값으로 미사용 상태
+                }
+
+                list.add(coupon); // 리스트에 추가
+            }
+
+            // 쿠폰 리스트를 서비스에 넘겨서 저장
+            service.createCoupons(list);
+        }
+
+        return "redirect:/admin/coupon/selectAll";
+    }
 		
-		List<CouponVO> list = new ArrayList<>();
+	@GetMapping("/admin/coupon/update")
+	public String ad_updateCoupon(CouponVO vo,Model model) {
+		log.info("/admin/coupon/update");
+		log.info("vo:{}",vo);
 		
-		// DateTimeFormatter 설정 (날짜 형식이 "yyyy-MM-dd"인 경우)
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		CouponVO vo2 = service.selectOne(vo);
+		log.info("vo2:{}",vo2);
+		model.addAttribute("vo2",vo2);
 		
-//		if (file.getOriginalFilename().endsWith(".xls") || file.getOriginalFilename().endsWith(".xlsx")) {
-//		    //Workbook workbook = new XSSFWorkbook(file.getInputStream());
-//		    Sheet sheet = workbook.getSheetAt(0);
-//		    
-//		    for (Row row : sheet) {
-//		        CouponVO coupon = new CouponVO();
-//		        coupon.setCoupon_code(row.getCell(0).getStringCellValue());
-//		        coupon.setCoupon_name(row.getCell(1).getStringCellValue());
-//		        coupon.setDiscount_rate((int) row.getCell(2).getNumericCellValue());
-//		        coupon.setUse_sdate(Timestamp.valueOf(LocalDate.parse(row.getCell(3).getStringCellValue(), formatter).atStartOfDay()));
-//		        coupon.setUse_edate(Timestamp.valueOf(LocalDate.parse(row.getCell(4).getStringCellValue(), formatter).atStartOfDay()));
-//		        list.add(coupon);
-//		    }
-//		    
-//		    service.createCoupons(list);
-//		    workbook.close();
-//		}
-		
-		return "redirect:/admin/coupon/selectAll";
+		return "admin/coupon/update";
 	}
+	
 }

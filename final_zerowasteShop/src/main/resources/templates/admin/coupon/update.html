@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+       		$(function() {
+            // 폼의 submit 이벤트를 가로채서 AJAX 요청을 보냄
+            $('#updateCoupon').on('submit', function(event) {
+                event.preventDefault();  // 기본 폼 제출 방지
+
+                var formData = $(this).serialize(); // 폼 데이터를 직렬화
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/coupon/updateOK',  // AJAX로 보낼 URL
+                    data: formData,
+                    success: function(response) {
+                        // 성공 시 메시지 처리
+                        if (response.status === 'success') {
+                            alert(response.message);  // 성공 메시지 표시
+                            //리다이렉트
+                            window.location.href = '/admin/coupon/selectAll'
+                        } else {
+                            alert(response.message);  // 실패 메시지 표시
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('서버와의 통신 중 오류가 발생했습니다.');
+                    }
+                });
+            });
+            
+            //삭제 버튼 클릭 시 이벤트 실행
+            $('#deleteCoupon').on('click',function(event){
+            	event.preventDefault();
+            	
+            	var couponCode = $('#coupon_code').val();
+            	
+            	if(confirm('정말로 이 쿠폰을 삭제하시겠습니까?')){
+            		$.ajax({
+            			type : 'POST',
+            			url : '/admin/coupon/delete',
+            			data : {coupon_code : couponCode},
+            			success : function(response){
+            				if(response.status==='success'){
+            					alert(response.message);
+            					window.location.href = '/admin/coupon/selectAll';				
+            				} else {
+            					alert(response.message);
+            				}
+            			},
+            			error : function(xhr,status,error){
+            				console.error('Error:',error);
+            				alert("서버와의 통신 중 오류가 발생했습니다.");
+            			}
+            		});
+            	}
+            })
+        });
+    </script>
+</head>
+<body>
+	<div>
+		<h1>[[${message}]]관리자 : 쿠폰 업데이트 및 삭제 페이지</h1>
+		<div>
+			<form id =updateCoupon action="/coupon/updateOK" method="post">
+				<table border=1>
+					<tr>
+						<td><label for="coupon_code">쿠폰코드</label></td>
+						<td>[[${vo2.coupon_code}]]<input type="hidden" id="coupon_code" name="coupon_code" th:value="${vo2.coupon_code}"></td>
+					</tr>
+					<tr>
+						<td><label for="member_id">회원ID</label></td>
+						<td>[[${vo2.member_id}]]<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}"></td>
+					</tr>
+					<tr>
+						<td><label for="coupon_name">쿠폰명</label></td>
+						<td><input type="text" id="coupon_name" name="coupon_name" th:value="${vo2.coupon_name}"></td>
+					</tr>
+					<tr>
+						<td><label for="use_sdate">사용가능 시작날짜</label></td>
+						<td><input type="datetime-local" id="use_sdate" name="use_sdate" th:value="${vo2.use_sdate}"></td>
+					</tr>
+					<tr>
+						<td><label for="use_edate">사용가능 종료날짜</label></td>
+						<td><input type="datetime-local" id="use_edate" name="use_edate" th:value="${vo2.use_edate}"></td>
+					</tr>
+					<tr>
+						<td><label for="discount_rate">할인율</label></td>
+						<td><input type="text" id="discount_rate" name="discount_rate" th:value="${vo2.discount_rate}"></td>
+					</tr>
+					<tr>
+						<td><label for="used">사용여부</label></td>
+						<td>[[${vo2.used}]]<input type="hidden" id="used" name="used" th:value="${vo2.used}" ></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="수정완료"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><button id="deleteCoupon">쿠폰 삭제</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
