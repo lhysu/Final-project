@@ -3,54 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제로씨 쇼핑몰</title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        ul li {
-            list-style: none;
-        }
-        a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        #menu {
-            font: bold 16px "malgun gothic";
-            width: 700px;
-            height: 50px;
-            background: #ccc;
-            color: black;
-            line-height: 50px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        #menu > ul > li {
-            float: left;
-            width: 140px;
-            position: relative;
-        }
-
-        #menu > ul > li > ul {
-            width: 130px;
-            display: none;
-            position: absolute;
-            font-size: 14px;
-            background: skyblue;
-        }
-
-        #menu > ul > li:hover > ul {
-            display: block;
-        }
-
-        #menu > ul > li > ul > li:hover {
-            background: orange;
-            transition: ease 1s;
-        }
-    </style>
+    <title>제로씨 쇼핑몰</title>  
 </head>
 <body>
     <header>
@@ -58,7 +11,8 @@
             <a href="home">제로씨 쇼핑몰</a>
             <div>
                 <a href="/user/login">로그인</a>
-                <a href="/user/myPage">마이페이지</a>
+                <a href="/user/myPage">마이 페이지</a>
+                <a href="/admin/home">관리자 페이지</a>
             </div>
         </div>
 
@@ -66,31 +20,38 @@
             <input type="text" name="searchWord" placeholder="검색어를 입력하세요">
             <input type="submit" value="검색">
         </form>
-
-        <div id="menu">
-            <ul>
-                <li><a href="#">제품</a>
-                    <ul>
-                        <li><a href="#">베스트셀러</a></li>
-                        <li><a href="#">주방</a></li>
-                        <li><a href="#">욕실</a></li>
-                        <li><a href="#">문구</a></li>
-                        <li><a href="#">여행</a></li>
-                        <li><a href="#">비건</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">커뮤니티</a>
-                    <ul>
-                        <li><a href="#">나의 재활용 라이프</a></li>
-                        <li><a href="#">재활용품 분리방법 팁</a></li>
-                        <li><a href="#">기부가능 물품</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">이벤트</a></li>
-            </ul>
-        </div>
+        
+  	<div class="dropdown">
+	  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	    제품
+	  </button>
+	  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	    <li><a class="dropdown-item" href="#">베스트셀러</a></li>
+	    <li><a class="dropdown-item" href="#">주방</a></li>
+	    <li><a class="dropdown-item" href="#">욕실</a></li>
+	    <li><a class="dropdown-item" href="#">문구</a></li>
+	    <li><a class="dropdown-item" href="#">여행</a></li>
+	    <li><a class="dropdown-item" href="#">비건</a></li>    
+	  </ul>
+	  
+	  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+	    커뮤니티
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+		    <li><a class="dropdown-item" href="/community/recycleLife/selectAll">나의 재활용 라이프</a></li>
+		    <li><a class="dropdown-item" href="/community/recycleTip/recycletip">재활용품 분리방법 팁</a></li>
+		    <li><a class="dropdown-item" href="/community/donateItem/selectAll">기부가능 물품</a></li>
+		    <li><a class="dropdown-item" href="/community/help/help">고객센터</a></li>   
+		  </ul>
+		  
+		  <button type="button" class="btn btn-primary">
+		     공지사항
+		  </button>
+		  <button type="button" class="btn btn-primary">
+		     이벤트
+  		</button>
+	</div>
+       
     </header>
 </body>
 </html>
