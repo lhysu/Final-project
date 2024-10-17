@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -21,6 +22,12 @@ public class MemberController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	ServletContext context;
 	
 	
 	//myPage로 연결
@@ -100,10 +107,40 @@ public class MemberController {
 			return "redirect:/home";			
 		}else {
 			return "redirect:/member/update?member_num="+vo.getMember_num();	
-			
 		}
-		
 	}
 	
+	//로그인 페이지 이동
+	@GetMapping({"/member/login"})
+	public String login() {
+		log.info("/member/login");
+		return "user/login";
+	}
+	
+	//로그인 
+	@PostMapping({"/member/loginOK"})
+	public String loginOK(MemberVO vo) {
+		log.info("/member/loginOK");
+		log.info("{}",vo);
+
+		MemberVO vo2 = new MemberVO();
+		vo2 = service.login(vo);
+		if(vo2!=null) {
+			session.setAttribute("user_id", vo2.getMember_id());
+			return "redirect:/home";
+		}else {
+			return "redirect:/member/login";
+		}
+	}
+	
+	//로그아웃
+	@GetMapping({"/member/logout"})
+	public String logout() {
+		log.info("/member/logout");
+		session.removeAttribute("user_id");
+		//session.invalidate();
+		
+		return "redirect:/home";
+	}
 
 }

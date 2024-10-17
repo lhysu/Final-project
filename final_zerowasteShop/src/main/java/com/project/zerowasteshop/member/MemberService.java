@@ -38,4 +38,8 @@ public class MemberService {
 		return mapper.idCheck(member_id);
 	}
 
+	public MemberVO login(MemberVO vo) {
+		return mapper.login(vo);
+	}
+
 }

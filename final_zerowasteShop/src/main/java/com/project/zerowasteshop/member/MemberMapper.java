@@ -19,4 +19,6 @@ public interface MemberMapper {
 
 	public MemberVO idCheck(String member_id);
 
+	public MemberVO login(MemberVO vo);
+
 }
