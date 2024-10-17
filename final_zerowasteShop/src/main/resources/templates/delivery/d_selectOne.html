@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thmeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>d_selectOne.html</title>
 </head>
 <body>
+<h1>배송 조회 상세</h1>
 
+<div>
+			<table id="insertTable">
+				<thead>
+					<tr>
+					<th>번호</th>
+					<th>제품명</th>
+					<th>주문번호</th>
+					<th>배송추적번호</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>[[${vo2.delivery_num}]]</td>
+						<td>[[${vo2.product_name}]]</td>
+						<td>[[${vo2.order_num}]]</td>
+						<td>[[${vo2.tracking_num}]]</td>
+						<td><form action="https://info.sweettracker.co.kr/tracking/5" method="post">
+						<button type="submit" class="btn btn-default">조회하기</button>
+        </form></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 </body>
 </html>

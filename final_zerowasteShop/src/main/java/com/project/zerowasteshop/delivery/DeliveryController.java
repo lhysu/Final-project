@@ -26,7 +26,7 @@ public class DeliveryController {
 		DeliveryVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
 		
-		model.addAttribute(vo2);
+		model.addAttribute("vo2", vo2);
 		
 		return "delivery/d_selectOne";
 	}
@@ -46,7 +46,7 @@ public class DeliveryController {
 	@GetMapping("/delivery/d_searchList")
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "delivery_num") String searchKey,
-			@RequestParam(defaultValue = "2024") String searchWord) {
+			@RequestParam(defaultValue = "1") String searchWord) {
 		log.info("/delivery/d_searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
