@@ -35,6 +35,41 @@
     
     <style>
         .content { margin : 160px; }
+        
+        #selectOneTable {
+            width: 100%; /* 테이블 너비를 100%로 설정 */
+            border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+            margin: 20px 0; /* 상하 마진 설정 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+        }
+
+        #selectOneTable thead {
+            color: black; /* 헤더 글자색 */
+        }
+
+        #selectOneTable th,
+        #selectOneTable td {
+            padding: 15px; /* 셀 내 여백 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+        }
+
+        #selectOneTable tbody tr:hover {
+            background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+        }
+
+        #selectOneTable img {
+            border-radius: 5px; /* 이미지 모서리 둥글게 */
+        }
+
+        #selectOneTable tfoot {
+            background-color: #f8f9fa; /* 푸터 배경색 */
+            font-weight: bold; /* 푸터 글자 두껍게 */
+        }
+
+        #selectOneTable tfoot .btn {
+            margin: 0; /* 버튼 마진 설정 */
+        }
     </style>
 </head>
 <body>
@@ -44,42 +79,48 @@
     <!-- 헤더 끝 -->
 	
 	<div th:fragment="content" class = "content">
-		<table id="selectOneTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
-			<thead>
-				<tr>
-					<th>상품번호</th>
-					<th>상품이름</th>
-					<th>가격</th>
-					<th>포인트</th>
-					<th>제조사</th>
-					<th>상품이미지</th>
-					<th>카테고리</th>
-					<th>별점</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>[[${vo2.product_num}]]</td>
-					<td th:utext="${vo2.product_name}"></td>
-					<td>[[${vo2.price}]]</td>
-					<td>[[${vo2.point}]]</td>
-					<td>[[${vo2.company}]]</td>
-					<td><img style="width: 100px;" th:src="${vo2.product_img}" alt=""></td>
-					<td>[[${vo2.category}]]</td>
-					<td>[[${vo2.rating}]]</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td>
-						<div style="display: flex; justify-content: flex-start; gap: 10px; margin-top: 10px;">
-							<a th:href="|/admin/product/update?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품수정</a> 
-							<a th:href="|/admin/product/delete?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품삭제</a>
-						</div>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
+		<table id="selectOneTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
+            <thead>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품이름</th>
+                    <th>가격</th>
+                    <th>포인트</th>
+                    <th>제조사</th>
+                    <th>상품이미지</th>
+                    <th>카테고리</th>
+                    <th>별점</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[[${vo2.product_num}]]</td>
+                    <td th:utext="${vo2.product_name}"></td>
+                    <td>[[${vo2.price}]]</td>
+                    <td>[[${vo2.point}]]</td>
+                    <td>[[${vo2.company}]]</td>
+                    <th:block th:if="${vo2.product_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="${vo2.product_img}" alt=""></td>
+                    </th:block>
+                    
+                    <th:block th:if="${!vo2.product_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.product_img}|" alt=""></td>
+                    </th:block>
+                    <td>[[${vo2.category}]]</td>
+                    <td>[[${vo2.rating}]]</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" style="text-align: left;">
+                        <div style="display: flex; justify-content: flex-start; gap: 10px; margin-top: 10px;">
+                            <a th:href="|/admin/product/update?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품수정</a> 
+                            <a th:href="|/admin/product/delete?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품삭제</a>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 	</div>
 	
 	

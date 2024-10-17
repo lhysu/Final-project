@@ -16,10 +16,10 @@ public class ProductService {
 
 	@Autowired
 	ProductMapper mapper;
-//	test
-//	public int insertOK(ProductVO vo) {
-//		return mapper.insertOK(vo);
-//	}
+
+	public int insertOK(ProductVO vo) {
+		return mapper.insertOK(vo);
+	}
 //
 //	public List<ProductVO> selectAll() {
 //		return mapper.selectAll();
@@ -29,14 +29,14 @@ public class ProductService {
 		return mapper.selectOne(vo);
 	}
 
-//	public int updateOK(ProductVO vo) {
-//		return mapper.updateOK(vo);
-//	}
-//
-//	public int deleteOK(ProductVO vo) {
-//		return mapper.deleteOK(vo);
-//	}
-//
+	public int updateOK(ProductVO vo) {
+		return mapper.updateOK(vo);
+	}
+
+	public int deleteOK(ProductVO vo) {
+		return mapper.deleteOK(vo);
+	}
+
 //	public List<ProductVO> searchList(String searchKey, String searchWord) {
 //		if (searchKey.equals("id")) {
 //			return mapper.searchListId("%" + searchWord + "%");
@@ -77,11 +77,7 @@ public class ProductService {
 		log.info("startRow:{}", startRow);
 		log.info("endRow:{}", endRow);
 
-		if (searchKey.equals("company")) {
-			return mapper.searchListPageBlockCompany("%" + searchWord + "%",startRow,endRow);
-		} else {
-			return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
-		}
+		return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
 	}
 	
 	// 상품 정보 저장
