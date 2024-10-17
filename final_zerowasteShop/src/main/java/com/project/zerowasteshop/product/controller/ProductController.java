@@ -34,8 +34,8 @@ public class ProductController {
     @Autowired
     ProductService service;
     
-    //메인페이지 접속 할 때 한 번만 db에 저장 되도록 서블릿 패스 설정 해야 됨
-    @GetMapping("/admin/product/zerowasteProduct/list")
+    //메인페이지 접속 할 때 한 번만 db에 저장 되도록 서블릿 패스 설정 해야 됨 필요 없을 듯?
+    @GetMapping("/product/zerowasteProduct/list")
     public String getItems(Model model){
         // ? 뒤에 오는 것을 쓰고 싶다면 @RequestParam
     	// 여러 검색어에서 상품을 가져오기
