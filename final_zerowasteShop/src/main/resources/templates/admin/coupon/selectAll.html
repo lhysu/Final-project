@@ -36,7 +36,7 @@
 			<tbody>
 				<th:block th:each="vo:${list}">				
 					<tr>
-						<td><a th:href="|/admin/coupon/selectOne?coupon_code=${vo.coupon_code}|">[[${vo.coupon_code}]]</a></td>
+						<td><a th:href="|/admin/coupon/update?coupon_code=${vo.coupon_code}|">[[${vo.coupon_code}]]</a></td>
 						<td>[[${vo.member_id}]]</td>
 						<td>[[${vo.coupon_name}]]</td>
 						<td>[[${vo.use_sdate}]]</td>

@@ -28,4 +28,10 @@ public interface CouponMapper {
 
 	public int getSearchTotalRowsUsed(String searchWord);
 
+	public CouponVO selectOne(CouponVO vo);
+
+	public int updateOK(CouponVO vo);
+
+	public int deleteCoupon(CouponVO vo);
+
 }

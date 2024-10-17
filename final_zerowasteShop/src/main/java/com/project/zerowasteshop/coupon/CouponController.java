@@ -3,6 +3,7 @@ package com.project.zerowasteshop.coupon;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,7 @@ public class CouponController {
 	}
 	
 	@GetMapping("/admin/coupon/selectAll")
-	public String ad_cpSelectAll(Model model,@RequestParam(defaultValue = "1")int cpage
+	public String ad_couponSelectAll(Model model,@RequestParam(defaultValue = "1")int cpage
 			,@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/admin/coupon/selectAll");
 		log.info("cpage:{}",cpage);
@@ -69,7 +70,7 @@ public class CouponController {
 	}
 	
 	@GetMapping("/admin/coupon/searchList")
-	public String searchList(Model model,
+	public String ad_couponSearchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
 			@RequestParam(defaultValue = "9")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage
@@ -110,11 +111,8 @@ public class CouponController {
 	}
 	
 	@PostMapping("/admin/coupon/upload")
-    public String uploadCoupons(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+    public String ad_uploadCoupons(@RequestParam("file") MultipartFile file, Model model) throws IOException {
         List<CouponVO> list = new ArrayList<>();
-
-        // DateTimeFormatter 설정 (날짜와 시간이 "yyyy-MM-dd HH:mm:ss" 형식인 경우)
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         // 엑셀 파일 처리
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -133,9 +131,9 @@ public class CouponController {
                 // member_id는 비어두기
                 coupon.setMember_id(null);
 
-                // 날짜 필드
-                coupon.setUse_sdate(Timestamp.valueOf(LocalDate.parse(row.getCell(3).getStringCellValue(), formatter).atStartOfDay()));
-                coupon.setUse_edate(Timestamp.valueOf(LocalDate.parse(row.getCell(4).getStringCellValue(), formatter).atStartOfDay()));
+                //날짜 필드
+                coupon.setUse_sdate(row.getCell(3).getStringCellValue());
+                coupon.setUse_edate(row.getCell(4).getStringCellValue());
 
                 // 사용 여부
                 if (row.getCell(5) != null) {
@@ -153,4 +151,17 @@ public class CouponController {
 
         return "redirect:/admin/coupon/selectAll";
     }
+		
+	@GetMapping("/admin/coupon/update")
+	public String ad_updateCoupon(CouponVO vo,Model model) {
+		log.info("/admin/coupon/update");
+		log.info("vo:{}",vo);
+		
+		CouponVO vo2 = service.selectOne(vo);
+		log.info("vo2:{}",vo2);
+		model.addAttribute("vo2",vo2);
+		
+		return "admin/coupon/update";
+	}
+	
 }

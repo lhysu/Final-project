@@ -6,16 +6,16 @@
 <mapper namespace="com.project.zerowasteshop.coupon.CouponMapper">
 
 <update id="updateOK">
-	update board set title=#{title}, content=#{content}, writer=#{writer},img_name=#{img_name},wdate=now()
-	where num=#{num}
+	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
+	where coupon_code = #{coupon_code}
 </update>
 
-<delete id="deleteOK">
-	delete from board where num=#{num}
+<delete id="deleteCoupon">
+	delete from coupon where coupon_code = #{coupon_code}
 </delete>
 
 <select id="selectOne" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from board where num =#{num} order by num desc
+	select * from coupon where coupon_code =#{coupon_code}
 </select>
 
 <select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
@@ -38,20 +38,12 @@
 	select count(*) total_rows from coupon 
 </select>
 
-<select id="searchListTitle" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from board where title like #{searchWord} order by num desc
-</select>
-
 <select id="getSearchTotalRowsId" resultType="java.lang.Integer">
 	select count(*) total_rows from coupon where member_id like #{searchWord}
 </select>
 
 <select id="getSearchTotalRowsUsed" resultType="java.lang.Integer">
 	select count(*) total_rows from coupon where used like #{searchWord}
-</select>
-
-<select id="searchListContent" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from board where content like #{searchWord} order by num desc
 </select>
 
 <!-- 쿠폰 코드 확인 -->

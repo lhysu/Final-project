@@ -72,5 +72,17 @@ public class CouponService {
 			return mapper.getSearchTotalRowsUsed("%"+searchWord+"%");
 		}
 	}
+
+	public CouponVO selectOne(CouponVO vo) {
+		return mapper.selectOne(vo);
+	}
+
+	public int updateOK(CouponVO vo) {
+		return mapper.updateOK(vo);
+	}
+
+	public int deleteCoupon(CouponVO vo) {
+		return mapper.deleteCoupon(vo);
+	}
 	
 }
