@@ -22,4 +22,10 @@ public class HomeController {
 		return "user/myPage";
 	}
 	
+	@GetMapping("/user/login")
+	public String login() {
+		log.info("/login");
+		return "user/login";
+	}
+	
 }
