@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <title>My Page - myUpdate</title>
  
+ <!-- Modal css -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 </head>
 <body>
 
 	<h1>내 정보 수정 및 관리</h1>
+	
 	
 	<form action="/member/m_updateOK" method="post">
 	<table border="1">
@@ -56,8 +60,50 @@
 	</table>
 	</form>
 	
-	<a th:href="|/member/m_deleteOK?member_num=${vo2.member_num}|">회원 탈퇴하기</a>
-
+	<!-- 회원 탈퇴 -->	
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+ 	 회원 탈퇴
+	</button>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        정말 회원을 탈퇴하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+	        <button type="button" class="btn btn-primary" onclick="clickDel(deleteForm)">예</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<form name="deleteForm">
+		<input type="hidden" id="member_num" name="member_num" th:value="${vo2.member_num}">
+	</form>
+	
+	<script>
+		function clickDel(formName){
+			formName.action = "/member/m_deleteOK";
+			formName.method="post";
+			formName.submit();
+		}
+	
+	</script>
+	
+	
+<!-- Modal js -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	
 </body>
 </html>
