@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>상품관리</title>
+    <title>상품등록</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -34,30 +34,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 152px; }
-        
-        .position-relative {
-		    display: flex;
-		    flex-wrap: wrap; /* 줄 바꿈을 허용하여 버튼들이 겹치지 않도록 함 */
-		    justify-content: flex-start; /* 왼쪽 정렬 */
-		}
-		
-		.position-relative > div {
-		    flex: 1; /* 요소가 공간을 균등하게 차지하도록 설정 */
-		}
-		
-		@media (max-width: 768px) {
-		    .position-relative {
-		        flex-direction: column; /* 작은 화면에서는 세로로 배치 */
-		        align-items: flex-start; /* 왼쪽 정렬 */
-		    }
-		
-		    .position-relative > div {
-		        width: 100%; /* 각 버튼이 전체 너비를 차지하도록 설정 */
-		        margin-bottom: 10px; /* 버튼 간의 간격 */
-		    }
-		}
-        
         .position-relative {
 		    display: flex; /* 플렉스 박스 모델 사용 */
 		    align-items: center; /* 수직 가운데 정렬 */
@@ -67,53 +43,58 @@
 			margin-right : 5px;
 		}
 		
-		#selectAllTable {
-		    width: 100%; /* 테이블 너비를 100%로 설정 */
-		    border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
-		    margin: 20px 0; /* 상하 마진 설정 */
-		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+		body {
+		    font-family: 'Open Sans', sans-serif;
+		    background-color: #f8f9fa;
+		    margin: 0;
+		    padding: 20px;
 		}
 		
-		#selectAllTable thead {
-		    
-		    color: black; /* 헤더 글자색 */
+		.custom-form {
+		    background-color: #fff;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		    padding: 20px;
+		    max-width: 400px;
+		    margin: auto;
 		}
 		
-		#selectAllTable th,
-		#selectAllTable td {
-		    padding: 15px; /* 셀 내 여백 */
-		    text-align: center; /* 텍스트 가운데 정렬 */
-		    border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+		.custom-form h2 {
+		    margin-bottom: 20px;
+		    color: #333;
+		    text-align: center;
 		}
 		
-		#selectAllTable tbody tr:hover {
-		    background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+		.form-group {
+		    margin-bottom: 15px;
 		}
 		
-		#selectAllTable img {
-		    border-radius: 5px; /* 이미지 모서리 둥글게 */
+		.form-group label {
+		    display: block;
+		    margin-bottom: 5px;
+		    font-weight: 600;
+		    color: #555;
 		}
 		
-		#selectAllTable tfoot {
-		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
+		.form-group input[type="text"],
+		.form-group input[type="file"] {
+		    width: 100%;
+		    padding: 10px;
+		    border: 1px solid #ced4da;
+		    border-radius: 5px;
+		    transition: border-color 0.3s;
 		}
 		
-		.pagination {
-		    margin: 0; /* 페이지네이션 마진 제거 */
-		    padding: 10px 0; /* 상하 패딩 추가 */
-		}
-		
-		.pagination .page-item .page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
-		
-		.pagination .page-item .page-link:hover {
-		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+		.form-group input[type="text"]:focus,
+		.form-group input[type="file"]:focus {
+		    border-color: #007bff;
+		    outline: none;
+		    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 		}
     </style>
 </head>
 <body>
+
 	<div class="container-fluid fixed-top" th:fragment="header">
     <div class="container topbar bg-primary d-none d-lg-block">
         <div class="d-flex justify-content-between">
@@ -130,7 +111,7 @@
     </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="../../home" class="navbar-brand"><h1 class="text-primary display-6">ZERO-C</h1></a>
+            <a href="../../	home" class="navbar-brand"><h1 class="text-primary display-6">ZERO-C</h1></a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars text-primary"></span>
             </button>
@@ -178,100 +159,37 @@
         </nav>
     </div>
 </div>
-    
-	<div class ="content" th:fragment="content">
-		
-		
-		<form action="/admin/product/searchList" style="margin-top: 160px !important;">
-		    <div class="position-relative mx-auto" style="margin-left: 50px !important;">
-		        <div class="d-flex align-items-center">
-		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2">
-		                <option value="company">제조사</option>
-		                <option value="product_name">상품이름</option>
-		            </select>
-		            <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill me-2" type="text" name="searchWord" placeholder="Search">
-		            <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">Search</button>
-		            <a th:href="|/admin/product/insert|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white ms-2">상품등록</a>
-		        </div>
+
+	<div th:fragment="content" style="margin-top : 160px">
+
+		<form class="custom-form" action="/admin/product/insertOK" method="post" enctype="multipart/form-data">
+		    <h2>상품 등록</h2>
+		    <div class="form-group">
+		        <label for="product_name">상품이름</label>
+		        <input type="text" id="product_name" name="product_name" placeholder="상품이름을 입력하세요" required>
 		    </div>
+		    <div class="form-group">
+		        <label for="price">가격</label>
+		        <input type="text" id="price" name="price" placeholder="가격을 입력하세요" required>
+		    </div>
+		    <div class="form-group">
+		        <label for="company">제조사</label>
+		        <input type="text" id="company" name="company" placeholder="제조사를 입력하세요" required>
+		    </div>
+		    <div class="form-group">
+		        <label for="category">카테고리</label>
+		        <input type="text" id="category" name="category" placeholder="카테고리를 입력하세요" required>
+		    </div>
+		    <div class="form-group">
+		        <label for="file">파일</label>
+		        <input type="file" id="file" name="file" required>
+		    </div>
+		    <button type="submit" class="btn btn-primary">등록완료</button>
 		</form>
-	    
-		
-		
- 
-		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
-			<thead>
-				<tr>
-					<th>상품번호</th>
-					<th>상품이름</th>
-					<th>가격</th>
-					<th>포인트</th>
-					<th>제조사</th>
-					<th>상품이미지</th>
-					<th>카테고리</th>
-					<th>별점</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="vo : ${list}">
-					<tr>
-						<td><a th:href="|/admin/product/selectOne?product_num=${vo.product_num}|">[[${vo.product_num}]]</a></td>
-						<td th:utext="${vo.product_name}"></td>
-						<td>[[${vo.price}]]</td>
-						<td>[[${vo.point}]]</td>
-						<td>[[${vo.company}]]</td>
-						<th:block th:if="${vo.product_img.startsWith('http')}">
-							<td><img style="width: 100px;" th:src="${vo.product_img}" alt=""></td>
-						</th:block>
-						
-						<th:block th:if="${!vo.product_img.startsWith('http')}">
-							<td><img style="width: 100px;" th:src="|/uploadimgPath/${vo.product_img}|" alt=""></td>
-						</th:block>
-						
-						<td>[[${vo.category}]]</td>
-						<td>[[${vo.rating}]]</td>
-					</tr>
-				</th:block>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="8">
-						<nav>
-			    			<ul class="pagination justify-content-center">
-			    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
-			                        <a class="page-link" th:href="|/admin/product/selectAll?cpage=${cpage - 1}|">이전</a>
-			                    </li>
-								<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
-									<th:block th:if="${param.searchKey == null}">
-										<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-			                            	<a class="page-link" th:href="|/admin/product/selectAll?cpage=${i}|">[[${i}]]</a>
-			                        	</li>	
-									</th:block>
-									
-									<th:block th:if="${param.searchKey != null}" >
-										<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
-											<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-					                            <a class="page-link" th:href="|/admin/product/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
-					                        </li>							
-										</th:block>
-									</th:block>
-									
-								</th:block>
-									
-								<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
-			                        <a class="page-link" th:href="|/admin/product/selectAll?cpage=${cpage + 1}|">다음</a>
-			                    </li>
-						
-							</ul>
-						</nav>
-		
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-		
+
+
 	</div>
-	
+
 	<!-- Footer Start -->
 	<div th:replace="footer :: footer"></div>
 	<!-- Footer End -->

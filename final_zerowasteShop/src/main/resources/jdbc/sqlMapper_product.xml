@@ -45,6 +45,21 @@
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		select * from product where product_num=#{product_num}
 	</select>
+
+	<insert id="insertOK">
+		insert into product(product_name, price, point, company, product_img, category)
+		values(#{product_name},#{price},#{point},#{company},#{product_img},#{category})
+	</insert>
+	
+	<update id="updateOK">
+		update product set
+		product_name=#{product_name}, price=#{price}, point=#{point}, company=#{company}, product_img=#{product_img}, category=#{category}
+		where product_num=#{product_num}
+	</update>	
+	
+	<delete id="deleteOK">
+		delete from product where product_num=#{product_num}
+	</delete>
 	
 	<!-- <select id="selectAll"
 		resultType="com.project.zerowasteshop.cart.model.CartVO">
@@ -77,22 +92,7 @@
 		select count(*) total_rows
 		from cart where name like #{searchWord} 
 	</select>
-
-
-	<insert id="insertOK">
-		insert into cart(num,id,pw,name,tel,img_name)
-		values(seq_member.nextval,#{id},#{pw},#{name},#{tel},#{img_name})
-	</insert>
-
-	<update id="updateOK">
-		update cart set
-		id=#{id},pw=#{pw},name=#{name},tel=#{tel} ,img_name=#{img_name}
-		where num=#{num}
-	</update>
-
-	<delete id="deleteOK">
-		delete from cart where num=#{num}
-	</delete> -->
+ -->
 	
 	<!-- 상품 정보 저장 -->
     <insert id="insertProduct" parameterType="com.project.zerowasteshop.product.model.ProductVO">

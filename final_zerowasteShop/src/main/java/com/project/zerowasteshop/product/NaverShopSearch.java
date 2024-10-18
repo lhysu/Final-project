@@ -20,7 +20,7 @@ public class NaverShopSearch {
 
 
     public List<ProductVO> search() {
-    	String[] keywords = {"제로웨이스트 리빙", "제로웨이스트 주방", "제로웨이스트 욕실", "제로웨이스트 문구", "제로웨이스트 여행", "제로웨이스트 비건", "제로웨이스트 선물"};
+    	String[] keywords = {"제로웨이스트 리빙", "제로웨이스트 주방", "제로웨이스트 욕실", "제로웨이스트 문구", "제로웨이스트 볼펜", "제로웨이스트 여행", "제로웨이스트 비건", "제로웨이스트 선물"};
         List<ProductVO> allProducts = new ArrayList<>();
         
         // https://openapi.naver.com/v1/search/shop.xml?query=%EC%A3%BC%EC%8B%9D&display=10&start=1&sort=sim
