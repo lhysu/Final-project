@@ -26,6 +26,12 @@ public class DeliveryController {
 		DeliveryVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
 		
+		if (vo2 == null) {
+	        // 에러 처리 로직 또는 기본 객체 설정
+	        model.addAttribute("error", "해당 배송 정보를 찾을 수 없습니다.");
+	        return "errorPage"; // 오류 페이지로 이동하거나 기본 페이지 설정
+	    }
+		
 		model.addAttribute("vo2", vo2);
 		
 		return "delivery/d_selectOne";

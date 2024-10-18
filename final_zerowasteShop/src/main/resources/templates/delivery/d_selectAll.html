@@ -26,10 +26,10 @@
 			<tbody>
 				<th:block th:each="vo : ${list}">
 					<tr>
-						<td><a th:href="|/delivery/d_selectOne?delivery_num=${vo.delivery_num}|">[[${vo.delivery_num}]]</a></td>
+						<td>[[${vo.delivery_num}]]</td>
 						<td>[[${vo.product_name}]]</td>
 						<td>[[${vo.order_num}]]</td>
-						<td>[[${vo.tracking_num}]]</td>
+						<td><a th:href="|/delivery/d_selectOne?tracking_num=${vo.tracking_num}|">[[${vo.tracking_num}]]</a></td>
 					</tr>
 				</th:block>
 			</tbody>
