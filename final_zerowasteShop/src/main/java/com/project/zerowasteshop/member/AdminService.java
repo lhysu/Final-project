@@ -81,4 +81,8 @@ public class AdminService {
 		return mapper.deleteOK(vo);
 	}
 
+	public MemberVO login(MemberVO vo) {
+		return mapper.login(vo);
+	}
+
 }

@@ -37,4 +37,6 @@ public interface AdminMapper {
 
 	public int deleteOK(MemberVO vo);
 
+	public MemberVO login(MemberVO vo);
+
 }
