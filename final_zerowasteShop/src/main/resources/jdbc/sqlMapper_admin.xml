@@ -67,5 +67,9 @@
 	<delete id="deleteOK">
 		delete from member where member_num=#{member_num}
 	</delete>
+	
+	<select id="login" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id from member where member_id=#{member_id} and pw=#{pw} and adCheck=true
+	</select>
 
 </mapper>
