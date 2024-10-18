@@ -293,27 +293,27 @@ CREATE TABLE `finalproject`.`product` (
   PRIMARY KEY (`product_num`));
   
 # 상품 더미값 20개
-INSERT INTO `finalproject`.`product` (product_name, price, point, company, product_img, category, rating, file) VALUES 
-('Product 1', 7951, 370, 'Company1', 'product1.jpg', 'Bathroom', 4, 'file1.jpg'),
-('Product 2', 30918, 170, 'Company2', 'product2.jpg', 'Living', 3, 'file2.jpg'),
-('Product 3', 29930, 382, 'Company3', 'product3.jpg', 'Kitchen', 5, 'file3.jpg'),
-('Product 4', 19530, 66, 'Company4', 'product4.jpg', 'Living', 5, 'file4.jpg'),
-('Product 5', 12877, 417, 'Company5', 'product5.jpg', 'Kitchen', 4, 'file5.jpg'),
-('Product 6', 26066, 98, 'Company6', 'product6.jpg', 'Gift', 4, 'file6.jpg'),
-('Product 7', 49129, 317, 'Company7', 'product7.jpg', 'Stationery', 4, 'file7.jpg'),
-('Product 8', 38649, 289, 'Company8', 'product8.jpg', 'Kitchen', 4, 'file8.jpg'),
-('Product 9', 46600, 436, 'Company9', 'product9.jpg', 'Stationery', 4, 'file9.jpg'),
-('Product 10', 12937, 105, 'Company10', 'product10.jpg', 'Kitchen', 3, 'file10.jpg'),
-('Product 11', 33039, 474, 'Company11', 'product11.jpg', 'Stationery', 4, 'file11.jpg'),
-('Product 12', 35260, 82, 'Company12', 'product12.jpg', 'Gift', 5, 'file12.jpg'),
-('Product 13', 31018, 78, 'Company13', 'product13.jpg', 'Kitchen', 4, 'file13.jpg'),
-('Product 14', 1018, 392, 'Company14', 'product14.jpg', 'Bathroom', 3, 'file14.jpg'),
-('Product 15', 5608, 141, 'Company15', 'product15.jpg', 'Stationery', 4, 'file15.jpg'),
-('Product 16', 33479, 216, 'Company16', 'product16.jpg', 'Stationery', 4, 'file16.jpg'),
-('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5, 'file17.jpg'),
-('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4, 'file18.jpg'),
-('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3, 'file19.jpg'),
-('Product 20', 34711, 269, 'Company20', 'product20.jpg', 'Stationery', 5, 'file20.jpg');
+INSERT INTO `finalproject`.`product` (product_name, price, point, company, product_img, category, rating) VALUES 
+('Product 1', 7951, 370, 'Company1', 'product1.jpg', 'Bathroom', 4),
+('Product 2', 30918, 170, 'Company2', 'product2.jpg', 'Living', 3),
+('Product 3', 29930, 382, 'Company3', 'product3.jpg', 'Kitchen', 5),
+('Product 4', 19530, 66, 'Company4', 'product4.jpg', 'Living', 5),
+('Product 5', 12877, 417, 'Company5', 'product5.jpg', 'Kitchen', 4),
+('Product 6', 26066, 98, 'Company6', 'product6.jpg', 'Gift', 4),
+('Product 7', 49129, 317, 'Company7', 'product7.jpg', 'Stationery', 4),
+('Product 8', 38649, 289, 'Company8', 'product8.jpg', 'Kitchen', 4),
+('Product 9', 46600, 436, 'Company9', 'product9.jpg', 'Stationery', 4),
+('Product 10', 12937, 105, 'Company10', 'product10.jpg', 'Kitchen', 3),
+('Product 11', 33039, 474, 'Company11', 'product11.jpg', 'Stationery', 4),
+('Product 12', 35260, 82, 'Company12', 'product12.jpg', 'Gift', 5),
+('Product 13', 31018, 78, 'Company13', 'product13.jpg', 'Kitchen', 4),
+('Product 14', 1018, 392, 'Company14', 'product14.jpg', 'Bathroom', 3),
+('Product 15', 5608, 141, 'Company15', 'product15.jpg', 'Stationery', 4),
+('Product 16', 33479, 216, 'Company16', 'product16.jpg', 'Stationery', 4),
+('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5),
+('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4),
+('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3),
+('Product 20', 34711, 269, 'Company20', 'product20.jpg', 'Stationery', 5);
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
