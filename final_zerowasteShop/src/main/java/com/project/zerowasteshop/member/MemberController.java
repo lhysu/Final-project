@@ -54,7 +54,7 @@ public class MemberController {
 		int result = service.insertOK(vo);
 		
 		if(result==1) {
-			return "redirect:/home";		
+			return "redirect:/member/m_login";		
 		}else {
 			return "redirect:/member/m_insert";		
 			
@@ -96,7 +96,7 @@ public class MemberController {
 	}
 	
 	//회원 탈퇴
-	@GetMapping({"/member/m_deleteOK"})
+	@PostMapping({"/member/m_deleteOK"})
 	public String m_deleteOK(Model model,MemberVO vo) {
 		log.info("/member/m_deleteOK");
 		log.info("vo:{}",vo);
