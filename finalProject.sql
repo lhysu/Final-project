@@ -484,7 +484,7 @@ CREATE TABLE `review` (
   `review_img` varchar(255) DEFAULT NULL,
   `createdDate` timestamp NOT NULL,
   `modifiedDate` timestamp NULL DEFAULT NULL,
-  `product_name` VARCHAR(255) NOT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`review_num`)
 );
 
