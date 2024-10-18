@@ -36,4 +36,7 @@ public interface EventMapper {
 
     // 검색 결과의 총 행 수 가져오기
     public int getSearchTotalRows(String searchWord);
+    
+    // 조회수 증가 메서드
+    public void incrementViewCount(int event_num);
 }
