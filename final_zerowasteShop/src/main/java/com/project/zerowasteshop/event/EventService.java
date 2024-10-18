@@ -65,4 +65,9 @@ public class EventService {
     public int getSearchTotalRows(String searchWord) {
         return mapper.getSearchTotalRows("%" + searchWord + "%");
     }
+    
+    public void incrementViewCount(int event_num) {
+        mapper.incrementViewCount(event_num);
+    }
+    
 }

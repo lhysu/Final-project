@@ -34,8 +34,8 @@ public class ProductController {
     @Autowired
     ProductService service;
     
-    //메인페이지 접속 할 때 한 번만 db에 저장 되도록 서블릿 패스 설정 해야 됨
-    @GetMapping("/admin/product/zerowasteProduct/list")
+    //메인페이지 접속 할 때 한 번만 db에 저장 되도록 서블릿 패스 설정 해야 됨 필요 없을 듯?
+    @GetMapping("/product/zerowasteProduct/list")
     public String getItems(Model model){
         // ? 뒤에 오는 것을 쓰고 싶다면 @RequestParam
     	// 여러 검색어에서 상품을 가져오기
@@ -52,35 +52,36 @@ public class ProductController {
         return "admin/product/zerowasteProduct_list";
     }
     
-// // application.properties 에서 설정한 변수(file.dir)를 DI
-// 	@Value("${file.dir}")
-// 	private String realPath;
-//
-// 	@GetMapping("/member/insert")
-// 	public String insert() {
-// 		log.info("/member/insert");
-// 		return "member/insert";
-// 	}
-//
-// 	@GetMapping("/member/update")
-// 	public String update(MemberVO vo, Model model) {
-// 		log.info("/member/update");
-// 		log.info("vo:{}", vo);
-//
-// 		MemberVO vo2 = service.selectOne(vo);
-// 		log.info("vo2:{}", vo2);
-//
-// 		model.addAttribute("vo2", vo2);
-//
-// 		return "member/update";
-// 	}
-//
-// 	@GetMapping("/member/delete")
-// 	public String delete() {
-// 		log.info("/member/delete");
-// 		return "member/delete";
-// 	}
-//
+ // application.properties 에서 설정한 변수(file.dir)를 DI
+ 	@Value("${file.dir}")
+ 	private String realPath;
+
+ 	@GetMapping("/admin/product/insert")
+ 	public String insert() {
+ 		log.info("/admin/product/insert");
+ 		return "admin/product/insert";
+ 	}
+
+ 	@GetMapping("/admin/product/update")
+ 	public String update(ProductVO vo, Model model) {
+ 		log.info("/admin/product/update");
+ 		log.info("vo:{}", vo);
+
+ 		ProductVO vo2 = service.selectOne(vo);
+ 		vo2.setProduct_name(vo2.getProduct_name().replace("<b>", "").replace("</b>", ""));
+ 		log.info("vo2:{}", vo2);
+
+ 		model.addAttribute("vo2", vo2);
+
+ 		return "admin/product/update";
+ 	}
+
+ 	@GetMapping("/admin/product/delete")
+ 	public String delete() {
+ 		log.info("/admin/product/delete");
+ 		return "admin/product/delete";
+ 	}
+
  	@GetMapping("/product/show")
  	public String show(Model model, @RequestParam(defaultValue = "1") int cpage,
  			@RequestParam(defaultValue = "12") int pageBlock) {
@@ -124,7 +125,7 @@ public class ProductController {
  	}
  	
  	@GetMapping("/product/showSearchList")
- 	public String showSearchList(Model model, @RequestParam(defaultValue = "company") String searchKey,
+ 	public String showSearchList(Model model, @RequestParam(defaultValue = "") String searchKey,
  			@RequestParam(defaultValue = "") String searchWord,
  			@RequestParam(defaultValue = "1") int cpage,
  			@RequestParam(defaultValue = "12") int pageBlock) {
@@ -277,109 +278,89 @@ public class ProductController {
  		return "admin/product/selectOne";
  	}
 
-// 	@PostMapping("/member/insertOK")
-// 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
-// 		log.info("/member/insertOK");
-// 		log.info("vo:{}", vo);
-//
-// 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
-// 		// String realPath = context.getRealPath("resources/upload_img");
-//
-// 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
-// 		log.info(realPath);
-//
-// 		String originName = vo.getFile().getOriginalFilename();
-// 		log.info("originName:{}", originName);
-//
-// 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
-// 			vo.setImg_name("default.png");
-// 		} else {
-// 			// 중복이미지 이름을 배제하기위한 처리
-// 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
-// 			log.info("save_name:{}", save_name);
-// 			vo.setImg_name(save_name);
-//
-// 			File f = new File(realPath, save_name);
-// 			vo.getFile().transferTo(f);
-//
-// 			//// create thumbnail image/////////
-// 			BufferedImage original_buffer_img = ImageIO.read(f);
-// 			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-// 			Graphics2D graphic = thumb_buffer_img.createGraphics();
-// 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
-//
-// 			File thumb_file = new File(realPath, "thumb_" + save_name);
-//
-// 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
-//
-// 		}
-//
-// 		int result = service.insertOK(vo);
-// 		log.info("result:{}", result);
-// 		if (result == 1) {
-// 			return "redirect:/member/selectAll";
-// 		} else {
-// 			return "redirect:/member/insert";
-// 		}
-// 	}
-//
-// 	@PostMapping("/member/updateOK")
-// 	public String updateOK(MemberVO vo) throws IllegalStateException, IOException {
-// 		log.info("/member/updateOK");
-// 		log.info("vo:{}", vo);
-//
-// 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
-// 		// String realPath = context.getRealPath("resources/upload_img");
-//
-// 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
-// 		log.info(realPath);
-//
-// 		String originName = vo.getFile().getOriginalFilename();
-// 		log.info("originName:{}", originName);
-//
-// 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
-// 			vo.setImg_name(vo.getImg_name());
-// 		} else {
-// 			// 중복이미지 이름을 배제하기위한 처리
-// 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
-// 			log.info("save_name:{}", save_name);
-// 			vo.setImg_name(save_name);
-//
-// 			File f = new File(realPath, save_name);
-// 			vo.getFile().transferTo(f);
-//
-// 			//// create thumbnail image/////////
-// 			BufferedImage original_buffer_img = ImageIO.read(f);
-// 			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-// 			Graphics2D graphic = thumb_buffer_img.createGraphics();
-// 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
-//
-// 			File thumb_file = new File(realPath, "thumb_" + save_name);
-//
-// 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
-//
-// 		}
-//
-// 		int result = service.updateOK(vo);
-// 		log.info("result:{}", result);
-// 		if (result == 1) {
-// 			return "redirect:/member/selectOne?num=" + vo.getNum();
-// 		} else {
-// 			return "redirect:/member/update?num=" + vo.getNum();
-// 		}
-// 	}
-//
-// 	@PostMapping("/member/deleteOK")
-// 	public String deleteOK(MemberVO vo) {
-// 		log.info("/member/deleteOK");
-// 		log.info("vo:{}", vo);
-//
-// 		int result = service.deleteOK(vo);
-// 		log.info("result:{}", result);
-// 		if (result == 1) {
-// 			return "redirect:/member/selectAll";
-// 		} else {
-// 			return "redirect:/member/delete?num=" + vo.getNum();
-// 		}
-// 	}
+ 	@PostMapping("/admin/product/insertOK")
+ 	public String insertOK(ProductVO vo) throws IllegalStateException, IOException {
+ 		log.info("/admin/product/insertOK");
+ 		vo.setPoint(vo.getPrice() / 1000);
+ 		log.info("vo:{}", vo);
+
+ 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
+ 		// String realPath = context.getRealPath("resources/upload_img");
+
+ 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
+ 		log.info(realPath);
+
+ 		String originName = vo.getFile().getOriginalFilename();
+ 		log.info("originName:{}", originName);
+
+ 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+ 			vo.setProduct_img("default.png");
+ 		} else {
+ 			// 중복이미지 이름을 배제하기위한 처리
+ 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+ 			log.info("save_name:{}", save_name);
+ 			vo.setProduct_img(save_name);
+
+ 			File f = new File(realPath, save_name);
+ 			vo.getFile().transferTo(f);
+ 		}
+
+ 		int result = service.insertOK(vo);
+ 		log.info("result:{}", result);
+ 		if (result == 1) {
+ 			return "redirect:/admin/product/selectAll";
+ 		} else {
+ 			return "redirect:/admin/product/insert";
+ 		}
+ 	}
+
+ 	@PostMapping("/admin/product/updateOK")
+ 	public String updateOK(ProductVO vo) throws IllegalStateException, IOException {
+ 		log.info("/admin/product/updateOK");
+ 		vo.setPoint(vo.getPrice() / 1000);
+ 		log.info("vo:{}", vo);
+
+ 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
+ 		// String realPath = context.getRealPath("resources/upload_img");
+
+ 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
+ 		log.info(realPath);
+
+ 		String originName = vo.getFile().getOriginalFilename();
+ 		log.info("originName:{}", originName);
+
+ 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+ 			vo.setProduct_img(vo.getProduct_img());
+ 		} else {
+ 			// 중복이미지 이름을 배제하기위한 처리
+ 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+ 			log.info("save_name:{}", save_name);
+ 			vo.setProduct_img(save_name);
+
+ 			File f = new File(realPath, save_name);
+ 			vo.getFile().transferTo(f);
+ 		}
+
+ 		int result = service.updateOK(vo);
+ 		log.info("result:{}", result);
+ 		if (result == 1) {
+ 			return "redirect:/admin/product/selectOne?product_num=" + vo.getProduct_num();
+ 		} else {
+ 			return "redirect:/admin/product/update?product_num=" + vo.getProduct_num();
+ 		}
+ 	}
+
+ 	@PostMapping("/admin/product/deleteOK")
+ 	public String deleteOK(ProductVO vo) {
+ 		log.info("/admin/product/deleteOK");
+ 		log.info("vo:{}", vo);
+
+ 		int result = service.deleteOK(vo);
+ 		log.info("result:{}", result);
+ 		if (result == 1) {
+ 			return "redirect:/admin/product/selectAll";
+ 		} else {
+ 			return "redirect:/admin/product/delete?Product_num=" + vo.getProduct_num();
+ 		}
+ 	}
 }

@@ -289,8 +289,7 @@ CREATE TABLE `finalproject`.`product` (
   `company` VARCHAR(255) NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
   `category` VARCHAR(255) NULL,
-  `rating` INT NULL,
-  `file` VARCHAR(255) NULL,
+  `rating` DOUBLE NULL,
   PRIMARY KEY (`product_num`));
   
 # 상품 더미값 20개
@@ -392,13 +391,15 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   `member_id` VARCHAR(255) NOT NULL,
   `coupon_code` VARCHAR(100) NULL,
   `count` INT NOT NULL,
+  `postcode` VARCHAR(255) NULL,
   `address` VARCHAR(255) NOT NULL,
+  `address_detail` VARCHAR(255) NULL,
   `tel` VARCHAR(45) NOT NULL,
-  `reusing` TINYINT NULL,
+  `reusing` TINYINT DEFAULT 0,
   `discount` INT NULL,
   `delivery_fee` INT NOT NULL,
   `delivery_memo` VARCHAR(255) NULL,
-  `payCheck` TINYINT NOT NULL,
+  `payCheck` TINYINT DEFAULT 0,
   `total_price` INT NOT NULL,
   `order_state` VARCHAR(45),
   PRIMARY KEY (`order_num`),
@@ -481,10 +482,10 @@ CREATE TABLE `review` (
   `member_id` varchar(255) NOT NULL,
   `product_num` int NOT NULL,
   `content` varchar(1000) NOT NULL,
-  `rating` int NOT NULL,
+  `rating` DOUBLE NOT NULL,
   `review_img` varchar(255) DEFAULT NULL,
-  `createdDate` timestamp NOT NULL,
-  `modifiedDate` timestamp NULL DEFAULT NULL,
+  `createdDate` VARCHAR(255) NOT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`review_num`)
 );
 
