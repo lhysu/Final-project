@@ -111,16 +111,16 @@ public class MemberController {
 	}
 	
 	//로그인 페이지 이동
-	@GetMapping({"/member/login"})
-	public String login() {
-		log.info("/member/login");
+	@GetMapping({"/member/m_login"})
+	public String m_login() {
+		log.info("/member/m_login");
 		return "user/login";
 	}
 	
 	//로그인 
-	@PostMapping({"/member/loginOK"})
-	public String loginOK(MemberVO vo) {
-		log.info("/member/loginOK");
+	@PostMapping({"/member/m_loginOK"})
+	public String m_loginOK(MemberVO vo) {
+		log.info("/member/m_loginOK");
 		log.info("{}",vo);
 
 		MemberVO vo2 = new MemberVO();
