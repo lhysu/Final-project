@@ -1,23 +1,15 @@
 package com.project.zerowasteshop.member;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.zerowasteshop.donateitem.DonateItemVO;
-
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -27,6 +19,10 @@ public class AdminController {
 	
 	@Autowired
 	AdminService service;
+	
+	@Autowired
+	private HttpSession session;
+	
 	
 	@GetMapping({"/admin/ad_selectAll"})
 	public String ad_selectAll(Model model,
@@ -172,6 +168,39 @@ public class AdminController {
 			
 		}
 		
+	}
+	
+	//관리자 로그인 페이지로 이동
+	@GetMapping({"/admin/ad_login"})
+	public String ad_login() {
+		log.info("/admin/ad_login");
+		return "admin/member/login";
+	}
+	
+	//관리자 로그인 
+	@PostMapping({"/admin/ad_loginOK"})
+	public String ad_loginOK(MemberVO vo) {
+		log.info("/admin/ad_loginOK");
+		log.info("{}",vo);
+
+		MemberVO vo2 = new MemberVO();
+		vo2 = service.login(vo);
+		if(vo2!=null) {
+			session.setAttribute("admin_id", vo2.getMember_id());
+			return "redirect:/home";
+		}else {
+			return "redirect:/admin/ad_login";
+		}
+	}
+	
+	//관리자 로그아웃
+	@GetMapping({"/admin/ad_logout"})
+	public String ad_logout() {
+		log.info("/admin/ad_logout");
+		session.removeAttribute("admin_id");
+		//session.invalidate();
+		
+		return "redirect:/home";
 	}
 	
 

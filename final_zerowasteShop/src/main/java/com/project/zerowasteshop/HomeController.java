@@ -44,5 +44,16 @@ public class HomeController {
 		return "home";//resources/templates폴더에서 찾는다
 	}
 	
-
+	@GetMapping("/user/myPage")
+	public String myPage() {
+		log.info("/myPage");
+		return "user/myPage";
+	}
+	
+	@GetMapping("/user/login")
+	public String login() {
+		log.info("/login");
+		return "user/login";
+	}
+	
 }

@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thmeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>d_selectAll.html</title>
 </head>
 <body>
 
-<form action="https://info.sweettracker.co.kr/tracking/5" method="post">
+<h1>배송 조회</h1>
+<form action="/delivery/d_searchList">
+			<select name="searchKey">
+				<option value="product_name">제품명</option>
+				<option value="order_num">주문번호</option>
+			</select> <input type="text" name="searchWord" value="" placeholder="검색어를 입력하세요"> <input
+				type="submit" value="검색">
+		</form>
+		<table id="insertTable">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제품명</th>
+					<th>주문번호</th>
+					<th>배송추적번호</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="vo : ${list}">
+					<tr>
+						<td>[[${vo.delivery_num}]]</td>
+						<td>[[${vo.product_name}]]</td>
+						<td>[[${vo.order_num}]]</td>
+						<td><a th:href="|/delivery/d_selectOne?tracking_num=${vo.tracking_num}|">[[${vo.tracking_num}]]</a></td>
+					</tr>
+				</th:block>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">1 2 3 4</td>
+				</tr>
+			</tfoot>
+		</table>
+
+<!-- <form action="https://info.sweettracker.co.kr/tracking/5" method="post">
             <div class="form-group">
               <label for="t_key">API key</label>
               <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY">
@@ -20,7 +54,7 @@
               <input type="text" class="form-control" name="t_invoice" id="t_invoice" placeholder="운송장 번호">
             </div>
             <button type="submit" class="btn btn-default">조회하기</button>
-        </form>
+        </form> -->
 
 </body>
 </html>

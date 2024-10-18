@@ -26,7 +26,13 @@ public class DeliveryController {
 		DeliveryVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
 		
-		model.addAttribute(vo2);
+		if (vo2 == null) {
+	        // 에러 처리 로직 또는 기본 객체 설정
+	        model.addAttribute("error", "해당 배송 정보를 찾을 수 없습니다.");
+	        return "errorPage"; // 오류 페이지로 이동하거나 기본 페이지 설정
+	    }
+		
+		model.addAttribute("vo2", vo2);
 		
 		return "delivery/d_selectOne";
 	}
@@ -46,7 +52,7 @@ public class DeliveryController {
 	@GetMapping("/delivery/d_searchList")
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "delivery_num") String searchKey,
-			@RequestParam(defaultValue = "2024") String searchWord) {
+			@RequestParam(defaultValue = "1") String searchWord) {
 		log.info("/delivery/d_searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);

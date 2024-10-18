@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thmeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Admin Page</title>
+<title>MemberJoin Page</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -32,32 +32,29 @@ $(function (){
         });
     });
 });
-</script>
- 
+</script>   
 </head>
 <body>
 
-	<h1>회원 생성</h1>
+	<h1>회원 가입</h1>
 	
-	<form action="/admin/ad_insertOK" method="post">
+	<form action="/member/m_insertOK" method="post">
 	<table border="1">
     	<tr>
         <th>아이디</th>
         <td><input type="text" id="member_id" name="member_id" value="hello" placeholder="아이디를 입력하세요">
-        	<input type="button" id="btn_idCheck" value="중복체크">
-            <span id="result"> 사용가능 or 중복된 아이디</span>
-        </td>
+         	<input type="button" id="btn_idCheck" value="중복체크">
+            <span id="result"> 사용가능 or 중복된 아이디</span></td>
+        </tr>
+        
+		 <tr>
+        <th>비밀번호</th>
+        <td><input type="text" id="pw" name="pw" value="hi1234" placeholder="비밀번호를 입력하세요"></td>
         </tr>
         
         <tr>
         <th>이름</th>
         <td><input type="text" id="name" name="name" value="kim" placeholder="이름을 입력하세요"></td>
-        </tr>
-        
-        
-        <tr>
-        <th>비밀번호</th>
-        <td><input type="text" id="pw" name="pw" value="hi1234" placeholder="비밀번호를 입력하세요"></td>
         </tr>
         
         <tr>
@@ -76,11 +73,7 @@ $(function (){
         </tr>
         
         <tr>
-        <td colspan="2"><input type="checkbox" id="adCheck" name="adCheck">관리자 계정</td>
-        </tr>
-        
-        <tr>
-			<td colspan="2"><input type="submit" value="생성완료"></td>
+			<td colspan="2"><input type="submit" value="가입완료"></td>
 		</tr>
                 
 	</table>
