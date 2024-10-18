@@ -480,7 +480,7 @@ CREATE TABLE `review` (
   `member_id` varchar(255) NOT NULL,
   `product_num` int NOT NULL,
   `content` varchar(1000) NOT NULL,
-  `rating` int NOT NULL,
+  `rating` DOUBLE NOT NULL,
   `review_img` varchar(255) DEFAULT NULL,
   `createdDate` timestamp NOT NULL,
   `modifiedDate` timestamp NULL DEFAULT NULL,
