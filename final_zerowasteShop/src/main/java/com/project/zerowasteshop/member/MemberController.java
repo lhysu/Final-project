@@ -129,14 +129,14 @@ public class MemberController {
 			session.setAttribute("user_id", vo2.getMember_id());
 			return "redirect:/home";
 		}else {
-			return "redirect:/member/login";
+			return "redirect:/member/m_login";
 		}
 	}
 	
 	//로그아웃
-	@GetMapping({"/member/logout"})
-	public String logout() {
-		log.info("/member/logout");
+	@GetMapping({"/member/m_logout"})
+	public String m_logout() {
+		log.info("/member/m_logout");
 		session.removeAttribute("user_id");
 		//session.invalidate();
 		

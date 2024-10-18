@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="login" resultType="com.project.zerowasteshop.member.MemberVO">
-		select member_id from member where member_id=#{member_id} and pw=#{pw}
+		select member_id from member where member_id=#{member_id} and pw=#{pw} and adCheck=false
 	</select>
 
 </mapper>
