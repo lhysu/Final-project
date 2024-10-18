@@ -52,7 +52,7 @@ public class EventController {
     @GetMapping("/community/event/delete")
     public String e_delete() {
         log.info("/event/delete");
-        return "event/delete";
+        return "community/event/delete";
     }
 
     @GetMapping("/community/event/selectOne")
@@ -62,6 +62,11 @@ public class EventController {
 
         EventVO vo2 = service.selectOne(vo);
         log.info("vo2:{}", vo2);
+        
+        if (vo2 != null) {
+            // 조회수가 증가하도록 서비스 호출
+            service.incrementViewCount(vo2.getEvent_num());
+        }
 
         model.addAttribute("vo2", vo2);
 
@@ -99,24 +104,9 @@ public class EventController {
 
         return "community/event/selectAll";
     }
-    
 
     @GetMapping("/event/searchList")
     public String e_searchList(Model model,
-                               @RequestParam(defaultValue = "") String searchWord) {
-        log.info("/event/searchList");
-        log.info("searchWord:{}", searchWord);
-
-        List<EventVO> list = service.searchList(searchWord);
-        log.info("list.size():{}", list.size());
-
-        model.addAttribute("list", list);
-
-        return "community/event/selectAll";
-    }
-
-    @GetMapping("/event/searchListPageBlock")
-    public String e_searchListPageBlock(Model model,
                                         @RequestParam(defaultValue = "") String searchWord,
                                         @RequestParam(defaultValue = "1") int cpage,
                                         @RequestParam(defaultValue = "5") int pageBlock) {
@@ -130,13 +120,21 @@ public class EventController {
 
         model.addAttribute("list", list);
 
-        int total_rows = service.getSearchTotalRows(searchWord);
-        log.info("total_rows:{}", total_rows);
+		int total_rows = service.getSearchTotalRows(searchWord);
+		log.info("total_rows:{}", total_rows);
+		int totalPageCount = 0;
 
-        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
-        log.info("totalPageCount:{}", totalPageCount);
+		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
+		if (total_rows / pageBlock == 0) {
+			totalPageCount = 1;
+		} else if (total_rows % pageBlock == 0) {
+			totalPageCount = total_rows / pageBlock;
+		} else {
+			totalPageCount = total_rows / pageBlock + 1;
+		}
+		log.info("totalPageCount:{}", totalPageCount);
 
-        model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("totalPageCount", totalPageCount);
 
         return "community/event/selectAll";
     }
@@ -176,9 +174,9 @@ public class EventController {
         int result = service.insertOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:community/event/selectAll";
+            return "redirect:/community/event/selectAll";
         } else {
-            return "redirect:community/event/insert";
+            return "redirect:/community/event/insert";
         }
     }
 
@@ -190,9 +188,9 @@ public class EventController {
         int result = service.deleteOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:community/event/selectAll";
+            return "redirect:/community/event/selectAll";
         } else {
-            return "redirect:community/event/delete?event_num=" + vo.getEvent_num();
+            return "redirect:/community/event/delete?event_num=" + vo.getEvent_num();
         }
     }
 
@@ -231,9 +229,9 @@ public class EventController {
         int result = service.updateOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:community/event/selectOne?event_num=" + vo.getEvent_num();
+            return "redirect:/community/event/selectOne?event_num=" + vo.getEvent_num();
         } else {
-            return "redirect:community/event/update?event_num=" + vo.getEvent_num();
+            return "redirect:/community/event/update?event_num=" + vo.getEvent_num();
         }
     }
 }

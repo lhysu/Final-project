@@ -64,5 +64,11 @@
         SELECT COUNT(*) FROM event
         WHERE event_title LIKE #{searchWord} OR event_content LIKE #{searchWord}
     </select>
+    
+    <update id="incrementViewCount" parameterType="int">
+	    UPDATE event
+	    SET event_views = event_views + 1
+	    WHERE event_num = #{event_num}
+	</update>
 
 </mapper>
