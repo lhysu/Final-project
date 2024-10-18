@@ -154,7 +154,7 @@ public class AdminController {
 	
 	}
 	
-	@PostMapping({"/admin/ad_deleteOK"})
+	@GetMapping({"/admin/ad_deleteOK"})
 	public String ad_deleteOK(Model model,MemberVO vo) {
 		log.info("/admin/ad_deleteOK");
 		log.info("vo:{}",vo);

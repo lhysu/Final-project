@@ -120,7 +120,7 @@ public class DonateItemController {
 		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
 	}
 	
-	@PostMapping({"/donateItem/d_deleteOK"})
+	@GetMapping({"/donateItem/d_deleteOK"})
 	public String d_deleteOK(Model model,DonateItemVO vo) {
 		log.info("/donateItem/d_deleteOK");
 		log.info("vo:{}",vo);
