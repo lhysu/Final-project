@@ -476,7 +476,7 @@ INSERT INTO `finalproject`.`coupon` (coupon_code, coupon_name, use_sdate, use_ed
 
 # 리뷰
 CREATE TABLE `review` (
-  `review_num` int NOT NULL,
+  `review_num` int NOT NULL AUTO_INCREMENT,
   `member_id` varchar(255) NOT NULL,
   `product_num` int NOT NULL,
   `content` varchar(1000) NOT NULL,
