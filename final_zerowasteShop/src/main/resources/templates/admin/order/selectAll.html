@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+</head>
+<body>
+	<div>
+		<h1>관리자: 주문 관리 페이지</h1>
+		<form action="/admin/order/searchList">
+			<select name="searchKey">
+				<option value="member_id">회원ID</option>
+				<option value="product_name">상품명</option>
+				<option value="payCheck">결제여부</option>
+			</select> 
+			<input type="text" name="searchWord"> 
+			<input type="submit" value="검색">
+		</form>
+			
+		<table border=1>
+			<thead>
+				<tr>
+					<th>주문번호</th>
+					<th>상품번호</th>
+					<th>상품명</th>
+					<th>회원ID</th>
+					<th>주문수량</th>
+					<th>총가격</th>
+					<th>주소</th>
+					<th>결제여부</th>
+					<th>주문상태</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="vo:${list}">				
+					<tr>
+						<td><a th:href="|/admin/order/selectOne?order_num=${vo.order_num}|">[[${vo.order_num}]]</a></td>
+						<td>[[${vo.product_num}]]</td>
+						<td>[[${vo.product_name}]]</td>
+						<td>[[${vo.member_id}]]</td>
+						<td>[[${vo.count}]]</td>
+						<td>[[${vo.total_price}]]</td>
+						<td>[[${vo.address}]]</td>
+						<td>[[${vo.payCheck}]]</td>
+						<td>[[${vo.order_state}]]</td>
+					</tr>				
+				</th:block>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="9">
+					<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+						<th:block th:if="${param.searchKey==null}">
+							<a th:href="|/admin/order/selectAll?cpage=${i}|">[[${i}]]</a>
+						</th:block>
+						<th:block th:if="${param.searchKey!=null}">
+							<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+							<a th:href="|/admin/order/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+							</th:block>	
+						</th:block>						
+					</th:block>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>
