@@ -487,28 +487,28 @@ CREATE TABLE `review` (
   PRIMARY KEY (`review_num`)
 );
 
- # 리뷰 더미값 20개
- INSERT INTO `finalproject`.`review` (review_num, member_id, product_num, content, rating, review_img, createdDate, modifiedDate) VALUES 
-(1, 'user01', 12, 'Review content for product 1', 2, 'review1.jpg', '2024-10-10', '2024-10-21'),
-(2, 'user02', 4, 'Review content for product 2', 4, 'review2.jpg', '2024-10-2', '2024-10-10'),
-(3, 'user03', 1, 'Review content for product 3', 3, 'review3.jpg', '2024-10-6', '2024-10-25'),
-(4, 'user04', 8, 'Review content for product 4', 4, 'review4.jpg', '2024-10-19', '2024-10-10'),
-(5, 'user05', 5, 'Review content for product 5', 2, 'review5.jpg', '2024-10-14', '2024-10-15'),
-(6, 'user06', 14, 'Review content for product 6', 3, 'review6.jpg', '2024-10-21', '2024-10-30'),
-(7, 'user07', 19, 'Review content for product 7', 1, 'review7.jpg', '2024-10-2', '2024-10-12'),
-(8, 'user08', 1, 'Review content for product 8', 5, 'review8.jpg', '2024-10-15', '2024-10-28'),
-(9, 'user09', 12, 'Review content for product 9', 5, 'review9.jpg', '2024-10-16', '2024-10-19'),
-(10, 'user10', 18, 'Review content for product 10', 2, 'review10.jpg', '2024-10-16', '2024-10-6'),
-(11, 'user11', 6, 'Review content for product 11', 2, 'review11.jpg', '2024-10-1', '2024-10-27'),
-(12, 'user12', 13, 'Review content for product 12', 1, 'review12.jpg', '2024-10-2', '2024-10-6'),
-(13, 'user13', 3, 'Review content for product 13', 4, 'review13.jpg', '2024-10-22', '2024-10-10'),
-(14, 'user14', 20, 'Review content for product 14', 3, 'review14.jpg', '2024-10-16', '2024-10-10'),
-(15, 'user15', 6, 'Review content for product 15', 1, 'review15.jpg', '2024-10-9', '2024-10-28'),
-(16, 'user16', 11, 'Review content for product 16', 3, 'review16.jpg', '2024-10-8', '2024-10-23'),
-(17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4', '2024-10-25'),
-(18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19', '2024-10-27'),
-(19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22', '2024-10-4'),
-(20, 'user20', 3, 'Review content for product 20', 3, 'review20.jpg', '2024-10-24', '2024-10-25'); 
+  # 리뷰 더미값 20개
+ INSERT INTO `finalproject`.`review` (review_num, member_id, product_num, content, rating, review_img, createdDate) VALUES 
+(1, 'user01', 12, 'Review content for product 1', 2, 'review1.jpg', '2024-10-10'),
+(2, 'user02', 4, 'Review content for product 2', 4, 'review2.jpg', '2024-10-2'),
+(3, 'user03', 1, 'Review content for product 3', 3, 'review3.jpg', '2024-10-6'),
+(4, 'user04', 8, 'Review content for product 4', 4, 'review4.jpg', '2024-10-19'),
+(5, 'user05', 5, 'Review content for product 5', 2, 'review5.jpg', '2024-10-14'),
+(6, 'user06', 14, 'Review content for product 6', 3, 'review6.jpg', '2024-10-21'),
+(7, 'user07', 19, 'Review content for product 7', 1, 'review7.jpg', '2024-10-2'),
+(8, 'user08', 1, 'Review content for product 8', 5, 'review8.jpg', '2024-10-15'),
+(9, 'user09', 12, 'Review content for product 9', 5, 'review9.jpg', '2024-10-16'),
+(10, 'user10', 18, 'Review content for product 10', 2, 'review10.jpg', '2024-10-16'),
+(11, 'user11', 6, 'Review content for product 11', 2, 'review11.jpg', '2024-10-1'),
+(12, 'user12', 13, 'Review content for product 12', 1, 'review12.jpg', '2024-10-2'),
+(13, 'user13', 3, 'Review content for product 13', 4, 'review13.jpg', '2024-10-22'),
+(14, 'user14', 20, 'Review content for product 14', 3, 'review14.jpg', '2024-10-16'),
+(15, 'user15', 6, 'Review content for product 15', 1, 'review15.jpg', '2024-10-9'),
+(16, 'user16', 11, 'Review content for product 16', 3, 'review16.jpg', '2024-10-8'),
+(17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4'),
+(18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19'),
+(19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22'),
+(20, 'user20', 3, 'Review content for product 20', 3, 'review20.jpg', '2024-10-24'); 
 
   # 재활용 라이프 댓글
   CREATE TABLE `finalproject`.`recyclelifecomment` (
