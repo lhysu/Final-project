@@ -142,5 +142,31 @@ public class MemberController {
 		
 		return "redirect:/home";
 	}
+	
+	//아이디 찾기 페이지로 이동
+	@GetMapping({"/member/selectId"})
+	public String selectId() {
+		log.info("/member/selectId");
+		return "user/selectId";
+	}
+	
+	//아이디 찾기
+	@PostMapping({"/member/selectIdCheck"})
+	public String selectIdCheck(Model model,MemberVO vo) {
+		log.info("/member/selectId");
+		log.info("vo:{}", vo);
+		MemberVO vo2 = service.selectId(vo);
+		String result="";
+		if(vo2!=null) {
+			result= vo2.getName()+"님의 아이디는 "+vo2.getMember_id()+"입니다.";
+					
+		}else result="회원정보가 존재하지 않습니다.";
+		
+		model.addAttribute("result",result);	
+		return "user/selectId_check";	
+		
+	}
+	
+	
 
 }
