@@ -323,6 +323,7 @@ CREATE TABLE `finalproject`.`cart` (
   `count` INT NOT NULL,
   `price` INT NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`cart_num`));
   
 # 장바구니 더미값 20개
