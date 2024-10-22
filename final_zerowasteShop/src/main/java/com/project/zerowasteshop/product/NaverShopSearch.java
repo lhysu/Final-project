@@ -52,7 +52,7 @@ public class NaverShopSearch {
     public List<ProductVO> fromJSONtoItems(String result)  {
         // 문자열 정보를 JSONObject로 바꾸기
         JSONObject rjson = new JSONObject(result);
-        System.out.println(rjson);
+        
         // JSONObject에서 items 배열 꺼내기
         // JSON 배열이기 때문에 보통 배열이랑 다르게 활용해야한다.
         JSONArray items = rjson.getJSONArray("items");

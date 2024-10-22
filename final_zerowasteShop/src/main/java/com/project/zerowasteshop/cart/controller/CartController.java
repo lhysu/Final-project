@@ -1,4 +1,4 @@
-package com.project.zerowasteshop.review.controller;
+package com.project.zerowasteshop.cart.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.zerowasteshop.review.model.ReviewVO;
-import com.project.zerowasteshop.review.service.ReviewService;
+import com.project.zerowasteshop.cart.model.CartVO;
+import com.project.zerowasteshop.cart.service.CartService;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -25,10 +25,10 @@ import javax.imageio.ImageIO;
 
 @Controller
 @Slf4j
-public class ReviewController {
+public class CartController {
 
     @Autowired
-    ReviewService service;
+    CartService service;
     
     @Autowired
 	private HttpSession session;
@@ -37,30 +37,30 @@ public class ReviewController {
  	@Value("${file.dir}")
  	private String realPath;
 
- 	@GetMapping("/review/insert")
+ 	@GetMapping("/cart/insert")
  	public String insert() {
- 		log.info("/review/insert");
- 		return "review/insert";
+ 		log.info("/cart/insert");
+ 		return "cart/insert";
  	}
 
- 	@GetMapping("/review/update")
- 	public String update(ReviewVO vo, Model model) {
- 		log.info("/review/update");
- 		log.info("vo:{}", vo);
+// 	@GetMapping("/cart/update")
+// 	public String update(CartVO vo, Model model) {
+// 		log.info("/cart/update");
+// 		log.info("vo:{}", vo);
+//
+// 		CartVO vo2 = service.selectOne(vo);
+// 		log.info("vo2:{}", vo2);
+//
+// 		model.addAttribute("vo2", vo2);
+//
+// 		return "cart/update";
+// 	}
 
- 		ReviewVO vo2 = service.selectOne(vo);
- 		log.info("vo2:{}", vo2);
-
- 		model.addAttribute("vo2", vo2);
-
- 		return "review/update";
- 	}
-
- 	@GetMapping("/review/delete")
- 	public String delete() {
- 		log.info("/review/delete");
- 		return "review/delete";
- 	}
+// 	@GetMapping("/cart/delete")
+// 	public String delete() {
+// 		log.info("/cart/delete");
+// 		return "cart/delete";
+// 	}
 
 // 	@GetMapping("/product/show")
 // 	public String show(Model model, @RequestParam(defaultValue = "1") int cpage,
@@ -70,7 +70,7 @@ public class ReviewController {
 // 		log.info("pageBlock:{}", pageBlock);
 //
 //// 		List<MemberVO> list = service.selectAll();
-// 		List<ReviewVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
+// 		List<CartVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
 // 		log.info("list.size():{}", list.size());
 //
 // 		model.addAttribute("list", list);
@@ -116,7 +116,7 @@ public class ReviewController {
 // 		log.info("pageBlock:{}", pageBlock);
 //
 //// 		List<MemberVO> list = service.searchList(searchKey, searchWord);
-// 		List<ReviewVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
+// 		List<CartVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
 // 		log.info("list.size():{}", list.size());
 //
 // 		model.addAttribute("list", list);
@@ -153,25 +153,22 @@ public class ReviewController {
 // 		return "product/show";
 // 	}
  	
- 	@GetMapping("/review/selectAll")
+ 	@GetMapping("/cart/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
  			@RequestParam(defaultValue = "10") int pageBlock, String user_id) {
- 		log.info("/review/selectAll");
+ 		log.info("/cart/selectAll");
  		log.info("cpage:{}", cpage);
  		log.info("pageBlock:{}", pageBlock);
 
 // 		List<MemberVO> list = service.selectAll();
  		service.updateProductName();
  		String userID = (String) session.getAttribute("user_id"); // 세션에서 user_id 가져오기
- 		List<ReviewVO> list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		List<CartVO> list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
  		log.info("list.size():{}", list.size());
 
  		model.addAttribute("list", list);
 
  		log.info("List size: {}", list.size());
- 		for (ReviewVO review : list) {
- 		    log.info("Review: {}, Product Name: {}", review.getReview_num(), review.getProduct_name());
- 		}
  		
  		// 디비로부터 얻은 검색결과의 모든 행수
  		int total_rows = service.getTotalRows(user_id);// select count(*) total_rows from member;
@@ -200,23 +197,23 @@ public class ReviewController {
  	    model.addAttribute("startPage", startPage);
  	    model.addAttribute("endPage", endPage);
 
- 		return "review/selectAll";
+ 		return "cart/selectAll";
  	}
  	
 
-// 	@GetMapping("/review/searchList")
+// 	@GetMapping("/cart/searchList")
 // 	public String searchList(Model model, @RequestParam(defaultValue = "company") String searchKey,
 // 			@RequestParam(defaultValue = "") String searchWord,
 // 			@RequestParam(defaultValue = "1") int cpage,
 // 			@RequestParam(defaultValue = "10") int pageBlock) {
-// 		log.info("/review/searchList");
+// 		log.info("/cart/searchList");
 // 		log.info("searchKey:{}", searchKey);
 // 		log.info("searchWord:{}", searchWord);
 // 		log.info("cpage:{}", cpage);
 // 		log.info("pageBlock:{}", pageBlock);
 //
 //// 		List<MemberVO> list = service.searchList(searchKey, searchWord);
-// 		List<ReviewVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
+// 		List<CartVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
 // 		log.info("list.size():{}", list.size());
 //
 // 		model.addAttribute("list", list);
@@ -250,105 +247,90 @@ public class ReviewController {
 // 	    model.addAttribute("startPage", startPage);
 // 	    model.addAttribute("endPage", endPage);
 //
-// 		return "review/selectAll";
+// 		return "cart/selectAll";
 // 	}
 
- 	@GetMapping("/review/selectOne")
- 	public String selectOne(ReviewVO vo, Model model) {
- 		log.info("/review/selectOne");
- 		log.info("vo:{}", vo);
+// 	@GetMapping("/cart/selectOne")
+// 	public String selectOne(CartVO vo, Model model) {
+// 		log.info("/cart/selectOne");
+// 		log.info("vo:{}", vo);
+//
+// 		CartVO vo2 = service.selectOne(vo);
+// 		log.info("vo2:{}", vo2);
+//
+// 		model.addAttribute("vo2", vo2);
+//
+// 		return "cart/selectOne";
+// 	}
 
- 		ReviewVO vo2 = service.selectOne(vo);
- 		log.info("vo2:{}", vo2);
-
- 		model.addAttribute("vo2", vo2);
-
- 		return "review/selectOne";
- 	}
-
- 	@PostMapping("/review/insertOK")
- 	public String insertOK(ReviewVO vo) throws IllegalStateException, IOException {
- 		log.info("/review/insertOK");
+ 	@PostMapping("/cart/insertOK")
+ 	public String insertOK(CartVO vo) throws IllegalStateException, IOException {
+ 		log.info("/cart/insertOK");
 		/* vo.setPoint(vo.getPrice() / 1000); */
  		log.info("vo:{}", vo);
 
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
  		// String realPath = context.getRealPath("resources/upload_img");
 
- 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
- 		log.info(realPath);
-
- 		String originName = vo.getFile().getOriginalFilename();
- 		log.info("originName:{}", originName);
-
- 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
- 			vo.setReview_img("default.png");
- 		} else {
- 			// 중복이미지 이름을 배제하기위한 처리
- 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
- 			log.info("save_name:{}", save_name);
- 			vo.setReview_img(save_name);
-
- 			File f = new File(realPath, save_name);
- 			vo.getFile().transferTo(f);
- 		}
 
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/review/selectAll";
+ 			return "redirect:/cart/selectAll";
  		} else {
- 			return "redirect:/review/insert";
+ 			return "redirect:/cart/insert";
  		}
  	}
 
- 	@PostMapping("/review/updateOK")
- 	public String updateOK(ReviewVO vo) throws IllegalStateException, IOException {
- 		log.info("/review/updateOK");
-// 		vo.setPoint(vo.getPrice() / 1000);
- 		log.info("vo:{}", vo);
+// 	@PostMapping("/cart/updateOK")
+// 	public String updateOK(CartVO vo) throws IllegalStateException, IOException {
+// 		log.info("/cart/updateOK");
+//// 		vo.setPoint(vo.getPrice() / 1000);
+// 		log.info("vo:{}", vo);
+//
+// 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
+// 		// String realPath = context.getRealPath("resources/upload_img");
+//
+// 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
+// 		log.info(realPath);
+//
+// 		String originName = vo.getFile().getOriginalFilename();
+// 		log.info("originName:{}", originName);
+//
+// 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+// 			vo.setReview_img(vo.getReview_img());
+// 		} else {
+// 			// 중복이미지 이름을 배제하기위한 처리
+// 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+// 			log.info("save_name:{}", save_name);
+// 			vo.setReview_img(save_name);
+//
+// 			File f = new File(realPath, save_name);
+// 			vo.getFile().transferTo(f);
+// 		}
+//
+// 		int result = service.updateOK(vo);
+// 		log.info("result:{}", result);
+// 		if (result == 1) {
+// 			return "redirect:/cart/selectOne?review_num=" + vo.getReview_num();
+// 		} else {
+// 			return "redirect:/cart/update?review_num=" + vo.getReview_num();
+// 		}
+// 	}
 
- 		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
- 		// String realPath = context.getRealPath("resources/upload_img");
-
- 		// @Value("${file.dir}")로 획득한 절대경로 사용해야함.
- 		log.info(realPath);
-
- 		String originName = vo.getFile().getOriginalFilename();
- 		log.info("originName:{}", originName);
-
- 		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
- 			vo.setReview_img(vo.getReview_img());
- 		} else {
- 			// 중복이미지 이름을 배제하기위한 처리
- 			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
- 			log.info("save_name:{}", save_name);
- 			vo.setReview_img(save_name);
-
- 			File f = new File(realPath, save_name);
- 			vo.getFile().transferTo(f);
- 		}
-
- 		int result = service.updateOK(vo);
- 		log.info("result:{}", result);
- 		if (result == 1) {
- 			return "redirect:/review/selectOne?review_num=" + vo.getReview_num();
- 		} else {
- 			return "redirect:/review/update?review_num=" + vo.getReview_num();
- 		}
- 	}
-
- 	@PostMapping("/review/deleteOK")
- 	public String deleteOK(ReviewVO vo) {
- 		log.info("/review/deleteOK");
+ 	@PostMapping("/cart/deleteOK")
+ 	public String deleteOK(CartVO vo) {
+ 		log.info("/cart/deleteOK");
  		log.info("vo:{}", vo);
 
  		int result = service.deleteOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/review/selectAll";
+ 			return "redirect:/cart/selectAll";
  		} else {
- 			return "redirect:/review/delete?review_num=" + vo.getReview_num();
+ 			return "redirect:/cart/selectAll";
  		}
  	}
+ 	
+
 }
