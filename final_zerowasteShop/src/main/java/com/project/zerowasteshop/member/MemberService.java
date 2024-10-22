@@ -46,6 +46,10 @@ public class MemberService {
 		return mapper.selectId(vo);
 	}
 
+	public MemberVO selectPw(MemberVO vo) {
+		return mapper.selectPw(vo);
+	}
+
 	
 
 }

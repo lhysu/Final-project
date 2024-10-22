@@ -23,5 +23,7 @@ public interface MemberMapper {
 
 	public MemberVO selectId(MemberVO vo);
 
+	public MemberVO selectPw(MemberVO vo);
+
 
 }
