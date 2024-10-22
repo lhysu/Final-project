@@ -14,8 +14,8 @@ public class CouponService {
 	@Autowired
 	CouponMapper mapper;
 	
-	public List<CouponVO> selectAll(){
-		return mapper.selectAll();
+	public List<CouponVO> selectAll(String user_id){
+		return mapper.selectAll(user_id);
 	}
 	
 	public int insertOK(CouponVO vo) {

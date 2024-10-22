@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CouponMapper {
-	public List<CouponVO> selectAll();
+	public List<CouponVO> selectAll(String user_id);
 	
 	public int insertOK(CouponVO vo);
 
