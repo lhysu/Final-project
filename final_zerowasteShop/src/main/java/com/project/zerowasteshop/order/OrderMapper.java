@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.zerowasteshop.coupon.CouponVO;
+
 @Mapper
 public interface OrderMapper {
 
@@ -22,5 +24,7 @@ public interface OrderMapper {
 	int getSearchTotalRowsPname(String searchWord);
 
 	int getSearchTotalRowsPayCheck(String searchWord);
+
+	List<OrderJoinCouponVO> getAvailableCouponsForUser(String member_id);
 
 }

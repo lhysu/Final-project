@@ -1,9 +1,11 @@
 package com.project.zerowasteshop.order;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
-public class OrderVO {
+public class OrderJoinCouponVO {
 	private int order_num;
 	private int product_num;
 	private String product_name;
@@ -22,4 +24,8 @@ public class OrderVO {
 	private int total_price;
 	private int final_price;
 	private String order_state;
+	
+	
+	private String coupon_name;
+	private int discount_rate;
 }
