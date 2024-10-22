@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,15 +27,20 @@ public class CouponController {
 
 	@Autowired
 	CouponService service;
+	
+	@Autowired
+	private HttpSession session;
 		
 	@GetMapping("/coupon/selectAll")
 	public String cp_selectAll(Model model) {
 		log.info("/coupon/selectAll");
 		
-		List<CouponVO> list = service.selectAll(); 
+		String user_id = (String) session.getAttribute("user_id"); // 세션에서 user_id 가져오기
+		List<CouponVO> list = service.selectAll(user_id); 
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
+		model.addAttribute("user_id",user_id);
 			
 		return "coupon/selectAll"; //resources/templates폴더에서 찾는다.
 	}

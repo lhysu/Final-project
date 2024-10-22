@@ -100,4 +100,9 @@
 	where o.member_id = #{member_id}
 </select>
 
+<!-- 쿠폰 코드 확인 -->
+<select id="getOrderAmount" resultType="int">
+	select price from order where merchant_uid = #{merchant_uid}
+</select>
+
 </mapper>

@@ -19,7 +19,7 @@
 </select>
 
 <select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from coupon order by coupon_code desc
+	select * from coupon where member_id = #{user_id} order by coupon_code desc
 </select>
 
 <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.coupon.CouponVO">

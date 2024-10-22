@@ -27,4 +27,6 @@ public interface OrderMapper {
 
 	List<OrderJoinCouponVO> getAvailableCouponsForUser(String member_id);
 
+	int getOrderAmount(String merchant_uid);
+
 }

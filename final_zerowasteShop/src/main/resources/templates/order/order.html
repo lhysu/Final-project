@@ -7,6 +7,8 @@
     
     <!-- 카카오 주소 API 스크립트 -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 아임포트 API 스크립트 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
  	// 숫자를 3자리마다 콤마를 추가하고 원 단위를 붙이는 함수
     function formatPrice(num) {
@@ -85,17 +87,52 @@
 					    });
 	            });
 
-            // 결제 완료 버튼 클릭 시
+	         // 아임포트 결제 요청 함수
 	            $('#orderForm').on('submit', function(event) {
-	                event.preventDefault();  // 기본 폼 제출 방지
-	
-	                // 결제 처리 로직
-	                alert("결제가 완료되었습니다.");
-	
-	                // 실제로는 여기서 서버로 결제 데이터를 전송해야 합니다.
-	                // 예: $.ajax({...})를 통해 서버로 데이터 전송
-	            });
-        });
+	                event.preventDefault(); // 기본 폼 제출 방지
+
+	                // 아임포트 결제 요청 함수
+	                var IMP = window.IMP; // 생략 가능
+	                IMP.init('imp57000577'); // 아임포트에서 발급받은 가맹점 식별코드
+
+	                IMP.request_pay({
+	                    pg: 'html5_inicis', // PG사 (KCP, 이니시스, 카카오페이 등 지원 가능)
+	                    pay_method: 'card', // 결제수단 (카드, 계좌이체 등)
+	                    merchant_uid: 'O' + new Date().getTime(), // 고유한 주문번호 생성
+	                    name: '주문명: 결제테스트', // 결제창에 표시될 상품명
+	                    amount: 100, // 결제 금액
+	                    buyer_email: 'test@example.com',
+	                    buyer_name: '홍길동',
+	                    buyer_tel: '010-1234-5678',
+	                    buyer_addr: '서울특별시 강남구 삼성동',
+	                    buyer_postcode: '123-456'
+	                }, function (rsp) { // callback 함수
+	                    if (rsp.success) {
+	                        // 결제 성공 시 서버로 imp_uid 전송
+	                        $.ajax({
+	                            url: '/order/pay',
+	                            method: 'POST',
+	                            data: {
+	                                imp_uid: rsp.imp_uid,
+	                                merchant_uid: rsp.merchant_uid,
+	                                paid_amount: rsp.paid_amount
+	                            },
+	                            success: function (response) {
+	                                if (response.status === 'success') {
+	                                    alert('결제가 완료되었습니다.');
+	                                    window.location.href = '/order/confirmation'; // 결제 완료 페이지로 이동
+	                                } else {
+	                                    alert('결제 검증에 실패했습니다.');
+	                                }
+	                            }
+	                        });
+	                    } else {
+	                        // 결제 실패 시
+	                        alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
+	                    }
+	                });
+	            });	         
+	        });
     </script>
 </head>
 <body>

@@ -58,4 +58,9 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		return mapper.getAvailableCouponsForUser(member_id);
 	}
+
+	public int getOrderAmount(String merchant_uid) {
+		// TODO Auto-generated method stub
+		return mapper.getOrderAmount(merchant_uid);
+	}
 }
