@@ -12,4 +12,5 @@ public class TestWebConfig implements WebMvcConfigurer{
 		registry.addViewController("/").setViewName("forward:/index.html");
 	}
 	
+	
 }

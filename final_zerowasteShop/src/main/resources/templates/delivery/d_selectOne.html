@@ -9,7 +9,27 @@
 
 		<div>
 			<table id="insertTable">
-				<thead>
+				<tr>
+					<td>배송추적번호</td>
+					<td th:text="${vo2.tracking_num}"></td>					
+				</tr>
+				<tr>
+				<td>배송상태</td>
+				<td th:text="${vo2.delivery_status}"></td>
+				</tr>
+				<tr>
+					<td>배송사</td>
+					<td th:text="${vo2.courier}"></td>					
+				</tr>
+				<tr>
+					<td>배송번호</td>
+					<td th:text="${vo2.delivery_num}">배송번호</td>
+				</tr>
+				<tr>
+					<td>받는사람</td>
+					<td th:text="${vo2.member_id}">받는사람</td>
+				</tr>
+				<!-- <thead>
 					<tr>
 					<th>번호</th>
 					<th>제품명</th>
@@ -24,7 +44,7 @@
 						<td>[[${vo2.order_num}]]</td>
 						<td>[[${vo2.tracking_num}]]</td>       
 					</tr>
-				</tbody>
+				</tbody> -->
 			</table>
 		</div>
 </body>

@@ -8,29 +8,29 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DeliveryMapper {
 
-	DeliveryVO selectOne(DeliveryVO vo);
+	public DeliveryVO selectOne(DeliveryVO vo);
 
-	List<DeliveryVO> selectAll();
+	public List<DeliveryVO> selectAll();
 
-	int getTotalRows();
+	public int getTotalRows();
 
-	List<DeliveryVO> selectAllPageBlock(int startRow, int pageBlock);
+	public List<DeliveryVO> selectAllPageBlock(int startRow, int pageBlock);
 
-	int getSearchTotalRows();
+	public int getSearchTotalRows();
 
-	List<DeliveryVO> searchListPageBlock();
+	public List<DeliveryVO> searchListPageBlock();
 
-	List<DeliveryVO> searchListProduct_name(String string);
+	public List<DeliveryVO> searchListProduct_name(String string);
 
-	List<DeliveryVO> searchListTracking_num(String string);
+	public List<DeliveryVO> searchListTracking_num(String string);
 
-	int getSearchTotalRowsProduct_name(String string);
+	public int getSearchTotalRowsProduct_name(String string);
 
-	int getSearchTotalRowsTracking_num(String string);
+	public int getSearchTotalRowsTracking_num(String string);
 
-	List<DeliveryVO> searchListPageBlockProduct_name(String string, int startRow, int endRow);
+	public List<DeliveryVO> searchListPageBlockProduct_name(String string, int startRow, int endRow);
 
-	List<DeliveryVO> searchListPageBlockTracking_num(String string, int startRow, int endRow);
+	public List<DeliveryVO> searchListPageBlockTracking_num(String string, int startRow, int endRow);
 	
 
 }
