@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+
+</head>
+<body>
+
+	<h1>비밀번호 찾기</h1>
+	
+	<form action="/member/selectPwCheck" method="post">
+  	<table>
+  		<tr>
+	      <th>아이디</th>
+	      <td><input type="text" name="member_id" id="member_id" value="user01"> </td>
+	    </tr>
+	    <tr>
+	      <th>이름</th>
+	      <td><input type="text" name="name" id="name" value="User01"> </td>
+	    </tr>
+	    <tr>
+	      <th>이메일</th>
+	      <td><input type="text" name="email" id="email" value="user01@example.com">
+	      	<button type="button" id="btn_sendEmail" >인증번호 받기</button></td>
+	    </tr>
+	    <tr>
+	      <th>이메일</th>
+	      <td><input type="text" name="verificationCode" id="verificationCode">
+	      	<button type="button" id="btn_verificationCheck">인증번호 확인</button></td>
+	    </tr>
+	    <tr>
+	      <td colspan="2"><input type="submit" value="확인"> </td>
+	    </tr>
+
+  	</table>
+
+	</form>
+ 
+
+	
+</body>
+</html>

@@ -42,4 +42,14 @@ public class MemberService {
 		return mapper.login(vo);
 	}
 
+	public MemberVO selectId(MemberVO vo) {
+		return mapper.selectId(vo);
+	}
+
+	public MemberVO selectPw(MemberVO vo) {
+		return mapper.selectPw(vo);
+	}
+
+	
+
 }
