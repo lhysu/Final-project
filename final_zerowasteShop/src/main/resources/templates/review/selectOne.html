@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>상품상세</title>
+    <title>리뷰상세</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -122,9 +122,21 @@
                 <div class="d-flex m-3 me-0" style = "margin-right: 20px !important">
                     <!-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> -->
 					<div class="top-link pe-2" style="background-color: #81c408; width: 100px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 25px; margin-right: 20px !important">
-					    <a href="/user/login" class="text-white">
-					        <small class="text-white ms-2">로그인</small>
-					    </a>
+					    <th:block th:if="${session.user_id == null && session.admin_id == null}">
+						    <a href="/user/login" class="text-white">
+						        <small class="text-white ms-2">로그인</small>
+						    </a>
+						</th:block>
+						<th:block th:if="${session.user_id != null}">
+						    <a href="/member/m_logout" class="text-white">
+						        <small class="text-white ms-2">로그아웃</small>
+						    </a>
+					    </th:block>
+					    <th:block th:if="${session.admin_id != null}">
+						    <a href="/admin/ad_logout" class="text-white">
+						        <small class="text-white ms-2">로그아웃</small>
+						    </a>
+					    </th:block>
 					</div>
                     <!-- <a href="#" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
@@ -143,40 +155,38 @@
 		<table id="selectOneTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
             <thead>
                 <tr>
-                    <th>상품번호</th>
-                    <th>상품이름</th>
-                    <th>가격</th>
-                    <th>포인트</th>
-                    <th>제조사</th>
-                    <th>상품이미지</th>
-                    <th>카테고리</th>
-                    <th>별점</th>
+                    <th>리뷰번호</th>
+					<th>회원아이디</th>
+					<th>상품이름</th>
+					<th>리뷰이미지</th>
+					<th>리뷰내용</th>
+					<th>별점</th>
+					<th>작성일</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>[[${vo2.product_num}]]</td>
-                    <td th:utext="${vo2.product_name}"></td>
-                    <td>[[${vo2.price}]]</td>
-                    <td>[[${vo2.point}]]</td>
-                    <td>[[${vo2.company}]]</td>
-                    <th:block th:if="${vo2.product_img.startsWith('http')}">
-                        <td><img style="width: 100px;" th:src="${vo2.product_img}" alt=""></td>
+                    <td>[[${vo2.review_num}]]</td>
+                    <td>[[${vo2.member_id}]]</td>
+                    <td th:utext="${vo2.product_name}"></td>     
+                    <th:block th:if="${vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="${vo2.review_img}" alt=""></td>
                     </th:block>
                     
-                    <th:block th:if="${!vo2.product_img.startsWith('http')}">
-                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.product_img}|" alt=""></td>
+                    <th:block th:if="${!vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.review_img}|" alt=""></td>
                     </th:block>
-                    <td>[[${vo2.category}]]</td>
+                    <td>[[${vo2.content}]]</td>
                     <td>[[${vo2.rating}]]</td>
+                    <td>[[${vo2.createdDate}]]</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="8" style="text-align: left;">
                         <div style="display: flex; justify-content: flex-start; gap: 10px; margin-top: 10px;">
-                            <a th:href="|/admin/product/update?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품수정</a> 
-                            <a th:href="|/admin/product/delete?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품삭제</a>
+                            <a th:href="|/review/update?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰수정</a> 
+                            <a th:href="|/review/delete?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰삭제</a>
                         </div>
                     </td>
                 </tr>
