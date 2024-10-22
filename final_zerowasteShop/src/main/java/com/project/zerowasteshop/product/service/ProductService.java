@@ -77,7 +77,11 @@ public class ProductService {
 		log.info("startRow:{}", startRow);
 		log.info("endRow:{}", endRow);
 
-		return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
+		if (searchKey.equals("company")) {
+			return mapper.searchListPageBlockCompany("%" + searchWord + "%",startRow,endRow);
+		} else {
+			return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
+		}
 	}
 	
 	// 상품 정보 저장

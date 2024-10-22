@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>상품목록페이지</title>
+    <title>상품 목록 페이지</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -59,9 +59,10 @@
 			<th:block th:each="vo : ${list}">
 				<div class="col-md-6 col-lg-6 col-xl-3">
                  	<div class="text-center">
-                     	<img style="width: 100px;" th:src="${vo.product_img}" class="img-fluid rounded" alt="">
+                     	<img style="width: 100px;" th:src="${vo.product_img}" th:if="${vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
+                     	<img style="width: 100px;" th:src="|/uploadimgPath/${vo.product_img}|" th:if="${!vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
 			            	<div class="py-4">
-			                	<a href="#" class="h5" th:utext="${vo.product_name}"></a>
+			                	<a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:utext="${vo.product_name}"></a>
 			                    	<div class="d-flex my-3 justify-content-center">
 			                        	<i class="fas fa-star text-primary"></i>
 			                            <i class="fas fa-star text-primary"></i>

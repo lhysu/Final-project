@@ -1,6 +1,5 @@
 package com.project.zerowasteshop.cart.controller;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.zerowasteshop.cart.model.CartVO;
 import com.project.zerowasteshop.cart.service.CartService;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.http.HttpSession;
 
-import javax.imageio.ImageIO;
-
-@Controller
 @Slf4j
+@Controller
 public class CartController {
 
     @Autowired
