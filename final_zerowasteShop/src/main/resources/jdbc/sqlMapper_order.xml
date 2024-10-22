@@ -22,10 +22,11 @@
 	select * from coupon order by coupon_code desc
 </select>
 
-<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.order.OrderVO">
-	SELECT o.*, p.product_name
+<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img, d.delivery_date
     FROM `order` o
     JOIN product p ON o.product_num = p.product_num
+    JOIN delivery d ON o.order_num = d.order_num
     ORDER BY o.order_num DESC
     LIMIT #{startRow}, #{pageBlock}
 </select>
@@ -90,5 +91,13 @@
 	insert into coupon(coupon_code,member_id, coupon_name, use_sdate, use_edate,discount_rate,used)
 	values(#{coupon_code},#{member_id},#{coupon_name},#{use_sdate},#{use_edate},#{discount_rate},#{used})
 </insert>
+
+<!-- 쿠폰 코드 확인 -->
+<select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.order.OrderJoinCouponVO">
+	select o.*,c.coupon_code,c.coupon_name,c.discount_rate
+	from `order` o
+	left join coupon c on o.coupon_code = c.coupon_code
+	where o.member_id = #{member_id}
+</select>
 
 </mapper>
