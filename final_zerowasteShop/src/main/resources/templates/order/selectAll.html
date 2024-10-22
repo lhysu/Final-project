@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>selectAll.html</title>
+</head>
+<body>
+	<div>
+		<h1>나의 구매내역 페이지</h1>			
+
+		<div th:each="vo:${list}" class="order-box">
+			<div class="order-header">
+				<p>주문번호: <a th:href="|/order/selectOne?order_num=${vo.order_num}|">[[${vo.order_num}]]</a></p>
+				<p>배송 예정일: [[${vo.delivery_date}]]</p> <!-- 추가: 배송예정일 표시 -->
+			</div>
+
+			<div>
+				<img th:src="${vo.product_img}" class="product-image" alt="Product Image">
+				<div class="product-info">
+					<p>상품명: [[${vo.product_name}]]</p>
+					<p>상품 수량: [[${vo.count}]]개</p>
+					<p>가격: [[${vo.price}]]원</p>
+					<p>탄소 절감 포인트: [[${vo.point}]]P</p> <!-- 추가: 탄소 절감 포인트 -->
+				</div>
+			</div>
+
+			<div class="action-buttons">
+				<!-- 주문 취소 버튼 -->
+				<button th:if="${vo.order_state == '결제완료'}" th:onclick="|location.href='/order/cancel?order_num=${vo.order_num}'|">주문 취소</button>
+				<!-- 리뷰 작성 버튼 -->
+				<button th:if="${vo.order_state == '배송완료'}" th:onclick="|location.href='/review/write?order_num=${vo.order_num}'|">리뷰 작성</button>
+				<!-- 교환/환불 버튼 -->
+				<button th:if="${vo.order_state == '배송완료'}" th:onclick="|location.href='/order/refund?order_num=${vo.order_num}'|">교환/환불</button>
+			</div>
+		</div>
+
+		<div>
+			<!-- 페이지 네이션 -->
+			<div>
+				<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+					<th:block th:if="${param.searchKey==null}">
+						<a th:href="|/order/selectAll?cpage=${i}|">[[${i}]]</a>
+					</th:block>
+					<th:block th:if="${param.searchKey!=null}">
+						<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+							<a th:href="|/order/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+						</th:block>	
+					</th:block>						
+				</th:block>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

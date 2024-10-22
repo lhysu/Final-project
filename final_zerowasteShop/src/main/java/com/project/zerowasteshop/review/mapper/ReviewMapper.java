@@ -23,9 +23,11 @@ public interface ReviewMapper {
 //
 //	public List<CartVO> searchListName(String searchWord);
 //
-	public int getTotalRows();
+	public int getTotalRows(String userID);
 //
-	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock);
+	public int updateProductName();
+	
+	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock, String userID);
 //
 //	public int getSearchTotalRowsCompany(String searchWord);
 //

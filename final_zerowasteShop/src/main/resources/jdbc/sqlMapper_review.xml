@@ -5,17 +5,24 @@
 
 <mapper namespace="com.project.zerowasteshop.review.mapper.ReviewMapper">
 
+	<update id = "updateProductName">
+		UPDATE review r
+		JOIN product p ON r.product_num = p.product_num
+		SET r.product_name = p.product_name;
+	</update>
+
 	<select id="selectAllPageBlock"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
-		SELECT r.*, p.product_name 
-	    FROM review r 
-	    JOIN product p ON r.product_num = p.product_num 
-	    ORDER BY r.review_num ASC limit #{startRow},#{pageBlock}
+		SELECT * 
+	    FROM review
+	    WHERE member_id = #{userID}
+	    ORDER BY review_num ASC limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="getTotalRows" resultType="int">
 		select count(*) total_rows
 		from review
+		where member_id = #{userID}
 	</select>
 	
 	<!-- <select id="searchListPageBlockCompany"
@@ -46,17 +53,19 @@
 	
 	<select id="selectOne"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
-		select * from review where review_num=#{review_num}
+		SELECT * 
+		FROM review  
+		WHERE review_num = #{review_num};
 	</select>
 
 	<insert id="insertOK">
-		insert into review(content, rating, review_img)
-		values(#{content},#{rating},#{review_img})
+		insert into review(content, rating, review_img, createdDate)
+		values(#{content},#{rating},#{review_img},CURRENT_TIMESTAMP)
 	</insert>
 	
 	<update id="updateOK">
 		update review set
-		content=#{content}, rating=#{rating}, review_img=#{review_img}
+		content=#{content}, rating=#{rating}, review_img=#{review_img}, createdDate=CURRENT_TIMESTAMP
 		where review_num=#{review_num}
 	</update>	
 	

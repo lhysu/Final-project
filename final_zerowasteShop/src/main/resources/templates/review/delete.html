@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>상품삭제</title>
+    <title>리뷰삭제</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -145,9 +145,21 @@
                 <div class="d-flex m-3 me-0" style = "margin-right: 20px !important">
                     <!-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> -->
 					<div class="top-link pe-2" style="background-color: #81c408; width: 100px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 25px; margin-right: 20px !important">
-					    <a href="/user/login" class="text-white">
-					        <small class="text-white ms-2">로그인</small>
-					    </a>
+					    <th:block th:if="${session.user_id == null && session.admin_id == null}">
+						    <a href="/user/login" class="text-white">
+						        <small class="text-white ms-2">로그인</small>
+						    </a>
+						</th:block>
+						<th:block th:if="${session.user_id != null}">
+						    <a href="/member/m_logout" class="text-white">
+						        <small class="text-white ms-2">로그아웃</small>
+						    </a>
+					    </th:block>
+					    <th:block th:if="${session.admin_id != null}">
+						    <a href="/admin/ad_logout" class="text-white">
+						        <small class="text-white ms-2">로그아웃</small>
+						    </a>
+					    </th:block>
 					</div>
                     <!-- <a href="#" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
@@ -164,11 +176,11 @@
 	
 	<div th:fragment="content" class="content">
 		<div class="custom-form">
-			<form action="/admin/product/deleteOK" method="post">
-				<input type="hidden" name="product_num" th:value="${param.product_num}">
+			<form action="/review/deleteOK" method="post">
+				<input type="hidden" name="review_num" th:value="${param.review_num}">
 				<table id="deleteTable">
 					<tr>
-						<th>[[${param.product_num}]]번 상품을 정말 삭제 하시겠습니까?</th>
+						<th>[[${param.review_num}]]번 상품을 정말 삭제 하시겠습니까?</th>
 					</tr>
 					<tr>
 						<th><input type="submit" value="삭제완료"></th>

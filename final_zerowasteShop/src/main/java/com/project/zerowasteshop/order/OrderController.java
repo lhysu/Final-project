@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.zerowasteshop.coupon.CouponVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -93,7 +95,9 @@ public class OrderController {
 			@RequestParam(defaultValue = "101호")String address_detail,
 			@RequestParam(defaultValue = "/upload_img/bag.png")String product_img,
 			@RequestParam(defaultValue = "가방1")String product_name,
-			@RequestParam(defaultValue = "30000")int price) {
+			@RequestParam(defaultValue = "80000")int price,
+			@RequestParam(defaultValue = "user19")String member_id,
+			@RequestParam(defaultValue = "1000")int points) {
 		
 		model.addAttribute("name",name);
 		model.addAttribute("tel",tel);
@@ -103,10 +107,46 @@ public class OrderController {
 		model.addAttribute("product_img",product_img);
 		model.addAttribute("product_name",product_name);
 		model.addAttribute("price",price);
+		model.addAttribute("points",points);
 		
-		
+	    List<OrderJoinCouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
+	    log.info("coupons:{}",coupons);
+	    model.addAttribute("coupons", coupons);
 		
 			
 		return "order/order";
 	}
+	
+	@GetMapping("/order/selectAll")
+	public String orderSelectAll(Model model,
+			@RequestParam(defaultValue = "1")int cpage,
+			@RequestParam(defaultValue = "5")int pageBlock) {
+		log.info("/order/selectAll");
+		log.info("cpage:{}",cpage);
+		log.info("pageBlock:{}",pageBlock);
+		
+		List<OrderVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
+		log.info("list.size():{}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		//DB로부터 얻은 검색결과의 모든 행의 수
+		int total_rows = service.getTotalRows();
+		log.info("total_rows:{}",total_rows);
+		
+		int totalPageCount; 
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가하기.
+		if(total_rows%pageBlock!=0) {
+			totalPageCount = (total_rows/pageBlock) +1;
+		} else {
+			totalPageCount = total_rows/pageBlock;
+		}
+		
+		model.addAttribute("totalPageCount",totalPageCount);
+		
+		
+		return "order/selectAll";
+	}
+	
 }

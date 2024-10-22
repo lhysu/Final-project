@@ -125,7 +125,7 @@ public class ProductController {
  	}
  	
  	@GetMapping("/product/showSearchList")
- 	public String showSearchList(Model model, @RequestParam(defaultValue = "") String searchKey,
+ 	public String showSearchList(Model model, @RequestParam(defaultValue = "product_name") String searchKey,
  			@RequestParam(defaultValue = "") String searchWord,
  			@RequestParam(defaultValue = "1") int cpage,
  			@RequestParam(defaultValue = "12") int pageBlock) {

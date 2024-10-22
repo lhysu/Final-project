@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 import javax.imageio.ImageIO;
 
@@ -28,6 +29,9 @@ public class ReviewController {
 
     @Autowired
     ReviewService service;
+    
+    @Autowired
+	private HttpSession session;
     
  // application.properties 에서 설정한 변수(file.dir)를 DI
  	@Value("${file.dir}")
@@ -151,19 +155,26 @@ public class ReviewController {
  	
  	@GetMapping("/review/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "10") int pageBlock) {
+ 			@RequestParam(defaultValue = "10") int pageBlock, String user_id) {
  		log.info("/review/selectAll");
  		log.info("cpage:{}", cpage);
  		log.info("pageBlock:{}", pageBlock);
 
 // 		List<MemberVO> list = service.selectAll();
- 		List<ReviewVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
+ 		service.updateProductName();
+ 		String userID = (String) session.getAttribute("user_id"); // 세션에서 user_id 가져오기
+ 		List<ReviewVO> list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
  		log.info("list.size():{}", list.size());
 
  		model.addAttribute("list", list);
 
+ 		log.info("List size: {}", list.size());
+ 		for (ReviewVO review : list) {
+ 		    log.info("Review: {}, Product Name: {}", review.getReview_num(), review.getProduct_name());
+ 		}
+ 		
  		// 디비로부터 얻은 검색결과의 모든 행수
- 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
+ 		int total_rows = service.getTotalRows(user_id);// select count(*) total_rows from member;
  		log.info("total_rows:{}", total_rows);
  		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
  		int totalPageCount = 0;
@@ -178,6 +189,7 @@ public class ReviewController {
  		}
  		log.info("totalPageCount:{}", totalPageCount);
 
+ 		model.addAttribute("user_id", user_id);
  		model.addAttribute("cpage", cpage);
  		model.addAttribute("totalPageCount", totalPageCount);
  		

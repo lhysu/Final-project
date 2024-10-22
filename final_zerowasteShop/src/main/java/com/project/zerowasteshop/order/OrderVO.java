@@ -20,5 +20,6 @@ public class OrderVO {
 	private String delivery_memo;
 	private boolean payCheck;
 	private int total_price;
+	private int final_price;
 	private String order_state;
 }

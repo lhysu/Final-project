@@ -46,18 +46,22 @@ public class ReviewService {
 //
 //	}
 //
-	public int getTotalRows() {
-		return mapper.getTotalRows();
+	public int getTotalRows(String userID) {
+		return mapper.getTotalRows(userID);
 	}
 
-	public List<ReviewVO> selectAllPageBlock(int cpage, int pageBlock) {
+	public int updateProductName() {
+		return mapper.updateProductName();
+	}
+	
+	public List<ReviewVO> selectAllPageBlock(int cpage, int pageBlock, String userID) {
 		// MySql 인경우 limit 시작행을얻어내는 알고리즘이 필요하다.
 		// 예:1페이지(0,pageBlock),2페이지(5,pageBlock),3페이지(10,pageBlock)
 		int startRow = (cpage - 1) * pageBlock ;
 		log.info("startRow:{}", startRow);
 		log.info("pageBlock:{}", pageBlock);
 
-		return mapper.selectAllPageBlock(startRow, pageBlock);
+		return mapper.selectAllPageBlock(startRow, pageBlock, userID);
 	}
 
 //	public int getSearchTotalRows(String searchKey, String searchWord) {

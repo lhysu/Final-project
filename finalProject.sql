@@ -9,7 +9,9 @@ CREATE TABLE `finalproject`.`member` (
   `pw` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `phone_number` VARCHAR(255) NOT NULL,
+  `postcode` VARCHAR(255) NULL,
   `address` VARCHAR(255) NOT NULL,
+  `address_detail` VARCHAR(255) NULL,
   `signup_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `points` INT NULL,
   `adCheck` TINYINT NULL,
@@ -293,27 +295,27 @@ CREATE TABLE `finalproject`.`product` (
   PRIMARY KEY (`product_num`));
   
 # 상품 더미값 20개
-INSERT INTO `finalproject`.`product` (product_name, price, point, company, product_img, category, rating, file) VALUES 
-('Product 1', 7951, 370, 'Company1', 'product1.jpg', 'Bathroom', 4, 'file1.jpg'),
-('Product 2', 30918, 170, 'Company2', 'product2.jpg', 'Living', 3, 'file2.jpg'),
-('Product 3', 29930, 382, 'Company3', 'product3.jpg', 'Kitchen', 5, 'file3.jpg'),
-('Product 4', 19530, 66, 'Company4', 'product4.jpg', 'Living', 5, 'file4.jpg'),
-('Product 5', 12877, 417, 'Company5', 'product5.jpg', 'Kitchen', 4, 'file5.jpg'),
-('Product 6', 26066, 98, 'Company6', 'product6.jpg', 'Gift', 4, 'file6.jpg'),
-('Product 7', 49129, 317, 'Company7', 'product7.jpg', 'Stationery', 4, 'file7.jpg'),
-('Product 8', 38649, 289, 'Company8', 'product8.jpg', 'Kitchen', 4, 'file8.jpg'),
-('Product 9', 46600, 436, 'Company9', 'product9.jpg', 'Stationery', 4, 'file9.jpg'),
-('Product 10', 12937, 105, 'Company10', 'product10.jpg', 'Kitchen', 3, 'file10.jpg'),
-('Product 11', 33039, 474, 'Company11', 'product11.jpg', 'Stationery', 4, 'file11.jpg'),
-('Product 12', 35260, 82, 'Company12', 'product12.jpg', 'Gift', 5, 'file12.jpg'),
-('Product 13', 31018, 78, 'Company13', 'product13.jpg', 'Kitchen', 4, 'file13.jpg'),
-('Product 14', 1018, 392, 'Company14', 'product14.jpg', 'Bathroom', 3, 'file14.jpg'),
-('Product 15', 5608, 141, 'Company15', 'product15.jpg', 'Stationery', 4, 'file15.jpg'),
-('Product 16', 33479, 216, 'Company16', 'product16.jpg', 'Stationery', 4, 'file16.jpg'),
-('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5, 'file17.jpg'),
-('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4, 'file18.jpg'),
-('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3, 'file19.jpg'),
-('Product 20', 34711, 269, 'Company20', 'product20.jpg', 'Stationery', 5, 'file20.jpg');
+INSERT INTO `finalproject`.`product` (product_name, price, point, company, product_img, category, rating) VALUES 
+('Product 1', 7951, 370, 'Company1', 'product1.jpg', 'Bathroom', 4),
+('Product 2', 30918, 170, 'Company2', 'product2.jpg', 'Living', 3),
+('Product 3', 29930, 382, 'Company3', 'product3.jpg', 'Kitchen', 5),
+('Product 4', 19530, 66, 'Company4', 'product4.jpg', 'Living', 5),
+('Product 5', 12877, 417, 'Company5', 'product5.jpg', 'Kitchen', 4),
+('Product 6', 26066, 98, 'Company6', 'product6.jpg', 'Gift', 4),
+('Product 7', 49129, 317, 'Company7', 'product7.jpg', 'Stationery', 4),
+('Product 8', 38649, 289, 'Company8', 'product8.jpg', 'Kitchen', 4),
+('Product 9', 46600, 436, 'Company9', 'product9.jpg', 'Stationery', 4),
+('Product 10', 12937, 105, 'Company10', 'product10.jpg', 'Kitchen', 3),
+('Product 11', 33039, 474, 'Company11', 'product11.jpg', 'Stationery', 4),
+('Product 12', 35260, 82, 'Company12', 'product12.jpg', 'Gift', 5),
+('Product 13', 31018, 78, 'Company13', 'product13.jpg', 'Kitchen', 4),
+('Product 14', 1018, 392, 'Company14', 'product14.jpg', 'Bathroom', 3),
+('Product 15', 5608, 141, 'Company15', 'product15.jpg', 'Stationery', 4),
+('Product 16', 33479, 216, 'Company16', 'product16.jpg', 'Stationery', 4),
+('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5),
+('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4),
+('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3),
+('Product 20', 34711, 269, 'Company20', 'product20.jpg', 'Stationery', 5);
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
@@ -323,6 +325,7 @@ CREATE TABLE `finalproject`.`cart` (
   `count` INT NOT NULL,
   `price` INT NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`cart_num`));
   
 # 장바구니 더미값 20개
@@ -478,7 +481,7 @@ INSERT INTO `finalproject`.`coupon` (coupon_code, coupon_name, use_sdate, use_ed
 
 # 리뷰
 CREATE TABLE `review` (
-  `review_num` int NOT NULL,
+  `review_num` int NOT NULL AUTO_INCREMENT,
   `member_id` varchar(255) NOT NULL,
   `product_num` int NOT NULL,
   `content` varchar(1000) NOT NULL,
@@ -489,28 +492,28 @@ CREATE TABLE `review` (
   PRIMARY KEY (`review_num`)
 );
 
- # 리뷰 더미값 20개
- INSERT INTO `finalproject`.`review` (review_num, member_id, product_num, content, rating, review_img, createdDate, modifiedDate) VALUES 
-(1, 'user01', 12, 'Review content for product 1', 2, 'review1.jpg', '2024-10-10', '2024-10-21'),
-(2, 'user02', 4, 'Review content for product 2', 4, 'review2.jpg', '2024-10-2', '2024-10-10'),
-(3, 'user03', 1, 'Review content for product 3', 3, 'review3.jpg', '2024-10-6', '2024-10-25'),
-(4, 'user04', 8, 'Review content for product 4', 4, 'review4.jpg', '2024-10-19', '2024-10-10'),
-(5, 'user05', 5, 'Review content for product 5', 2, 'review5.jpg', '2024-10-14', '2024-10-15'),
-(6, 'user06', 14, 'Review content for product 6', 3, 'review6.jpg', '2024-10-21', '2024-10-30'),
-(7, 'user07', 19, 'Review content for product 7', 1, 'review7.jpg', '2024-10-2', '2024-10-12'),
-(8, 'user08', 1, 'Review content for product 8', 5, 'review8.jpg', '2024-10-15', '2024-10-28'),
-(9, 'user09', 12, 'Review content for product 9', 5, 'review9.jpg', '2024-10-16', '2024-10-19'),
-(10, 'user10', 18, 'Review content for product 10', 2, 'review10.jpg', '2024-10-16', '2024-10-6'),
-(11, 'user11', 6, 'Review content for product 11', 2, 'review11.jpg', '2024-10-1', '2024-10-27'),
-(12, 'user12', 13, 'Review content for product 12', 1, 'review12.jpg', '2024-10-2', '2024-10-6'),
-(13, 'user13', 3, 'Review content for product 13', 4, 'review13.jpg', '2024-10-22', '2024-10-10'),
-(14, 'user14', 20, 'Review content for product 14', 3, 'review14.jpg', '2024-10-16', '2024-10-10'),
-(15, 'user15', 6, 'Review content for product 15', 1, 'review15.jpg', '2024-10-9', '2024-10-28'),
-(16, 'user16', 11, 'Review content for product 16', 3, 'review16.jpg', '2024-10-8', '2024-10-23'),
-(17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4', '2024-10-25'),
-(18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19', '2024-10-27'),
-(19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22', '2024-10-4'),
-(20, 'user20', 3, 'Review content for product 20', 3, 'review20.jpg', '2024-10-24', '2024-10-25'); 
+  # 리뷰 더미값 20개
+ INSERT INTO `finalproject`.`review` (review_num, member_id, product_num, content, rating, review_img, createdDate) VALUES 
+(1, 'user01', 12, 'Review content for product 1', 2, 'review1.jpg', '2024-10-10'),
+(2, 'user02', 4, 'Review content for product 2', 4, 'review2.jpg', '2024-10-2'),
+(3, 'user03', 1, 'Review content for product 3', 3, 'review3.jpg', '2024-10-6'),
+(4, 'user04', 8, 'Review content for product 4', 4, 'review4.jpg', '2024-10-19'),
+(5, 'user05', 5, 'Review content for product 5', 2, 'review5.jpg', '2024-10-14'),
+(6, 'user06', 14, 'Review content for product 6', 3, 'review6.jpg', '2024-10-21'),
+(7, 'user07', 19, 'Review content for product 7', 1, 'review7.jpg', '2024-10-2'),
+(8, 'user08', 1, 'Review content for product 8', 5, 'review8.jpg', '2024-10-15'),
+(9, 'user09', 12, 'Review content for product 9', 5, 'review9.jpg', '2024-10-16'),
+(10, 'user10', 18, 'Review content for product 10', 2, 'review10.jpg', '2024-10-16'),
+(11, 'user11', 6, 'Review content for product 11', 2, 'review11.jpg', '2024-10-1'),
+(12, 'user12', 13, 'Review content for product 12', 1, 'review12.jpg', '2024-10-2'),
+(13, 'user13', 3, 'Review content for product 13', 4, 'review13.jpg', '2024-10-22'),
+(14, 'user14', 20, 'Review content for product 14', 3, 'review14.jpg', '2024-10-16'),
+(15, 'user15', 6, 'Review content for product 15', 1, 'review15.jpg', '2024-10-9'),
+(16, 'user16', 11, 'Review content for product 16', 3, 'review16.jpg', '2024-10-8'),
+(17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4'),
+(18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19'),
+(19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22'),
+(20, 'user20', 3, 'Review content for product 20', 3, 'review20.jpg', '2024-10-24'); 
 
   # 재활용 라이프 댓글
   CREATE TABLE `finalproject`.`recyclelifecomment` (
