@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>rl_selectAll.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+	<h1>재활용 라이프 게시판 글 목록</h1>
+	<h2>나의 재활용 라이프를 자랑해보세요!</h2>
+	
+	<div th:fragment="content">
+		
+		<form action="/community/recycleLife/rl_searchList">
+			<select name="searchKey">
+				<option value="title">title</option>
+				<option value="content">content</option>
+			</select> <input type="text" name="searchWord" value="tum"> <input
+				type="submit" value="검색">
+		</form>
+		
+		<table id="insertTable">
+			<thead>
+				<tr>
+					<th>NUM</th>
+					<th>TITLE</th>
+					<th>WRITER</th>
+					<th>WDATE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="vo : ${list}">
+					<tr>
+						<td><a th:href="|/board/selectOne?num=${vo.num}|">[[${vo.num}]]</a></td>
+						<td>[[${vo.title}]]</td>
+						<td>[[${vo.writer}]]</td>
+						<td>[[${vo.wdate}]]</td>
+					</tr>
+				</th:block>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">1 2 3 4</td>
+				</tr>
+			</tfoot>
+		</table>
+
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>rl_insert.html</title>
+</head>
+<body>
+
+	<h1>재활용 라이프 글 작성</h1>
+	
+	<form action="/community/recycleLife/rl_insertOK" method="post" enctype="multipart/form-data">
+	<table border="1">
+    	<tr>
+        <th>제목</th>
+        <td><input type="text" id="recycleLife_title" name="recycleLife_title" value="title" placeholder="제목을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>내용</th>
+        <td><input type="text" id="recycleLife_content" name="recycleLife_content" value="content" placeholder="내용을 입력하세요"></td>
+        </tr>                  
+        
+        <tr>
+        	<th>이미지</th>
+			<td><input type="file" id="file" name="file"></td>
+		</tr> 
+		
+        <tr>
+			<td colspan="2"><input type="submit" value="작성완료"></td>
+		</tr>
+                
+	</table>
+	</form>
+
+	
+</body>
+</html>
