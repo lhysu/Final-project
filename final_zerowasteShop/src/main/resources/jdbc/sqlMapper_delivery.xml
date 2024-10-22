@@ -5,19 +5,19 @@
   <mapper namespace="com.project.zerowasteshop.delivery.DeliveryMapper">
   
 	  <select id="selectAll" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
-	  	select * from delivery order by delivery_num desc
+	  	select * from delivery order by tracking_num desc
 	  </select>
 	  
 	  <select id="selectOne" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
-	  	select * from delivery where delivery_num=#{delivery_num} 
+	  	select * from delivery where tracking_num=#{tracking_num} 
 	  </select>
   
   	  <select id="searchListProduct_name" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
-  		select * from delivery where product_name like #{searchWord} order by delivery_num desc
+  		select * from delivery where product_name like #{searchWord} order by tracking_num desc
   	  </select>
   	  
   	  <select id="searchListTracking_num" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
-  		select * from delivery where tracking_num like #{searchWord} order by delivery_num desc
+  		select * from delivery where tracking_num like #{searchWord} order by tracking_num desc
   	  </select>
   
   </mapper>

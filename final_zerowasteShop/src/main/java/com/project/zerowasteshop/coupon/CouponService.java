@@ -84,5 +84,10 @@ public class CouponService {
 	public int deleteCoupon(CouponVO vo) {
 		return mapper.deleteCoupon(vo);
 	}
+
+	public CouponVO getCouponInfo(String couponCode) {
+		// TODO Auto-generated method stub
+		return mapper.getCouponInfo(couponCode);
+	}
 	
 }

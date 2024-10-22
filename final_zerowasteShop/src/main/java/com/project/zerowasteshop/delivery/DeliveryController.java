@@ -19,12 +19,14 @@ public class DeliveryController {
 		
 	
 	@GetMapping("/delivery/d_selectOne")
-	public String d_selectOne(DeliveryVO vo, Model model) {
+	public String d_selectOne(@RequestParam("tracking_num") String trackingNum, DeliveryVO vo, Model model) {
 		log.info("/delivery/d_selectOne");
 		log.info("vo : {}", vo);
 		
 		DeliveryVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
+		
+		model.addAttribute("vo2", vo2);
 		
 		if (vo2 == null) {
 	        // 에러 처리 로직 또는 기본 객체 설정
@@ -32,10 +34,10 @@ public class DeliveryController {
 	        return "errorPage"; // 오류 페이지로 이동하거나 기본 페이지 설정
 	    }
 		
-		model.addAttribute("vo2", vo2);
-		
 		return "delivery/d_selectOne";
-	}
+        
+    }
+		
 	
 	@GetMapping("/delivery/d_selectAll")
 	public String d_selectAll(Model model) {
@@ -63,7 +65,7 @@ public class DeliveryController {
 		model.addAttribute("list", list);
 		
 		return "delivery/d_searchList";
-	}	
+	}
 	
 
 }

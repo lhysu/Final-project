@@ -13,7 +13,9 @@ public class MemberVO {
 	public String pw;
 	public String email;
 	public String phone_number;
+	public String postcode;
 	public String address;
+	public String address_detail;
 	public Timestamp signup_date;
 	public int points;
 	public boolean adCheck;

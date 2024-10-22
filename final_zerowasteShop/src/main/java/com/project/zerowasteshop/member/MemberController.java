@@ -54,7 +54,7 @@ public class MemberController {
 		int result = service.insertOK(vo);
 		
 		if(result==1) {
-			return "redirect:/home";		
+			return "redirect:/member/m_login";		
 		}else {
 			return "redirect:/member/m_insert";		
 			
@@ -96,7 +96,7 @@ public class MemberController {
 	}
 	
 	//회원 탈퇴
-	@GetMapping({"/member/m_deleteOK"})
+	@PostMapping({"/member/m_deleteOK"})
 	public String m_deleteOK(Model model,MemberVO vo) {
 		log.info("/member/m_deleteOK");
 		log.info("vo:{}",vo);
@@ -142,5 +142,55 @@ public class MemberController {
 		
 		return "redirect:/home";
 	}
+	
+	//아이디 찾기 페이지로 이동
+	@GetMapping({"/member/selectId"})
+	public String selectId() {
+		log.info("/member/selectId");
+		return "user/selectId";
+	}
+	
+	//아이디 찾기
+	@PostMapping({"/member/selectIdCheck"})
+	public String selectIdCheck(Model model,MemberVO vo) {
+		log.info("/member/selectId");
+		log.info("vo:{}", vo);
+		MemberVO vo2 = service.selectId(vo);
+		String result="";
+		if(vo2!=null) {
+			result= vo2.getName()+"님의 아이디는 "+vo2.getMember_id()+"입니다.";
+					
+		}else result="회원정보가 존재하지 않습니다.";
+		
+		model.addAttribute("result",result);	
+		return "user/selectId_check";	
+		
+	}
+	
+		//비밀번호 찾기 페이지로 이동
+		@GetMapping({"/member/selectPw"})
+		public String selectPw() {
+			log.info("/member/selectPw");
+			return "user/selectPw";
+		}
+		
+		//비밀번호 찾기
+		@PostMapping({"/member/selectPwCheck"})
+		public String selectPwCheck(Model model,MemberVO vo) {
+			log.info("/member/selectPwCheck");
+			log.info("vo:{}", vo);
+			MemberVO vo2 = service.selectPw(vo);
+			String result="";
+			if(vo2!=null) {
+				result= vo2.getName()+"님의 비밀번호는 "+vo2.getPw()+"입니다.";
+						
+			}else result="회원정보가 존재하지 않습니다.";
+			
+			model.addAttribute("result",result);	
+			return "user/selectPw_check";	
+			
+		}
+	
+	
 
 }

@@ -34,4 +34,6 @@ public interface CouponMapper {
 
 	public int deleteCoupon(CouponVO vo);
 
+	public CouponVO getCouponInfo(String couponCode);
+
 }

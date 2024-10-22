@@ -12,12 +12,13 @@
 	</select>
 	
 	<insert id="insertOK">
-		insert into member(member_id,name,pw,email,phone_number,address,adCheck) 
-		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{address},#{adCheck})
+		insert into member(member_id,name,pw,email,phone_number,postcode,address,address_detail,adCheck) 
+		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{postcode},#{address},#{address_detail},#{adCheck})
 	</insert>
 	
 	<update id="updateOK">
-		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},address=#{address} where member_num=#{member_num} 
+		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},
+		postcode=#{postcode},address=#{address},address_detail=#{address_detail} where member_num=#{member_num} 
 	</update>
 	
 	<delete id="deleteOK">
@@ -31,5 +32,12 @@
 	<select id="login" resultType="com.project.zerowasteshop.member.MemberVO">
 		select member_id from member where member_id=#{member_id} and pw=#{pw} and adCheck=false
 	</select>
+	
+	<select id="selectId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id, name from member where name=#{name} and email=#{email} and adCheck=false
+	</select>
 
+	<select id="selectPw" resultType="com.project.zerowasteshop.member.MemberVO">
+		select pw, name from member where member_id=#{member_id} and name=#{name} and email=#{email} and adCheck=false
+	</select>
 </mapper>

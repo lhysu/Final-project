@@ -78,4 +78,33 @@ public class CouponRestController {
 	    
 	    return response;  // JSON 형태로 응답 반환
 	}
+	
+	@PostMapping("/order/applyCoupon")
+    public Map<String, Object> applyCoupon(@RequestParam("couponCode") String couponCode,
+                                                           @RequestParam("totalPrice") int totalPrice) {
+        // 쿠폰 정보를 가져옴
+        CouponVO coupon = service.getCouponInfo(couponCode);
+
+        if (coupon != null) {
+            // 할인율 계산
+            int discountRate = coupon.getDiscount_rate(); // 할인율 가져오기
+            int discountAmount = (totalPrice * discountRate) / 100; // 할인 금액 계산
+            int finalPrice = totalPrice - discountAmount; // 최종 결제 금액
+
+            // 응답으로 할인 금액과 최종 결제 금액 반환
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("discountAmount", discountAmount);
+            response.put("finalPrice", finalPrice);
+
+            return response; // 응답 전송
+        } else {
+            // 쿠폰이 없는 경우 실패 응답
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "fail");
+            response.put("message", "해당 쿠폰이 없습니다.");
+
+            return response; // 실패 응답 전송
+        }
+    }
 }
