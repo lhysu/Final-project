@@ -34,7 +34,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 152px; }
+        .content { margin : 140px; }
         
         .position-relative {
 		    display: flex;
@@ -95,8 +95,8 @@
 		}
 		
 		#selectAllTable tfoot {
-		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
+		    
+		    
 		}
 		
 		.pagination {
@@ -135,22 +135,34 @@
         
         /* 푸터 스타일 */
         .footer-summary {
-            margin-top: 20px;
-            border-top: 1px solid #dee2e6;
-            padding-top: 10px;
+            text-align: center; /* 가운데 정렬 */
+            
+        }
+        
+        .footer-summary table {
+        	background-color: #f8f9fa; /* 푸터 배경색 */
+        	border-top: 1px solid #dee2e6;
+            width: 50% !important; /* 테이블 너비를 자동으로 설정하여 크기를 줄임 */
+            margin: 0 auto; /* 중앙 정렬을 위한 마진 */
         }
 
         .footer-summary th,
         .footer-summary td {
-            padding: 10px;
-            text-align: right; /* 오른쪽 정렬 */
+            padding: 5px; /* 셀 내 여백을 줄임 */
+
         }
 
         .footer-summary td:first-child {
             text-align: left; /* 첫 번째 열은 왼쪽 정렬 */
-            font-weight: bold; /* 글자 두껍게 */
         }
-    </style>
+
+        /* 결제 금액을 볼드 처리 */
+        #final-price {
+            font-weight: bold; /* 볼드 처리 */
+        }    
+        
+        
+</style>
 </head>
 <body>
 	<!-- 헤더 시작 -->
@@ -198,7 +210,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <!-- 푸터 요약 테이블 -->
 				        <div class="footer-summary">
 				            <table style="width: 100%;">
@@ -211,17 +223,27 @@
 				                    <td>3000원</td> <!-- 배송비 -->
 				                </tr>
 				                <tr>
-				                    <td>결제 금액</td>
+				                    <td style="font-weight: bold;">결제 금액</td>
 				                    <td id="final-price">0원</td> <!-- 결제 금액 -->
 				                </tr>
+				                <tr>
+				                	<td colspan="2">
+				                		<div style="display: flex; justify-content: flex-start; gap: 10px; display:inline-block; width: 200px !important;">
+						       				<a href="/order/order" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style = "width : 100% !important; font-size : 120%; padding : 16px !important">구매하기</a>
+										</div>
+									</td>
+								</tr>
 				            </table>
 				        </div>
-				    </div>
+				    
                     </td>
                 </tr>
             </tfoot>
         </table>
+ 
     </div>
+    
+    
 
     <div th:replace="footer :: footer"></div>
 

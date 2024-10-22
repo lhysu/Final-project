@@ -1,10 +1,5 @@
 package com.project.zerowasteshop.cart.model;
 
-import java.sql.Timestamp;
-
-import org.json.JSONObject;
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data

@@ -277,6 +277,19 @@ public class ProductController {
 
  		return "admin/product/selectOne";
  	}
+ 	
+ 	@GetMapping("/product/detail")
+ 	public String detail(ProductVO vo, Model model) {
+ 		log.info("/product/detail");
+ 		log.info("vo:{}", vo);
+
+ 		ProductVO vo2 = service.selectOne(vo);
+ 		log.info("vo2:{}", vo2);
+
+ 		model.addAttribute("vo2", vo2);
+
+ 		return "product/detail";
+ 	}
 
  	@PostMapping("/admin/product/insertOK")
  	public String insertOK(ProductVO vo) throws IllegalStateException, IOException {
