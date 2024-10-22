@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>rl_update.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+	
+	<h1>재활용 라이프 글 수정</h1>
+	
+	<div th:fragment="content">
+		
+		<div>
+
+			<form action="/community/recycleLife/rl_updateOK" method="post">
+				<table id="insertTable">
+					<!-- <tr>
+						<td><label for="num">NUM</label></td>
+						<td>[[${param.num}]]<input type="hidden" id="num" name="num"
+							th:value="${param.num}"></td>
+					</tr> -->
+					<tr>
+						<td><label for="title">title</label></td>
+						<td><input type="text" id="title" name="title"
+							th:value="${vo2.recycleLife_title}" placeholder="title를 입력하세요"></td>
+					</tr>
+					<tr>
+						<td><label for="content">content</label></td>
+						<td><textarea rows="10" cols="20" id="content" name="content">[[${vo2.recycleLife_content}]]</textarea></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><input type="submit" value="수정완료"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+
+	</div>
+
+</body>
+</html>

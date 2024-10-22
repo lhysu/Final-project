@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class RecycleLifeVO {
 	
+	private String member_id;
 	private int recycleLife_num;
 	private String recycleLife_title;
 	private String recycleLife_content;
@@ -17,10 +18,18 @@ public class RecycleLifeVO {
 	
 	@Override
 	public String toString() {
-		return "RecycleLifeVO [recycleLife_num=" + recycleLife_num + ", recycleLife_title=" + recycleLife_title
-				+ ", recycleLife_content=" + recycleLife_content + ", recycleLife_views=" + recycleLife_views
-				+ ", recycleLife_likes=" + recycleLife_likes + ", recycleLife_img=" + recycleLife_img
-				+ ", recycleLife_wdate=" + recycleLife_wdate + ", file=" + file + "]";
+		return "RecycleLifeVO [member_id=" + member_id + ", recycleLife_num=" + recycleLife_num + ", recycleLife_title="
+				+ recycleLife_title + ", recycleLife_content=" + recycleLife_content + ", recycleLife_views="
+				+ recycleLife_views + ", recycleLife_likes=" + recycleLife_likes + ", recycleLife_img="
+				+ recycleLife_img + ", recycleLife_wdate=" + recycleLife_wdate + ", file=" + file + "]";
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
 	public int getRecycleLife_num() {
@@ -86,8 +95,6 @@ public class RecycleLifeVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
 	
 
 }
