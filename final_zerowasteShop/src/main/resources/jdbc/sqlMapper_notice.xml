@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.zerowasteshop.order.model.NoticeMapper">
+
+    <!-- 단일 공지사항 조회 -->
+    <select id="selectOne" parameterType="com.final.zerowasteshop.order.model.NoticeVO" resultType="com.final.zerowasteshop.order.model.NoticeVO">
+        SELECT * FROM notice WHERE notice_num = #{notice_num}
+    </select>
+
+    <!-- 모든 공지사항 조회 -->
+    <select id="selectAll" resultType="com.final.zerowasteshop.order.model.NoticeVO">
+        SELECT * FROM notice ORDER BY notice_num DESC
+    </select>
+
+    <!-- 페이징 처리를 위한 공지사항 조회 -->
+    <select id="selectAllPageBlock" resultType="com.final.zerowasteshop.order.model.NoticeVO">
+        SELECT * FROM notice ORDER BY notice_num DESC LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 공지사항 검색 -->
+    <select id="searchList" parameterType="string" resultType="com.final.zerowasteshop.order.model.NoticeVO">
+        SELECT * FROM notice
+        WHERE notice_title LIKE #{searchWord} OR notice_content LIKE #{searchWord}
+        ORDER BY notice_num DESC
+    </select>
+
+    <!-- 검색 결과에 대한 페이징 처리 -->
+    <select id="searchListPageBlock" parameterType="map" resultType="com.final.zerowasteshop.order.model.NoticeVO">
+        SELECT * FROM notice
+        WHERE notice_title LIKE #{searchWord} OR notice_content LIKE #{searchWord}
+        ORDER BY notice_num DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 공지사항 추가 -->
+    <insert id="insertOK" parameterType="com.final.zerowasteshop.order.model.NoticeVO" useGeneratedKeys="true" keyProperty="notice_num">
+        INSERT INTO notice (notice_title, notice_content, notice_img, notice_wdate, notice_views)
+        VALUES (#{notice_title}, #{notice_content}, #{notice_img}, NOW(), 0)
+    </insert>
+
+    <!-- 공지사항 삭제 -->
+    <delete id="deleteOK" parameterType="com.final.zerowasteshop.order.model.NoticeVO">
+        DELETE FROM notice WHERE notice_num = #{notice_num}
+    </delete>
+
+    <!-- 공지사항 업데이트 -->
+    <update id="updateOK" parameterType="com.final.zerowasteshop.order.model.NoticeVO">
+        UPDATE notice
+        SET notice_title = #{notice_title},
+            notice_content = #{notice_content},
+            notice_img = #{notice_img}
+        WHERE notice_num = #{notice_num}
+    </update>
+
+    <!-- 전체 공지사항 수 가져오기 -->
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) FROM notice
+    </select>
+
+    <!-- 검색 결과의 총 행 수 가져오기 -->
+    <select id="getSearchTotalRows" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM notice
+        WHERE notice_title LIKE #{searchWord} OR notice_content LIKE #{searchWord}
+    </select>
+
+</mapper>
