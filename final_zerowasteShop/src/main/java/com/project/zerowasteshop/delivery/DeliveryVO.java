@@ -6,7 +6,7 @@ public class DeliveryVO {
 
 	private int delivery_num;
 	private int pay_num;
-	private int product_name;
+	private String product_name;
 	private String member_id;
 	private int order_num;
 	private String tracking_num;
@@ -39,11 +39,11 @@ public class DeliveryVO {
 		this.pay_num = pay_num;
 	}
 
-	public int getProduct_name() {
+	public String getProduct_name() {
 		return product_name;
 	}
 
-	public void setProduct_name(int product_name) {
+	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
 

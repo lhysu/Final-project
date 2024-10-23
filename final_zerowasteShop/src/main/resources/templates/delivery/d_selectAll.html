@@ -69,11 +69,22 @@
 						</tr>
 					</th:block>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="4">1 2 3 4</td>
-					</tr>
-				</tfoot>
+				
+				<!-- 페이지 처리 -->
+			<tfoot>
+			<td colspan="4">
+      			<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+      			<th:block th:if="${param.searchKey==null}">
+		      		<a th:href="|/delivery/d_selectAll?cpage=${i}|">[[${i}]]</a>
+				</th:block>
+      			<th:block th:if="${param.searchKey!=null}">
+      			<th:block th:with="searchKey=${param.searchKey}, searchWord=${param.searchWord}">
+		      		<a th:href="|/delivery/d_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+				</th:block>
+				</th:block>		   	
+      			</th:block>
+      		</td>
+			</tfoot>
 			</table>
 		
 		<!-- Footer Start -->

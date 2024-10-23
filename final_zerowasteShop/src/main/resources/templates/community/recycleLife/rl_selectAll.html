@@ -80,11 +80,23 @@
 					</tr>
 				</th:block>
 			</tbody>
+			
+			<!-- 페이지 처리 -->
 			<tfoot>
-				<tr>
-					<td colspan="4">1 2 3 4</td>
-				</tr>
+			<td colspan="4">
+      			<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+      			<th:block th:if="${param.searchKey==null}">
+		      		<a th:href="|/community/recycleLife/rl_selectAll?cpage=${i}|">[[${i}]]</a>
+				</th:block>
+      			<th:block th:if="${param.searchKey!=null}">
+      			<th:block th:with="searchKey=${param.searchKey}, searchWord=${param.searchWord}">
+		      		<a th:href="|/community/recycleLife/rl_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+				</th:block>
+				</th:block>		   	
+      			</th:block>
+      		</td>
 			</tfoot>
+			
 		</table>
 
 	</div>
