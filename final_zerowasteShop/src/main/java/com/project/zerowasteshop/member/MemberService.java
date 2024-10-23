@@ -17,8 +17,8 @@ public class MemberService {
 	MemberMapper mapper;
 	
 
-	public MemberVO selectOne(MemberVO vo) {
-		return mapper.selectOne(vo);
+	public MemberVO selectOne(String user_id) {
+		return mapper.selectOne(user_id);
 	}
 
 	public int insertOK(MemberVO vo) {
