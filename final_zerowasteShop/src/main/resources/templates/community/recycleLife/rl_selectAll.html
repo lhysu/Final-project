@@ -32,10 +32,10 @@
 			<tbody>
 				<th:block th:each="vo : ${list}">
 					<tr>
-						<td><a th:href="|/board/selectOne?num=${vo.num}|">[[${vo.num}]]</a></td>
-						<td>[[${vo.title}]]</td>
-						<td>[[${vo.writer}]]</td>
-						<td>[[${vo.wdate}]]</td>
+						<td><a th:href="|/community/recycleLife/rl_selectOne?recycleLife_num=${vo.recycleLife_num}|">[[${vo.recycleLife_num}]]</a></td>
+						<td>[[${vo.recycleLife_title}]]</td>
+						<td>[[${vo.member_id}]]</td>
+						<td>[[${vo.recycleLife_wdate}]]</td>
 					</tr>
 				</th:block>
 			</tbody>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>rl_selectOne.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+	<h1>재활용 라이프 게시글 상세</h1>
+
+	<div th:fragment="content">
+		
+		<div>
+			<table id="insertTable">
+				<thead>
+					<tr>
+						<th>NUM</th>
+						<th>TITLE</th>
+						<th>CONTENT</th>
+						<th>WRITER</th>
+						<th>WDATE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>[[${vo2.recycleLife_num}]]</td>
+						<td>[[${vo2.recycleLife_title}]]</td>
+						<td>[[${vo2.recycleLife_content}]]</td>
+						<td>[[${vo2.member_id}]]</td>
+						<td>[[${vo2.recycleLife_wdate}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a th:href="|/community/recycleLife/rl_update?recycleLife_num=${vo2.recycleLife_num}|">글수정</a> 
+		<a th:href="|/community/recycleLife/rl_delete?recycleLife_num=${vo2.recycleLife_num}|">글삭제</a>
+
+
+	</div>
+
+</body>
+</html>
