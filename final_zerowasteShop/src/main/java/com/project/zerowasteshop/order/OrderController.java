@@ -86,7 +86,7 @@ public class OrderController {
 		return "admin/order/selectAll";
 	}
 	
-	@GetMapping("/order/insert")
+	@GetMapping("/order/order")
 	public String insert(Model model,
 			@RequestParam(defaultValue = "홍길동")String name,
 			@RequestParam(defaultValue = "010-3333-3333")String tel,
