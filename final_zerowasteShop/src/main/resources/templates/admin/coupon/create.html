@@ -2,16 +2,139 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>selectAll.html</title>
+<title>쿠폰 생성</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 152px; }
+        
+        .position-relative {
+		    display: flex;
+		    flex-wrap: wrap; /* 줄 바꿈을 허용하여 버튼들이 겹치지 않도록 함 */
+		    justify-content: flex-start; /* 왼쪽 정렬 */
+		}
+		
+		.position-relative > div {
+		    flex: 1; /* 요소가 공간을 균등하게 차지하도록 설정 */
+		}
+		
+		@media (max-width: 768px) {
+		    .position-relative {
+		        flex-direction: column; /* 작은 화면에서는 세로로 배치 */
+		        align-items: flex-start; /* 왼쪽 정렬 */
+		    }
+		
+		    .position-relative > div {
+		        width: 100%; /* 각 버튼이 전체 너비를 차지하도록 설정 */
+		        margin-bottom: 10px; /* 버튼 간의 간격 */
+		    }
+		}
+        
+        .position-relative {
+		    display: flex; /* 플렉스 박스 모델 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		}
+		
+		select {
+			margin-right : 5px;
+		}
+		
+		#selectAllTable {
+		    width: 100%; /* 테이블 너비를 100%로 설정 */
+		    border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+		    margin: 20px 0; /* 상하 마진 설정 */
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+		}
+		
+		#selectAllTable thead {
+		    
+		    color: black; /* 헤더 글자색 */
+		}
+		
+		#selectAllTable th,
+		#selectAllTable td {
+		    padding: 15px; /* 셀 내 여백 */
+		    text-align: center; /* 텍스트 가운데 정렬 */
+		    border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+		}
+		
+		#selectAllTable tbody tr:hover {
+		    background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+		}
+		
+		#selectAllTable img {
+		    border-radius: 5px; /* 이미지 모서리 둥글게 */
+		}
+		
+		#selectAllTable tfoot {
+		    background-color: #f8f9fa; /* 푸터 배경색 */
+		    font-weight: bold; /* 푸터 글자 두껍게 */
+		}
+		
+		.pagination {
+		    margin: 0; /* 페이지네이션 마진 제거 */
+		    padding: 10px 0; /* 상하 패딩 추가 */
+		}
+		
+		.pagination .page-item .page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.pagination .page-item .page-link:hover {
+		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+		}
+    </style>
 </head>
 <body>
-	<div>
-		<h1>관리자: 쿠폰 생성 페이지</h1>
-		<form id="uploadCouponForm" action="/admin/coupon/upload" method="post" enctype="multipart/form-data">
-			<label for="file">쿠폰 파일 업로드(.XLSX):</label>
-    		<input type="file" id="file" name="file" accept=".xls, .xlsx" required />
-    		<button type="submit">쿠폰 생성</button>
-		</form>
-	</div>
+
+	<!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+
+    <div class="container mt-5" style="margin-top: 350px !important;">
+        
+        <!-- 쿠폰 업로드 폼 -->
+        <form id="uploadCouponForm" action="/admin/coupon/upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">쿠폰 파일 업로드 (.XLSX):</label>
+                <input type="file" class="form-control" id="file" name="file" accept=".xls, .xlsx" required>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-secondary" style="margin-bottom: 250px">쿠폰 생성</button>
+            </div>
+        </form>
+    </div>
+
+    
+    <!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
 </body>
 </html>

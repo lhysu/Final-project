@@ -63,4 +63,45 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		return mapper.getOrderAmount(merchant_uid);
 	}
+
+	public String createOrder(OrderVO vo) {
+		// 상품 금액 및 할인 금액 계산
+        int totalPrice = 100;
+        int discount = calculateDiscount(vo.getCoupon_code());
+        int finalPrice = totalPrice - discount;
+
+        // 고유한 주문 번호 생성
+        String merchantUid = generateMerchantUid();
+
+        // 주문 객체 생성 및 설정
+        OrderVO order = new OrderVO();
+        order.setMerchant_uid(merchantUid);
+        order.setTotal_price(totalPrice);
+        order.setDiscount(discount);
+        order.setFinal_price(finalPrice);
+        order.setAddress(vo.getAddress());
+        order.setAddress_detail(vo.getAddress_detail());
+        order.setPostcode(vo.getPostcode());
+        order.setOrder_state("주문대기");
+
+        // DB에 저장
+        mapper.saveOrder(order);
+
+        // 주문 번호 반환
+        return merchantUid;
+	}
+	
+	private int calculateTotalPrice(OrderVO vo) {
+        // 상품 총액 계산 로직
+        return 100;  // 예시 값
+    }
+
+    private int calculateDiscount(String couponCode) {
+        // 할인 금액 계산 로직 (예시)
+        return couponCode != null ? 5000 : 0;
+    }
+
+    private String generateMerchantUid() {
+        return "O" + System.currentTimeMillis();  // 고유 주문 번호 생성
+    }
 }
