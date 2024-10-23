@@ -203,5 +203,12 @@ public class AdminController {
 		return "redirect:/home";
 	}
 	
+	@GetMapping({"/admin/home"})
+	public String home() {
+		log.info("/admin/home");
+	
+		return "admin/member/home";
+	}
+	
 
 }
