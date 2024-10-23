@@ -319,7 +319,7 @@ INSERT INTO `finalproject`.`product` (product_name, price, point, company, produ
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
-  `cart_num` INT NOT NULL,
+  `cart_num` INT NOT NULL AUTO_INCREMENT,
   `product_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `count` INT NOT NULL,
@@ -410,27 +410,27 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
   
   # 주문 더미값 20개
-INSERT INTO `finalproject`.`order` (order_num, product_num, member_id, coupon_code, count, address, tel, reusing, discount, delivery_fee, delivery_memo, payCheck, total_price) VALUES 
-(1, 17, 'user01', 'COUPON1', 5, 'Address 1', '010-5690-9095', 0, 100, 4747, 'Memo 1', 0, 10917),
-(2, 12, 'user02', 'COUPON2', 3, 'Address 2', '010-2224-5058', 1, 15, 3607, 'Memo 2', 1, 78160),
-(3, 6, 'user03', 'COUPON3', 2, 'Address 3', '010-6430-9927', 0, 6, 1155, 'Memo 3', 0, 57017),
-(4, 5, 'user04', 'COUPON4', 4, 'Address 4', '010-3727-8448', 0, 5, 1845, 'Memo 4', 1, 9331),
-(5, 8, 'user05', 'COUPON5', 1, 'Address 5', '010-2147-7721', 0, 72, 2266, 'Memo 5', 1, 87698),
-(6, 14, 'user06', 'COUPON6', 4, 'Address 6', '010-3203-3178', 0, 28, 1680, 'Memo 6', 0, 36908),
-(7, 8, 'user07', 'COUPON7', 4, 'Address 7', '010-9458-8074', 1, 84, 4084, 'Memo 7', 1, 99732),
-(8, 19, 'user08', 'COUPON8', 2, 'Address 8', '010-7283-6066', 0, 25, 1561, 'Memo 8', 1, 81293),
-(9, 18, 'user09', 'COUPON9', 2, 'Address 9', '010-2471-2273', 1, 5, 1674, 'Memo 9', 1, 79770),
-(10, 3, 'user10', 'COUPON10', 1, 'Address 10', '010-2249-4970', 0, 36, 1196, 'Memo 10', 1, 81067),
-(11, 14, 'user11', 'COUPON11', 4, 'Address 11', '010-6653-1377', 0, 76, 2189, 'Memo 11', 0, 73455),
-(12, 7, 'user12', 'COUPON12', 3, 'Address 12', '010-9553-2626', 1, 34, 4456, 'Memo 12', 1, 31104),
-(13, 3, 'user13', 'COUPON13', 2, 'Address 13', '010-2146-6252', 0, 44, 1823, 'Memo 13', 1, 41559),
-(14, 1, 'user14', 'COUPON14', 3, 'Address 14', '010-4032-4479', 1, 4, 4176, 'Memo 14', 1, 95191),
-(15, 8, 'user15', 'COUPON15', 4, 'Address 15', '010-7383-6549', 0, 99, 3805, 'Memo 15', 0, 53540),
-(16, 7, 'user16', 'COUPON16', 5, 'Address 16', '010-9873-3843', 0, 57, 1274, 'Memo 16', 0, 81644),
-(17, 18, 'user17', 'COUPON17', 2, 'Address 17', '010-9840-3766', 1, 53, 2473, 'Memo 17', 1, 78576),
-(18, 9, 'user18', 'COUPON18', 5, 'Address 18', '010-3210-1243', 1, 89, 2714, 'Memo 18', 0, 67279),
-(19, 9, 'user19', 'COUPON19', 2, 'Address 19', '010-8305-2282', 0, 28, 3504, 'Memo 19', 1, 47645),
-(20, 7, 'user20', 'COUPON20', 2, 'Address 20', '010-4209-8782', 1, 49, 2284, 'Memo 20', 0, 40746);
+INSERT INTO `finalproject`.`order` (order_num, product_num, member_id, coupon_code, count, address, tel, reusing, discount, delivery_fee, delivery_memo, payCheck, total_price,order_state) VALUES 
+(1, 17, 'user01', 'COUPON1', 5, 'Address 1', '010-5690-9095', 0, 100, 4747, 'Memo 1', 0, 10917,'배송완료'),
+(2, 12, 'user02', 'COUPON2', 3, 'Address 2', '010-2224-5058', 1, 15, 3607, 'Memo 2', 1, 78160,'배송완료'),
+(3, 6, 'user03', 'COUPON3', 2, 'Address 3', '010-6430-9927', 0, 6, 1155, 'Memo 3', 0, 57017,'결제완료'),
+(4, 5, 'user04', 'COUPON4', 4, 'Address 4', '010-3727-8448', 0, 5, 1845, 'Memo 4', 1, 9331,'결제완료'),
+(5, 8, 'user05', 'COUPON5', 1, 'Address 5', '010-2147-7721', 0, 72, 2266, 'Memo 5', 1, 87698,'결제완료'),
+(6, 14, 'user06', 'COUPON6', 4, 'Address 6', '010-3203-3178', 0, 28, 1680, 'Memo 6', 0, 36908,'결제완료'),
+(7, 8, 'user07', 'COUPON7', 4, 'Address 7', '010-9458-8074', 1, 84, 4084, 'Memo 7', 1, 99732,'결제완료'),
+(8, 19, 'user08', 'COUPON8', 2, 'Address 8', '010-7283-6066', 0, 25, 1561, 'Memo 8', 1, 81293,'결제완료'),
+(9, 18, 'user09', 'COUPON9', 2, 'Address 9', '010-2471-2273', 1, 5, 1674, 'Memo 9', 1, 79770,'배송완료'),
+(10, 3, 'user10', 'COUPON10', 1, 'Address 10', '010-2249-4970', 0, 36, 1196, 'Memo 10', 1, 81067,'배송완료'),
+(11, 14, 'user11', 'COUPON11', 4, 'Address 11', '010-6653-1377', 0, 76, 2189, 'Memo 11', 0, 73455,'배송완료'),
+(12, 7, 'user12', 'COUPON12', 3, 'Address 12', '010-9553-2626', 1, 34, 4456, 'Memo 12', 1, 31104,'배송완료'),
+(13, 3, 'user13', 'COUPON13', 2, 'Address 13', '010-2146-6252', 0, 44, 1823, 'Memo 13', 1, 41559,'배송완료'),
+(14, 1, 'user14', 'COUPON14', 3, 'Address 14', '010-4032-4479', 1, 4, 4176, 'Memo 14', 1, 95191,'배송완료'),
+(15, 8, 'user15', 'COUPON15', 4, 'Address 15', '010-7383-6549', 0, 99, 3805, 'Memo 15', 0, 53540,'배송완료'),
+(16, 7, 'user16', 'COUPON16', 5, 'Address 16', '010-9873-3843', 0, 57, 1274, 'Memo 16', 0, 81644,'배송완료'),
+(17, 18, 'user17', 'COUPON17', 2, 'Address 17', '010-9840-3766', 1, 53, 2473, 'Memo 17', 1, 78576,'결제완료'),
+(18, 9, 'user18', 'COUPON18', 5, 'Address 18', '010-3210-1243', 1, 89, 2714, 'Memo 18', 0, 67279,'결제완료'),
+(19, 9, 'user19', 'COUPON19', 2, 'Address 19', '010-8305-2282', 0, 28, 3504, 'Memo 19', 1, 47645,'결제완료'),
+(20, 7, 'user20', 'COUPON20', 2, 'Address 20', '010-4209-8782', 1, 49, 2284, 'Memo 20', 0, 40746,'결제완료');
   
   # 쿠폰
   CREATE TABLE `finalproject`.`coupon` (
@@ -451,7 +451,8 @@ CHANGE COLUMN `use_edate` `use_edate` TIMESTAMP NOT NULL ;
 # 쿠폰 더미값 20개
 INSERT INTO `finalproject`.`coupon` (coupon_code, member_id, coupon_name, use_sdate, use_edate, discount_rate) VALUES 
 ('COUPON1', 'user01', 'Coupon 1', '2024-10-17', '2024-12-14', 24),
-('COUPON2', 'user02', 'Coupon 2', '2024-10-1', '2024-12-18', 20),
+('12345789', 'user02', '5000원 이상 할인 쿠폰', '2024-10-1', '2024-12-18', 20),
+('98877512', 'user02', '5000원 이상 할인 쿠폰', '2024-10-1', '2024-12-10', 10),
 ('COUPON3', 'user03', 'Coupon 3', '2024-10-2', '2024-12-16', 20),
 ('COUPON4', 'user04', 'Coupon 4', '2024-10-28', '2024-12-10', 10),
 ('COUPON5', 'user05', 'Coupon 5', '2024-10-26', '2024-12-22', 21),
@@ -701,8 +702,8 @@ ADD CONSTRAINT `FK_DELIVERY_PAYMENT`
 ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_DELIVERY_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
@@ -724,7 +725,7 @@ ALTER TABLE `finalproject`.`payment`
 ADD CONSTRAINT `FK_PAYMENT_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
+  ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_PAYMENT_MEMBER`
   FOREIGN KEY (`member_id`)
@@ -750,8 +751,8 @@ ALTER TABLE `finalproject`.`order`
 ADD CONSTRAINT `FK_ORDER_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_ORDER_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
