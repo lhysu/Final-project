@@ -4,6 +4,14 @@
   
   <mapper namespace="com.project.zerowasteshop.delivery.DeliveryMapper">
   
+  	  <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  	  	select * from delivery order by delivery_num desc limit #{startRow}, #{pageBlock}
+  	  </select>
+  
+	  <select id="getTotalRows" resultType="int">
+	  		select count(*) total_rows from delivery
+	  	</select>
+  
 	  <select id="selectAll" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
 	  	select * from delivery order by tracking_num desc
 	  </select>

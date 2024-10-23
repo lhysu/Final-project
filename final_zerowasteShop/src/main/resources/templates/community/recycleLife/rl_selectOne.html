@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>rl_delete.html</title>
+<title>rl_selectOne.html</title>
 <link rel="stylesheet" href="/css/main.css">
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -43,23 +43,37 @@
     <div th:replace="header :: header"></div>
     <!-- Header End -->
    
-	<h1>재활용 라이프 글 삭제</h1>
+	<h1>재활용 라이프 게시글 상세</h1>
 
 	<div th:fragment="content" style="margin-top : 250px; margin-left : 100px;">
-
+		
 		<div>
-			<form action="/community/recycleLife/rl_deleteOK" method="post">
-				<input type="hidden" name="recycleLife_num" th:value="${param.recycleLife_num}">
-				<table id="insertTable">
+			<table id="insertTable">
+				<thead>
 					<tr>
-						<th>[[${param.recycleLife_num}]]번글을 정말 삭제하시겠습니까?<input type="submit"
-							value="삭제완료"></th>
+						<th>NUM</th>
+						<th>TITLE</th>
+						<th>CONTENT</th>
+						<th>WRITER</th>
+						<th>WDATE</th>
 					</tr>
-				</table>
-			</form>
+				</thead>
+				<tbody>
+					<tr>
+						<td>[[${vo2.recycleLife_num}]]</td>
+						<td>[[${vo2.recycleLife_title}]]</td>
+						<td>[[${vo2.recycleLife_content}]]</td>
+						<td>[[${vo2.member_id}]]</td>
+						<td>[[${vo2.recycleLife_wdate}]]</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-	</div>
-
+		<a th:href="|/community/recycleLife/rl_update?recycleLife_num=${vo2.recycleLife_num}|">글수정</a> 
+		<a th:href="|/community/recycleLife/rl_delete?recycleLife_num=${vo2.recycleLife_num}|">글삭제</a>
+		</div>
+		
+		
 		<!-- Footer Start -->
 		<div th:replace="footer :: footer"></div>
 		<!-- Footer End -->

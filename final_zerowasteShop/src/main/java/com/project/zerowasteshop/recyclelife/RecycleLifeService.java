@@ -15,8 +15,8 @@ public class RecycleLifeService {
 		return mapper.selectAll();
 	}
 
-	public RecycleLifeVO selectOne(RecycleLifeVO vo) {
-		return mapper.selectOne(vo);
+	public RecycleLifeVO rl_selectOne(RecycleLifeVO vo) {
+		return mapper.rl_selectOne(vo);
 	}
 
 	public int insertOK(RecycleLifeVO vo) {

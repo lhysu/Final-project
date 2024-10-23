@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.zerowasteshop.recyclelife.RecycleLifeVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,13 +42,33 @@ public class DeliveryController {
 		
 	
 	@GetMapping("/delivery/d_selectAll")
-	public String d_selectAll(Model model) {
+	public String d_selectAll(Model model,
+			@RequestParam(defaultValue = "1") int cpage,
+            @RequestParam(defaultValue = "5") int pageBlock) {
 		log.info("/delivery/d_selectAll");
+		log.info("cpage : {}", cpage);
+        log.info("pageBlock : {}", pageBlock);
 		
-		List<DeliveryVO> list = service.selectAll();
+		List<DeliveryVO> list = service.selectAllPageBlock(cpage, pageBlock);
 		log.info("list.size() : [}", list.size());
 		
 		model.addAttribute("list", list);
+		
+		// 총 페이지 수 계산
+        int total_rows = service.getTotalRows();
+        log.info("total_rows:{}", total_rows);
+        int totalPageCount = 0;
+
+        if (total_rows / pageBlock == 0) {
+            totalPageCount = 1;
+        } else if (total_rows % pageBlock == 0) {
+            totalPageCount = total_rows / pageBlock;
+        } else {
+            totalPageCount = total_rows / pageBlock + 1;
+        }
+        log.info("totalPageCount:{}", totalPageCount);
+
+        model.addAttribute("totalPageCount", totalPageCount);
 		
 		return "delivery/d_selectAll";
 	}
@@ -64,7 +86,7 @@ public class DeliveryController {
 		
 		model.addAttribute("list", list);
 		
-		return "delivery/d_searchList";
+		return "delivery/d_selectAll";
 	}
 	
 

@@ -18,6 +18,22 @@
   	<delete id="rl_deleteOK">
   		delete from recyclelife where recycleLife_num=#{recycleLife_num}
   	</delete>
+  	
+  	<select id="rl_selectAll" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife order by recycleLife_num desc
+  	</select>
+  	
+  	<select id="rl_selectOne" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife where recycleLife_num = #{recycleLife_num}
+  	</select>
+  	
+  	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife order by recycleLife_num desc limit #{startRow}, #{pageBlock}
+  	</select>
+  	
+  	<select id="getTotalRows" resultType="int">
+  		select count(*) total_rows from recyclelife
+  	</select>
   
 	  
   
