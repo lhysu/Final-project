@@ -11,6 +11,8 @@ public interface CartMapper {
 
 //	//추상메소드명(예:insertOK)이 sqlMapper_*.xml 문서의 id와 같아야한다.
 	public int insertOK(CartVO vo);
+	
+	public int cartCheck(CartVO vo);
 //	
 //	public List<CartVO> selectAll();
 

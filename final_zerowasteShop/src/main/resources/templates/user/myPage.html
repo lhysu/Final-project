@@ -38,6 +38,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 
 	<!-- Header Start -->
     <div th:replace="header :: header"></div>
@@ -67,5 +68,23 @@
 		<div th:replace="footer :: footer"></div>
 		<!-- Footer End -->
 	
+=======
+<!-- 프로필 영역 -->
+<div class="profile">
+    <p th:text="${session.user_id} + '님의 마이페이지'"></p>
+    <h3>내 포인트</h3>
+    <p th:text="${points}+' 점'"></p>
+</div>
+<div>
+<p><a href="/cart/selectAll">내 장바구니</a></p>
+<p><a href="@{/like/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
+<p><a href="/order/selectAll">구매내역</a></p>
+<p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
+<p><a href="/delivery/d_selectAll">배송조회</a></p>
+<p><a th:href="@{/review/selectAll(user_id=${session.user_id})}">내가 쓴 리뷰</a></p>
+<p><a href="/coupon/selectAll">내가 보유한 쿠폰</a></p>
+<p><a href="/member/m_update">내 정보 수정 및 관리</a></p>
+</div>
+>>>>>>> 644c4cd62183a72e47dac3fb686f0fb5d9d87906
 </body>
 </html>

@@ -45,6 +45,14 @@
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		select * from product where product_num=#{product_num}
 	</select>
+	
+	<select id="selectAllReview"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		SELECT * 
+	    FROM review
+	    WHERE product_num = #{product_num}
+	    ORDER BY review_num ASC
+	</select>
 
 	<insert id="insertOK">
 		insert into product(product_name, price, point, company, product_img, category)

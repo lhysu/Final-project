@@ -319,7 +319,7 @@ INSERT INTO `finalproject`.`product` (product_name, price, point, company, produ
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
-  `cart_num` INT NOT NULL,
+  `cart_num` INT NOT NULL AUTO_INCREMENT,
   `product_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `count` INT NOT NULL,
@@ -702,8 +702,8 @@ ADD CONSTRAINT `FK_DELIVERY_PAYMENT`
 ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_DELIVERY_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
@@ -725,7 +725,7 @@ ALTER TABLE `finalproject`.`payment`
 ADD CONSTRAINT `FK_PAYMENT_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
+  ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_PAYMENT_MEMBER`
   FOREIGN KEY (`member_id`)
@@ -751,8 +751,8 @@ ALTER TABLE `finalproject`.`order`
 ADD CONSTRAINT `FK_ORDER_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_ORDER_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
