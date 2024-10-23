@@ -29,4 +29,6 @@ public interface OrderMapper {
 
 	int getOrderAmount(String merchant_uid);
 
+	void saveOrder(OrderVO order);
+
 }

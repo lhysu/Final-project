@@ -146,17 +146,22 @@
 	<!-- 헤더 시작 -->
     <div th:replace="header :: header"></div>
     <!-- 헤더 끝 -->
-    <h2>내가 보유한 쿠폰</h2>
-	<div class ="content" th:fragment="content" style="margin-top : 220px">
+    
+
+	<div class ="content" th:fragment="content" style="margin-top : 270px">
+		<h2>내가 보유한 쿠폰</h2>
 		
-		
-		<form id="couponForm" method="post">
+		<form id="couponForm" method="post" style="margin-top: 10px !important;">
+			<div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
+				<div class="d-flex align-items-center">
 			<label for="couponCode"></label>
-			<input type="text" id="couponCode" name="couponCode" placeholder="쿠폰 코드를 입력해주세요">
-			<input type="submit" value="쿠폰 등록">
+			<input type="text" id="couponCode" name="couponCode" placeholder="쿠폰 코드를 입력해주세요" class="form-control border-2 border-secondary py-3 px-4 rounded-pill me-2" style="max-width: 400px;">
+			<input type="submit" value="쿠폰 등록" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">
+				</div>
+			</div>
 		</form>
 		
-		<table border=1>
+		<table id="selectAllTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
 			<thead>
 				<tr>
 					<th>쿠폰코드</th>

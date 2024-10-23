@@ -89,49 +89,74 @@
 
 	         // 아임포트 결제 요청 함수
 	            $('#orderForm').on('submit', function(event) {
-	                event.preventDefault(); // 기본 폼 제출 방지
+	                event.preventDefault();  // 기본 폼 제출 방지
 
-	                // 아임포트 결제 요청 함수
-	                var IMP = window.IMP; // 생략 가능
-	                IMP.init('imp57000577'); // 아임포트에서 발급받은 가맹점 식별코드
+	                // 주문 정보를 먼저 서버에 전송
+	                var orderData = {
+	                    productName: $('#product_name').text(),
+	                    totalPrice: $('#final_price').text().replace(',', '').replace('원', ''),  // 상품 총액
+	                    couponCode: $('#couponSelect').val(),  // 선택한 쿠폰 코드
+	                    points: $('#points').val(),  // 사용한 포인트
+	                    address: $('#address').val(),  // 배송 주소
+	                    address_detail: $('#address_detail').val(),  // 상세 주소
+	                    postcode: $('#postcode').val(),  // 우편번호
+	                    deliveryMemo: $('#delivery_memo').val()  // 배송 요청사항
+	                };
 
-	                IMP.request_pay({
-	                    pg: 'html5_inicis', // PG사 (KCP, 이니시스, 카카오페이 등 지원 가능)
-	                    pay_method: 'card', // 결제수단 (카드, 계좌이체 등)
-	                    merchant_uid: 'O' + new Date().getTime(), // 고유한 주문번호 생성
-	                    name: '주문명: 결제테스트', // 결제창에 표시될 상품명
-	                    amount: 100, // 결제 금액
-	                    buyer_email: 'test@example.com',
-	                    buyer_name: '홍길동',
-	                    buyer_tel: '010-1234-5678',
-	                    buyer_addr: '서울특별시 강남구 삼성동',
-	                    buyer_postcode: '123-456'
-	                }, function (rsp) { // callback 함수
-	                    if (rsp.success) {
-	                        // 결제 성공 시 서버로 imp_uid 전송
-	                        $.ajax({
-	                            url: '/order/pay',
-	                            method: 'POST',
-	                            data: {
-	                                imp_uid: rsp.imp_uid,
-	                                merchant_uid: rsp.merchant_uid,
-	                                paid_amount: rsp.paid_amount
-	                            },
-	                            success: function (response) {
-	                                if (response.status === 'success') {
-	                                    alert('결제가 완료되었습니다.');
-	                                    window.location.href = '/order/confirmation'; // 결제 완료 페이지로 이동
-	                                } else {
-	                                    alert('결제 검증에 실패했습니다.');
-	                                }
+	                $.ajax({
+	                    type: 'POST',
+	                    url: '/order/create',  // 서버의 주문 생성 엔드포인트
+	                    contentType: 'application/json',
+	                    data: JSON.stringify(orderData),
+	                    success: function(response) {
+	                        var merchantUid = response.merchantUid;  // 서버로부터 주문 번호(merchant_uid)를 응답받음
+
+	                        // 2단계: 결제 요청
+	                        var IMP = window.IMP;
+	                        IMP.init('imp57000577');  // 아임포트 가맹점 식별 코드
+
+	                        IMP.request_pay({
+	                            pg: 'html5_inicis',  // 결제 대행사
+	                            pay_method: 'card',  // 결제 방식
+	                            merchant_uid: merchantUid,  // 서버에서 받은 주문 번호 사용
+	                            name: '주문명: 결제 테스트',
+	                            amount: 100,  // 최종 결제 금액
+	                            buyer_email: 'test@example.com',
+	                            buyer_name: '홍길동',
+	                            buyer_tel: '010-1234-5678',
+	                            buyer_addr: '서울특별시 강남구 삼성동',
+	                            buyer_postcode: '123-456'
+	                        }, function(rsp) {
+	                            if (rsp.success) {
+	                                // 결제 성공 시 서버로 결제 정보 전송
+	                                $.ajax({
+	                                    url: '/order/pay',
+	                                    method: 'POST',
+	                                    data: {
+	                                        imp_uid: rsp.imp_uid,
+	                                        merchant_uid: merchantUid,  // 주문 생성 시 사용한 주문 번호를 다시 전송
+	                                        paid_amount: rsp.paid_amount
+	                                    },
+	                                    success: function(response) {
+	                                        if (response.status === 'success') {
+	                                            alert('결제가 완료되었습니다.');
+	                                            window.location.href = '/order/confirmation';  // 결제 완료 페이지로 이동
+	                                        } else {
+	                                            alert('결제 검증에 실패했습니다.');
+	                                        }
+	                                    }
+	                                });
+	                            } else {
+	                                alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
 	                            }
 	                        });
-	                    } else {
-	                        // 결제 실패 시
-	                        alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
+	                    },
+	                    error: function(xhr, status, error) {
+	                        alert('주문 생성 중 오류가 발생했습니다.');
+	                        console.error('주문 생성 오류:', error);
 	                    }
 	                });
-	            });	         
+	            });
 	        });
     </script>
 </head>
@@ -211,10 +236,10 @@
             
             <hr>
             <div class="order-summary">
-            <p>총 상품 금액: <span id="total_price">80,000원</span></p>
+            <p>총 상품 금액: <span id="total_price">100원</span></p>
             <p>총 할인 금액: <span id="discount">0원</span></p>
             <p>배송비: <span id="shipping_fee">0원</span></p>
-            <p class="final_price">최종 결제 금액: <span id="final_price">80,000원</span></p>
+            <p class="final_price">최종 결제 금액: <span id="final_price">100원</span></p>
         	</div>
             <hr>
              

@@ -31,6 +31,7 @@ public class OrderController {
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
+		model.addAttribute("cpage",cpage);
 		
 		//DB로부터 얻은 검색결과의 모든 행의 수
 		int total_rows = service.getTotalRows();
@@ -68,7 +69,8 @@ public class OrderController {
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
-			
+		model.addAttribute("cpage",cpage);
+		
 		int total_rows = service.getSearchTotalRows(searchKey,searchWord); //select count(*) total_rows from member;
 		log.info("total_rows:{}",total_rows);
 		//int pageBlock =5; //1개 페이지에서 보여질 행의 수. 파라미터로 받으면 됨.

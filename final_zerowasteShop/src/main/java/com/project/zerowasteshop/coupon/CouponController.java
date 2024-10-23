@@ -56,6 +56,7 @@ public class CouponController {
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
+		model.addAttribute("cpage",cpage);
 		
 		//DB로부터 얻은 검색결과의 모든 행의 수
 		int total_rows = service.getTotalRows();
@@ -91,6 +92,7 @@ public class CouponController {
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
+		model.addAttribute("cpage",cpage);
 			
 		int total_rows = service.getSearchTotalRows(searchKey,searchWord); //select count(*) total_rows from member;
 		log.info("total_rows:{}",total_rows);

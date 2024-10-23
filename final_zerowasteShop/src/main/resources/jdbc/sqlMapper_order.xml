@@ -102,7 +102,12 @@
 
 <!-- 쿠폰 코드 확인 -->
 <select id="getOrderAmount" resultType="int">
-	select price from order where merchant_uid = #{merchant_uid}
+	select final_price from `order` where merchant_uid = #{merchant_uid}
 </select>
+
+<insert id="saveOrder">
+	insert into `order`(merchant_uid,member_id, coupon_code, postcode, address,address_detail,discount,total_price,final_price,order_state)
+	values(#{merchant_uid},#{member_id},#{coupon_code},#{postcode},#{address},#{address_detail},#{discount},#{total_price},#{final_price},#{order_state})
+</insert>
 
 </mapper>
