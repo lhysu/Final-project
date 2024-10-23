@@ -19,8 +19,8 @@
 		
     	<tr>
         <th>아이디</th>
-        <td>user01<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}">
-        <input type="hidden" id="member_num" name=member_num th:value="${param.member_num}" ></td>
+        <td>[[${session.user_id}]]<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}">
+        <input type="hidden" id="member_num" name=member_num th:value="${vo2.member_num}" ></td>
         </tr>
         
         <tr>

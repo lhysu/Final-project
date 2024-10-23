@@ -63,12 +63,14 @@ public class MemberController {
 	
 	//회원정보 수정페이지로 이동
 	@GetMapping("/member/m_update")
-	public String m_update(MemberVO vo, Model model) {
+	public String m_update(Model model) {
 		log.info("/member/m_update");
-		log.info("vo:{}",vo);
-		MemberVO vo2 = service.selectOne(vo);
-		log.info("vo2:{}",vo2);
+		String user_id = (String) session.getAttribute("user_id");
+		log.info("user_id:",user_id);
 		
+		
+		MemberVO vo2 = service.selectOne(user_id);
+		log.info("vo2:{}",vo2);	
 		model.addAttribute("vo2",vo2);
 		return "user/myUpdate";	
 	}
@@ -79,7 +81,6 @@ public class MemberController {
 		log.info("/member/m_updateOK");
 		log.info("vo:{}",vo);
 		log.info("pwCheck:{}",pwCheck);
-		
 		int result=0;
 		
 		if(vo.getPw().equals(pwCheck)) {
@@ -89,7 +90,7 @@ public class MemberController {
 		if(result==1) {
 			return "redirect:/member/m_selectOne";			
 		}else {
-			return "redirect:/member/m_update?member_num="+vo.getMember_num();		
+			return "redirect:/member/m_update?member_id="+vo.getMember_id();		
 			
 		}
 	

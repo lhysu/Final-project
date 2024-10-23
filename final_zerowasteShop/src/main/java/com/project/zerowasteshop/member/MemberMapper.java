@@ -9,7 +9,7 @@ import com.project.zerowasteshop.donateitem.DonateItemVO;
 @Mapper
 public interface MemberMapper {
 
-	public MemberVO selectOne(MemberVO vo);
+	public MemberVO selectOne(String member_id);
 
 	public int insertOK(MemberVO vo);
 
