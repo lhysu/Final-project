@@ -35,8 +35,8 @@
     
     <style>
         .content {
-            margin-top: 300px;
-            padding: 20px;
+            margin: 300px;
+            padding: 30px;
             border: 1px solid #dee2e6; /* 테두리 추가 */
             border-radius: 5px; /* 모서리 둥글게 */
             background-color: #f8f9fa; /* 배경색 */
@@ -95,45 +95,39 @@
 
     <div class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" style = "width : 400px; margin : 20px">
             	<img th:if="${vo2.product_img.startsWith('http')}" th:src="${vo2.product_img}" class="img-fluid rounded" alt="">
 				<img th:if="${!vo2.product_img.startsWith('http')}" th:src="|/uploadimgPath/${vo2.product_img}|" class="img-fluid rounded" alt="">
 				<div class="flex-container">
                     <a href="/like/selectAll" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style="margin-top: 10px;">상품 찜하기</a>
-                    <div class="rating">★ ★ ★ ★ ☆ (487)</div>
+                    <div class="rating">[[${vo2.rating}]] (리뷰 갯수)</div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="product-title">상품 이름</div>
-                <div class="button-container">
-                    <button class="btn btn-primary">장바구니</button>
-                    <button class="btn btn-secondary">바로 구매</button>
-                </div>
+            <div class="col-md-6" style = "width : 700px; margin : 20px">
+                <div class="product-title" th:utext="${vo2.product_name}"></div>
                 <div class="description">
-                    <p>상품 상세 설명 (이미지, 텍스트 등)</p>
+                    <h1 class="mb-3">[[${vo2.price}]]원</h4>
+                    <h5 class="mb-3" style="color: #28a745;">판매자 : [[${vo2.company}]]</h5>
+    				<h5 class="mb-3" style="color: green;">탄소 중립 포인트 : [[${vo2.point}]]</h5>
+                </div>
+                <div class="button-container">
+                    <a th:href="|/cart/insertOK?product_num=${vo2.product_num}&member_id=${session.user_id}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name}|" class="btn btn-primary	">장바구니</a>
+                    <a href="/order/order" class="btn btn-secondary">바로 구매</a>
                 </div>
             </div>
         </div>
-
+        
+		
         <div class="review-section">
             <div class="review-title">상품 리뷰 *4.8점</div>
             <div class="row">
-                <div class="col-md-3">
-                    <img src="리뷰이미지_URL" class="review-image" alt="리뷰 이미지">
-                    <div class="review-content">리뷰 내용 1</div>
-                </div>
-                <div class="col-md-3">
-                    <img src="리뷰이미지_URL" class="review-image" alt="리뷰 이미지">
-                    <div class="review-content">리뷰 내용 2</div>
-                </div>
-                <div class="col-md-3">
-                    <img src="리뷰이미지_URL" class="review-image" alt="리뷰 이미지">
-                    <div class="review-content">리뷰 내용 3</div>
-                </div>
-                <div class="col-md-3">
-                    <img src="리뷰이미지_URL" class="review-image" alt="리뷰 이미지">
-                    <div class="review-content">리뷰 내용 4</div>
-                </div>
+            	<th:block th:each="vo : ${list}">
+	                <div class="col-md-3">
+	                	<img style="width: 100px;" th:src="${vo.review_img}" th:if="${vo.review_img.startsWith('http')}" class="img-fluid rounded" alt="">
+                     	<img style="width: 100px;" th:src="|/uploadimgPath/${vo.review_img}|" th:if="${!vo.review_img.startsWith('http')}" class="img-fluid rounded" alt="">
+	                    <div class="review-content">[[${vo.content}]]</div>
+	                </div>
+                </th:block>
             </div>
             <div class="review-form">
                 <h5>리뷰 작성</h5>
@@ -141,7 +135,9 @@
                 <button class="btn btn-success mt-2">작성하기</button>
             </div>
         </div>
+        
     </div>
+    
 
 	<!-- Footer Start -->
 	<div th:replace="footer :: footer"></div>

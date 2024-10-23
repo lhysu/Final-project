@@ -59,9 +59,14 @@
 	</select> -->
 
 	<insert id="insertOK">
-		insert into cart(content, rating, cart_img, createdDate)
-		values(#{content},#{rating},#{cart_img},CURRENT_TIMESTAMP)
+		insert into cart(product_num, member_id, count, price, product_img, product_name)
+		values(#{product_num},#{member_id}, 1 ,#{price},#{product_img},#{product_name})
 	</insert>
+	
+	<select id="cartCheck" resultType="int">
+		select count(*)
+		from cart where product_num like #{product_num} 
+	</select>
 	
 	<!-- <update id="updateOK">
 		update cart set

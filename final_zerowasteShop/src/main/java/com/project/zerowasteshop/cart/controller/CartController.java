@@ -31,11 +31,11 @@ public class CartController {
  	@Value("${file.dir}")
  	private String realPath;
 
- 	@GetMapping("/cart/insert")
- 	public String insert() {
- 		log.info("/cart/insert");
- 		return "cart/insert";
- 	}
+// 	@GetMapping("/cart/insert")
+// 	public String insert() {
+// 		log.info("/cart/insert");
+// 		return "cart/insert";
+// 	}
 
 // 	@GetMapping("/cart/update")
 // 	public String update(CartVO vo, Model model) {
@@ -257,12 +257,16 @@ public class CartController {
 // 		return "cart/selectOne";
 // 	}
 
- 	@PostMapping("/cart/insertOK")
+ 	@GetMapping("/cart/insertOK")
  	public String insertOK(CartVO vo) throws IllegalStateException, IOException {
  		log.info("/cart/insertOK");
 		/* vo.setPoint(vo.getPrice() / 1000); */
  		log.info("vo:{}", vo);
 
+ 		int check = service.cartCheck(vo);
+ 		if (check != 0) return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
+ 		else {
+ 		
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
  		// String realPath = context.getRealPath("resources/upload_img");
 
@@ -270,9 +274,10 @@ public class CartController {
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/cart/selectAll";
+ 			return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
  		} else {
- 			return "redirect:/cart/insert";
+ 			return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
+ 		}
  		}
  	}
 

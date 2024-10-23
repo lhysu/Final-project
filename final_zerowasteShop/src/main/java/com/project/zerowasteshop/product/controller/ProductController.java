@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.zerowasteshop.product.NaverShopSearch;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
+import com.project.zerowasteshop.review.model.ReviewVO;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -284,9 +285,15 @@ public class ProductController {
  		log.info("vo:{}", vo);
 
  		ProductVO vo2 = service.selectOne(vo);
+ 		List<ReviewVO> list = service.selectAllReview(vo);
  		log.info("vo2:{}", vo2);
-
+ 		
  		model.addAttribute("vo2", vo2);
+ 		
+ 		log.info("list.size():{}", list.size());
+
+ 		model.addAttribute("list", list);
+
 
  		return "product/detail";
  	}

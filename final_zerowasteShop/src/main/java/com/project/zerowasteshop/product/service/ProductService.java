@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.zerowasteshop.product.mapper.ProductMapper;
 import com.project.zerowasteshop.product.model.ProductVO;
+import com.project.zerowasteshop.review.model.ReviewVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,10 @@ public class ProductService {
 
 	public ProductVO selectOne(ProductVO vo) {
 		return mapper.selectOne(vo);
+	}
+	
+	public List<ReviewVO> selectAllReview(ProductVO vo) {
+		return mapper.selectAllReview(vo);
 	}
 
 	public int updateOK(ProductVO vo) {

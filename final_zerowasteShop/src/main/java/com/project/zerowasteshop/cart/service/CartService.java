@@ -20,6 +20,10 @@ public class CartService {
 	public int insertOK(CartVO vo) {
 		return mapper.insertOK(vo);
 	}
+	
+	public int cartCheck(CartVO vo) {
+		return mapper.cartCheck(vo);
+	}
 //
 //	public List<CartVO> selectAll() {
 //		return mapper.selectAll();
