@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.zerowasteshop.product.model.ProductVO;
+import com.project.zerowasteshop.review.model.ReviewVO;
 
 @Mapper
 public interface ProductMapper {
@@ -15,6 +16,7 @@ public interface ProductMapper {
 //	public List<CartVO> selectAll();
 
 	public ProductVO selectOne(ProductVO vo);
+	public List<ReviewVO> selectAllReview(ProductVO vo);
 
 	public int updateOK(ProductVO vo);
 	public int deleteOK(ProductVO vo);

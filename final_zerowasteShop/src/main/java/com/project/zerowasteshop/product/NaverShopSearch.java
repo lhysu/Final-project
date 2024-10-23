@@ -60,6 +60,11 @@ public class NaverShopSearch {
         for (int i = 0; i < items.length(); i++) {
             JSONObject itemJson = (JSONObject) items.get(i);
             ProductVO itemDto = new ProductVO(itemJson);
+            
+         // title에서 <b> 태그 제거
+            String title = itemJson.getString("title").replaceAll("<b>", "").replaceAll("</b>", "");
+            itemDto.setProduct_name(title); // product_name에 설정
+            
             ProductVOList.add(itemDto);
             // item 중에서 필요한 항목만 꺼내기
             //String title = itemJson.getString("title");
