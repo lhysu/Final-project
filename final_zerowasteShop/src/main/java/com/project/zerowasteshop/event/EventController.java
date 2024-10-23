@@ -105,7 +105,7 @@ public class EventController {
         return "community/event/selectAll";
     }
 
-    @GetMapping("/event/searchList")
+    @GetMapping("/community/event/searchList")
     public String e_searchList(Model model,
                                         @RequestParam(defaultValue = "") String searchWord,
                                         @RequestParam(defaultValue = "1") int cpage,
