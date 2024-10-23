@@ -69,7 +69,7 @@ public class RecycleLifeController {
 		log.info("/community/recycleLife/rl_selectOne");
 		log.info("vo : {}", vo);
 		
-		RecycleLifeVO vo2 = service.selectOne(vo);
+		RecycleLifeVO vo2 = service.rl_selectOne(vo);
 		log.info("vo2", vo2);
 		
 		model.addAttribute("vo2", vo2);
@@ -112,7 +112,7 @@ public class RecycleLifeController {
 		log.info("/community/recycleLife/rl_update");
 		log.info("vo : {}", vo);
 		
-		RecycleLifeVO vo2 = service.selectOne(vo);
+		RecycleLifeVO vo2 = service.rl_selectOne(vo);
 		
 		log.info("vo2:{}", vo2);
 
