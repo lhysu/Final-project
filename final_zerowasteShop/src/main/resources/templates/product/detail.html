@@ -167,7 +167,7 @@
                 </div>
                 <div class="button-container">
                     <a th:href="|/cart/insertOK?product_num=${vo2.product_num}&member_id=${session.user_id}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary	">장바구니</a>
-                    <a href="/order/order" class="btn btn-secondary">바로 구매</a>
+                    <a th:href="|/order/order?product_num=${vo2.product_num}&member_id=${session.user_id}&price=${vo2.price}&product_name=${vo2.product_name}|" class="btn btn-secondary">바로 구매</a>
                 </div>
             </div>
         </div>
