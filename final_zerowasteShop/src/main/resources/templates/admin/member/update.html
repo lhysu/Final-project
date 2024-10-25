@@ -32,7 +32,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"> 
     
      <style>
-        .content { margin : 152px;}
         
         .position-relative {
 		    display: flex;
@@ -109,8 +108,7 @@
 			
 		#postcode{
 			width: 50%;}
-		#btn_postcod{
-			float: right;}
+		
     </style>
 </head>
 <body>
@@ -119,12 +117,10 @@
 	 <div th:replace="header_admin :: header"></div>
     <!-- 해더 끝 -->
 
-	<div class="content col-lg-8  " th:fragment="content" style = "margin-top : 160px !important;">
-		<div class="row g-4">
+	<div class="container my-4" th:fragment="content" style = "padding-top : 160px">
+		<div class="row g-4 mb-2">
           <!-- 제목 영역: 섹션의 제목을 표시 -->
-          <div class="col-lg-4 text-start">
 			<h1>회원 수정</h1>
-			</div>
 		</div>	
 	
 	<form action="/admin/ad_updateOK" method="post">
@@ -164,9 +160,12 @@
         <tr>
         <th>회원주소</th>
         <td>
-		    <input type="text" id="postcode" class="form-control" name="postcode" style="float:left" th:value="${vo2.postcode}" placeholder="우편번호">
-		    <input type="button" id="btn_postcode" onclick="execDaumPostcode()" class="btn btn-primary mb-3" style="float:right" value="우편번호 찾기">
-			  
+		    <div class="col-md-8">
+        		<input type="text" id="postcode" class="form-control" style="float:left"  name="postcode" placeholder="우편번호">
+        	</div>
+        	<div class="col-md-4 d-flex">
+        		<input type="button" onclick="execDaumPostcode()" class="btn btn-primary ms-2 mb-3" value="우편번호 찾기"><br>
+        	</div>
         	<input type="text" id="address" class="form-control" name="address" th:value="${vo2.address}" placeholder="주소"><br>
         	<input type="text" id="address_detail" class="form-control" name="address_detail" th:value="${vo2.address_detail}" placeholder="상세주소"></td>
         </tr>

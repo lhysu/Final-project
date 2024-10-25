@@ -29,7 +29,7 @@ public class DonateItemController {
 	@Value("${file.dir}")
 	private String realPath;
 	
-	@GetMapping({"/donateItem/d_selectAll"})
+	@GetMapping({"/community/donateItem/d_selectAll"})
 	public String d_selectAll(Model model,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "10")int pageBlock) {
@@ -128,7 +128,7 @@ public class DonateItemController {
 		log.info("result:{}",result);
 		
 		if(result==1) {
-			return "redirect:/donateItem/d_selectAll";			
+			return "redirect:/community/donateItem/d_selectAll";			
 		}else {
 			return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();	
 			
@@ -180,7 +180,7 @@ public class DonateItemController {
 		int result = service.insertOK(vo);
 		
 		if(result==1) {
-			return "redirect:/donateItem/d_selectAll";		
+			return "redirect:/community/donateItem/d_selectAll";		
 		}else {
 			return "redirect:/donateItem/insert";		
 			
