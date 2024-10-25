@@ -614,11 +614,6 @@ ALTER TABLE `finalproject`.`review`
 ADD INDEX `FK_REVIEW_PRODUCT_idx` (`product_num` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`review` 
-ADD CONSTRAINT `FK_REVIEW_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_REVIEW_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -674,11 +669,6 @@ ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
   REFERENCES `finalproject`.`product` (`product_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_DELIVERY_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_DELIVERY_ORDER`
   FOREIGN KEY (`merchant_uid`)
   REFERENCES `finalproject`.`order` (`merchant_uid`)
