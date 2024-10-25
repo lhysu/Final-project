@@ -14,8 +14,11 @@
 	delete from coupon where coupon_code = #{coupon_code}
 </delete>
 
-<select id="selectOne" resultType="com.project.zerowasteshop.order.OrderVO">
-	select * from `order` where merchant_uid =#{merchant_uid}
+<select id="selectOne" resultType="com.project.zerowasteshop.order.OrderJoinItemVO">
+	select o.* ,i.product_num,i.product_name,i.quantity,i.price
+	from `order` o
+	join order_item i on o.merchant_uid = i.merchant_uid
+	where o.merchant_uid =#{merchant_uid}
 </select>
 
 <select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">

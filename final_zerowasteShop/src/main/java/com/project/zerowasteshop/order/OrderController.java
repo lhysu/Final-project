@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.zerowasteshop.coupon.CouponVO;
+import com.project.zerowasteshop.member.MemberService;
+import com.project.zerowasteshop.member.MemberVO;
+import com.project.zerowasteshop.product.model.ProductVO;
+import com.project.zerowasteshop.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +22,12 @@ public class OrderController {
 	
 	@Autowired
 	OrderService service;
+	
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	ProductService productService;
 
 	@GetMapping("/admin/order/selectAll")
 	public String ad_orderSelectAll(Model model,
@@ -94,7 +104,7 @@ public class OrderController {
 		log.info("/admin/order/selectOne");
 		log.info("merchant_uid:{}",merchant_uid);
 		
-		OrderVO vo = service.selectOne(merchant_uid);
+		OrderJoinItemVO vo = service.selectOne(merchant_uid);
 		
 		model.addAttribute("vo",vo);
 		
@@ -103,26 +113,26 @@ public class OrderController {
 	
 	@GetMapping("/order/order")
 	public String insert(Model model,
-			@RequestParam(defaultValue = "홍길동")String name,
-			@RequestParam(defaultValue = "010-3333-3333")String tel,
-			@RequestParam(defaultValue = "13529")String postcode,
-			@RequestParam(defaultValue = "경기 성남시 분당구 판교역로 166")String address,
-			@RequestParam(defaultValue = "101호")String address_detail,
-			@RequestParam(defaultValue = "/upload_img/bag.png")String product_img,
-			@RequestParam(defaultValue = "가방1")String product_name,
-			@RequestParam(defaultValue = "80000")int price,
-			@RequestParam(defaultValue = "user19")String member_id,
-			@RequestParam(defaultValue = "1000")int points) {
+			@RequestParam("product_num")int product_num,
+			@RequestParam("member_id")String member_id,
+			@RequestParam("price")String price,
+			@RequestParam("product_name")String product_name) {
 		
-		model.addAttribute("name",name);
-		model.addAttribute("tel",tel);
-		model.addAttribute("postcode",postcode);
-		model.addAttribute("address",address);
-		model.addAttribute("address_detail",address_detail);
-		model.addAttribute("product_img",product_img);
-		model.addAttribute("product_name",product_name);
-		model.addAttribute("price",price);
-		model.addAttribute("points",points);
+		//배송지 정보 불러오고 넘기기
+		MemberVO member = memberService.selectOne(member_id);
+		model.addAttribute("name",member.getName());
+		model.addAttribute("tel",member.getPhone_number());
+		model.addAttribute("postcode",member.getPostcode());
+		model.addAttribute("address",member.getAddress());
+		model.addAttribute("address_detail",member.getAddress_detail());
+		model.addAttribute("points",member.getPoints());
+		
+		//상품 정보 불러오고 넘기기
+		ProductVO product = new ProductVO();
+		product.setProduct_num(product_num);
+		product = productService.selectOne(product);
+		model.addAttribute("product",product);		
+
 		
 	    List<OrderJoinCouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
 	    log.info("coupons:{}",coupons);
