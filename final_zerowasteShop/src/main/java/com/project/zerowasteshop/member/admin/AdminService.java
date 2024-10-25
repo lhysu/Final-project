@@ -1,4 +1,4 @@
-package com.project.zerowasteshop.member;
+package com.project.zerowasteshop.member.admin;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.zerowasteshop.donateitem.DonateItemVO;
+import com.project.zerowasteshop.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
 

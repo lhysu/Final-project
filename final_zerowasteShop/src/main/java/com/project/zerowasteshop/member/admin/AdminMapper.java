@@ -1,10 +1,11 @@
-package com.project.zerowasteshop.member;
+package com.project.zerowasteshop.member.admin;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.project.zerowasteshop.donateitem.DonateItemVO;
+import com.project.zerowasteshop.member.MemberVO;
+
 
 @Mapper
 public interface AdminMapper {

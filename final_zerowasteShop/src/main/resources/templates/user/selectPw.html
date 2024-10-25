@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login Page</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -13,30 +13,72 @@
   	<table>
   		<tr>
 	      <th>아이디</th>
-	      <td><input type="text" name="member_id" id="member_id" value="user01"> </td>
+	      <td><input type="text" name="member_id" id="member_id" value="hello" placeholder="아이디를 입력해주세요"> </td>
 	    </tr>
 	    <tr>
 	      <th>이름</th>
-	      <td><input type="text" name="name" id="name" value="User01"> </td>
+	      <td><input type="text" name="name" id="name" value="kim" placeholder="이름을 입력해주세요"> </td>
 	    </tr>
 	    <tr>
 	      <th>이메일</th>
-	      <td><input type="text" name="email" id="email" value="user01@example.com">
-	      	<button type="button" id="btn_sendEmail" >인증번호 받기</button></td>
+	      <td><input type="text" name="email" id="email" value="zerocfinal33@naver.com" placeholder="이메일을 입력해주세요">
+	      	<button type="button" id="sendEmailCode" >인증번호 받기</button><br>
+	      	<input type="text" name="verificationCode" id="verificationCode" placeholder="이메일 인증 코드를 입력해주세요">
+	      	<button type="button" id="checkEmailCode">인증번호 확인</button></td>
 	    </tr>
+	    
 	    <tr>
-	      <th>이메일</th>
-	      <td><input type="text" name="verificationCode" id="verificationCode">
-	      	<button type="button" id="btn_verificationCheck">인증번호 확인</button></td>
-	    </tr>
-	    <tr>
-	      <td colspan="2"><input type="submit" value="확인"> </td>
+	      <td colspan="2"><input type="submit" disabled='disabled' id="selectPwCheck" value="확인"> </td>
 	    </tr>
 
   	</table>
 
 	</form>
- 
+ 	
+ 	<script>
+			let code="";
+			const target = document.getElementById('selectPwCheck');
+			// 이메일 인증번호
+			$("#sendEmailCode").click(function() {
+			   $.ajax({
+			      type : "POST",
+			      url : "/login/mailConfirm",
+			      data : {
+			         "email" : $("#email").val()
+			      },
+			      success : function(data){
+			         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+			         code=data;
+			      }
+			   })
+			})
+			
+			$("#checkEmailCode").click(function() {
+				if(!$("#verificationCode").val()){
+					alert("인증번호가 입력되지 않았습니다.");
+				}else chekEmailConfirm(code, $("#verificationCode"));
+				
+			})
+			
+			// 이메일 인증번호 체크 함수
+			function chekEmailConfirm(data, $memailconfirm){
+					
+				if (data != $("#verificationCode").val()) { //
+					
+					console.log("인증코드 불일치")
+					alert("인증코드가 일치하지 않습니다.")
+					target.disabled=true;
+					
+				} else {
+					console.log("data:"+data);
+					console.log("인증 완료")
+					target.disabled=false;
+					
+				
+				}
+			}
+				
+			</script>
 
 	
 </body>
