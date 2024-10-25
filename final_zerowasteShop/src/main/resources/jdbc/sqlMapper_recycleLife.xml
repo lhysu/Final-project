@@ -12,7 +12,8 @@
   	<update id="rl_updateOK">
   		update recyclelife set 
   		recycleLife_title=#{recycleLife_title}, 
-  		recycleLife_content=#{recycleLife_content} where recycleLife_num=#{recycleLife_num}
+  		recycleLife_content=#{recycleLife_content},
+  		recycleLife_img=#{recycleLife_img} where recycleLife_num=#{recycleLife_num}
   	</update>
   	
   	<delete id="rl_deleteOK">
@@ -34,6 +35,14 @@
   	<select id="getTotalRows" resultType="int">
   		select count(*) total_rows from recyclelife
   	</select>
+  	
+  	<update id="increaseViews">
+	  update recyclelife
+	  set recycleLife_views = recycleLife_views + 1
+	  where recycleLife_num = #{recycleLife_num}
+	</update>
+	
+	
   
 	  
   

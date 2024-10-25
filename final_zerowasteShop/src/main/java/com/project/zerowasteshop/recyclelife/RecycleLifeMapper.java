@@ -23,4 +23,7 @@ public interface RecycleLifeMapper {
 
 	public int getTotalRows();
 
+	public void increaseViews(int recycleLife_num);
+
+
 }

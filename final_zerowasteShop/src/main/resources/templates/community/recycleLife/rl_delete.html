@@ -39,21 +39,20 @@
 </head>
 <body>
 
-	<!-- Header Start -->
-    <div th:replace="header :: header"></div>
-    <!-- Header End -->
-   
-	<h1>재활용 라이프 글 삭제</h1>
-
-	<div th:fragment="content" style="margin-top : 250px; margin-left : 100px;">
-
+	<!-- Header -->
+    <!-- <div th:replace="header :: header"></div> -->
+ 
+	<div th:fragment="content" class="container my-4">
+		<h1 class="mb-4">재활용 라이프 글 삭제</h1>
 		<div>
 			<form action="/community/recycleLife/rl_deleteOK" method="post">
 				<input type="hidden" name="recycleLife_num" th:value="${param.recycleLife_num}">
 				<table id="insertTable">
 					<tr>
-						<th>[[${param.recycleLife_num}]]번글을 정말 삭제하시겠습니까?<input type="submit"
-							value="삭제완료"></th>
+						<th>[[${param.recycleLife_num}]]번 글을 정말 삭제하시겠습니까?
+						<!-- <input type="submit" value="삭제완료"> -->
+						<button type="submit" class="btn btn-danger">삭제</button>
+                		<a th:href="@{/community/recycleLife/rl_selectAll}" class="btn btn-secondary">취소</a></th>
 					</tr>
 				</table>
 			</form>

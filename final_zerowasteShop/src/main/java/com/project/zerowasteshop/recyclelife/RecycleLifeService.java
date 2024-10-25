@@ -44,4 +44,10 @@ public class RecycleLifeService {
 		return mapper.searchList("%" + searchWord + "%");
 	}
 
+	public void increaseViews(int recycleLife_num) {
+		mapper.increaseViews(recycleLife_num);
+		
+	}
+
+	
 }
