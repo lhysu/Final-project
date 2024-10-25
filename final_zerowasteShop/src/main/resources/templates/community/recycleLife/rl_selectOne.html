@@ -3,7 +3,7 @@
 <head>
 <title th:text="${vo2.recycleLife_title}">재활용 라이프 게시글 상세</title>
 <!-- <p th:text="${vo2.recycleLife_content != null ? vo2.recycleLife_content : '내용 없음'}"></p> -->
-<link rel="stylesheet" href="/css/main.css">
+<!-- <link rel="stylesheet" href="/css/main.css"> -->
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -40,9 +40,32 @@
             height: auto;
         }
     </style>
+    
+    
 </head>
 <body>
-
+		<script>
+	    	let isLiked = false; // 좋아요 상태
+	    	
+	        function toggleLike(recycleLife_num) {
+	            fetch(`/community/recycleLife/${recycleLife_num}/like`, {
+	                method: 'POST'
+	            })
+	            .then(response => {
+	                if (!response.ok) {
+	                    throw new Error('Network response was not ok');
+	                }
+	                return response.json();  // 서버에서 변경된 좋아요 수 반환
+	            })
+	            .then(updatedLikes => {
+	                document.getElementById('likeCount').innerText = updatedLikes;  // 좋아요 수 업데이트
+	            })
+	            .catch(error => {
+	                console.error('API 호출 중 오류 발생:', error);
+	            });
+	        }
+	    </script>
+    
 	<!-- Header -->
     <!-- <div th:replace="header :: header"></div> -->
 	
@@ -54,8 +77,9 @@
                 <p class="text-muted">
                     작성일: <span th:text="${#dates.format(vo2.recycleLife_wdate, 'yyyy-MM-dd HH:mm')}"></span> |
                     조회수: <span th:text="${vo2.recycleLife_views}"></span> |
-                    <button class="btn btn-xs btn-primary">좋아요</button>
-                </p>
+                    좋아요 수: <span id="likeCount" th:text="${vo2.recycleLife_likes}">0</span>
+        			<!-- <button onclick="toggleLike([[${vo2.recycleLife_num}]])" class="btn btn-secondary">좋아요</button> -->
+               </p>
             </div>
         </div>
 

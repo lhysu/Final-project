@@ -81,6 +81,24 @@
         </form>
     </div>
 	
+		<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공) -->
+	    <script>
+	        (function () {
+	            'use strict'
+	            var forms = document.querySelectorAll('.needs-validation')
+	            Array.prototype.slice.call(forms)
+	                .forEach(function (form) {
+	                    form.addEventListener('submit', function (event) {
+	                        if (!form.checkValidity()) {
+	                            event.preventDefault()
+	                            event.stopPropagation()
+	                        }
+	                        form.classList.add('was-validated')
+	                    }, false)
+	                })
+	        })()
+	    </script>
+	
 		<!-- Footer -->
 		<div th:replace="footer :: footer"></div>
 		
