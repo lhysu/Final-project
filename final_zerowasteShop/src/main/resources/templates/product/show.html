@@ -72,7 +72,7 @@
 			                            [[${vo.rating}]]
 			                         </div>
 			                         <h4 class="mb-3">[[${vo.price}]]</h4>
-			                     <a th:href="|/cart/insertOK?product_num=${vo.product_num}&member_id=${session.user_id}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+			                     <a th:href="|/cart/insertOK?product_num=${vo.product_num}&member_id=${session.user_id}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
 			                </div>
 			        </div>
 			    </div>             
