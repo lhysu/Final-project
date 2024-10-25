@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.zerowasteshop.order.OrderMapper">
+<mapper namespace="com.project.zerowasteshop.payment.PaymentMapper">
 
 <update id="updateOK">
 	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
@@ -14,8 +14,8 @@
 	delete from coupon where coupon_code = #{coupon_code}
 </delete>
 
-<select id="selectOne" resultType="com.project.zerowasteshop.order.OrderVO">
-	select * from `order` where merchant_uid =#{merchant_uid}
+<select id="selectOne" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where coupon_code =#{coupon_code}
 </select>
 
 <select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
@@ -23,31 +23,29 @@
 </select>
 
 <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img, d.delivery_date
     FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
     JOIN product p ON o.product_num = p.product_num
-    order by o.merchant_uid desc    
+    JOIN delivery d ON o.order_num = d.order_num
+    ORDER BY o.order_num DESC
     LIMIT #{startRow}, #{pageBlock}
 </select>
 
-<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
-    FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON o.product_num = p.product_num
+<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.order.OrderVO">
+	select o.*,p.product_name
+	from `order` o
+	join product p on o.product_num = p.product_num
 	where member_id like #{searchWord}
-	order by o.merchant_uid desc 
+	order by o.order_num desc 
 	limit #{startRow}, #{pageBlock}
 </select>
 
-<select id="searchListPageBlockPname" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
-    FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
+<select id="searchListPageBlockPname" resultType="com.project.zerowasteshop.order.OrderVO">
+	select o.*,p.product_name
+	from `order` o
 	join product p on o.product_num = p.product_num
 	where product_name like #{searchWord}
-	order by o.merchant_uid desc 
+	order by o.order_num desc 
 	limit #{startRow}, #{pageBlock}
 </select>
 
@@ -56,7 +54,7 @@
 	from `order` o
 	join product p on o.product_num = p.product_num
 	where payCheck like #{searchWord}
-	order by o.merchant_uid desc 
+	order by o.order_num desc 
 	limit #{startRow}, #{pageBlock}
 </select>
 
@@ -124,4 +122,14 @@
     VALUES (#{merchant_uid}, #{product_num}, #{quantity}, #{price});
 </insert>
 
+<!-- 결제 정보 저장 -->
+<insert id="savePayment" parameterType="com.project.zerowasteshop.payment.PaymentVO">
+    INSERT INTO payment (merchant_uid, imp_uid, paid_amount, pay_method, pay_status, tracking_number)
+    VALUES (#{merchant_uid}, #{imp_uid}, #{paid_amount}, #{pay_method}, #{pay_status}, #{tracking_number});
+</insert>
+
+<!-- 결제 정보 조회 -->
+<select id="getPaymentInfo" resultType="com.project.zerowasteshop.payment.PaymentVO">
+	select * from payment where merchant_uid = #{merchantUid}
+</select>
 </mapper>

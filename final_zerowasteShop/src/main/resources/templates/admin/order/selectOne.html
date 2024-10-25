@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 상세</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 부트스트랩 및 CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <style>
+        .content {
+            margin: 40px;
+        }
+        .order-details, .payment-details {
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .table-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .btn-group .btn {
+            width: 150px;
+        }
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- 주문 상세 시작 -->
+    <div class="content">
+        <div class="order-details">
+            <div class="table-title">주문 상세</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>상품번호</th>
+                        <th>회원ID</th>
+                        <th>배송상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[[${vo.merchant_uid}]]</td>
+                        <td>[[${vo.product_num}]]</td>
+                        <td>[[${vo.member_id}]]</td>
+                        <td>[[${vo.order_state}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn-group">
+                <button class="btn btn-primary">교환 확인</button>
+                <button class="btn btn-warning">취소 확인</button>
+                <button class="btn btn-success">환불 확인</button>
+                <button class="btn btn-danger">발품 확인</button>
+            </div>
+        </div>
+
+        
+     </div>
+
+
+
+	<!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>

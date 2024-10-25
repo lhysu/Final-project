@@ -1,16 +1,16 @@
 package com.project.zerowasteshop.order;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class OrderVO {
-	private int order_num;
-	private int product_num;
-	private String product_name;
-	private String member_id;
-	private String coupon_code;
 	private String merchant_uid;
-	private int count;
+	private int product_num;
+	private String member_id;	
+	private String coupon_code;
+	private int points;
 	private String postcode;
 	private String address;
 	private String address_detail;
@@ -19,8 +19,8 @@ public class OrderVO {
 	private int discount;
 	private int delivery_fee;
 	private String delivery_memo;
-	private boolean payCheck;
 	private int total_price;
 	private int final_price;
 	private String order_state;
+	private List<OrderItemVO> orderItems;
 }

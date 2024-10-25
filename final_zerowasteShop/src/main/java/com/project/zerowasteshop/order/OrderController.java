@@ -88,6 +88,19 @@ public class OrderController {
 		return "admin/order/selectAll";
 	}
 	
+	@GetMapping("/admin/order/selectOne")
+	public String ad_orderSelectOne(Model model,
+			@RequestParam("merchant_uid")String merchant_uid) {
+		log.info("/admin/order/selectOne");
+		log.info("merchant_uid:{}",merchant_uid);
+		
+		OrderVO vo = service.selectOne(merchant_uid);
+		
+		model.addAttribute("vo",vo);
+		
+		return "admin/order/selectOne";
+	}
+	
 	@GetMapping("/order/order")
 	public String insert(Model model,
 			@RequestParam(defaultValue = "홍길동")String name,

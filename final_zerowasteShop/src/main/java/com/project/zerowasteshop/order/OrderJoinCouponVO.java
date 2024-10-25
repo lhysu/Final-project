@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class OrderJoinCouponVO {
-	private int order_num;
+	private String merchant_uid;
 	private int product_num;
 	private String product_name;
 	private String member_id;

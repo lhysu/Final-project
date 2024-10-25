@@ -90,17 +90,45 @@
 	         // 아임포트 결제 요청 함수
 	            $('#orderForm').on('submit', function(event) {
 	                event.preventDefault();  // 기본 폼 제출 방지
+	                
+	             // 주문 상품 리스트 생성 (여러 상품이 있을 경우 배열로 처리)
+	                var orderItems = [];
+
+	                // 예시: 상품 정보를 배열에 추가
+	                $('.order-item').each(function() {
+	                    var productNum = $(this).find('.product-num').val();  // 상품 번호
+	                    var quantity = $(this).find('.quantity').val();  // 수량
+	                    var price = $(this).find('.price').text().replace(',', '').replace('원', '');  // 상품 가격
+
+	                    // 주문 항목 추가
+	                    orderItems.push({
+	                        product_num: productNum,
+	                        quantity: quantity,
+	                        price: price
+	                    });
+	                });
 
 	                // 주문 정보를 먼저 서버에 전송
 	                var orderData = {
-	                    productName: $('#product_name').text(),
-	                    totalPrice: $('#final_price').text().replace(',', '').replace('원', ''),  // 상품 총액
-	                    couponCode: $('#couponSelect').val(),  // 선택한 쿠폰 코드
+	                	//member_id : ${'#member_id'}.val(),
+	                	coupon_code: $('#couponSelect').val(),  // 선택한 쿠폰 코드
+	                    product_name: $('#product_name').text(),
+	                    total_price: $('#total_price').text().replace(',', '').replace('원', ''),  // 상품 총액
+	                    discount: $('#discount').text().replace(',', '').replace('원', ''),  // 할인 총액
+	                    delivery_fee: $('#delivery_fee').text().replace(',', '').replace('원', ''),  // 배송비
 	                    points: $('#points').val(),  // 사용한 포인트
 	                    address: $('#address').val(),  // 배송 주소
 	                    address_detail: $('#address_detail').val(),  // 상세 주소
 	                    postcode: $('#postcode').val(),  // 우편번호
-	                    deliveryMemo: $('#delivery_memo').val()  // 배송 요청사항
+	                    tel : $('#tel').val(),
+	                    points : $('#points').val(),
+	                    //resuing : ${'#reusing}.val(),
+	                    delivery_memo: $('#delivery_memo').val(),  // 배송 요청사항
+	                    //order_item 테이블
+	                    //product_num : ${'#product_num'}.val(),
+	                    //quantity : ${'#quantity'}.val(),
+	                    //price : ${'#price'}.val(),
+	                    orderItems : orderItems
 	                };
 
 	                $.ajax({
@@ -128,6 +156,7 @@
 	                            buyer_postcode: '123-456'
 	                        }, function(rsp) {
 	                            if (rsp.success) {
+	                            	console.log('결제 응답 객체:', rsp.pay_method);  // 전체 응답 객체 확인
 	                                // 결제 성공 시 서버로 결제 정보 전송
 	                                $.ajax({
 	                                    url: '/order/pay',
@@ -135,12 +164,14 @@
 	                                    data: {
 	                                        imp_uid: rsp.imp_uid,
 	                                        merchant_uid: merchantUid,  // 주문 생성 시 사용한 주문 번호를 다시 전송
-	                                        paid_amount: rsp.paid_amount
+	                                        paid_amount: rsp.paid_amount,
+	                                        pay_method : rsp.pay_method,	                     
+	                                      	//member_id : ${'#member_id'}.val()
 	                                    },
 	                                    success: function(response) {
 	                                        if (response.status === 'success') {
 	                                            alert('결제가 완료되었습니다.');
-	                                            window.location.href = '/order/confirmation';  // 결제 완료 페이지로 이동
+	                                            window.location.href = '/payment/payment?merchant_uid=' + merchantUid;  // 결제 완료 페이지로 이동
 	                                        } else {
 	                                            alert('결제 검증에 실패했습니다.');
 	                                        }
@@ -174,7 +205,7 @@
 	            <br>
 	            
 	            <label for="tel">연락처 : </label>
-	            [[${tel}]]<input type="hidden" th:value="${tel}">
+	            [[${tel}]]<input type="hidden" th:value="${tel}" id="tel">
 	            
 	            <br>
 	            
@@ -204,7 +235,7 @@
 	            </select>	            	            
             </div>
             
-            <div>
+			<div>
             <h2>주문 상품</h2>
 	            <table>
 	            <tr>
@@ -214,6 +245,27 @@
 	            </tr>
 	        	</table>
             </div>
+            
+            <div class="order-items">
+			    <div class="order-item">
+			    	<img th:src="${product_img}" alt="Product Image" width="50">
+			        <input type="hidden" class="product-num" value="1">  <!-- 상품 번호 -->
+			        <span class="product-name">상품 1</span>
+			        <span class="price">10,000원</span> <!-- 상품 가격 -->
+			        <input type="hidden" class="quantity" value="1">  <!-- 상품 수량 -->
+			    </div>
+			</div>
+            
+<!--             <div class="order-items">
+    		Thymeleaf 반복문을 사용해 주문 상품 리스트 출력
+    			<div th:each="item : ${orderItems}" class="order-item">
+    				<img th:src="${product_img}" alt="Product Image" width="50">
+        			<input type="hidden" class="product-num" th:value="${item.product_num}">  상품 번호
+        			<span class="product-name" th:text="${item.product_name}">상품명</span>
+        			<span class="price" th:text="${item.price}">10,000원</span> 상품 가격
+        			<input type="number" class="quantity" th:value="${item.quantity}" min="1">  상품 수량
+    			</div>
+			</div> -->
             
             <h3>재사용 포장재 반납 신청</h3>
         	<input type="checkbox" id="reusing" name="resuing"> 반납 신청
@@ -238,7 +290,7 @@
             <div class="order-summary">
             <p>총 상품 금액: <span id="total_price">100원</span></p>
             <p>총 할인 금액: <span id="discount">0원</span></p>
-            <p>배송비: <span id="shipping_fee">0원</span></p>
+            <p>배송비: <span id="delivery_fee">0원</span></p>
             <p class="final_price">최종 결제 금액: <span id="final_price">100원</span></p>
         	</div>
             <hr>

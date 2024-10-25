@@ -9,12 +9,12 @@ import lombok.Data;
 
 @Data
 public class OrderJoinProductVO {
-	private int order_num;
+	private String merchant_uid;
 	private int product_num;
 	private String product_name;
 	private String member_id;
 	private String coupon_code;
-	private int count;
+	private int quantity;
 	private String postcode;
 	private String address;
 	private String address_detail;
