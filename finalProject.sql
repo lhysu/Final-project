@@ -114,35 +114,37 @@ INSERT INTO `finalproject`.`event` (event_title, event_content, event_views, eve
 ('Event 20', 'Content for event 20.', 221, 'event20.jpg', 'file20.jpg');
 
 # 찜
-CREATE TABLE `finalproject`.`like` (
-  `like_num` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `finalproject`.`likeList` (
+  `likeList_num` INT NOT NULL AUTO_INCREMENT,
   `product_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
-  `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`like_num`));
+  `price` INT NOT NULL,
+  `product_img` VARCHAR(255) NOT NULL,
+  `product_name` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`likeList_num`));
   
 # 찜 더미값 20개
-INSERT INTO `finalproject`.`like` (product_num, member_id) VALUES 
-(9, 'user01'),
-(11, 'user02'),
-(16, 'user03'),
-(1, 'user04'),
-(2, 'user05'),
-(15, 'user06'),
-(2, 'user07'),
-(18, 'user08'),
-(12, 'user09'),
-(5, 'user10'),
-(17, 'user11'),
-(18, 'user12'),
-(17, 'user13'),
-(16, 'user14'),
-(7, 'user15'),
-(6, 'user16'),
-(13, 'user17'),
-(6, 'user18'),
-(10, 'user19'),
-(4, 'user20');
+INSERT INTO `finalproject`.`likeList` (product_num, member_id, price, product_img, product_name) VALUES 
+(9, 'user01', 25448, 'product9.jpg' , 'Product 9'),
+(11, 'user02', 25448, 'product11.jpg' , 'Product 11'),
+(16, 'user03', 25448, 'product16.jpg' , 'Product 16'),
+(1, 'user04', 25448, 'product1.jpg' , 'Product 1'),
+(2, 'user05', 25448, 'product2.jpg' , 'Product 2'),
+(15, 'user06', 25448, 'product15.jpg' , 'Product 15'),
+(2, 'user07', 25448, 'product2.jpg' , 'Product 2'),
+(18, 'user08', 25448, 'product18.jpg' , 'Product 18'),
+(12, 'user09', 25448, 'product12.jpg' , 'Product 12'),
+(5, 'user10', 25448, 'product5.jpg' , 'Product 5'),
+(17, 'user11', 25448, 'product17.jpg' , 'Product 17'),
+(18, 'user12', 25448, 'product18.jpg' , 'Product 18'),
+(17, 'user13', 25448, 'product17.jpg' , 'Product 17'),
+(16, 'user14', 25448, 'product16.jpg' , 'Product 16'),
+(7, 'user15', 25448, 'product7.jpg' , 'Product 7'),
+(6, 'user16', 25448, 'product6.jpg' , 'Product 6'),
+(13, 'user17', 25448, 'product13.jpg' , 'Product 13'),
+(6, 'user18', 25448, 'product6.jpg' , 'Product 6'),
+(10, 'user19', 25448, 'product10.jpg' , 'Product 10'),
+(4, 'user20', 25448, 'product4.jpg' , 'Product 4');
   
 # 공지사항
 CREATE TABLE `finalproject`.`notice` (
@@ -641,15 +643,15 @@ ADD CONSTRAINT `FK_CART_PRODUCT`
   ON UPDATE CASCADE;
 
 #찜에서 회원, 상품 참조
-ALTER TABLE `finalproject`.`like`
-ADD CONSTRAINT `FK_LIKE_MEMBER`
+ALTER TABLE `finalproject`.`likeList`
+ADD CONSTRAINT `FK_LIKELIST_MEMBER`
 FOREIGN KEY (`member_id`) 
 REFERENCES `finalproject`.`member` (`member_id`)
 ON DELETE CASCADE 
 ON UPDATE NO ACTION;
 
-ALTER TABLE `finalproject`.`like`
-ADD CONSTRAINT `FK_LIKE_PRODUCT`
+ALTER TABLE `finalproject`.`likeList`
+ADD CONSTRAINT `FK_LIKELIST_PRODUCT`
 FOREIGN KEY (`product_num`) 
 REFERENCES `finalproject`.`product` (`product_num`)
 ON DELETE CASCADE 

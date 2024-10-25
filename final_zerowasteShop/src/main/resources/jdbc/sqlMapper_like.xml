@@ -3,69 +3,69 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.zerowasteshop.cart.mapper.CartMapper">
+<mapper namespace="com.project.zerowasteshop.likeList.mapper.LikeListMapper">
 
-	<update id = "updateProductName">
+	<!-- <update id = "updateProductName">
 		UPDATE cart c
 		JOIN product p ON c.product_num = p.product_num
 		SET c.product_name = p.product_name;
-	</update>
+	</update> -->
 
 	<select id="selectAllPageBlock"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
 		SELECT * 
-	    FROM cart
+	    FROM likeList
 	    WHERE member_id = #{userID}
-	    ORDER BY cart_num ASC limit #{startRow},#{pageBlock}
+	    ORDER BY likeList_num ASC limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="getTotalRows" resultType="int">
 		select count(*) total_rows
-		from cart
+		from likeList
 		where member_id = #{userID}
 	</select>
 	
 	<!-- <select id="searchListPageBlockCompany"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
 		select rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from
 		(select row_number() over(order by cart_num asc) as
-		rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from cart where company like #{searchWord}) as temp
+		rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from cart where company likeList #{searchWord}) as temp
 		where rnum between #{startRow} and #{endRow}
 	</select>
 
 	<select id="searchListPageBlockcart_name"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
 		select rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from
 		(select row_number() over(order by cart_num asc) as
-		rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from cart where cart_name like #{searchWord}) as temp
+		rnum, cart_num, cart_name, price, point , company, cart_img, category, rating from cart where cart_name likeList #{searchWord}) as temp
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="getSearchTotalRowsCompany" resultType="int">
 		select count(*) total_rows
-		from cart where company like #{searchWord} 
+		from cart where company likeList #{searchWord} 
 	</select>
 	
 	<select id="getSearchTotalRowscart_name" resultType="int">
 		select count(*) total_rows
-		from cart where cart_name like #{searchWord} 
+		from cart where cart_name likeList #{searchWord} 
 	</select> 
 	
 	<select id="selectOne"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
 		SELECT * 
 		FROM cart  
 		WHERE cart_num = #{cart_num};
 	</select> -->
 
 	<insert id="insertOK">
-		insert into cart(product_num, member_id, count, price, product_img, product_name)
-		values(#{product_num},#{member_id}, 1 ,#{price},#{product_img},#{product_name})
+		insert into likeList(product_num, member_id, price, product_img, product_name)
+		values(#{product_num},#{member_id}, #{price},#{product_img},#{product_name})
 	</insert>
 	
-	<select id="cartCheck" resultType="int">
+	<select id="likeListCheck" resultType="int">
 		select count(*)
-		from cart where product_num like #{product_num} and member_id like #{member_id}
+		from likeList where product_num like #{product_num} and member_id like #{member_id}
 	</select>
 	
 	<!-- <update id="updateOK">
@@ -75,23 +75,23 @@
 	</update> -->	
 	
 	<delete id="deleteOK">
-		delete from cart where cart_num=#{cart_num}
+		delete from likeList where likeList_num=#{likeList_num}
 	</delete>
 	
 	<!-- <select id="selectAll"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
 		select * from cart order by num desc
 	</select>
 
 	<select id="searchListName"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
-		select * from cart where name like #{searchWord} order by
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
+		select * from cart where name likeList #{searchWord} order by
 		num desc
 	</select>
 
 	<select id="searchListId"
-		resultType="com.project.zerowasteshop.cart.model.CartVO">
-		select * from cart where id like #{searchWord} order by
+		resultType="com.project.zerowasteshop.likeList.model.LikeListVO">
+		select * from cart where id likeList #{searchWord} order by
 		num desc
 	</select>
 	
@@ -102,7 +102,7 @@
 	
 	<select id="getSearchTotalRowsId" resultType="int">
 		select count(*) total_rows
-		from cart where id like #{searchWord} 
+		from cart where id likeList #{searchWord} 
 	</select>
 	
 	<select id="getSearchTotalRowsName" resultType="int">

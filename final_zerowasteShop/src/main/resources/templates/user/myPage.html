@@ -55,7 +55,7 @@
 	
 	<div style="margin-left : 100px;"> 
 	<p><a href="/cart/selectAll">내 장바구니</a></p>
-	<p><a href="@{/like/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
+	<p><a th:href="@{/likeList/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
 	<p><a href="/order/selectAll">구매내역</a></p>
 	<p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
 	<p><a href="/delivery/d_selectAll">배송조회</a></p>
@@ -77,7 +77,7 @@
 </div>
 <div>
 <p><a href="/cart/selectAll">내 장바구니</a></p>
-<p><a href="@{/like/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
+<p><a href="@{/likeList/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
 <p><a href="/order/selectAll">구매내역</a></p>
 <p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
 <p><a href="/delivery/d_selectAll">배송조회</a></p>
