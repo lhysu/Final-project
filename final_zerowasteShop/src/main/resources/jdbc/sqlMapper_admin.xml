@@ -4,7 +4,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.zerowasteshop.member.AdminMapper">
+<mapper namespace="com.project.zerowasteshop.member.admin.AdminMapper">
 
 	<select id = "selectAll" resultType="com.project.zerowasteshop.member.MemberVO">
 		select * from member order by member_num desc
