@@ -59,8 +59,8 @@
 	</select>
 
 	<insert id="insertOK">
-		insert into review(content, rating, review_img, createdDate)
-		values(#{content},#{rating},#{review_img},CURRENT_TIMESTAMP)
+		insert into review(member_id, product_num, content, rating, review_img, createdDate)
+		values(#{member_id},#{product_num}, #{content},#{rating},#{review_img},CURRENT_TIMESTAMP)
 	</insert>
 	
 	<update id="updateOK">
