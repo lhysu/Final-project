@@ -49,5 +49,17 @@ public class RecycleLifeService {
 		
 	}
 
-	
+	public int toggleLike(int recycleLife_num) {
+        int currentLikes = mapper.getLikes(recycleLife_num);
+        if (currentLikes % 2 == 0) {
+            mapper.incrementLikeCount(recycleLife_num);  // 짝수일 때 증가
+        } else {
+            mapper.decrementLikeCount(recycleLife_num);  // 홀수일 때 감소
+        }
+        return mapper.getLikes(recycleLife_num); // 변경된 좋아요 수 반환
+	}
+
 }
+
+	
+

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+
 @Mapper
 public interface RecycleLifeMapper {
 
@@ -25,5 +26,11 @@ public interface RecycleLifeMapper {
 
 	public void increaseViews(int recycleLife_num);
 
+	public void incrementLikeCount(int recycleLife_num);
 
+	public void decrementLikeCount(int recycleLife_num);
+
+	public int getLikes(int recycleLife_num);
+
+	public int toggleLike(int recycleLife_num);
 }
