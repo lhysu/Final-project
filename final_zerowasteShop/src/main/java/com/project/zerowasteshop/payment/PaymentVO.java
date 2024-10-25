@@ -4,27 +4,14 @@ import lombok.Data;
 
 @Data
 public class PaymentVO {
-	private int order_num;
-	private int product_num;
-	private String product_name;
-	private String member_id;
-	private String coupon_code;
-	private int count;
-	private String postcode;
-	private String address;
-	private String address_detail;
-	private String tel;
-	private boolean reusing;
-	private int discount;
-	private int delivery_fee;
-	private String delivery_memo;
-	private boolean payCheck;
-	private int total_price;
-	private int final_price;
-	private String order_state;
-	
-	private String imp_uid;
-    private String merchant_uid;
-    private int paid_amount;
-    private String status;
+	private int pay_num;           // 결제 번호 (Primary Key)
+    private String merchant_uid;   // 주문 번호
+    private String imp_uid;        // 아임포트 결제 고유 ID
+    private String member_id;      // 회원 ID
+    private int paid_amount;       // 결제 금액
+    private String pay_method;     // 결제 방식 (카드, 계좌이체 등)
+    private String pay_status;         // 결제 상태 ('paid', 'failed' 등)
+    private String pay_date;       // 결제일
+    private String tracking_number; // 운송장 번호
+
 }

@@ -31,4 +31,10 @@ public interface OrderMapper {
 
 	void saveOrder(OrderVO order);
 
+	void updateOrderState(String merchant_uid, String orderState);
+
+	void saveOrderItem(OrderItemVO item);
+
+	OrderVO selectOne(String merchant_uid);
+
 }

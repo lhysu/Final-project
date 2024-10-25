@@ -36,7 +36,7 @@ public class IamportService {
         return (String) responseData.get("access_token");
     }
     
- // 결제 정보 조회
+    // 결제 정보 조회
     public PaymentVO getPaymentInfo(String impUid,String token) throws Exception {
         token = getToken(); // 토큰 발급
         RestTemplate restTemplate = new RestTemplate();
@@ -56,8 +56,9 @@ public class IamportService {
         payment.setImp_uid((String) responseData.get("imp_uid"));
         payment.setMerchant_uid((String) responseData.get("merchant_uid"));
         payment.setPaid_amount((Integer) responseData.get("amount"));
-        payment.setStatus((String) responseData.get("status"));
-
+        payment.setPay_status((String) responseData.get("status"));
+        payment.setPay_method((String) responseData.get("pay_method"));
+        payment.setMember_id((String) responseData.get("member_id"));
         return payment;
     }
 }
