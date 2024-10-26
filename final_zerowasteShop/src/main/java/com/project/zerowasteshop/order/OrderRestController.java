@@ -133,9 +133,13 @@ public class OrderRestController {
         // 각각의 주문 아이템을 저장하는 로직
         orderService.saveOrderItems(merchantUid, orderItems);
 
+        OrderJoinItemVO vo2 = orderService.selectOne(merchantUid);
+        log.info("vo2.getFinal_price():{}",vo2.getFinal_price());
         // 응답으로 주문 번호를 반환
         Map<String, String> response = new HashMap<>();
+        
         response.put("merchantUid", merchantUid);
+        response.put("finalAmount", Integer.toString(vo2.getFinal_price()) );
         return response;
     }
 	

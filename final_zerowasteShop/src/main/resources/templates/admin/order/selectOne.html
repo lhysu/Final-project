@@ -1,84 +1,133 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>주문 상세</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- 부트스트랩 및 CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-
+    <title>주문 상세 - 관리자 페이지</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .content {
-            margin: 40px;
+        .container {
+            margin-top: 50px;
         }
-        .order-details, .payment-details {
-            margin-bottom: 30px;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .table-title {
+        .section-title {
+            font-size: 1.5rem;
             font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .details {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .details label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .details div {
             margin-bottom: 15px;
-            font-size: 18px;
         }
         .btn-group {
-            display: flex;
-            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .customer-center {
             margin-top: 20px;
-        }
-        .btn-group .btn {
-            width: 150px;
-        }
-        th, td {
-            text-align: center;
         }
     </style>
 </head>
 <body>
-
-
-    <!-- 주문 상세 시작 -->
-    <div class="content">
+			
+    <div class="container">
+        <!-- 주문 상세 -->
         <div class="order-details">
-            <div class="table-title">주문 상세</div>
-            <table class="table">
+        <!-- 버튼 그룹 -->
+            <div class="btn-group" role="group" aria-label="주문 상태 변경">
+                <button type="button" class="btn btn-primary">교환 확인</button>
+                <button type="button" class="btn btn-secondary">취소 확인</button>
+                <button type="button" class="btn btn-success">환불 확인</button>
+                <button type="button" class="btn btn-info">반품 확인</button>
+            </div>
+            <div class="section-title">주문 상세</div>
+            <div class="details">
+                <div>
+                    <label>주문번호:</label>
+                    <span>[[${vo.merchant_uid}]]</span>
+                </div>
+                <div>
+                    <label>상품번호:</label>
+                    <span>[[${vo.product_num}]]</span>
+                </div>
+                <div>
+                    <label>회원ID:</label>
+                    <span>[[${vo.member_id}]]</span>
+                </div>
+                <div>
+                    <label>사용한 쿠폰 코드:</label>
+                    <span>[[${vo.coupon_code}]]</span>
+                </div>
+                <div>
+                    <label>사용한 포인트:</label>
+                    <span>[[${vo.points}]]</span>
+                </div>
+                <div>
+                    <label>우편번호 :</label>
+                    <span>[[${vo.postcode}]]</span>
+                </div>
+                <div>
+                    <label>주소:</label>
+                    <span>[[${vo.address}]]</span>
+                </div>
+                <div>
+                    <label>상세한 주소:</label>
+                    <span>[[${vo.address_detail}]]</span>
+                </div>
+                <div>
+                    <label>연락처:</label>
+                    <span>[[${vo.tel}]]</span>
+                </div>
+                <div>
+                    <label>배송 요청 사항:</label>
+                    <span>[[${vo.delivery_memo}]]</span>
+                </div>
+                <div class="section-title">주문한 상품 목록</div>
+            <table class="item-table">
                 <thead>
                     <tr>
-                        <th>주문번호</th>
                         <th>상품번호</th>
-                        <th>회원ID</th>
-                        <th>배송상태</th>
+                        <th>수량</th>
+                        <th>가격</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>[[${vo.merchant_uid}]]</td>
-                        <td>[[${vo.product_num}]]</td>
-                        <td>[[${vo.member_id}]]</td>
-                        <td>[[${vo.order_state}]]</td>
+                    <tr th:each="item : ${vo.orderItems}">
+                        <td>[[${item.product_num}]]</td>
+                        <td>[[${item.quantity}]]</td>
+                        <td>[[${item.price}]]원</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="btn-group">
-                <button class="btn btn-primary">교환 확인</button>
-                <button class="btn btn-warning">취소 확인</button>
-                <button class="btn btn-success">환불 확인</button>
-                <button class="btn btn-danger">발품 확인</button>
+ 
+            </div>           
+        </div>
+
+        <!-- 결제 상세 -->
+        <div class="payment-details mt-5">
+            <div class="section-title">결제 상세</div>
+            <div class="details">
+                <div>
+                    <label>주문번호:</label>
+                    <span>[[${vo.merchant_uid}]]</span>
+                </div>
+                <div>
+                    <label>상품번호:</label>
+                    <span>[[${vo.product_num}]]</span>
+                </div>
+                <div>
+                    <label>회원ID:</label>
+                    <span>[[${vo.member_id}]]</span>
+                </div>
             </div>
         </div>
 
-        
-     </div>
 
-
-
-	<!-- Footer Start -->
-	<div th:replace="footer :: footer"></div>
-	<!-- Footer End -->
+    </div>
 </body>
 </html>

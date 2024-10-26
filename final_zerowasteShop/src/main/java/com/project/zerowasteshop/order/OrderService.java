@@ -148,7 +148,7 @@ public class OrderService {
 		
 	}
 
-	public OrderVO selectOne(String merchant_uid) {
+	public OrderJoinItemVO selectOne(String merchant_uid) {
 		return mapper.selectOne(merchant_uid);
 	}
 }
