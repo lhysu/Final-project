@@ -4,36 +4,160 @@
 <meta charset="UTF-8">
 <title>Login Page</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com"  crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+<style>
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+body{
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-wrapper{
+    display: grid;
+	place-items: center;
+	min-height: 100dvh;
+	
+	
+}
+.login-wrapper2{
+    display: grid;
+	place-items: center;
+	min-height: 40dvh;
+	
+ }
+
+.content{
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	border-radius: 20px;
+	width: 500px;
+	height: 650px;
+	position: relative;
+}
+
+.login-wrapper2 > h1{
+    font-size: 35px;
+    color: #81c408;
+    padding-top: 50px;
+    margin-bottom: 30px;
+    
+}
+#login-form > input{
+    font-size: 18px;
+	width: 400px;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#login-form > input::placeholder{
+    color: #D2D2D2;
+    font-size: 16px;
+}
+
+
+#login-form > input[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color:  #81c408;
+    margin-top: 20px;
+}
+#admin-login{
+	color: #D2D2D2;
+}
+
+.emailCheck-text > input{
+    font-size: 15px;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+
+.emailCheck-btn{
+	height: 40px;
+	margin-bottom: 10px;
+	font-size: 10pt;
+}
+
+
+
+</style>
 </head>
 <body>
-
+<div class="login-wrapper">
+	<div class="content">
+	<div class="login-wrapper2">
 	<h1>비밀번호 찾기</h1>
 	
-	<form action="/member/selectPwCheck" method="post">
-  	<table>
-  		<tr>
-	      <th>아이디</th>
-	      <td><input type="text" name="member_id" id="member_id" value="hello" placeholder="아이디를 입력해주세요"> </td>
-	    </tr>
-	    <tr>
-	      <th>이름</th>
-	      <td><input type="text" name="name" id="name" value="kim" placeholder="이름을 입력해주세요"> </td>
-	    </tr>
-	    <tr>
-	      <th>이메일</th>
-	      <td><input type="text" name="email" id="email" value="zerocfinal33@naver.com" placeholder="이메일을 입력해주세요">
-	      	<button type="button" id="sendEmailCode" >인증번호 받기</button><br>
-	      	<input type="text" name="verificationCode" id="verificationCode" placeholder="이메일 인증 코드를 입력해주세요">
-	      	<button type="button" id="checkEmailCode">인증번호 확인</button></td>
-	    </tr>
+	<form id="login-form" action="/member/selectPwCheck" method="post">
+		<label for="member_id" class="form-label">아이디</label>
+        <input type="text" class="form-control" name="member_id" id="member_id" value="hello" placeholder="아이디를 입력해주세요">
+	
+        <label for="name" class="form-label">이름</label>
+        <input type="text" class="form-control" name="name" id="name" value="User01" placeholder="이름을 입력하세요">
+        
+	    <label for="email" class="form-label">이메일</label>
+	    <div >
+	    <div class="emailCheck-text col-md-8">
+        		<input type="text" class="form-control" name="email" id="email" value="zerocfinal33@naver.com" style="float:left" placeholder="이메일을 입력해주세요">
+        	</div>
+        	<div class="col-md-4 d-flex">
+        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2" id="sendEmailCode" >인증번호 받기</button>
+        	</div>
+	    </div>
 	    
-	    <tr>
-	      <td colspan="2"><input type="submit" disabled='disabled' id="selectPwCheck" value="확인"> </td>
-	    </tr>
-
-  	</table>
+	    <div>
+	    <div class="emailCheck-text col-md-8">
+        		<input type="text" class="form-control" name="verificationCode" id="verificationCode" style="float:left" placeholder="이메일 인증 코드를 입력해주세요">
+        	</div>
+        	<div class=" col-md-4 d-flex">
+        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2 " id="checkEmailCode" >인증번호 확인</button>
+        	</div>
+	    </div>
+	    
+	    
+	    
+	    
+	    <button type="submit" class="btn btn-primary w-100 text-white my-2" disabled='disabled' id="selectPwCheck" style="height: 42px;" >확인</button>
 
 	</form>
+	
+	<a th:href="|/home|" style="position: absolute; bottom: 70px;">HOME</a>
+ 	
+	
+</div>
+</div>
+</div>
  	
  	<script>
 			let code="";

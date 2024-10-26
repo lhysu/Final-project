@@ -492,7 +492,7 @@ CREATE TABLE `review` (
   `content` varchar(1000) NOT NULL,
   `rating` DOUBLE NOT NULL,
   `review_img` varchar(255) DEFAULT NULL,
-  `createdDate` VARCHAR(255) NOT NULL,
+  `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`review_num`)
 );
@@ -526,7 +526,7 @@ CREATE TABLE `review` (
   `recycleLife_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `lifeComment_content` VARCHAR(1000) NOT NULL,
-  `lifeComment_wdate` TIMESTAMP NOT NULL,
+  `lifeComment_wdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`lifeComment_num`));
   
   # 재활용 라이프 댓글 더미값 20개
