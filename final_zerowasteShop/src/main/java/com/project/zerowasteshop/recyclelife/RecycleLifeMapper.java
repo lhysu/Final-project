@@ -10,7 +10,7 @@ public interface RecycleLifeMapper {
 
 	public List<RecycleLifeVO> selectAll();
 
-	public RecycleLifeVO rl_selectOne(RecycleLifeVO vo);
+	public RecycleLifeVO selectOne(RecycleLifeVO vo);
 
 	public int insertOK(RecycleLifeVO vo);
 

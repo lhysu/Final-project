@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thmeleaf.org">
 <head>
-<title>d_selectOne.html</title>
+<title>배송조회 상세</title>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -40,11 +40,10 @@
 <body>
 
 	<!-- Header -->
-    <!-- <div th:replace="header :: header"></div> -->
+    <div th:replace="header :: header"></div>
   
-	<h1>배송 조회 상세</h1>
-
-		<div class="container my-4" >
+		<div class="container my-4" style="padding-top:200px;">
+		<h1 class="mb-4"><a th:href="@{delivery/selectOne}" >배송조회 상세</a></h1>
 			<table id="insertTable" class="table table-striped table-bordered">
 				<tr>
 					<td>배송추적번호</td>

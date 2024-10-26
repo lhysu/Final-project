@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thmeleaf.org">
 <head>
-<title>rl_insert.html</title>
+<title>insert.html</title>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -46,7 +46,7 @@
         <h1 class="mb-4">재활용 게시판 글 작성</h1>
         
         <!-- 게시판 글 작성 폼 -->
-        <form th:action="@{/community/recycleLife/rl_insertOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <form th:action="@{/community/recycleLife/insertOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="recycleLife_title" class="form-label">제목 : </label>
                 <input type="text" id="recycleLife_title" name="recycleLife_title" class="form-control" required>
@@ -75,11 +75,14 @@
                     <button type="reset" class="btn btn-secondary">초기화</button>
                 </div>
                 <div>
-                    <a th:href="@{/community/recycleLife/rl_selectAll}" class="btn btn-link">목록으로</a>
+                    <a th:href="@{/community/recycleLife/selectAll}" class="btn btn-link">목록으로</a>
                 </div>
             </div>
         </form>
     </div>
+	
+		<!-- 부트스트랩 JS 및 의존성 추가 (CDN 사용 권장) -->
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
 		<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공) -->
 	    <script>

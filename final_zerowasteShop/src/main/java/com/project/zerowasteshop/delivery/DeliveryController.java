@@ -20,9 +20,9 @@ public class DeliveryController {
 	DeliveryService service;
 		
 	
-	@GetMapping("/delivery/d_selectOne")
-	public String d_selectOne(@RequestParam("tracking_num") String trackingNum, DeliveryVO vo, Model model) {
-		log.info("/delivery/d_selectOne");
+	@GetMapping("/delivery/selectOne")
+	public String selectOne(@RequestParam("delivery_num") int delivery_num , DeliveryVO vo, Model model) {
+		log.info("/delivery/selectOne");
 		log.info("vo : {}", vo);
 		
 		DeliveryVO vo2 = service.selectOne(vo);
@@ -36,16 +36,16 @@ public class DeliveryController {
 	        return "errorPage"; // 오류 페이지로 이동하거나 기본 페이지 설정
 	    }
 		
-		return "delivery/d_selectOne";
+		return "delivery/selectOne";
         
     }
 		
 	
-	@GetMapping("/delivery/d_selectAll")
-	public String d_selectAll(Model model,
+	@GetMapping("/delivery/selectAll")
+	public String selectAll(Model model,
 			@RequestParam(defaultValue = "1") int cpage,
             @RequestParam(defaultValue = "5") int pageBlock) {
-		log.info("/delivery/d_selectAll");
+		log.info("/delivery/selectAll");
 		log.info("cpage : {}", cpage);
         log.info("pageBlock : {}", pageBlock);
 		
@@ -70,14 +70,14 @@ public class DeliveryController {
 
         model.addAttribute("totalPageCount", totalPageCount);
 		
-		return "delivery/d_selectAll";
+		return "delivery/selectAll";
 	}
 	
-	@GetMapping("/delivery/d_searchList")
-	public String d_searchList(Model model,
+	@GetMapping("/delivery/searchList")
+	public String searchList(Model model,
 			@RequestParam(defaultValue = "delivery_num") String searchKey,
 			@RequestParam(defaultValue = "1") String searchWord) {
-		log.info("/delivery/d_searchList");
+		log.info("/delivery/searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
 		
@@ -86,7 +86,7 @@ public class DeliveryController {
 		
 		model.addAttribute("list", list);
 		
-		return "delivery/d_selectAll";
+		return "delivery/selectAll";
 	}
 	
 

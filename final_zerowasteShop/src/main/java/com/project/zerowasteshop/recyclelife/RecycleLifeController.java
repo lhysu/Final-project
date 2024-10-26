@@ -32,11 +32,11 @@ public class RecycleLifeController {
 	@Value("${file.dir}")
 	private String realPath;
 	
-	@GetMapping("/community/recycleLife/rl_selectAll")
-	public String rl_selectAll(Model model,
+	@GetMapping("/community/recycleLife/selectAll")
+	public String selectAll(Model model,
 			@RequestParam(defaultValue = "1") int cpage,
             @RequestParam(defaultValue = "5") int pageBlock) {
-		log.info("/community/recycleLife/rl_selectAll");
+		log.info("/community/recycleLife/selectAll");
 		log.info("cpage : {}", cpage);
         log.info("pageBlock : {}", pageBlock);
 		
@@ -62,15 +62,15 @@ public class RecycleLifeController {
 
         model.addAttribute("totalPageCount", totalPageCount);
 		
-		return "community/recycleLife/rl_selectAll";
+		return "community/recycleLife/selectAll";
 	}
 	
-	@GetMapping("/community/recycleLife/rl_selectOne")
-	public String rl_selectOne(RecycleLifeVO vo, Model model) {
-		log.info("/community/recycleLife/rl_selectOne");
+	@GetMapping("/community/recycleLife/selectOne")
+	public String selectOne(RecycleLifeVO vo, Model model) {
+		log.info("/community/recycleLife/selectOne");
 		log.info("vo : {}", vo);
 		
-		RecycleLifeVO vo2 = service.rl_selectOne(vo);
+		RecycleLifeVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
 		
 		if (vo2 == null) {
@@ -83,14 +83,14 @@ public class RecycleLifeController {
 			
 		model.addAttribute("vo2", vo2);
 		
-		return "community/recycleLife/rl_selectOne";
+		return "community/recycleLife/selectOne";
 	}
 	
-	@GetMapping("/community/recycleLife/rl_searchList")
-	public String d_searchList(Model model,
+	@GetMapping("/community/recycleLife/searchList")
+	public String searchList(Model model,
 			@RequestParam(defaultValue = "recycleLife_num") String searchKey,
 			@RequestParam(defaultValue = "1") String searchWord) {
-		log.info("/community/recycleLife/rl_searchList");
+		log.info("/community/recycleLife/searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
 		
@@ -99,29 +99,29 @@ public class RecycleLifeController {
 		
 		model.addAttribute("list", list);
 		
-		return "community/recycleLife/rl_searchList";
+		return "community/recycleLife/selectAll";
 	}
 	
-	@GetMapping("/community/recycleLife/rl_insert")
-	public String rl_insert() {
-		log.info("/community/recycleLife/rl_insert");
+	@GetMapping("/community/recycleLife/insert")
+	public String insert() {
+		log.info("/community/recycleLife/insert");
 		
-		return "community/recycleLife/rl_insert";
+		return "community/recycleLife/insert";
 	}
 	
-	@GetMapping("/community/recycleLife/rl_delete")
-	public String rl_delete() {
-		log.info("/community/recycleLife/rl_delete");
+	@GetMapping("/community/recycleLife/delete")
+	public String delete() {
+		log.info("/community/recycleLife/delete");
 		
-		return "community/recycleLife/rl_delete";
+		return "community/recycleLife/delete";
 	}
 	
-	@GetMapping("/community/recycleLife/rl_update")
-	public String rl_update(RecycleLifeVO vo, Model model) {
-		log.info("/community/recycleLife/rl_update");
+	@GetMapping("/community/recycleLife/update")
+	public String update(RecycleLifeVO vo, Model model) {
+		log.info("/community/recycleLife/update");
 		log.info("vo : {}", vo);
 		
-		RecycleLifeVO vo2 = service.rl_selectOne(vo);
+		RecycleLifeVO vo2 = service.selectOne(vo);
 		
 		log.info("vo2:{}", vo2);
 
@@ -131,12 +131,12 @@ public class RecycleLifeController {
 			log.info("vo2 is null");		
 		}
 	
-		return "community/recycleLife/rl_update";
+		return "community/recycleLife/update";
 	}
 
-	@PostMapping("/community/recycleLife/rl_insertOK")
-	public String rl_insertOK(RecycleLifeVO vo) throws IllegalStateException, IOException {
-		log.info("/community/recycleLife/rl_insertOK");
+	@PostMapping("/community/recycleLife/insertOK")
+	public String insertOK(RecycleLifeVO vo) throws IllegalStateException, IOException {
+		log.info("/community/recycleLife/insertOK");
 		log.info("vo : {}", vo);
 
 		log.info(realPath);
@@ -168,16 +168,17 @@ public class RecycleLifeController {
 
         int result = service.insertOK(vo);
         log.info("result : {}", result);
+        
         if (result == 1) {
-            return "redirect:/community/event/selectAll";
+            return "redirect:/community/recycleLife/selectAll";
         } else {
-            return "redirect:/community/event/insert";
+            return "redirect:/community/recycleLife/insert";
         }
 	}
 	
-	@PostMapping("/community/recycleLife/rl_updateOK")
-	public String rl_updateOK(RecycleLifeVO vo) throws IllegalStateException, IOException {
-		log.info("/community/recycleLife/rl_updateOK");
+	@PostMapping("/community/recycleLife/updateOK")
+	public String updateOK(RecycleLifeVO vo) throws IllegalStateException, IOException {
+		log.info("/community/recycleLife/updateOK");
 		log.info("vo : {}", vo);
 		
 		log.info(realPath);
@@ -210,24 +211,24 @@ public class RecycleLifeController {
         int result = service.updateOK(vo);
         log.info("result : {}", result);
         if (result == 1) {
-            return "redirect:/community/recycleLife/rl_selectOne?recycleLife_num=" + vo.getRecycleLife_num();
+            return "redirect:/community/recycleLife/selectOne?recycleLife_num=" + vo.getRecycleLife_num();
         } else {
-            return "redirect:/community/recycleLife/rl_update?recycleLife_num=" + vo.getRecycleLife_num();
+            return "redirect:/community/recycleLife/update?recycleLife_num=" + vo.getRecycleLife_num();
         }
     }
 	
 	
-	@PostMapping("/community/recycleLife/rl_deleteOK")
-	public String rl_deleteOK(RecycleLifeVO vo) {
-		log.info("/community/recycleLife/rl_deleteOK");
+	@PostMapping("/community/recycleLife/deleteOK")
+	public String deleteOK(RecycleLifeVO vo) {
+		log.info("/community/recycleLife/deleteOK");
 		log.info("vo : {}", vo);
 		
 		int result = service.deleteOK(vo);
 		log.info("result : {}", result);
 		if (result == 1) {
-			return "redirect:/community/recycleLife/rl_selectAll";
+			return "redirect:/community/recycleLife/selectAll";
 		} else {
-			return "redirect:/community/recycleLife/rl_delete?recycleLife_num=" + vo.getRecycleLife_num();
+			return "redirect:/community/recycleLife/delete?recycleLife_num=" + vo.getRecycleLife_num();
 		}
 	}
 	

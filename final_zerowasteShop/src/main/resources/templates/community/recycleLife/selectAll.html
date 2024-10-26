@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>rl_selectAll.html</title>
+<title>재활용 라이프 게시판</title>
 <link rel="stylesheet" href="/css/main.css">
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,39 +57,47 @@
 <body>
 
 	<!-- Header -->
-    <!-- <div th:replace="header :: header"></div> -->    
+    <div th:replace="header :: header"></div>    
 	
-	<div th:fragment="content" class="container my-4">
-		<h1 class="mb-4">나의 재활용 라이프를 자랑해보세요!</h1>
-		<form action="/community/recycleLife/rl_searchList">
-			<select name="searchKey">
-				<option value="title">title</option>
-				<option value="content">content</option>
-			</select> 
-			<input type="text" name="searchWord" value="tum"> 
-			<input type="submit" value="검색">			
-		</form>
-		
-		<form action="/community/recycleLife/rl_insert">
+	<div class="container my-4" style="padding-top:200px;">
+	<h1 class="mb-4"><a th:href="@{/community/recycleLife/selectAll}" >재활용 라이프 게시판</a></h1>
+		<h3 class="mb-4">나의 재활용 라이프를 자랑해보세요!</h3>
+		<!-- 검색 폼 추가 -->
+        <form th:action="@{/community/recycleLife/searchList}" method="get" class="row g-3 mb-4">
+            <div class="col-md-8">
+                <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" 
+                       th:value="${searchWord}">
+            </div>
+            <div class="col-md-4 d-flex">
+                <button type="submit" class="btn btn-primary-custom me-2">검색</button>
+                <a th:if="${searchWord}" th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">검색 초기화</a>
+                <a th:href="@{/community/recycleLife/insert}" class="btn btn-secondary">글쓰기</a>
+            </div>
+        	        	
+        </form>
+        		
+		<!-- <form action="/community/recycleLife/insert">
 			<input type="submit" value="글쓰기">
-		</form>
+		</form> -->
 		
 		<table id="insertTable" class="table table-striped table-bordered">
 			<thead class="table-dark">
 				<tr>
-					<th>NUM</th>
-					<th>TITLE</th>
-					<th>WRITER</th>
-					<th>WDATE</th>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
 				<th:block th:each="vo : ${list}">
 					<tr>
-						<td><a th:href="|/community/recycleLife/rl_selectOne?recycleLife_num=${vo.recycleLife_num}|">[[${vo.recycleLife_num}]]</td>
+						<td><a th:href="|/community/recycleLife/selectOne?recycleLife_num=${vo.recycleLife_num}|">[[${vo.recycleLife_num}]]</td>
 						<td>[[${vo.recycleLife_title}]]</a></td>
 						<td>[[${vo.member_id}]]</td>
 						<td>[[${vo.recycleLife_wdate}]]</td>
+						<td>[[${vo.recycleLife_views}]]</td>
 					</tr>
 				</th:block>
 			</tbody>
@@ -99,11 +107,11 @@
 			<td colspan="4">
       			<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
       			<th:block th:if="${param.searchKey==null}">
-		      		<a th:href="|/community/recycleLife/rl_selectAll?cpage=${i}|">[[${i}]]</a>
+		      		<a th:href="|/community/recycleLife/selectAll?cpage=${i}|">[[${i}]]</a>
 				</th:block>
       			<th:block th:if="${param.searchKey!=null}">
       			<th:block th:with="searchKey=${param.searchKey}, searchWord=${param.searchWord}">
-		      		<a th:href="|/community/recycleLife/rl_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+		      		<a th:href="|/community/recycleLife/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
 				</th:block>
 				</th:block>		   	
       			</th:block>
@@ -118,7 +126,7 @@
 	                <li th:each="pageNum : ${#numbers.sequence(1, totalPageCount)}" 
 	                    th:class="${pageNum == cpage} ? 'page-item active' : 'page-item'">
 	                    <a class="page-link" 
-	                       th:href="@{/community/recycleLife/rl_selectAll(cpage=${pageNum})}" 
+	                       th:href="@{/community/recycleLife/selectAll(cpage=${pageNum})}" 
 	                       th:text="${pageNum}">1</a>
 	                </li>
 	            </ul>

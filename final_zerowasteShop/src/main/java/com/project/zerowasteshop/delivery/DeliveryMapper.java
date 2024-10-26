@@ -20,7 +20,7 @@ public interface DeliveryMapper {
 
 	public List<DeliveryVO> searchListPageBlock();
 
-	public List<DeliveryVO> searchListProduct_name(String string);
+	public List<DeliveryVO> searchListDelivery_num(String string);
 
 	public List<DeliveryVO> searchListTracking_num(String string);
 
