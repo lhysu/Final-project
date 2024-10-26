@@ -122,12 +122,11 @@
 	                    postcode: $('#postcode').val(),  // 우편번호
 	                    tel : $('#tel').val(),
 	                    points : $('#points').val(),
-	                    //resuing : ${'#reusing}.val(),
 	                    delivery_memo: $('#delivery_memo').val(),  // 배송 요청사항
 	                    //order_item 테이블
-	                    //product_num : ${'#product_num'}.val(),
-	                    //quantity : ${'#quantity'}.val(),
-	                    //price : ${'#price'}.val(),
+	                    product_num : $('#product_num').val(),
+	                    quantity : $('#quantity').val(),
+	                    price : $('#price').val(),
 	                    orderItems : orderItems
 	                };
 
@@ -138,7 +137,7 @@
 	                    data: JSON.stringify(orderData),
 	                    success: function(response) {
 	                        var merchantUid = response.merchantUid;  // 서버로부터 주문 번호(merchant_uid)를 응답받음
-
+	                        var finalAmount = response.finalAmount;  // 서버로부터 받은 최종 결제 금액
 	                        // 2단계: 결제 요청
 	                        var IMP = window.IMP;
 	                        IMP.init('imp57000577');  // 아임포트 가맹점 식별 코드
@@ -148,7 +147,7 @@
 	                            pay_method: 'card',  // 결제 방식
 	                            merchant_uid: merchantUid,  // 서버에서 받은 주문 번호 사용
 	                            name: '주문명: 결제 테스트',
-	                            amount: 100,  // 최종 결제 금액
+	                            amount: finalAmount,  // 최종 결제 금액
 	                            buyer_email: 'test@example.com',
 	                            buyer_name: '홍길동',
 	                            buyer_tel: '010-1234-5678',
@@ -235,24 +234,14 @@
 	            </select>	            	            
             </div>
             
-			<div>
-            <h2>주문 상품</h2>
-	            <table>
-	            <tr>
-	                <td><img th:src="${product_img}" alt="Product Image" width="50"></td>
-	                <td>[[${product_name}]]</td>
-	                <td>[[${price}]]원</td>
-	            </tr>
-	        	</table>
-            </div>
-            
+            <h2>주문 상품</h2>	                   
             <div class="order-items">
 			    <div class="order-item">
-			    	<img th:src="${product_img}" alt="Product Image" width="50">
-			        <input type="hidden" class="product-num" value="1">  <!-- 상품 번호 -->
-			        <span class="product-name">상품 1</span>
-			        <span class="price">10,000원</span> <!-- 상품 가격 -->
-			        <input type="hidden" class="quantity" value="1">  <!-- 상품 수량 -->
+			    	<img th:src="${product.product_img}" alt="Product Image" width="50">
+			        <input type="hidden" class="product-num" th:value="${product.product_num}">  <!-- 상품 번호 -->
+			        <span class="product_name">[[${product.product_name}]]</span>
+			        <span class="price">[[${product.price}]]원</span> <!-- 상품 가격 -->
+			        <input type="hidden" class="quantity" th:value="${product.product_num}">  <!-- 상품 수량 -->
 			    </div>
 			</div>
             
@@ -288,10 +277,10 @@
             
             <hr>
             <div class="order-summary">
-            <p>총 상품 금액: <span id="total_price">100원</span></p>
+            <p>총 상품 금액: <span id="total_price">[[${product.price}]]원</span></p>
             <p>총 할인 금액: <span id="discount">0원</span></p>
             <p>배송비: <span id="delivery_fee">0원</span></p>
-            <p class="final_price">최종 결제 금액: <span id="final_price">100원</span></p>
+            <p class="final_price">최종 결제 금액: <span id="final_price">[[${product.price}]]원</span></p>
         	</div>
             <hr>
              

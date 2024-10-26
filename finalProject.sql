@@ -408,7 +408,6 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   `final_price` INT  NULL,
   `order_state` VARCHAR(45),
   PRIMARY KEY (`merchant_uid`),
-  UNIQUE INDEX `coupon_code_UNIQUE` (`coupon_code` ASC) VISIBLE,
   UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
   
   # 주문 더미값 20개
@@ -424,6 +423,7 @@ CREATE TABLE `finalproject`.`order_item` (
   `order_item_id` INT NOT NULL AUTO_INCREMENT,
   `merchant_uid` VARCHAR(255)  NULL,
   `product_num` INT  NULL,
+  `product_name` VARCHAR(255)  NULL,
   `quantity` INT  NULL,
   `price` INT  NULL,
   PRIMARY KEY (`order_item_id`));
