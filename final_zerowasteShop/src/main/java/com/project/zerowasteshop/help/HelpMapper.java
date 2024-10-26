@@ -2,6 +2,9 @@ package com.project.zerowasteshop.help;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface HelpMapper {
 	// 단일 문의 조회
     public HelpVO selectOne(HelpVO helpVO);
