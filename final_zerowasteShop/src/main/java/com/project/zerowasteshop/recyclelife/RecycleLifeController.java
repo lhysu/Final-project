@@ -10,15 +10,18 @@ import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.zerowasteshop.delivery.DeliveryVO;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +34,7 @@ public class RecycleLifeController {
 	
 	@Value("${file.dir}")
 	private String realPath;
-	
+		
 	@GetMapping("/community/recycleLife/selectAll")
 	public String selectAll(Model model,
 			@RequestParam(defaultValue = "1") int cpage,
@@ -61,12 +64,17 @@ public class RecycleLifeController {
         log.info("totalPageCount:{}", totalPageCount);
 
         model.addAttribute("totalPageCount", totalPageCount);
-		
+        
+        // 조회수 Top3 게시물 조회
+        List<RecycleLifeVO> post = service.selectTopViews();
+		model.addAttribute("post", post);
+        
 		return "community/recycleLife/selectAll";
 	}
 	
 	@GetMapping("/community/recycleLife/selectOne")
-	public String selectOne(RecycleLifeVO vo, Model model) {
+	public String selectOne(RecycleLifeVO vo, Model model,
+			@RequestParam int recycleLife_num) {
 		log.info("/community/recycleLife/selectOne");
 		log.info("vo : {}", vo);
 		
@@ -79,11 +87,22 @@ public class RecycleLifeController {
 	    } else {
 	    	//조회수 증가 로직, 중복 방지 기능은 구현 X
 	    	service.increaseViews(vo2.getRecycleLife_num());
-	    }
-			
+	    }			
+		
 		model.addAttribute("vo2", vo2);
 		
+		int likes = service.getLikeCount(recycleLife_num);
+        model.addAttribute("recycleLife_num", recycleLife_num);
+        model.addAttribute("recycleLife_likes", likes);
+		
 		return "community/recycleLife/selectOne";
+	}
+	
+	@PostMapping("/community/recycleLife/selectOne")
+	public ResponseEntity<Integer> toggleLike(@RequestParam("recycleLife_num") int recycleLife_num,
+            @RequestParam("isLiked") boolean isLiked) {
+		int updatedLikes = service.toggleLike(recycleLife_num, isLiked);
+		return ResponseEntity.ok(updatedLikes);
 	}
 	
 	@GetMapping("/community/recycleLife/searchList")

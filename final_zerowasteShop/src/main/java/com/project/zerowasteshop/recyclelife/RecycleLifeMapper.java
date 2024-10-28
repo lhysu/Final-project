@@ -3,6 +3,7 @@ package com.project.zerowasteshop.recyclelife;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
@@ -26,11 +27,13 @@ public interface RecycleLifeMapper {
 
 	public void increaseViews(int recycleLife_num);
 
-	public void incrementLikeCount(int recycleLife_num);
+	public List<RecycleLifeVO> selectTopViews();
 
-	public void decrementLikeCount(int recycleLife_num);
+	public void decreaseLikeCount(@Param("recycleLife_num") int recycleLife_num);
 
-	public int getLikes(int recycleLife_num);
+	public void increaseLikeCount(@Param("recycleLife_num") int recycleLife_num);
 
-	public int toggleLike(int recycleLife_num);
+	public int getLikeCount(@Param("recycleLife_num") int recycleLife_num);
+
+	
 }

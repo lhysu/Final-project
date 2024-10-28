@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class RecycleLifeService {
 	
@@ -45,18 +48,24 @@ public class RecycleLifeService {
 	}
 
 	public void increaseViews(int recycleLife_num) {
-		mapper.increaseViews(recycleLife_num);
-		
+		mapper.increaseViews(recycleLife_num);		
 	}
-
-	public int toggleLike(int recycleLife_num) {
-        int currentLikes = mapper.getLikes(recycleLife_num);
-        if (currentLikes % 2 == 0) {
-            mapper.incrementLikeCount(recycleLife_num);  // 짝수일 때 증가
+	
+	public List<RecycleLifeVO> selectTopViews() {	
+		return mapper.selectTopViews();
+	}
+	
+	public int toggleLike(int recycleLife_num, boolean isLiked) {
+        if (isLiked) {
+            mapper.decreaseLikeCount(recycleLife_num);
         } else {
-            mapper.decrementLikeCount(recycleLife_num);  // 홀수일 때 감소
+            mapper.increaseLikeCount(recycleLife_num);
         }
-        return mapper.getLikes(recycleLife_num); // 변경된 좋아요 수 반환
+        return mapper.getLikeCount(recycleLife_num); // 최종 좋아요 수 반환
+    }
+
+	public int getLikeCount(int recycleLife_num) {
+		return mapper.getLikeCount(recycleLife_num);
 	}
 
 }
