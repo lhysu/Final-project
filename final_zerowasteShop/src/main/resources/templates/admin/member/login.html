@@ -25,31 +25,21 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
 <style>
-*{
-    padding: 0;
-    margin: 0;
-    border: none;
-}
-body{
-    font-size: 14px;
-    font-family: 'Roboto', sans-serif;
-}
 
-.login-wrapper{
+ .login-wrapper{
     display: grid;
 	place-items: center;
-	min-height: 100dvh;
 	
 	
-}
-.login-wrapper2{
+} 
+ .login-wrapper2{
     display: grid;
 	place-items: center;
 	min-height: 40dvh;
 	
- }
+ } 
 
-.content{
+.contents{
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 	padding: 20px;
 	border-radius: 20px;
@@ -95,14 +85,17 @@ body{
 </style>
 </head>
 <body >
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header_community :: header}"></div>
+    <!-- 해더 끝 -->
 
-
+<div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px; ">
 <div class="login-wrapper">
-	<div class="content">
+	<div class="contents">
 	<div class="login-wrapper2">
 	<h1>관리자 로그인</h1>
 	
-	<form id="login-form" action="/member/m_loginOK" method="post">
+	<form id="login-form" action="/admin/ad_loginOK" method="post">
 	      <input type="text" class="form-control" name="member_id" id="member_id" value="user03" placeholder="아이디를 입력하세요">
 	      <input type="password" class="form-control" name="pw" id="pw" value="password003" placeholder="비밀번호를 입력하세요">
 	      <button type="submit" class="btn btn-primary w-100 text-white">로그인</button>
@@ -115,6 +108,9 @@ body{
 </div>
 </div>
 </div>
-	
+</div>
+	<!-- Footer Start -->
+		<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
 </body>
 </html>

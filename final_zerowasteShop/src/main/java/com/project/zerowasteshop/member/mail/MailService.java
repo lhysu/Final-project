@@ -32,14 +32,14 @@ public class MailService implements MailServiceInter {
 		String msgg = "";
 		msgg += "<div style='margin:100px;'>";
 		msgg += "<h1> 안녕하세요</h1>";
-		msgg += "<h1> 제로웨이스트 쇼핑 플랫폼 zeroWaste 입니다.</h1>";
+		msgg += "<h1> 제로웨이스트 쇼핑 플랫폼 zero-C 입니다.</h1>";
 		msgg += "<br>";
-		msgg += "<p>아래 코드를 비밀번호 찾기 창으로 돌아가 입력해주세요<p>";
+		msgg += "<p>아래 코드를 쇼핑몰 창으로 돌아가 입력해주세요<p>";
 		msgg += "<br>";
 		msgg += "<p>저희 쇼핑몰을 이용해주셔서 감사합니다!<p>";
 		msgg += "<br>";
 		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-		msgg += "<h3 style='color:blue;'>비밀번호 찾기 인증 코드입니다.</h3>";
+		msgg += "<h3 style='color:blue;'>이메일 인증 코드입니다.</h3>";
 		msgg += "<div style='font-size:130%'>";
 		msgg += "CODE : <strong>";
 		msgg += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기

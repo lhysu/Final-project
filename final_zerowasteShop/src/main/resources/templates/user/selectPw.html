@@ -26,20 +26,12 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
 <style>
-*{
-    padding: 0;
-    margin: 0;
-    border: none;
-}
-body{
-    font-size: 14px;
-    font-family: 'Roboto', sans-serif;
-}
+
 
 .login-wrapper{
     display: grid;
 	place-items: center;
-	min-height: 100dvh;
+
 	
 	
 }
@@ -114,6 +106,12 @@ body{
 </style>
 </head>
 <body>
+
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header_community :: header}"></div>
+    <!-- 해더 끝 -->
+
+<div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px; ">
 <div class="login-wrapper">
 	<div class="content">
 	<div class="login-wrapper2">
@@ -158,6 +156,7 @@ body{
 </div>
 </div>
 </div>
+</div>
  	
  	<script>
 			let code="";
@@ -197,6 +196,7 @@ body{
 					console.log("data:"+data);
 					console.log("인증 완료")
 					target.disabled=false;
+					document.getElementById('email').readOnly = true; 
 					
 				
 				}
@@ -204,6 +204,8 @@ body{
 				
 			</script>
 
-	
+<!-- Footer Start -->
+	<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
 </body>
 </html>
