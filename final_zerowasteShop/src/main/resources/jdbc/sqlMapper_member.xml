@@ -40,4 +40,9 @@
 	<select id="selectPw" resultType="com.project.zerowasteshop.member.MemberVO">
 		select pw, name from member where member_id=#{member_id} and name=#{name} and email=#{email} and adCheck=false
 	</select>
+	
+	<!-- 포인트 차감 로직 -->
+	<update id="deductPoints">
+		update member set points=#{remainingPoints} where member_id=#{member_id} 
+	</update>
 </mapper>

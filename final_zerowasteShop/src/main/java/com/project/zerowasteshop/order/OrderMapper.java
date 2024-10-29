@@ -1,6 +1,7 @@
 package com.project.zerowasteshop.order;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +10,7 @@ import com.project.zerowasteshop.coupon.CouponVO;
 @Mapper
 public interface OrderMapper {
 
-	List<OrderVO> selectAllPageBlock(int startRow, int pageBlock);
+	List<OrderJoinProductVO> selectAllPageBlock(int startRow, int pageBlock);
 
 	int getTotalRows();
 
@@ -25,7 +26,7 @@ public interface OrderMapper {
 
 	int getSearchTotalRowsPayCheck(String searchWord);
 
-	List<OrderJoinCouponVO> getAvailableCouponsForUser(String member_id);
+	List<CouponVO> getAvailableCouponsForUser(String member_id);
 
 	int getOrderAmount(String merchant_uid);
 
@@ -35,6 +36,10 @@ public interface OrderMapper {
 
 	void saveOrderItem(OrderItemVO item);
 
-	OrderJoinItemVO selectOne(String merchant_uid);
+	OrderVO selectOneOrder(String merchant_uid);
+
+	void updateReusing(Map<String, Object> params);
+
+	List<OrderItemVO> selectOneItem(String merchantUid);
 
 }
