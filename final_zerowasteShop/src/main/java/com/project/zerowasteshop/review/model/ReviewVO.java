@@ -17,7 +17,7 @@ public class ReviewVO {
     private String content;
     private double rating;
     private String review_img;
-    private String createdDate;
+    private Timestamp createdDate;
     private MultipartFile file;
    
 }

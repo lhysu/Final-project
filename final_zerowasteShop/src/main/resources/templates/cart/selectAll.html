@@ -260,8 +260,23 @@
         totalElement.textContent = totalPrice + '원'; // 총 가격 업데이트
 
         updateTotalPrice(); // 총 가격 재계산
+        
+     	// AJAX 요청으로 수량 저장
+        updateQuantityInCart(quantityElement.id.split('-')[1], currentQuantity);
     }
 
+    function updateQuantityInCart(cartNum, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/cart/updateQuantity", true); // 서버의 적절한 URL로 수정
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("수량이 성공적으로 업데이트되었습니다.");
+            }
+        };
+        xhr.send(JSON.stringify({ cart_num: cartNum, count: quantity }));
+    }
+    
     function updateTotalPrice() {
         const totals = document.querySelectorAll('td[id^="total-"]'); // 총 가격 요소 선택
         let totalPrice = 0;

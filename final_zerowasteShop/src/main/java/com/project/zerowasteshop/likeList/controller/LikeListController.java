@@ -149,7 +149,7 @@ public class LikeListController {
  	
  	@GetMapping("/likeList/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "10") int pageBlock, String user_id) {
+ 			@RequestParam(defaultValue = "10") int pageBlock) {
  		log.info("/likeList/selectAll");
  		log.info("cpage:{}", cpage);
  		log.info("pageBlock:{}", pageBlock);
@@ -165,7 +165,7 @@ public class LikeListController {
  		log.info("List size: {}", list.size());
  		
  		// 디비로부터 얻은 검색결과의 모든 행수
- 		int total_rows = service.getTotalRows(user_id);// select count(*) total_rows from member;
+ 		int total_rows = service.getTotalRows(userID);// select count(*) total_rows from member;
  		log.info("total_rows:{}", total_rows);
  		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
  		int totalPageCount = 0;
@@ -180,7 +180,7 @@ public class LikeListController {
  		}
  		log.info("totalPageCount:{}", totalPageCount);
 
- 		model.addAttribute("user_id", user_id);
+ 		model.addAttribute("user_id", userID);
  		model.addAttribute("cpage", cpage);
  		model.addAttribute("totalPageCount", totalPageCount);
  		
@@ -264,7 +264,7 @@ public class LikeListController {
  		log.info("vo:{}", vo);
 
  		int check = service.likeListCheck(vo);
- 		if (check != 0) return "redirect:/likeList/selectAll?user_id=" + vo.getMember_id();
+ 		if (check != 0) return "redirect:/likeList/selectAll";
  		else {
  		
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
@@ -274,9 +274,9 @@ public class LikeListController {
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/likeList/selectAll?user_id=" + vo.getMember_id();
+ 			return "redirect:/likeList/selectAll";
  		} else {
- 			return "redirect:/likeList/selectAll?user_id=" + vo.getMember_id();
+ 			return "redirect:/likeList/selectAll";
  		}
  		}
  	}

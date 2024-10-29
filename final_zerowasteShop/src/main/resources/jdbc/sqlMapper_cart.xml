@@ -11,6 +11,12 @@
 		SET c.product_name = p.product_name;
 	</update>
 
+	<update id="updateCartQuantity" parameterType="map">
+        UPDATE cart
+        SET count = #{count}
+        WHERE cart_num = #{cart_num}
+    </update>
+
 	<select id="selectAllPageBlock"
 		resultType="com.project.zerowasteshop.cart.model.CartVO">
 		SELECT * 

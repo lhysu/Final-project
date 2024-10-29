@@ -9,6 +9,7 @@ import lombok.Data;
 public class ProductVO {
 	private int product_num;
     private String product_name;
+    private int count;
     private int price;
     private int point;
     private String company;
