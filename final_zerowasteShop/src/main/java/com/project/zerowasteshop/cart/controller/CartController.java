@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.zerowasteshop.cart.model.CartVO;
@@ -149,7 +151,7 @@ public class CartController {
  	
  	@GetMapping("/cart/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "10") int pageBlock, String user_id) {
+ 			@RequestParam(defaultValue = "10") int pageBlock) {
  		log.info("/cart/selectAll");
  		log.info("cpage:{}", cpage);
  		log.info("pageBlock:{}", pageBlock);
@@ -165,7 +167,7 @@ public class CartController {
  		log.info("List size: {}", list.size());
  		
  		// 디비로부터 얻은 검색결과의 모든 행수
- 		int total_rows = service.getTotalRows(user_id);// select count(*) total_rows from member;
+ 		int total_rows = service.getTotalRows(userID);// select count(*) total_rows from member;
  		log.info("total_rows:{}", total_rows);
  		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
  		int totalPageCount = 0;
@@ -180,7 +182,7 @@ public class CartController {
  		}
  		log.info("totalPageCount:{}", totalPageCount);
 
- 		model.addAttribute("user_id", user_id);
+ 		model.addAttribute("userId", userID);
  		model.addAttribute("cpage", cpage);
  		model.addAttribute("totalPageCount", totalPageCount);
  		
@@ -194,6 +196,16 @@ public class CartController {
  		return "cart/selectAll";
  	}
  	
+ 	@PostMapping("/cart/updateQuantity")
+    public ResponseEntity<Void> updateQuantity(@RequestBody CartVO request) {
+        // 수량이 0보다 큰지 확인
+        if (request.getCount() <= 0) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청
+        }
+        
+        service.updateQuantity(request.getCart_num(), request.getCount());
+        return ResponseEntity.ok().build(); // 성공적으로 처리됨
+    }
 
 // 	@GetMapping("/cart/searchList")
 // 	public String searchList(Model model, @RequestParam(defaultValue = "company") String searchKey,
@@ -265,7 +277,7 @@ public class CartController {
 
  		int check = service.cartCheck(vo);
  		log.info("check:{}", check);
- 		if (check != 0) return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
+ 		if (check != 0) return "redirect:/cart/selectAll";
  		else {
  		
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
@@ -275,9 +287,9 @@ public class CartController {
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
+ 			return "redirect:/cart/selectAll";
  		} else {
- 			return "redirect:/cart/selectAll?user_id=" + vo.getMember_id();
+ 			return "redirect:/cart/selectAll";
  		}
  		}
  	}

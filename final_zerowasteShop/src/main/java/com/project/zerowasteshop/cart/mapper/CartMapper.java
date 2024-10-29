@@ -38,4 +38,6 @@ public interface CartMapper {
 //	public List<CartVO> searchListPageBlockCompany(String searchWord, int startRow, int endRow);
 //
 //	public List<CartVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
+
+	public void updateCartQuantity(int cart_num, int count);
 }

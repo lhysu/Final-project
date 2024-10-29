@@ -68,6 +68,11 @@ public class CartService {
 		return mapper.selectAllPageBlock(startRow, pageBlock, userID);
 	}
 
+	public void updateQuantity(int cart_num, int count) {
+		mapper.updateCartQuantity(cart_num, count);
+		
+	}
+
 //	public int getSearchTotalRows(String searchKey, String searchWord) {
 //		if (searchKey.equals("company")) {
 //			return mapper.getSearchTotalRowsCompany("%" + searchWord + "%");

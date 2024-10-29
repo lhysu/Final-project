@@ -147,7 +147,7 @@
 						</th:block>
 						<td>[[${vo.content}]]</td>
 						<td>[[${vo.rating}]]</td>
-						<td>[[${vo.createdDate}]]</td>
+						<td th:text="${#dates.format(vo.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
 						
 					</tr>
 				</th:block>

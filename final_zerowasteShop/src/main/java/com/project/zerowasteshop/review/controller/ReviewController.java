@@ -155,7 +155,7 @@ public class ReviewController {
  	
  	@GetMapping("/review/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "10") int pageBlock, String user_id) {
+ 			@RequestParam(defaultValue = "10") int pageBlock) {
  		log.info("/review/selectAll");
  		log.info("cpage:{}", cpage);
  		log.info("pageBlock:{}", pageBlock);
@@ -174,7 +174,7 @@ public class ReviewController {
  		}
  		
  		// 디비로부터 얻은 검색결과의 모든 행수
- 		int total_rows = service.getTotalRows(user_id);// select count(*) total_rows from member;
+ 		int total_rows = service.getTotalRows(userID);// select count(*) total_rows from member;
  		log.info("total_rows:{}", total_rows);
  		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
  		int totalPageCount = 0;
@@ -189,7 +189,7 @@ public class ReviewController {
  		}
  		log.info("totalPageCount:{}", totalPageCount);
 
- 		model.addAttribute("user_id", user_id);
+ 		model.addAttribute("user_id", userID);
  		model.addAttribute("cpage", cpage);
  		model.addAttribute("totalPageCount", totalPageCount);
  		
@@ -298,7 +298,7 @@ public class ReviewController {
  		if (result == 1) {
  			return "redirect:/review/selectAll";
  		} else {
- 			return "redirect:/review/insert";
+ 			return "redirect:/review/selectAll";
  		}
  	}
 

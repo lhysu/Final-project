@@ -55,11 +55,11 @@
 	
 	<div style="margin-left : 100px;"> 
 	<p><a href="/cart/selectAll">내 장바구니</a></p>
-	<p><a th:href="@{/likeList/selectAll(user_id=${session.user_id})}">내 찜 목록</a></p>
+	<p><a href="/likeList/selectAll">내 찜 목록</a></p>
 	<p><a href="/order/selectAll">구매내역</a></p>
 	<p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
 	<p><a href="/delivery/d_selectAll">배송조회</a></p>
-	<p><a th:href="@{/review/selectAll(user_id=${session.user_id})}">내가 쓴 리뷰</a></p>
+	<p><a href="/review/selectAll">내가 쓴 리뷰</a></p>
 	<p><a href="/coupon/selectAll">내가 보유한 쿠폰</a></p>
 	<p><a href="/member/m_update">내 정보 수정 및 관리</a></p>
 	</div>

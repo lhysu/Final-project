@@ -5,6 +5,7 @@
 
 <mapper namespace="com.project.zerowasteshop.review.mapper.ReviewMapper">
 
+	
 	<update id = "updateProductName">
 		UPDATE review r
 		JOIN product p ON r.product_num = p.product_num
@@ -60,12 +61,12 @@
 
 	<insert id="insertOK">
 		insert into review(member_id, product_num, content, rating, review_img, createdDate)
-		values(#{member_id},#{product_num}, #{content},#{rating},#{review_img},CURRENT_TIMESTAMP)
+		values(#{member_id},#{product_num}, #{content},#{rating},#{review_img}, NOW())
 	</insert>
 	
 	<update id="updateOK">
 		update review set
-		content=#{content}, rating=#{rating}, review_img=#{review_img}, createdDate=CURRENT_TIMESTAMP
+		content=#{content}, rating=#{rating}, review_img=#{review_img}, createdDate= NOW()
 		where review_num=#{review_num}
 	</update>	
 	
