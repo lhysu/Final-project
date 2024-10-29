@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.zerowasteshop.coupon.CouponVO;
 import com.project.zerowasteshop.member.MemberService;
 import com.project.zerowasteshop.member.MemberVO;
+import com.project.zerowasteshop.payment.PaymentService;
+import com.project.zerowasteshop.payment.PaymentVO;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
 
@@ -28,6 +30,9 @@ public class OrderController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	PaymentService paymentService;
 
 	@GetMapping("/admin/order/selectAll")
 	public String ad_orderSelectAll(Model model,
@@ -37,7 +42,7 @@ public class OrderController {
 		log.info("cpage:{}",cpage);
 		log.info("pageBlock:{}",pageBlock);
 		
-		List<OrderVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
+		List<OrderJoinProductVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
@@ -104,9 +109,15 @@ public class OrderController {
 		log.info("/admin/order/selectOne");
 		log.info("merchant_uid:{}",merchant_uid);
 		
-		OrderJoinItemVO vo = service.selectOne(merchant_uid);
+		OrderVO order = service.selectOneOrder(merchant_uid);
+		List<OrderItemVO> order_item = service.selectOneItem(merchant_uid);
+		PaymentVO payment = paymentService.getPaymentInfo(merchant_uid);
+		log.info("order:{}",order);
+		log.info("order_item:{}",order_item);
 		
-		model.addAttribute("vo",vo);
+		model.addAttribute("order",order);
+		model.addAttribute("order_item",order_item);
+		model.addAttribute("payment",payment);
 		
 		return "admin/order/selectOne";
 	}
@@ -116,7 +127,8 @@ public class OrderController {
 			@RequestParam("product_num")int product_num,
 			@RequestParam("member_id")String member_id,
 			@RequestParam("price")String price,
-			@RequestParam("product_name")String product_name) {
+			@RequestParam("product_name")String product_name,
+			@RequestParam(defaultValue = "1")int quantity) {
 		
 		//배송지 정보 불러오고 넘기기
 		MemberVO member = memberService.selectOne(member_id);
@@ -126,15 +138,16 @@ public class OrderController {
 		model.addAttribute("address",member.getAddress());
 		model.addAttribute("address_detail",member.getAddress_detail());
 		model.addAttribute("points",member.getPoints());
+		model.addAttribute("member_id",member.getMember_id());
 		
 		//상품 정보 불러오고 넘기기
 		ProductVO product = new ProductVO();
 		product.setProduct_num(product_num);
 		product = productService.selectOne(product);
 		model.addAttribute("product",product);		
-
+		model.addAttribute("quantity",quantity);				
 		
-	    List<OrderJoinCouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
+	    List<CouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
 	    log.info("coupons:{}",coupons);
 	    model.addAttribute("coupons", coupons);
 		
@@ -150,7 +163,7 @@ public class OrderController {
 		log.info("cpage:{}",cpage);
 		log.info("pageBlock:{}",pageBlock);
 		
-		List<OrderVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
+		List<OrderJoinProductVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);

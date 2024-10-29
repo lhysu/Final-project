@@ -407,8 +407,7 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   `total_price` INT NOT NULL,
   `final_price` INT  NULL,
   `order_state` VARCHAR(45),
-  PRIMARY KEY (`merchant_uid`),
-  UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
+  PRIMARY KEY (`merchant_uid`));
   
   # 주문 더미값 20개
 INSERT INTO `finalproject`.`order` (merchant_uid,product_num ,member_id, coupon_code, postcode, address, address_detail, tel, reusing, discount, delivery_fee, delivery_memo,total_price,order_state) VALUES 

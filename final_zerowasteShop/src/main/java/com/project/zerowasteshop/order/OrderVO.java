@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class OrderVO {
 	private String merchant_uid;
-	private int product_num;
 	private String member_id;	
 	private String coupon_code;
 	private int points;

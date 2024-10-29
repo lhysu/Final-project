@@ -81,14 +81,15 @@ public class CouponRestController {
 	
 	@PostMapping("/order/applyCoupon")
     public Map<String, Object> applyCoupon(@RequestParam("couponCode") String couponCode,
-                                                           @RequestParam("totalPrice") int totalPrice) {
+                                           @RequestParam("totalPrice") int totalPrice,
+                                           @RequestParam("points")int points) {
         // 쿠폰 정보를 가져옴
         CouponVO coupon = service.getCouponInfo(couponCode);
 
         if (coupon != null) {
             // 할인율 계산
             int discountRate = coupon.getDiscount_rate(); // 할인율 가져오기
-            int discountAmount = (totalPrice * discountRate) / 100; // 할인 금액 계산
+            int discountAmount = (totalPrice * discountRate) / 100 + points; // 할인 금액 계산
             int finalPrice = totalPrice - discountAmount; // 최종 결제 금액
 
             // 응답으로 할인 금액과 최종 결제 금액 반환

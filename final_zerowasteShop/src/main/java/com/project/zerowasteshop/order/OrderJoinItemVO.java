@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class OrderJoinItemVO {
 	private String merchant_uid;
-	private int product_num;
 	private String member_id;	
 	private String coupon_code;
 	private int points;
@@ -25,6 +24,7 @@ public class OrderJoinItemVO {
 	private List<OrderItemVO> orderItems;
 	
 	private int order_item_id;
+	private int product_num;
 	private String product_name;
 	private int quantity;
 	private int price;

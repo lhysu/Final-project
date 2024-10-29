@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.zerowasteshop.coupon.CouponService;
+import com.project.zerowasteshop.member.MemberService;
 import com.project.zerowasteshop.member.MemberVO;
 import com.project.zerowasteshop.payment.IamportService;
 import com.project.zerowasteshop.payment.PaymentService;
@@ -36,6 +37,9 @@ public class OrderRestController {
 	
 	@Autowired
 	PaymentService paymentService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@PostMapping("/order/applyPoints")
     public Map<String, Object> applyPoints(@RequestParam("points")int points,
@@ -64,9 +68,11 @@ public class OrderRestController {
 	
 	@PostMapping("/order/pay")
 	public Map<String, String> completePayment(
-	    @RequestParam String imp_uid, 
-	    @RequestParam String merchant_uid, 
-	    @RequestParam int paid_amount
+	    @RequestParam("imp_uid")String imp_uid, 
+	    @RequestParam("merchant_uid") String merchant_uid, 
+	    @RequestParam("paid_amount") int paid_amount,
+	    @RequestParam("member_id") String member_id,      
+	    @RequestParam("points_used") int points_used 
 	) {
 	    Map<String, String> response = new HashMap<>();
 
@@ -93,6 +99,11 @@ public class OrderRestController {
 	            paymentInfo.setPay_status("결제 완료");
 	            paymentInfo.setPay_method("카드");
 	            paymentService.savePayment(paymentInfo);  // 결제 정보와 운송장 번호 저장
+	            
+	            // 6. 포인트 차감 로직
+	            log.info("member_id:{}",member_id);
+	            log.info("points_used:{}",points_used);
+	            memberService.deductPoints(member_id,points_used);
 	            
 	            // 결제 성공 처리 (결제 금액이 일치하고, 결제 상태가 'paid'인 경우)
 	        	response.put("status", "success");
@@ -125,15 +136,16 @@ public class OrderRestController {
     @PostMapping("/order/create")
     public Map<String, String> createOrder(@RequestBody OrderVO vo) {
         // 1.주문을 생성하고 order 테이블에 저장하고, 고유한 주문 번호(merchant_uid)를 반환
+    	log.info("vo:{}",vo);
         String merchantUid = orderService.createOrder(vo);
         
         // 2. order_item 테이블에 주문한 상품 정보 저장 (OrderVO에 포함된 상품 정보 저장)
         List<OrderItemVO> orderItems = vo.getOrderItems(); // 주문한 상품 리스트 (필요한 상품 정보가 포함됨)
-        
+        log.info("orderItems:{}",orderItems);
         // 각각의 주문 아이템을 저장하는 로직
         orderService.saveOrderItems(merchantUid, orderItems);
 
-        OrderJoinItemVO vo2 = orderService.selectOne(merchantUid);
+        OrderVO vo2 = orderService.selectOneOrder(merchantUid);
         log.info("vo2.getFinal_price():{}",vo2.getFinal_price());
         // 응답으로 주문 번호를 반환
         Map<String, String> response = new HashMap<>();
@@ -141,6 +153,19 @@ public class OrderRestController {
         response.put("merchantUid", merchantUid);
         response.put("finalAmount", Integer.toString(vo2.getFinal_price()) );
         return response;
+    }
+    
+	// 재사용 포장재 반환 신청
+    @PostMapping("/order/reusing")
+    public String updateReusing(@RequestBody Map<String, Object> requestData) {
+        
+    	String member_id = (String) requestData.get("member_id"); // 회원 ID 가져오기
+        boolean reusing = (Boolean) requestData.get("reusing"); // 재사용 상태 가져오기
+        log.info("member_id:{}",member_id);
+        log.info("reusing:{}",reusing);
+    	orderService.updateReusing(member_id,reusing);
+    	
+    	return "재사용 포장재 반납 상태가 변경되었습니다.";
     }
 	
 }

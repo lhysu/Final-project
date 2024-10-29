@@ -14,22 +14,19 @@
 	delete from coupon where coupon_code = #{coupon_code}
 </delete>
 
-<select id="selectOne" resultType="com.project.zerowasteshop.order.OrderJoinItemVO">
-	select o.* ,i.product_num,i.product_name,i.quantity,i.price
-	from `order` o
-	join order_item i on o.merchant_uid = i.merchant_uid
-	where o.merchant_uid =#{merchant_uid}
+<select id="selectOneOrder" resultType="com.project.zerowasteshop.order.OrderVO">
+	select * from `order` where merchant_uid = #{merchant_uid}
 </select>
 
-<select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
-	select * from coupon order by coupon_code desc
+<select id="selectOneItem" resultType="com.project.zerowasteshop.order.OrderItemVO">
+	select * from order_item where merchant_uid = #{merchant_uid}
 </select>
 
 <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON o.product_num = p.product_num
+    JOIN product p ON i.product_num = p.product_num
     order by o.merchant_uid desc    
     LIMIT #{startRow}, #{pageBlock}
 </select>
@@ -98,11 +95,10 @@
 </insert>
 
 <!-- 쿠폰 코드 확인 -->
-<select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.order.OrderJoinCouponVO">
-	select o.*,c.coupon_code,c.coupon_name,c.discount_rate
-	from `order` o
-	left join coupon c on o.coupon_code = c.coupon_code
-	where o.member_id = #{member_id}
+<select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select c.*
+	from coupon c
+	where member_id = #{member_id}
 </select>
 
 
@@ -112,8 +108,8 @@
 
 <!-- 주문 정보 저장 -->
 <insert id="saveOrder">
-	insert into `order`(merchant_uid,member_id, coupon_code, postcode, address,address_detail,tel,discount,delivery_fee,delivery_memo,total_price,final_price,order_state)
-	values(#{merchant_uid},#{member_id},#{coupon_code},#{postcode},#{address},#{address_detail},#{tel},#{discount},#{delivery_fee},#{delivery_memo},#{total_price},#{final_price},#{order_state})
+	insert into `order`(merchant_uid,member_id, coupon_code,points, postcode, address,address_detail,tel,reusing,discount,delivery_fee,delivery_memo,total_price,final_price,order_state)
+	values(#{merchant_uid},#{member_id},#{coupon_code},#{points},#{postcode},#{address},#{address_detail},#{tel},#{reusing},#{discount},#{delivery_fee},#{delivery_memo},#{total_price},#{final_price},#{order_state})
 </insert>
 
 <!-- 주문 상태 업데이트 -->
@@ -123,8 +119,13 @@
 
 <!-- 주문 상세 정보 저장 -->
 <insert id="saveOrderItem" parameterType="com.project.zerowasteshop.order.OrderItemVO">
-    INSERT INTO order_item (merchant_uid, product_num, quantity, price)
-    VALUES (#{merchant_uid}, #{product_num}, #{quantity}, #{price});
+    INSERT INTO order_item (merchant_uid, product_num,product_name, quantity, price)
+    VALUES (#{merchant_uid}, #{product_num},#{product_name}, #{quantity}, #{price});
 </insert>
+
+<!-- 재사용 포장재 반납 업데이트 -->
+<update id="updateReusing" parameterType="map">
+	update `order` set reusing = #{reusing} where member_id = #{member_id}
+</update>
 
 </mapper>

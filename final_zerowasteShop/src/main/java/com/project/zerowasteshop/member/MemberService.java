@@ -50,6 +50,13 @@ public class MemberService {
 		return mapper.selectPw(vo);
 	}
 
+	public void deductPoints(String member_id, int points_used) {
+		MemberVO vo = mapper.selectOne(member_id);
+		int remainingPoints = vo.getPoints()-points_used;
+		mapper.deductPoints(member_id,remainingPoints);
+		
+	}
+
 	
 
 }

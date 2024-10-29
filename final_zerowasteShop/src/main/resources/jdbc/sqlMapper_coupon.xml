@@ -65,4 +65,6 @@
 <select id="getCouponInfo" resultType="com.project.zerowasteshop.coupon.CouponVO">
 	select * from coupon where coupon_code = #{couponCode}
 </select>
+
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.project.zerowasteshop.order;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,7 @@ public class OrderService {
 	@Autowired
 	CouponMapper couponMapper;
 
-	public List<OrderVO> selectAllPageBlock(int cpage, int pageBlock) {
+	public List<OrderJoinProductVO> selectAllPageBlock(int cpage, int pageBlock) {
 		//mysql인 경우 limit 시작행을 얻어내는 알고리즘이 필요하다.
 		//예: 1페이지(0,5), 2페이지(5,5),3페이지(10,5)
 		int startRow = pageBlock*(cpage-1);
@@ -58,7 +61,7 @@ public class OrderService {
 		}
 	}
 
-	public List<OrderJoinCouponVO> getAvailableCouponsForUser(String member_id) {
+	public List<CouponVO> getAvailableCouponsForUser(String member_id) {
 		// TODO Auto-generated method stub
 		return mapper.getAvailableCouponsForUser(member_id);
 	}
@@ -91,14 +94,15 @@ public class OrderService {
         order.setAddress(vo.getAddress());
         order.setAddress_detail(vo.getAddress_detail());
         order.setTel(vo.getTel());
-        //order.setReusing(vo.getreusing());
+        order.setPoints(vo.getPoints());
+        order.setReusing(vo.isReusing());
         order.setDiscount(discount);
         order.setDelivery_fee(vo.getDelivery_fee());
         order.setDelivery_memo(vo.getDelivery_memo());        
         order.setTotal_price(totalPrice);
         order.setFinal_price(finalPrice);
         order.setOrder_state("결제대기");
-
+        
         // DB에 저장
         mapper.saveOrder(order);
 
@@ -143,12 +147,30 @@ public class OrderService {
 		for (OrderItemVO item : orderItems) {
 	        // order_item 테이블에 각 상품 정보를 저장
 	        item.setMerchant_uid(merchant_uid);  // 주문 번호 설정
+	        log.info("product_name:{}",item.getProduct_name());
 	        mapper.saveOrderItem(item);  // 각 상품 정보 저장
 	    }
 		
 	}
 
-	public OrderJoinItemVO selectOne(String merchant_uid) {
-		return mapper.selectOne(merchant_uid);
+	public OrderVO selectOneOrder(String merchant_uid) {
+		return mapper.selectOneOrder(merchant_uid);
 	}
+
+	public void updateReusing(String member_id, boolean reusing) {
+		Map<String, Object> params = new HashMap<>();
+        params.put("member_id", member_id);
+        params.put("reusing", reusing ? "1" : "0"); // boolean을 MySQL의 1과 0으로 변환
+
+        log.info("reusing:{}",params.get("reusing"));
+        mapper.updateReusing(params);
+		
+	}
+
+	public List<OrderItemVO> selectOneItem(String merchant_uid) {
+		// TODO Auto-generated method stub
+		return mapper.selectOneItem(merchant_uid);
+	}
+
+
 }
