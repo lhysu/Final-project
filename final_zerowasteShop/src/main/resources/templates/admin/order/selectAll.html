@@ -140,7 +140,6 @@ select {
 			<thead>
 				<tr>
 					<th>주문번호</th>
-					<th>상품번호</th>
 					<th>상품명</th>
 					<th>회원ID</th>
 					<th>주문수량</th>
@@ -154,7 +153,6 @@ select {
 				<th:block th:each="vo:${list}">				
 					<tr>
 						<td><a th:href="|/admin/order/selectOne?merchant_uid=${vo.merchant_uid}|">[[${vo.merchant_uid}]]</a></td>
-						<td>[[${vo.product_num}]]</td>
 						<td>[[${vo.product_name}]]</td>
 						<td>[[${vo.member_id}]]</td>
 						<td>[[${vo.quantity}]]</td>

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,23 @@ public class MemberRestController {
 		
 		return map;
 	}
+	
+	//아이디 찾기
+		@PostMapping({"/api/selectIdCheck"})
+		public String api_selectIdCheck(Model model,MemberVO vo) {
+			log.info("/api/selectIdCheck");
+			log.info("vo:{}", vo);
+			MemberVO vo2 = service.selectId(vo);
+			log.info("vo2:{}",vo2);
+			String result="";
+			if(vo2!=null) {
+				result= vo2.getMember_id();
+						
+			}
+			
+			return result;	
+			
+		}
 	
 
 }

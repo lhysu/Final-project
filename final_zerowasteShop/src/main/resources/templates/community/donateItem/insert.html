@@ -41,7 +41,7 @@
 </head>
 <body>
 	<!-- 헤더 시작 -->
-	 <div th:replace="header_community :: header"></div>
+	 <div th:replace="~{header_community :: header}"></div>
     <!-- 해더 끝 -->
 
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
@@ -51,18 +51,22 @@
 		<hr>
 		</div>
 	
-	<form action="/donateItem/d_insertOK" method="post" enctype="multipart/form-data">
+	<form action="/donateItem/d_insertOK" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 		<div class="mb-2">
     	<div class="form-item w-100">
     		<label class="form-label my-3">제목<sup>*</sup></label>
-    		<input type="text" id="donateItem_title" class="form-control" name="donateItem_title" value="title" placeholder="제목을 입력하세요">
+    		<input type="text" id="donateItem_title" class="form-control" name="donateItem_title" value="title" placeholder="제목을 입력하세요" required>
+    		<div class="invalid-feedback">제목을 입력해주세요.</div>
     	</div>
         
         <div class="row">
              <div class="col-md-12 col-lg-6">
                  <div class="form-item w-100">
                      <label class="form-label my-3">물품명<sup>*</sup></label>
-       					<input type="text" id="donateItem_item" class="form-control" name="donateItem_item" value="item" placeholder="물품명을 입력하세요">
+       					<input type="text" id="donateItem_item" class="form-control" name="donateItem_item" value="item" placeholder="물품명을 입력하세요" required>
+       					<div class="invalid-feedback">
+		                    물품명을 입력해주세요.
+		                </div>
                  </div>
              </div>
              <div class="col-md-12 col-lg-6">
@@ -98,9 +102,29 @@
 	
 	</form>
 	</div>
+
+    
 	<!-- Footer Start -->
-	<div th:replace="footer :: footer"></div>
+	<div th:replace="~{footer :: footer}"></div>
 	<!-- Footer End -->
 	
+		
+	<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공)-->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                        	event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 </body>
 </html>

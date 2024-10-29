@@ -114,7 +114,7 @@
 <body>
 
 	<!-- 헤더 시작 -->
-	 <div th:replace="header_admin :: header"></div>
+	 <div th:replace="~{header_admin :: header}"></div>
     <!-- 해더 끝 -->
 
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px">
@@ -123,33 +123,42 @@
 			<h1>회원 수정</h1>
 		</div>	
 	
-	<form action="/admin/ad_updateOK" method="post">
+	<form action="/admin/ad_updateOK" method="post" class="needs-validation" novalidate>
 	<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate;">
 	
 		<tr>
         <th>회원번호</th>
-        <td ><input type="text" id="member_num" name=member_num th:value="${param.member_num}" class="form-control" value="${param.member_num}" readonly></td>
+        <td ><input type="text" id="member_num" name=member_num th:value="${param.member_num}" class="form-control" value="${param.member_num}" readonly>
+        </td>
         </tr>
 	
     	<tr>
         <th>아이디</th>
-        <td><input type="text" id="member_id" class="form-control" name="member_id" th:value="${vo2.member_id}" placeholder="아이디를 입력하세요"></td>
+        <td><input type="text" id="member_id" class="form-control" name="member_id" th:value="${vo2.member_id}" placeholder="아이디를 입력하세요" required>
+            <div class="invalid-feedback">아이디를 입력해주세요.</div>
+         </td>
         </tr>
         
         <tr>
         <th>이름</th>
-        <td><input type="text" id="name" class="form-control" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요"></td>
+        <td><input type="text" id="name" class="form-control" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요" required>
+        	<div class="invalid-feedback">이름을 입력해주세요.</div>
+        </td>
         </tr>
         
         
         <tr>
         <th>비밀번호</th>
-        <td><input type="text" id="pw" class="form-control" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        <td><input type="text" id="pw" class="form-control" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요" required>
+        	<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+        </td>
         </tr>
         
         <tr>
         <th>이메일</th>
-        <td><input type="text" id="email" class="form-control" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
+        <td><input type="text" id="email" class="form-control" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요" required>
+        	<div class="invalid-feedback">이메일을 입력해주세요.</div>
+        </td>
         </tr>
         
         <tr>
@@ -210,7 +219,27 @@
 	        }).open();
 	    }
 	</script>
-
 	
+	<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공)-->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                        	event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+	<!-- Footer Start -->
+		<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->	
 </body>
 </html>

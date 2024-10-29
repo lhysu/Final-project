@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>rl_delete.html</title>
+<title>delete.html</title>
 <link rel="stylesheet" href="/css/main.css">
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -45,14 +45,14 @@
 	<div th:fragment="content" class="container my-4">
 		<h1 class="mb-4">재활용 라이프 글 삭제</h1>
 		<div>
-			<form action="/community/recycleLife/rl_deleteOK" method="post">
+			<form action="/community/recycleLife/deleteOK" method="post">
 				<input type="hidden" name="recycleLife_num" th:value="${param.recycleLife_num}">
 				<table id="insertTable">
 					<tr>
 						<th>[[${param.recycleLife_num}]]번 글을 정말 삭제하시겠습니까?
 						<!-- <input type="submit" value="삭제완료"> -->
 						<button type="submit" class="btn btn-danger">삭제</button>
-                		<a th:href="@{/community/recycleLife/rl_selectAll}" class="btn btn-secondary">취소</a></th>
+                		<a th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">취소</a></th>
 					</tr>
 				</table>
 			</form>
