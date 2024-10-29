@@ -26,8 +26,8 @@ public class DeliveryService {
 	}
 
 	public List<DeliveryVO> searchList(String searchKey, String searchWord) {
-		if(searchKey.equals("product_name")){
-			return mapper.searchListProduct_name("%"+searchWord+"%");
+		if(searchKey.equals("delivery_num")){
+			return mapper.searchListDelivery_num("%"+searchWord+"%");
 		} else {
 			return mapper.searchListTracking_num("%"+searchWord+"%");
 		}

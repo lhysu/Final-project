@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>rl_update.html</title>
+<title>update.html</title>
 <link rel="stylesheet" href="/css/main.css">
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -46,7 +46,7 @@
         <h1 class="mb-4">재활용 게시판 글 수정</h1>
         
         <!-- 재활용 게시판 글 수정 폼 -->
-        <form th:action="@{/community/recycleLife/rl_updateOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <form th:action="@{/community/recycleLife/updateOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
             <input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}">
             <input type="hidden" name="recycleLife_img" th:value="${vo2.recycleLife_img}">
             
@@ -84,7 +84,7 @@
                     <button type="reset" class="btn btn-secondary">초기화</button>
                 </div>
                 <div>
-                    <a th:href="@{/community/recycleLife/rl_selectAll}" class="btn btn-link">목록으로</a>
+                    <a th:href="@{/community/recycleLife/selectAll}" class="btn btn-link">목록으로</a>
                 </div>
             </div>
         </form>

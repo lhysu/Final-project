@@ -96,5 +96,5 @@ public class RecycleLifeVO {
 		this.file = file;
 	}
 	
-
+	
 }
