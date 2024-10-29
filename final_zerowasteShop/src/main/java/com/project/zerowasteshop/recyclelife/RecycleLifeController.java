@@ -146,9 +146,9 @@ public class RecycleLifeController {
 
 		model.addAttribute("vo2", vo2);
 		
-		if(vo2 == null) {
-			log.info("vo2 is null");		
-		}
+		/*
+		 * if(vo2 == null) { log.info("vo2 is null"); }
+		 */
 	
 		return "community/recycleLife/update";
 	}

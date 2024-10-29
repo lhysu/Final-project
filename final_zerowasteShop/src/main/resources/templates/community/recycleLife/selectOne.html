@@ -41,6 +41,8 @@
         }
     </style>
     <script>
+    	let isLiked = false;
+    	
         function toggleLike(recycleLife_num, isLiked) {
             fetch("/community/recycleLife/selectOne", {
                 method: "POST",

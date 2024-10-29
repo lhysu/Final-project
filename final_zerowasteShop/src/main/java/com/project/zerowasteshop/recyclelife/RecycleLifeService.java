@@ -56,10 +56,10 @@ public class RecycleLifeService {
 	}
 	
 	public int toggleLike(int recycleLife_num, boolean isLiked) {
-        if (isLiked) {
-            mapper.decreaseLikeCount(recycleLife_num);
-        } else {
+        if (isLiked == false) {
             mapper.increaseLikeCount(recycleLife_num);
+        } else {
+            mapper.decreaseLikeCount(recycleLife_num);
         }
         return mapper.getLikeCount(recycleLife_num); // 최종 좋아요 수 반환
     }
