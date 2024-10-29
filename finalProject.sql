@@ -491,7 +491,7 @@ CREATE TABLE `review` (
   `content` varchar(1000) NOT NULL,
   `rating` DOUBLE NOT NULL,
   `review_img` varchar(255) DEFAULT NULL,
-  `createdDate` VARCHAR(255) NOT NULL,
+  `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`review_num`)
 );
@@ -525,7 +525,7 @@ CREATE TABLE `review` (
   `recycleLife_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `lifeComment_content` VARCHAR(1000) NOT NULL,
-  `lifeComment_wdate` TIMESTAMP NOT NULL,
+  `lifeComment_wdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`lifeComment_num`));
   
   # 재활용 라이프 댓글 더미값 20개
@@ -613,11 +613,6 @@ ALTER TABLE `finalproject`.`review`
 ADD INDEX `FK_REVIEW_PRODUCT_idx` (`product_num` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`review` 
-ADD CONSTRAINT `FK_REVIEW_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_REVIEW_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -673,11 +668,6 @@ ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
   REFERENCES `finalproject`.`product` (`product_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_DELIVERY_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_DELIVERY_ORDER`
   FOREIGN KEY (`merchant_uid`)
   REFERENCES `finalproject`.`order` (`merchant_uid`)

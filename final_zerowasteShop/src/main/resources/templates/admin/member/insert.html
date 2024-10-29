@@ -146,7 +146,7 @@ $(function (){
 <body>
 
 	<!-- 헤더 시작 -->
-	 <div th:replace="header_admin :: header"></div>
+	 <div th:replace="~{header_admin :: header}"></div>
     <!-- 해더 끝 -->
 
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
@@ -158,13 +158,14 @@ $(function (){
 
 	
 	
-	<form action="/admin/ad_insertOK" method="post">
+	<form action="/admin/ad_insertOK" method="post" class="needs-validation" novalidate>
 	<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate;">
     	<tr>
         <th>아이디</th>
         <td>
         	<div class="col-md-8">
-                <input type="text" id="member_id" class="form-control" style="float:left" name="member_id" value="hello" placeholder="아이디를 입력하세요">
+                <input type="text" id="member_id" class="form-control" style="float:left" name="member_id" value="hello" placeholder="아이디를 입력하세요" required>
+                <div class="invalid-feedback">아이디를 입력해주세요.</div>
             </div>
             <div class="col-md-4 d-flex">
                 <input type="button" id="btn_idCheck" class="btn btn-primary ms-2" value="중복체크">
@@ -177,18 +178,24 @@ $(function (){
         
         <tr>
         <th>이름</th>
-        <td><input type="text" id="name" class="form-control" name="name" value="kim" placeholder="이름을 입력하세요"></td>
+        <td><input type="text" id="name" class="form-control" name="name" value="kim" placeholder="이름을 입력하세요" required>
+        	<div class="invalid-feedback">이름을 입력해주세요.</div>
+        </td>
         </tr>
         
         
         <tr>
         <th>비밀번호</th>
-        <td><input type="text" id="pw" class="form-control" name="pw" value="hi1234" placeholder="비밀번호를 입력하세요"></td>
+        <td><input type="password" id="pw" class="form-control" name="pw" value="hi1234" placeholder="비밀번호를 입력하세요" required>
+        	<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+        </td>
         </tr>
         
         <tr>
         <th>이메일</th>
-        <td><input type="text" id="email" class="form-control" name="email" value="aaa@bbb.com" placeholder="이메일을 입력하세요"></td>
+        <td><input type="text" id="email" class="form-control" name="email" value="aaa@bbb.com" placeholder="이메일을 입력하세요" required>
+        	<div class="invalid-feedback">이메일을 입력해주세요.</div>
+        </td>
         </tr>
         
         <tr>
@@ -256,6 +263,27 @@ $(function (){
 	        }).open();
 	    }
 	</script>
+	
+	<!-- Footer Start -->
+		<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
+	<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공)-->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                        	event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 
 	
 </body>
