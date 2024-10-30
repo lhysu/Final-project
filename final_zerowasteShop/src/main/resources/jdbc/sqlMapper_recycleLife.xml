@@ -50,7 +50,7 @@
 	
 	<select id="selectTopViews">
 	    SELECT *
-	    FROM RecycleLife
+	    FROM recyclelife
 	    WHERE recycleLife_views >= 100
 	    ORDER BY recycleLife_views DESC
 	    LIMIT 3
@@ -58,22 +58,22 @@
 	
 	<!-- 좋아요 증가 -->
     <update id="increaseLikeCount" parameterType="int">
-        UPDATE recycleLife
+        UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes + 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
 	
 	<!-- 좋아요 감소 -->
     <update id="decreaseLikeCount" parameterType="int">
-        UPDATE recycleLife
+        UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes - 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
 
     <!-- 좋아요 수 조회 -->
-    <select id="getLikeCount" parameterType="int" resultType="int">
+    <select id="getLikeCount" parameterType="int" resultType="Integer">
         SELECT recycleLife_likes
-        FROM recycleLife
+        FROM recyclelife
         WHERE recycleLife_num = #{recycleLife_num}
     </select>
 	

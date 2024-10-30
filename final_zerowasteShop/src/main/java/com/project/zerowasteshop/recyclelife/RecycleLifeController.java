@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentService;
+import com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +32,9 @@ public class RecycleLifeController {
 	
 	@Autowired
 	RecycleLifeService service;
+	
+	@Autowired
+	RecycleLifeCommentService commentService;
 	
 	@Value("${file.dir}")
 	private String realPath;
@@ -81,11 +85,15 @@ public class RecycleLifeController {
 		RecycleLifeVO vo2 = service.selectOne(vo);
 		log.info("vo2", vo2);
 		
+		// 댓글 목록 조회
+		List<RecycleLifeCommentVO> list = commentService.selectAll(vo.getRecycleLife_num());
+		model.addAttribute("list", list);
+		
 		if (vo2 == null) {
 	        // vo2 값이 null 인지 확인 로그 출력 또는 예외 처리
 	        System.out.println("vo2 is null");
 	    } else {
-	    	//조회수 증가 로직, 중복 방지 기능은 구현 X
+	    	// 조회수 증가
 	    	service.increaseViews(vo2.getRecycleLife_num());
 	    }			
 		
@@ -94,10 +102,11 @@ public class RecycleLifeController {
 		int likes = service.getLikeCount(recycleLife_num);
         model.addAttribute("recycleLife_num", recycleLife_num);
         model.addAttribute("recycleLife_likes", likes);
-		
+        
 		return "community/recycleLife/selectOne";
 	}
 	
+	// 좋아요 클릭 업데이트 로직
 	@PostMapping("/community/recycleLife/selectOne")
 	public ResponseEntity<Integer> toggleLike(@RequestParam("recycleLife_num") int recycleLife_num,
             @RequestParam("isLiked") boolean isLiked) {
