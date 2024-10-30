@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Login Page</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta content="" name="keywords">
     <meta content="" name="description">
 
@@ -81,6 +82,55 @@
 #admin-login{
 	color: #D2D2D2;
 }
+h2{
+    text-align: center;
+}
+
+/*모달 팝업 영역 스타일링*/
+.modal {
+/*팝업 배경*/
+	display: none; /*평소에는 보이지 않도록*/
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+}
+.modal .modal_popup {
+/*팝업*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+    width: 400px;
+    height: 350px;
+}
+.modal .modal_popup .close_btn  {
+    display: block;
+    padding: 10px 20px;
+    background-color: rgb(116, 0, 0);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.login_btn{
+ 	display: block;
+    padding: 10px 20px;
+    background-color: rgb(116, 0, 0);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
 
 </style>
 
@@ -96,13 +146,13 @@
 	<div class="login-wrapper2">
 	<h1>아이디찾기</h1>
 	
-	<form id="login-form"  action="/member/selectIdCheck" method="post">
+	<form id="login-form" >
         <label for="name" class="form-label">이름</label>
         <input type="text" class="form-control" name="name" id="name" value="User01" placeholder="이름을 입력하세요">
         
 	    <label for="email" class="form-label">이메일</label>
 	    <input type="text" class="form-control" name="email" id="email" value="user01@example.com" placeholder="이메일을 입력하세요">
-	    <button type="submit" class="btn btn-primary w-100 text-white my-2">확인</button>
+	    <button type="button" class="btn btn-primary w-100 text-white my-2" id="idCheck">확인</button>
 
 	</form>
 	
@@ -113,6 +163,63 @@
 </div>
 </div>
 </div>
+
+<!-- 아이디찾기 결과 창 -->
+<div class="modal">
+    <div class="modal_popup">
+        <h3>아이디 찾기</h3>
+        <div>
+        <p></p>
+        <p id="result"></p>
+        </div>        
+        <div>
+        <button type="button" class="close_btn">닫기</button>
+        <button type="button" class="login_btn" onclick="location.href='/m_login' ">로그인</button>
+        </div>
+    </div>
+</div>
+
+	<script>
+	
+	const modal = document.querySelector('.modal');
+	const modalClose = document.querySelector('.close_btn');
+	
+	//닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+	modalClose.addEventListener('click',function(){
+	   //display 속성을 none으로 변경
+	    modal.style.display = 'none';
+	});
+	
+	$("#idCheck").click(function() {
+		let result="";
+		   $.ajax({
+		      type : "POST",
+		      url : "/api/selectIdCheck",
+		      data : {
+		         "email" : $("#email").val(), "name" : $("#name").val()
+		      },
+		      success : function(data){
+		         if(!data){
+		        	 result="일치하는 회원정보가 존재하지 않습니다."
+	        		 document.getElementById('result').innerHTML = result;
+	        		 modal.style.display = 'block'; 
+		        	 
+		         }else {
+		        	 result=data;
+		        	 document.getElementById('result').innerHTML = result;
+		        	 modal.style.display = 'block';
+		        	 
+		        	 
+		         }
+		         
+		      }
+		   })
+		})
+		
+
+		
+	
+	</script>
 
  	<!-- Footer Start -->
 	<div th:replace="~{footer :: footer}"></div>
