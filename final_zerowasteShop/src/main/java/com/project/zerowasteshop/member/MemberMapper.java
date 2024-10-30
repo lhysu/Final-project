@@ -23,9 +23,9 @@ public interface MemberMapper {
 
 	public MemberVO selectId(MemberVO vo);
 
-	public MemberVO selectPw(MemberVO vo);
-
 	public void deductPoints(String member_id, int remainingPoints);
+
+	public int updatePW(String member_id, String name, String email, String temppw);
 
 
 }

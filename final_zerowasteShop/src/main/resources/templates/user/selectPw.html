@@ -117,7 +117,7 @@
 	<div class="login-wrapper2">
 	<h1>비밀번호 찾기</h1>
 	
-	<form id="login-form" action="/member/selectPwCheck" method="post">
+ 	<form id="login-form"> 
 		<label for="member_id" class="form-label">아이디</label>
         <input type="text" class="form-control" name="member_id" id="member_id" value="hello" placeholder="아이디를 입력해주세요">
 	
@@ -146,9 +146,9 @@
 	    
 	    
 	    
-	    <button type="submit" class="btn btn-primary w-100 text-white my-2" disabled='disabled' id="selectPwCheck" style="height: 42px;" >확인</button>
-
-	</form>
+	    <button type="button" class="btn btn-primary w-100 text-white my-2" disabled='disabled' id="selectPwCheck" style="height: 42px;" >확인</button>
+ 
+	</form> 
 	
 	<a th:href="|/home|" style="position: absolute; bottom: 70px;">HOME</a>
  	
@@ -201,7 +201,32 @@
 				
 				}
 			}
+			
+			
 				
+			</script>
+			
+			<script>
+			
+			//임시비밀번호 전송
+			$("#selectPwCheck").click(function() {
+				   $.ajax({
+				      type : "POST",
+				      url : "/login/newPassword",
+				      data : {
+				         "email" : $("#email").val() ,"member_id" : $("#member_id").val(), "name" : $("#name").val()
+				      },
+				      success : function(data){
+				    	  if(data==1){alert("이메일로 임시 비밀번호가 전송되었습니다. \n 임시 비밀번호로 로그인 후 비밀번호를 변경해주세요.")}
+				    	  else {
+				    		  alert("회원정보가 일치하지 않습니다.");
+				    		  document.getElementById('email').readOnly = false; 
+				    		  }
+				         
+				      }
+				   })
+				})
+			
 			</script>
 
 <!-- Footer Start -->
