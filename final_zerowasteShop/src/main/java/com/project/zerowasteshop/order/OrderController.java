@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.zerowasteshop.coupon.CouponVO;
 import com.project.zerowasteshop.member.MemberService;
@@ -16,6 +17,7 @@ import com.project.zerowasteshop.payment.PaymentVO;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -158,18 +160,32 @@ public class OrderController {
 	@GetMapping("/order/selectAll")
 	public String orderSelectAll(Model model,
 			@RequestParam(defaultValue = "1")int cpage,
-			@RequestParam(defaultValue = "5")int pageBlock) {
+			@RequestParam(defaultValue = "5")int pageBlock,
+			HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		log.info("/order/selectAll");
 		log.info("cpage:{}",cpage);
 		log.info("pageBlock:{}",pageBlock);
 		
-		List<OrderJoinProductVO> list = service.selectAllPageBlock(cpage,pageBlock); //해당 페이지에 보여줄 5개행씩 만 검색
+		// 세션에서 로그인된 사용자 ID를 가져옴
+	    String userId = (String) session.getAttribute("user_id");
+	    log.info("userId:{}",userId);
+	    if (userId == null) {
+	    	// 로그인되지 않은 상태라면 로그인 페이지로 리다이렉트하면서 알림 메시지를 추가
+	        redirectAttributes.addFlashAttribute("alertMessage", "회원만 이용할 수 있습니다.");
+	        return "redirect:/member/m_login";
+	    }
+		
+		// 주문과 상품 정보 불러오기
+		List<OrderJoinProductVO> list = service.selectAllPageBlockByUser(cpage,pageBlock,userId); //해당 페이지에 보여줄 5개행씩 만 검색
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
+		model.addAttribute("cpage",cpage);
 		
+		// 
 		//DB로부터 얻은 검색결과의 모든 행의 수
-		int total_rows = service.getTotalRows();
+		int total_rows = service.getTotalRowsByUser(userId);
 		log.info("total_rows:{}",total_rows);
 		
 		int totalPageCount; 
@@ -185,6 +201,80 @@ public class OrderController {
 		
 		
 		return "order/selectAll";
+	}
+	
+	@GetMapping("/order/selectOne")
+	public String orderSelectOne(Model model,
+			HttpSession session,
+			@RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("product_num")int product_num) {
+		log.info("/order/selectOne");
+		log.info("merchant_uid:{}",merchant_uid);
+		
+		// 세션에서 로그인된 사용자 ID를 가져옴
+	    String userId = (String) session.getAttribute("user_id");
+	    log.info("userId:{}",userId);
+	    if (userId == null) {
+	        // 로그인되지 않은 상태라면 로그인 페이지로 리다이렉트
+	        return "redirect:/m_login";
+	    }
+		
+		OrderVO order = service.selectOneOrder(merchant_uid);
+		List<OrderItemVO> order_item = service.selectOneItem(merchant_uid);
+		PaymentVO payment = paymentService.getPaymentInfo(merchant_uid);
+		MemberVO member = memberService.selectOne(userId);
+		log.info("order:{}",order);
+		log.info("order_item:{}",order_item);
+		
+		// 상품이미지, 상품개수,상품가격 불러오기
+		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid,product_num);
+		log.info("list.size():{}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		model.addAttribute("order",order);
+		model.addAttribute("order_item",order_item);
+		model.addAttribute("payment",payment);
+		model.addAttribute("member",member);
+		
+		return "order/selectOne";
+	}
+	
+	@GetMapping("/order/cancelSelectOne")
+	public String cancleSelectOne(Model model,
+			HttpSession session,
+			@RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("product_num")int product_num) {
+		log.info("/order/selectOne");
+		log.info("merchant_uid:{}",merchant_uid);
+		
+		// 세션에서 로그인된 사용자 ID를 가져옴
+	    String userId = (String) session.getAttribute("user_id");
+	    log.info("userId:{}",userId);
+	    if (userId == null) {
+	        // 로그인되지 않은 상태라면 로그인 페이지로 리다이렉트
+	        return "redirect:/m_login";
+	    }
+		
+		OrderVO order = service.selectOneOrder(merchant_uid);
+		List<OrderItemVO> order_item = service.selectOneItem(merchant_uid);
+		PaymentVO payment = paymentService.getPaymentInfo(merchant_uid);
+		MemberVO member = memberService.selectOne(userId);
+		log.info("order:{}",order);
+		log.info("order_item:{}",order_item);
+		
+		// 상품이미지, 상품개수,상품가격 불러오기
+		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid,product_num);
+		log.info("list.size():{}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		model.addAttribute("order",order);
+		model.addAttribute("order_item",order_item);
+		model.addAttribute("payment",payment);
+		model.addAttribute("member",member);
+		
+		return "order/selectOne";
 	}
 	
 }

@@ -69,4 +69,9 @@ public class DeliveryService {
 			return mapper.searchListPageBlockTracking_num("%"+searchWord +"%", startRow, endRow);
 		}	
 	}
+
+	public void saveDelivery(DeliveryVO deliveryInfo) {
+		mapper.saveDelivery(deliveryInfo);
+		
+	}
 }

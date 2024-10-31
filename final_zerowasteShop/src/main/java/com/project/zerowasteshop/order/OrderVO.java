@@ -22,4 +22,5 @@ public class OrderVO {
 	private int final_price;
 	private String order_state;
 	private List<OrderItemVO> orderItems;
+	private String order_date;
 }

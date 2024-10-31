@@ -74,63 +74,19 @@ public class OrderRestController {
 	    @RequestParam("member_id") String member_id,      
 	    @RequestParam("points_used") int points_used 
 	) {
-	    Map<String, String> response = new HashMap<>();
+		 // PaymentService의 completePayment 메서드를 호출하여 결제 처리를 진행
+        Map<String, String> response = paymentService.completePayment(imp_uid, merchant_uid, paid_amount, member_id, points_used);
 
-	    try {
-	        // 1. 아임포트에서 발급받은 토큰을 통해 결제 정보를 조회
-	        String token = iamportService.getToken();  // 아임포트 API 토큰 발급
-	        PaymentVO paymentInfo = iamportService.getPaymentInfo(imp_uid, token);
-	        log.info("paymentInfo:{}",paymentInfo);
+        // 결과에 따라 메시지 추가
+        if ("success".equals(response.get("status"))) {
+            response.put("statusCode", "200"); // 성공 상태 코드 추가
+        } else {
+            response.put("statusCode", "400"); // 실패 상태 코드 추가
+        }
 
-	        // 2. 서버에서 관리하는 주문 금액 가져오기
-	        int orderAmount = orderService.getOrderAmount(merchant_uid);
-	        log.info("orderAmount:{}",orderAmount);
-	        
-	        // 3. 결제 금액 검증: 실제 결제된 금액이 주문 금액과 같은지 확인
-	        if (paymentInfo.getPaid_amount() == orderAmount) {
-	        	
-	        	// 4. 운송장 번호 생성
-	        	Random random = new Random();
-	        	long randomNumber = Math.abs(random.nextLong() % 1000000000000L);
-	        	String trackingNumber = String.format("%012d", randomNumber);
-	        	
-	        	// 5. 결제 테이블에 운송장 번호 저장
-	            paymentInfo.setTracking_number(trackingNumber);
-	            paymentInfo.setPay_status("결제 완료");
-	            paymentInfo.setPay_method("카드");
-	            paymentService.savePayment(paymentInfo);  // 결제 정보와 운송장 번호 저장
-	            
-	            // 6. 포인트 차감 로직
-	            log.info("member_id:{}",member_id);
-	            log.info("points_used:{}",points_used);
-	            memberService.deductPoints(member_id,points_used);
-	            
-	            // 결제 성공 처리 (결제 금액이 일치하고, 결제 상태가 'paid'인 경우)
-	        	response.put("status", "success");
-	        	response.put("message", "결제가 성공적으로 처리되었습니다.");
-	        	
-	        	// 주문 상태를 '결제 완료'로 업데이트
-	            orderService.updateOrderState(merchant_uid, "결제 완료");
-	        } else {
-	            // 결제 금액 불일치 또는 결제 실패 처리
-	        	response.put("status", "error");
-	        	response.put("message", "결제 금액이 다릅니다.");
-	        	
-	        	// 주문 상태를 '결제 실패'로 업데이트
-	            orderService.updateOrderState(merchant_uid, "결제 실패");
-	        }
-	    } catch (Exception e) {
-	        // 예외 처리
-	        e.printStackTrace();
-	        response.put("status", "error");
-	        response.put("message", "서버 오류: " + e.getMessage());
-	        
-	        // 주문 상태를 '결제 실패'로 업데이트
-            orderService.updateOrderState(merchant_uid, "결제 실패");
-	    }
-
-	    return response;
-	}
+        return response; // ResponseEntity 없이 Map 직접 반환
+    }
+	
 	
 	// 주문 생성 요청 처리
     @PostMapping("/order/create")

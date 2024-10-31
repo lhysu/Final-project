@@ -407,6 +407,7 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   `total_price` INT NOT NULL,
   `final_price` INT  NULL,
   `order_state` VARCHAR(45),
+  `order_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`merchant_uid`));
   
   # 주문 더미값 20개
@@ -554,7 +555,7 @@ CREATE TABLE `review` (
   CREATE TABLE `finalproject`.`delivery` (
   `delivery_num` INT NOT NULL,
   `pay_num` INT NOT NULL,
-  `product_num` INT NOT NULL,
+  `product_name` VARCHAR(255) NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `merchant_uid` VARCHAR(255) NOT NULL,
   `tracking_num` VARCHAR(255) NULL,
@@ -562,8 +563,7 @@ CREATE TABLE `review` (
   `delivery_status` VARCHAR(45) NULL,
   `shipped_date` TIMESTAMP NOT NULL,
   `delivery_date` TIMESTAMP NULL,
-  PRIMARY KEY (`delivery_num`),
-  UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
+  PRIMARY KEY (`delivery_num`));
   
  # 배송 조회 더미값 20개
  INSERT INTO `finalproject`.`delivery` (delivery_num, pay_num, product_num, member_id, merchant_uid, tracking_num, courier, delivery_status, shipped_date, delivery_date) VALUES 
@@ -654,7 +654,6 @@ ON UPDATE CASCADE;
 # 배송조회에서 결제,상품,회원,주문 참조
 ALTER TABLE `finalproject`.`delivery` 
 ADD INDEX `FK_DELIVERY_PAYMENT_idx` (`pay_num` ASC) VISIBLE,
-ADD INDEX `FK_DELIVERY_PRODUCT_idx` (`product_num` ASC) VISIBLE,
 ADD INDEX `FK_DELIVERY_ORDER_idx` (`merchant_uid` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`delivery` 
@@ -663,11 +662,6 @@ ADD CONSTRAINT `FK_DELIVERY_PAYMENT`
   REFERENCES `finalproject`.`payment` (`pay_num`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
-  FOREIGN KEY (`product_num`)
-  REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_DELIVERY_ORDER`
   FOREIGN KEY (`merchant_uid`)
   REFERENCES `finalproject`.`order` (`merchant_uid`)

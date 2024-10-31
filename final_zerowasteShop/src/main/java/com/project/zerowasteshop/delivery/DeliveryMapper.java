@@ -31,6 +31,8 @@ public interface DeliveryMapper {
 	public List<DeliveryVO> searchListPageBlockProduct_name(String string, int startRow, int endRow);
 
 	public List<DeliveryVO> searchListPageBlockTracking_num(String string, int startRow, int endRow);
+
+	public void saveDelivery(DeliveryVO deliveryInfo);
 	
 
 }
