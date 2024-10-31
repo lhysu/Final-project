@@ -77,15 +77,17 @@
 					<tr>
 						<th>번호</th>
 						<th>주문번호</th>
-						<th>배송추적번호</th>
+						<th>상품</th>
+						<th>배송상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					<th:block th:each="vo : ${list}">
 						<tr>
 							<td><a th:href="|/delivery/selectOne?delivery_num=${vo.delivery_num}|">[[${vo.delivery_num}]]</a></td>
-							<td>[[${vo.order_num}]]</td>
-							<td>[[${vo.tracking_num}]]</td>
+							<td>[[${vo.merchant_uid}]]</td>
+							<td>[[${vo.product_name}]]</td>
+							<td>[[${vo.delivery_status}]]</td>						
 						</tr>
 					</th:block>
 				</tbody>
