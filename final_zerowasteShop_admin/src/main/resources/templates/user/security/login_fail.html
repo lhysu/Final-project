@@ -5,8 +5,8 @@
 <title>login.html</title>
 <link rel="stylesheet" href="/css/main.css">
 </head>
-<body th:replace="~{layout::layout}">
-	<div th:fragment="content">
+<body>
+	<div>
 		<script>
 			alert("아이디 혹은 비밀번호가 틀려요");
 			location.href = "[[@{/member/login_form}]]";

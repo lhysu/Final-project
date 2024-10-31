@@ -180,7 +180,12 @@ public class MemberController {
 	public String expired() {
 		return "user/security/expired";
 	}
-		
+	
+	//권한 없는 페이지에 접근한 경우
+	@GetMapping("/member/denied")
+	public String denied() {
+		return "user/security/denied";
+	}
 	
 	
 

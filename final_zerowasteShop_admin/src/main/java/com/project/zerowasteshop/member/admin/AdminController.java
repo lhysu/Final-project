@@ -180,24 +180,24 @@ public class AdminController {
 	}
 	
 	//관리자 로그인 
-	
-	  @PostMapping({"/admin/ad_loginOK"}) public String ad_loginOK(MemberVO vo) {
-	  log.info("/admin/ad_loginOK"); log.info("{}",vo);
-	  
-	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); if(vo2!=null) {
-	  session.setAttribute("admin_id", vo2.getMember_id()); return
-	  "redirect:/home"; }else { return "redirect:/admin/ad_login"; } }
+//	
+//	  @PostMapping({"/admin/ad_loginOK"}) public String ad_loginOK(MemberVO vo) {
+//	  log.info("/admin/ad_loginOK"); log.info("{}",vo);
+//	  
+//	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); if(vo2!=null) {
+//	  session.setAttribute("admin_id", vo2.getMember_id()); return
+//	  "redirect:/home"; }else { return "redirect:/admin/ad_login"; } }
 	 
 	
 	//관리자 로그아웃
-	@GetMapping({"/admin/ad_logout"})
-	public String ad_logout() {
-		log.info("/admin/ad_logout");
-		session.removeAttribute("admin_id");
-		//session.invalidate();
-		
-		return "redirect:/home";
-	}
+//	@GetMapping({"/admin/ad_logout"})
+//	public String ad_logout() {
+//		log.info("/admin/ad_logout");
+//		session.removeAttribute("admin_id");
+//		//session.invalidate();
+//		
+//		return "redirect:/home";
+//	}
 	
 	@GetMapping({"/admin/home"})
 	public String home() {
@@ -205,6 +205,37 @@ public class AdminController {
 	
 		return "admin/member/home";
 	}
+	
+	// 로그인이 필요한 요청경로를 로그인 하지 않은 상태로 요청하면 리다일렉트 되는 요청경로
+		@GetMapping("/member/required_login")
+		public String required_login() {
+			return "user/security/required_login";
+		}
+
+		// 로그인 폼을 제출(post) 한 로그인 프로세즈 중에 forward 되는 경로이기 때문에 @PostMapping 임에 주의!
+		@PostMapping("/member/login_fail")
+		public String login_fail() {
+			// 로그인 실패임을 알릴 페이지
+			return "user/security/login_fail";
+		}
+
+		@PostMapping("/member/login_success")
+		public String login_success() {
+			// 로그인 성공후 보여질 페이지
+			return "user/security/login_success";
+		}
+
+		// 세션 허용갯수 초과시
+		@GetMapping("/member/expired")
+		public String expired() {
+			return "user/security/expired";
+		}
+		
+		//권한 없는 페이지에 접근한 경우
+		@GetMapping("/member/denied")
+		public String denied() {
+			return "user/security/denied";
+		}
 	
 
 }

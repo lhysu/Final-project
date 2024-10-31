@@ -3,6 +3,7 @@ package com.project.zerowasteshop.member.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.zerowasteshop.donateitem.DonateItemVO;
@@ -16,6 +17,10 @@ public class AdminService {
 	
 	@Autowired
 	AdminMapper mapper;
+	
+	// 비밀번호 암호화하는 객체도 bean 으로 등록이 되어 있다.
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	public List<MemberVO> selectAll() {
 		
@@ -70,10 +75,14 @@ public class AdminService {
 	}
 
 	public int insertOK(MemberVO vo) {
+		String encodedPwd = encoder.encode(vo.getPw());
+		vo.setPw(encodedPwd);
 		return mapper.insertOK(vo);
 	}
 
 	public int updateOK(MemberVO vo) {
+		String encodedPwd = encoder.encode(vo.getPw());
+		vo.setPw(encodedPwd);
 		return mapper.updateOK(vo);
 		
 	}
@@ -82,8 +91,8 @@ public class AdminService {
 		return mapper.deleteOK(vo);
 	}
 
-	public MemberVO login(MemberVO vo) {
-		return mapper.login(vo);
-	}
+	/*
+	 * public MemberVO login(MemberVO vo) { return mapper.login(vo); }
+	 */
 
 }
