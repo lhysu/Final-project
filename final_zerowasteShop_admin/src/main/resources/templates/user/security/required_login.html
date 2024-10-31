@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>login.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body th:replace="~{layout::layout}">
+
+	<div th:fragment="content">
+		<form action="login" method="post">
+			<table id="insertTable">
+				<tr>
+					<td><label for="id">ID</label></td>
+					<td><input type="text" id="id" name="id" value="admin1"
+						placeholder="ID를 입력하세요"></td>
+				</tr>
+				<tr>
+					<td><label for="pw">PW</label></td>
+					<td><input type="text" id="pw" name="pw" value="hi1212"
+						placeholder="PW를 입력하세요"></td>
+				</tr>
+
+				
+				<tr>
+					<td colspan="2"><input type="submit" value="로그인"></td>
+				</tr>
+			</table>
+		</form>
+
+
+	</div>
+
+
+</body>
+</html>

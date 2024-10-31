@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>login.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body th:replace="~{layout::layout}">
+	<div th:fragment="content">
+		<script>
+			alert("로그인 되었습니다");
+			location.href = "[[@{/}]]";
+		</script>
+	</div>
+
+</body>
+</html>
+

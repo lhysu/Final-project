@@ -121,23 +121,23 @@ public class MemberController {
 	
 	  //로그인
 	  
-	  @PostMapping({"/member/m_loginOK"}) public String m_loginOK(MemberVO vo) {
-	  log.info("/member/m_loginOK"); log.info("{}",vo);
-	  
-	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); 
-	  if(vo2!=null) {
-	  session.setAttribute("user_id", vo2.getMember_id()); 
-	  return "redirect:/home";
-	  }else { return "redirect:/member/m_login"; } }
+//	  @PostMapping({"/member/m_loginOK"}) public String m_loginOK(MemberVO vo) {
+//	  log.info("/member/m_loginOK"); log.info("{}",vo);
+//	  
+//	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); 
+//	  if(vo2!=null) {
+//	  session.setAttribute("user_id", vo2.getMember_id()); 
+//	  return "redirect:/home";
+//	  }else { return "redirect:/member/m_login"; } }
 	 
 	
 	//로그아웃
 	
-	  @GetMapping({"/member/m_logout"}) public String m_logout() {
-	  log.info("/member/m_logout"); session.removeAttribute("user_id");
-	  //session.invalidate();
-	  
-	  return "redirect:/home"; }
+//	  @GetMapping({"/member/m_logout"}) public String m_logout() {
+//	  log.info("/member/m_logout"); session.removeAttribute("user_id");
+//	  //session.invalidate();
+//	  
+//	  return "redirect:/home"; }
 	 
 	
 	//아이디 찾기 페이지로 이동
@@ -153,6 +153,32 @@ public class MemberController {
 	public String selectPw() {
 		log.info("/member/selectPw");
 		return "user/selectPw";
+	}
+	
+
+	// 로그인이 필요한 요청경로를 로그인 하지 않은 상태로 요청하면 리다일렉트 되는 요청경로
+	@GetMapping("/member/required_login")
+	public String required_login() {
+		return "user/security/required_login";
+	}
+
+	// 로그인 폼을 제출(post) 한 로그인 프로세즈 중에 forward 되는 경로이기 때문에 @PostMapping 임에 주의!
+	@PostMapping("/member/login_fail")
+	public String login_fail() {
+		// 로그인 실패임을 알릴 페이지
+		return "user/security/login_fail";
+	}
+
+	@PostMapping("/member/login_success")
+	public String login_success() {
+		// 로그인 성공후 보여질 페이지
+		return "user/security/login_success";
+	}
+
+	// 세션 허용갯수 초과시
+	@GetMapping("/member/expired")
+	public String expired() {
+		return "user/security/expired";
 	}
 		
 	

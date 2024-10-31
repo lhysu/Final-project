@@ -34,7 +34,7 @@ public class AdminController {
 		log.info("cpage:{}",cpage);
 		log.info("pageBlock:{}",pageBlock);
 		
-//		List<MemberVO> list = service.selectAll();
+
 		List<MemberVO> list = service.selectAllPageBlock(cpage,pageBlock);
 		log.info("list.size():{}",list.size());
 		

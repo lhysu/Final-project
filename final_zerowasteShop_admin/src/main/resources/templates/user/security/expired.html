@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>login.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body th:replace="~{layout::layout}">
+	<div th:fragment="content">
+		<h3>알림</h3>
+		<p>다른 기기에서 로그인 되어서 로그아웃 되었습니다(세션 허용 갯수 넘어감).
+		<p>
+			tip! <br> chrome 브라우저에서 로그인 한후에 동일한 계정으로 edge 브라우저에 로그인을 한다.
+			chrome 브라우저에서 새로 고침하면 이 페이지의 내용을 볼수가 있다
+		</p>
+	</div>
+
+</body>
+</html>
+

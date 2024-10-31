@@ -11,6 +11,10 @@
 		select * from member where member_id=#{member_id}
 	</select>
 	
+	<select id="findById" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id=#{member_id} and adCheck=false
+	</select>
+	
 	<insert id="insertOK">
 		insert into member(member_id,name,pw,email,phone_number,postcode,address,address_detail,adCheck) 
 		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{postcode},#{address},#{address_detail},#{adCheck})

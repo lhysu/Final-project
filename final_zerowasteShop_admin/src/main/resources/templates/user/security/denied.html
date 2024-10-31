@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>login.html</title>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body th:replace="~{layout::layout}">
+	<div th:fragment="content">
+		<script>
+			alert("해당 페이지를 요청할 권한이 없습니다");
+			location.href = "[[@{/member/login_form}]]";
+		</script>
+	</div>
+
+</body>
+</html>
+
