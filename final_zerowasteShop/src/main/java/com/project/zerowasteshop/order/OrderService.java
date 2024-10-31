@@ -184,9 +184,9 @@ public class OrderService {
 		return mapper.getTotalRowsByUser(userId);
 	}
 
-	public List<OrderJoinProductVO> selectAllByUser(String merchant_uid,int product_num) {
+	public List<OrderJoinProductVO> selectAllByUser(String merchant_uid) {
 		// TODO Auto-generated method stub
-		return mapper.selectAllByUser(merchant_uid,product_num);
+		return mapper.selectAllByUser(merchant_uid);
 	}
 
 

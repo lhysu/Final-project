@@ -464,25 +464,28 @@
                       	                   
             <div class="order-items" style="margin-top: 20px !important;">
 			    <h2>주문 상품</h2>
-			    <div class="order-item">
-			    	<img th:src="${product.product_img}" alt="Product Image" width="100">
-			        <input type="hidden" id = "product_num" class="product_num" th:value="${product.product_num}">  <!-- 상품 번호 -->
-			        <span class="product_name">[[${product.product_name}]]</span>
-			        <span class="price">[[${product.price}]]원</span> <!-- 상품 가격 -->
-			        <input type="hidden" class="quantity" th:value="${quantity}"><span class="quantity-display">[[${quantity}]]개</span>  <!-- 상품 수량 -->
+			    
+			    <div th:if="${product != null}"> 
+				    <div class="order-item">
+				    	<img th:src="${product.product_img}" alt="Product Image" width="100">
+				        <input type="hidden" id = "product_num" class="product_num" th:value="${product.product_num}">  <!-- 상품 번호 -->
+				        <span class="product_name">[[${product.product_name}]]</span>
+				        <span class="price">[[${product.price}]]원</span> <!-- 상품 가격 -->
+				        <input type="hidden" class="quantity" th:value="${quantity}"><span class="quantity-display">[[${quantity}]]개</span>  <!-- 상품 수량 -->
+				    </div>
+			    </div>
+
+            
+            	<div th:if="${products != null}">
+			        <div th:each="item : ${products}" class="order-item">
+			            <img th:src="${item.product_img}" alt="Product Image" width="50">
+			            <input type="hidden" class="product_num" th:value="${item.product_num}"> <!-- 상품 번호 -->
+			            <span class="product_name" th:text="${item.product_name}">[[${item.product_name}]]</span>
+			            <span class="price" th:text="${item.price}">[[${item.price}]]</span> <!-- 상품 가격 -->
+			            <input type="hidden" class="quantity" th:value="${item.count}"> <!-- 상품 수량 -->
+			        </div>
 			    </div>
 			</div>
-            
-<!--             <div class="order-items">
-    		Thymeleaf 반복문을 사용해 주문 상품 리스트 출력
-    			<div th:each="item : ${orderItems}" class="order-item">
-    				<img th:src="${product_img}" alt="Product Image" width="50">
-        			<input type="hidden" class="product-num" th:value="${item.product_num}">  상품 번호
-        			<span class="product-name" th:text="${item.product_name}">상품명</span>
-        			<span class="price" th:text="${item.price}">10,000원</span> 상품 가격
-        			<input type="number" class="quantity" th:value="${item.quantity}" min="1">  상품 수량
-    			</div>
-			</div> -->
 			
 			<hr>
 			
@@ -513,12 +516,14 @@
 	        <button type="button" id="applyPointsBtn">사용하기</button>
             
             <hr>
+            
             <div class="order-summary">
-            <p>총 상품 금액: <span id="total_price">[[${product.price}]]원</span></p>
+            <p>총 상품 금액: <span id="total_price" th:text="${products != null ? totalPrice + '원' : product.price*quantity + '원'}"></span></p>
             <p>총 할인 금액: <span id="discount">0원</span></p>
             <p>배송비: <span id="delivery_fee">0원</span></p>
-            <p class="final_price">최종 결제 금액: <span id="final_price">[[${product.price}]]원</span></p>
+            <p class="final_price">최종 결제 금액: <span id="final_price" th:text="${products != null ? totalPrice + '원' : product.price*quantity + '원'}"></span></p>
         	</div>
+        	
             <hr>
             
             <div style="text-align: right;">
@@ -526,7 +531,9 @@
             </div>
             
         </form>
-    </div>
+        
+        </div>
+
     
     <!-- Footer Start -->
 	<div th:replace="footer :: footer"></div>

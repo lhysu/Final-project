@@ -1,11 +1,15 @@
 package com.project.zerowasteshop.order;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -124,13 +128,13 @@ public class OrderController {
 		return "admin/order/selectOne";
 	}
 	
-	@GetMapping("/order/order")
+	@PostMapping("/order/order")
 	public String insert(Model model,
 			@RequestParam("product_num")int product_num,
 			@RequestParam("member_id")String member_id,
 			@RequestParam("price")String price,
 			@RequestParam("product_name")String product_name,
-			@RequestParam(defaultValue = "1")int quantity) {
+			@RequestParam("quantity")int quantity) {
 		
 		//배송지 정보 불러오고 넘기기
 		MemberVO member = memberService.selectOne(member_id);
@@ -148,6 +152,55 @@ public class OrderController {
 		product = productService.selectOne(product);
 		model.addAttribute("product",product);		
 		model.addAttribute("quantity",quantity);				
+		
+	    List<CouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
+	    log.info("coupons:{}",coupons);
+	    model.addAttribute("coupons", coupons);
+		
+			
+		return "order/order";
+	}
+	
+	@PostMapping("/order/cartOrder")
+	public String insertMultiProducts(Model model,
+			@RequestParam("productNums") List<Integer> productNums,
+			@RequestParam("member_id")String member_id,
+			@RequestParam("prices") List<Integer> prices, // 가격 목록 추가
+	        @RequestParam("quantities") List<Integer> quantities // 수량 목록 추가
+	        ) {
+		
+		//배송지 정보 불러오고 넘기기
+		MemberVO member = memberService.selectOne(member_id);
+		model.addAttribute("name",member.getName());
+		model.addAttribute("tel",member.getPhone_number());
+		model.addAttribute("postcode",member.getPostcode());
+		model.addAttribute("address",member.getAddress());
+		model.addAttribute("address_detail",member.getAddress_detail());
+		model.addAttribute("points",member.getPoints());
+		model.addAttribute("member_id",member.getMember_id());
+		
+		// 여러 상품 정보를 저장할 리스트 생성
+	    List<ProductVO> products = new ArrayList<>();
+	    
+	    for (int i = 0; i < productNums.size(); i++) {
+	        ProductVO product = new ProductVO();
+	        product.setProduct_num(productNums.get(i));
+	        product = productService.selectOne(product);
+	        product.setProduct_name(product.getProduct_name()); // 제품명 설정
+	        product.setPrice(prices.get(i)); // 개별 가격 설정
+	        product.setCount(quantities.get(i)); // 개별 수량 설정
+	        
+	        log.info("product:{}", product);
+	        products.add(product);
+	    }
+
+	    model.addAttribute("products", products);	
+	    
+	    int totalPrice = products.stream()
+	    	    .mapToInt(item -> item.getPrice())
+	    	    .sum();
+	    
+	    model.addAttribute("totalPrice", totalPrice);
 		
 	    List<CouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
 	    log.info("coupons:{}",coupons);
@@ -180,7 +233,11 @@ public class OrderController {
 		List<OrderJoinProductVO> list = service.selectAllPageBlockByUser(cpage,pageBlock,userId); //해당 페이지에 보여줄 5개행씩 만 검색
 		log.info("list.size():{}",list.size());
 		
-		model.addAttribute("list",list);
+		 // 주문 번호별로 데이터를 그룹화
+	    Map<String, List<OrderJoinProductVO>> groupedOrders = list.stream()
+	            .collect(Collectors.groupingBy(OrderJoinProductVO::getMerchant_uid)); // OrderJoinProductVO에 주문 번호를 반환하는 getOrderNumber() 메소드가 필요
+
+	    model.addAttribute("groupedOrders", groupedOrders);
 		model.addAttribute("cpage",cpage);
 		
 		// 
@@ -206,8 +263,8 @@ public class OrderController {
 	@GetMapping("/order/selectOne")
 	public String orderSelectOne(Model model,
 			HttpSession session,
-			@RequestParam("merchant_uid")String merchant_uid,
-			@RequestParam("product_num")int product_num) {
+			@RequestParam("merchant_uid")String merchant_uid
+			) {
 		log.info("/order/selectOne");
 		log.info("merchant_uid:{}",merchant_uid);
 		
@@ -227,7 +284,7 @@ public class OrderController {
 		log.info("order_item:{}",order_item);
 		
 		// 상품이미지, 상품개수,상품가격 불러오기
-		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid,product_num);
+		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid);
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);
