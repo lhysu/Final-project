@@ -8,7 +8,7 @@ public class DeliveryVO {
 	private int pay_num;
 	private String product_name;
 	private String member_id;
-	private int order_num;
+	private String merchant_uid;
 	private String tracking_num;
 	private String courier;
 	private String delivery_status;
@@ -18,7 +18,7 @@ public class DeliveryVO {
 	@Override
 	public String toString() {
 		return "DeliveryVO [delivery_num=" + delivery_num + ", pay_num=" + pay_num + ", product_name=" + product_name
-				+ ", member_id=" + member_id + ", order_num=" + order_num + ", tracking_num=" + tracking_num
+				+ ", member_id=" + member_id + ", merchant_uid=" + merchant_uid + ", tracking_num=" + tracking_num
 				+ ", courier=" + courier + ", delivery_status=" + delivery_status + ", shipped_date=" + shipped_date
 				+ ", delivery_date=" + delivery_date + "]";
 	}
@@ -55,12 +55,12 @@ public class DeliveryVO {
 		this.member_id = member_id;
 	}
 
-	public int getOrder_num() {
-		return order_num;
+	public String getMerchant_uid() {
+		return merchant_uid;
 	}
 
-	public void setOrder_num(int order_num) {
-		this.order_num = order_num;
+	public void setMerchant_uid(String merchant_uid) {
+		this.merchant_uid = merchant_uid;
 	}
 
 	public String getTracking_num() {

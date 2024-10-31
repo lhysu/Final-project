@@ -42,4 +42,10 @@ public interface OrderMapper {
 
 	List<OrderItemVO> selectOneItem(String merchantUid);
 
+	List<OrderJoinProductVO> selectAllPageBlockByUser(int startRow, int pageBlock, String userId);
+
+	int getTotalRowsByUser(String userId);
+
+	List<OrderJoinProductVO> selectAllByUser(String merchant_uid,int product_num);
+
 }

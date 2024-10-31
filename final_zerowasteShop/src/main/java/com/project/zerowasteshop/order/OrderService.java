@@ -172,5 +172,22 @@ public class OrderService {
 		return mapper.selectOneItem(merchant_uid);
 	}
 
+	public List<OrderJoinProductVO> selectAllPageBlockByUser(int cpage, int pageBlock, String userId) {
+		int startRow = pageBlock*(cpage-1);
+		log.info("startRow:{}",startRow);
+		log.info("pageBlock:{}",pageBlock);
+		
+		return mapper.selectAllPageBlockByUser(startRow,pageBlock,userId);
+	}
+
+	public int getTotalRowsByUser(String userId) {
+		return mapper.getTotalRowsByUser(userId);
+	}
+
+	public List<OrderJoinProductVO> selectAllByUser(String merchant_uid,int product_num) {
+		// TODO Auto-generated method stub
+		return mapper.selectAllByUser(merchant_uid,product_num);
+	}
+
 
 }

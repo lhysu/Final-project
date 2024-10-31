@@ -34,6 +34,8 @@ public class OrderJoinProductVO {
     private String category;
     private double rating;
     private MultipartFile file;
+    private String order_date;
+    private String delivery_status;
     private String delivery_date;
     
     public OrderJoinProductVO(JSONObject itemJson) {
