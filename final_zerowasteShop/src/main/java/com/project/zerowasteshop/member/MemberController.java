@@ -3,13 +3,13 @@ package com.project.zerowasteshop.member;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
@@ -118,31 +118,27 @@ public class MemberController {
 		return "user/login";
 	}
 	
-	//로그인 
-	@PostMapping({"/member/m_loginOK"})
-	public String m_loginOK(MemberVO vo) {
-		log.info("/member/m_loginOK");
-		log.info("{}",vo);
-
-		MemberVO vo2 = new MemberVO();
-		vo2 = service.login(vo);
-		if(vo2!=null) {
-			session.setAttribute("user_id", vo2.getMember_id());
-			return "redirect:/home";
-		}else {
-			return "redirect:/member/m_login";
-		}
-	}
+	
+	  //로그인
+	  
+	  @PostMapping({"/member/m_loginOK"}) public String m_loginOK(MemberVO vo) {
+	  log.info("/member/m_loginOK"); log.info("{}",vo);
+	  
+	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); 
+	  if(vo2!=null) {
+	  session.setAttribute("user_id", vo2.getMember_id()); 
+	  return "redirect:/home";
+	  }else { return "redirect:/member/m_login"; } }
+	 
 	
 	//로그아웃
-	@GetMapping({"/member/m_logout"})
-	public String m_logout() {
-		log.info("/member/m_logout");
-		session.removeAttribute("user_id");
-		//session.invalidate();
-		
-		return "redirect:/home";
-	}
+	
+	  @GetMapping({"/member/m_logout"}) public String m_logout() {
+	  log.info("/member/m_logout"); session.removeAttribute("user_id");
+	  //session.invalidate();
+	  
+	  return "redirect:/home"; }
+	 
 	
 	//아이디 찾기 페이지로 이동
 	@GetMapping({"/member/selectId"})
@@ -151,46 +147,14 @@ public class MemberController {
 		return "user/selectId";
 	}
 	
-	//아이디 찾기
-	@PostMapping({"/member/selectIdCheck"})
-	public String selectIdCheck(Model model,MemberVO vo) {
-		log.info("/member/selectId");
-		log.info("vo:{}", vo);
-		MemberVO vo2 = service.selectId(vo);
-		String result="";
-		if(vo2!=null) {
-			result= vo2.getName()+"님의 아이디는 "+vo2.getMember_id()+"입니다.";
-					
-		}else result="회원정보가 존재하지 않습니다.";
-		
-		model.addAttribute("result",result);	
-		return "user/selectId_check";	
-		
-	}
 	
-		//비밀번호 찾기 페이지로 이동
-		@GetMapping({"/member/selectPw"})
-		public String selectPw() {
-			log.info("/member/selectPw");
-			return "user/selectPw";
-		}
+	//비밀번호 찾기 페이지로 이동
+	@GetMapping({"/member/selectPw"})
+	public String selectPw() {
+		log.info("/member/selectPw");
+		return "user/selectPw";
+	}
 		
-		//비밀번호 찾기
-		@PostMapping({"/member/selectPwCheck"})
-		public String selectPwCheck(Model model,MemberVO vo) {
-			log.info("/member/selectPwCheck");
-			log.info("vo:{}", vo);
-			MemberVO vo2 = service.selectPw(vo);
-			String result="";
-			if(vo2!=null) {
-				result= vo2.getName()+"님의 비밀번호는 "+vo2.getPw()+"입니다.";
-						
-			}else result="회원정보가 존재하지 않습니다.";
-			
-			model.addAttribute("result",result);	
-			return "user/selectPw_check";	
-			
-		}
 	
 	
 
