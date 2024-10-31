@@ -294,7 +294,7 @@ CREATE TABLE `finalproject`.`product` (
   `company` VARCHAR(255) NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
   `category` VARCHAR(255) NULL,
-  `rating` DOUBLE NULL DEFAULT 1,
+  `rating` DOUBLE NULL DEFAULT 4,
   PRIMARY KEY (`product_num`));
   
 # 상품 더미값 20개
