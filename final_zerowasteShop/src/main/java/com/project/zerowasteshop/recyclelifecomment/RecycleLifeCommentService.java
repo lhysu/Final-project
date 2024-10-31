@@ -2,11 +2,13 @@ package com.project.zerowasteshop.recyclelifecomment;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RecycleLifeCommentService {
 	
+	@Autowired
 	RecycleLifeCommentMapper mapper;
 
 	public RecycleLifeCommentVO selectOne(RecycleLifeCommentVO vo) {
@@ -36,6 +38,10 @@ public class RecycleLifeCommentService {
 
 	public int getTotalRows() {
 		return mapper.getTotalRows();
+	}
+
+	public List<RecycleLifeCommentVO> selectAll(int recycleLife_num) {
+		return mapper.selectAll();
 	}
 
 }

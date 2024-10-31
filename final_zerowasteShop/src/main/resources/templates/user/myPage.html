@@ -33,34 +33,78 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 20px auto; }
-    </style>
+
+.myPage-wrapper{
+    display: grid;
+	place-items: center;
+	height: 500px;
+}
+.myPage-wrapper2{
+    display: grid;
+	place-items: center;
+	min-height: 25dvh;
+	height: 500px;	
+ }
+.content{
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	border-radius: 20px;
+	width: 400px;
+	height: 750px;
+	position: relative;
+}
+.myPage-wrapper2 p a{
+    font-size: 19px;
+    font-weight: normal;
+    color: #81c408;
+    margin-bottom: 10px;
+    padding: 2px 0;    
+    display: inline;
+}
+.myPage-wrapper2 p a:hover {
+    color: #2d7a2a; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+#myPage-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+</style>
 </head>
 
 <body>
 
 	<!-- Header -->
-    <div th:replace="header :: header"></div>
+    <div th:replace="~{header_community :: header}"></div>
   
-<!-- 프로필 영역 -->
-<div class="profile">
-    <p th:text="${session.user_id} + '님의 마이페이지'"></p>
-    <h3>내 포인트</h3>
-    <p th:text="${points}+' 점'"></p>
-</div>
-<div>
-<p><a href="/cart/selectAll">내 장바구니</a></p>
-<p><a href="/likeList/selectAll">내 찜 목록</a></p>
-<p><a href="/order/selectAll">구매내역</a></p>
-<p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
-<p><a href="/delivery/d_selectAll">배송조회</a></p>
-<p><a href="/review/selectAll">내가 쓴 리뷰</a></p>
-<p><a href="/coupon/selectAll">내가 보유한 쿠폰</a></p>
-<p><a href="/member/m_update">내 정보 수정 및 관리</a></p>
-</div>
-
-	<!-- Footer -->
-	<div th:replace="footer :: footer"></div>
-		
+	<!-- 프로필 영역 -->
+	<div class="myPage-wrapper" style="margin-top : 150px;" >
+	<div class="content">
+	<div class="myPage-wrapper2">
+	<h2>마이페이지</h2>
+		<img alt="user_img" src="/img/user_img_color.png" 
+		width="110" height="110" style="margin-top : 10px; margin-left : 10px;">
+	    <p th:text="${session.user_id} + '님의 마이페이지'" style="margin-top : 25px;"></p>
+	    <h5>내 포인트</h5>
+	    <p th:text="${points}+' 점'" style="padding-bottom : 20px"></p>		
+	 
+	<p><a href="/cart/selectAll">내 장바구니</a></p>
+	<p><a href="/likeList/selectAll">내 찜 목록</a></p>
+	<p><a href="/order/selectAll">구매내역</a></p>
+	<p><a href="/order/selectOne">취소/교환/환불/반품내역</a></p>
+	<p><a href="/delivery/selectAll">배송조회</a></p>
+	<p><a href="/review/selectAll">내가 쓴 리뷰</a></p>
+	<p><a href="/coupon/selectAll">내가 보유한 쿠폰</a></p>
+	<p><a href="/member/m_update">내 정보 수정 및 관리</a></p>
+	
+	</div>
+	</div>
+	</div>
 </body>
 </html>
