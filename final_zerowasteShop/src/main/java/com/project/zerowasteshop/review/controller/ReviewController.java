@@ -163,7 +163,13 @@ public class ReviewController {
 // 		List<MemberVO> list = service.selectAll();
  		service.updateProductName();
  		String userID = (String) session.getAttribute("user_id"); // 세션에서 user_id 가져오기
- 		List<ReviewVO> list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		String adminID = (String) session.getAttribute("admin_id"); // 세션에서 user_id 가져오기
+ 		List<ReviewVO> list = null;
+ 		if (adminID == null) {
+ 			list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		} else {
+ 			list = service.selectAllPageBlock(cpage, pageBlock, adminID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		}
  		log.info("list.size():{}", list.size());
 
  		model.addAttribute("list", list);
@@ -296,9 +302,9 @@ public class ReviewController {
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
  		if (result == 1) {
- 			return "redirect:/review/selectAll";
+ 			return "redirect:/product/detail?product_num=" + vo.getProduct_num();
  		} else {
- 			return "redirect:/review/selectAll";
+ 			return "redirect:/product/detail?product_num=" + vo.getProduct_num();
  		}
  	}
 

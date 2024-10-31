@@ -64,6 +64,11 @@ public class ProductService {
 
 		return mapper.selectAllPageBlock(startRow, pageBlock);
 	}
+	
+	public void updateQuantity(int product_num, int count) {
+		mapper.updateProductQuantity(product_num, count);
+		
+	}
 
 	public int getSearchTotalRows(String searchKey, String searchWord) {
 		if (searchKey.equals("company")) {

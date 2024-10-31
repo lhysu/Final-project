@@ -5,6 +5,12 @@
 
 <mapper namespace="com.project.zerowasteshop.product.mapper.ProductMapper">
 
+	<update id="updateProductQuantity" parameterType="map">
+        UPDATE product
+        SET count = #{count}
+        WHERE product_num = #{product_num}
+    </update>
+
 	<select id="selectAllPageBlock"
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		select * from product order by product_num asc limit #{startRow},#{pageBlock}

@@ -28,6 +28,8 @@ public interface ProductMapper {
 	public int getTotalRows();
 //
 	public List<ProductVO> selectAllPageBlock(int startRow, int pageBlock);
+	
+	public void updateProductQuantity(int product_num, int count);
 //
 	public int getSearchTotalRowsCompany(String searchWord);
 

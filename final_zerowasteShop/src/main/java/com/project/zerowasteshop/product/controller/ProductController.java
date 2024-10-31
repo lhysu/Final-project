@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.zerowasteshop.cart.model.CartVO;
 import com.project.zerowasteshop.product.NaverShopSearch;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
@@ -297,6 +300,17 @@ public class ProductController {
 
  		return "product/detail";
  	}
+ 	
+ 	@PostMapping("/product/updateQuantity")
+    public ResponseEntity<Void> updateQuantity(@RequestBody ProductVO request) {
+        // 수량이 0보다 큰지 확인
+        if (request.getCount() <= 0) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청
+        }
+        
+        service.updateQuantity(request.getProduct_num(), request.getCount());
+        return ResponseEntity.ok().build(); // 성공적으로 처리됨
+    }
 
  	@PostMapping("/admin/product/insertOK")
  	public String insertOK(ProductVO vo) throws IllegalStateException, IOException {

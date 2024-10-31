@@ -94,6 +94,7 @@
 	    <h5>내 포인트</h5>
 	    <p th:text="${points}+' 점'" style="padding-bottom : 20px"></p>		
 	 
+
 	<p><a href="/cart/selectAll">내 장바구니</a></p>
 	<p><a href="/likeList/selectAll">내 찜 목록</a></p>
 	<p><a href="/order/selectAll">구매내역</a></p>
@@ -102,9 +103,10 @@
 	<p><a href="/review/selectAll">내가 쓴 리뷰</a></p>
 	<p><a href="/coupon/selectAll">내가 보유한 쿠폰</a></p>
 	<p><a href="/member/m_update">내 정보 수정 및 관리</a></p>
-	
 	</div>
-	</div>
-	</div>
+
+	<!-- Footer -->
+	<div th:replace="footer :: footer"></div>
+		
 </body>
 </html>
