@@ -180,20 +180,14 @@ public class AdminController {
 	}
 	
 	//관리자 로그인 
-	@PostMapping({"/admin/ad_loginOK"})
-	public String ad_loginOK(MemberVO vo) {
-		log.info("/admin/ad_loginOK");
-		log.info("{}",vo);
-
-		MemberVO vo2 = new MemberVO();
-		vo2 = service.login(vo);
-		if(vo2!=null) {
-			session.setAttribute("admin_id", vo2.getMember_id());
-			return "redirect:/home";
-		}else {
-			return "redirect:/admin/ad_login";
-		}
-	}
+	
+	  @PostMapping({"/admin/ad_loginOK"}) public String ad_loginOK(MemberVO vo) {
+	  log.info("/admin/ad_loginOK"); log.info("{}",vo);
+	  
+	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); if(vo2!=null) {
+	  session.setAttribute("admin_id", vo2.getMember_id()); return
+	  "redirect:/home"; }else { return "redirect:/admin/ad_login"; } }
+	 
 	
 	//관리자 로그아웃
 	@GetMapping({"/admin/ad_logout"})
