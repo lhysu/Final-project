@@ -158,8 +158,15 @@ public class CartController {
 
 // 		List<MemberVO> list = service.selectAll();
  		service.updateProductName();
- 		String userID = (String) session.getAttribute("user_id"); // 세션에서 user_id 가져오기
- 		List<CartVO> list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		String userID = (String) session.getAttribute("user_id");// 세션에서 user_id 가져오기
+ 		String adminID = (String) session.getAttribute("admin_id");// 세션에서 admin_id 가져오기
+ 		List<CartVO> list = null;
+ 		if (adminID == null) {
+ 			list = service.selectAllPageBlock(cpage, pageBlock, userID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		}
+ 		else {
+ 			list = service.selectAllPageBlock(cpage, pageBlock, adminID);// 해당페이지에 보여줄 5개행씩만 검색
+ 		}
  		log.info("list.size():{}", list.size());
 
  		model.addAttribute("list", list);
