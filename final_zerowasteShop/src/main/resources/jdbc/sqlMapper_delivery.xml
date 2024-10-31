@@ -27,5 +27,11 @@
   	  <select id="searchListTracking_num" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
   		select * from delivery where tracking_num like #{searchWord} order by tracking_num desc
   	  </select>
+  	  
+  	  	<!-- 배송 정보 저장 -->
+		<insert id="saveDelivery">
+			insert into delivery(pay_num,product_name,member_id, merchant_uid,tracking_num, courier, delivery_status,shipped_date,delivery_date)
+			values(#{pay_num},#{product_name},#{member_id},#{merchant_uid},#{tracking_num},#{courier},#{delivery_status},#{shipped_date},#{delivery_date})
+		</insert>
   
   </mapper>

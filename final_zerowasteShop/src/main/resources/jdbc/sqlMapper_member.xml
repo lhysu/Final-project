@@ -37,12 +37,14 @@
 		select member_id, name from member where name=#{name} and email=#{email} and adCheck=false
 	</select>
 
-	<select id="selectPw" resultType="com.project.zerowasteshop.member.MemberVO">
-		select pw, name from member where member_id=#{member_id} and name=#{name} and email=#{email} and adCheck=false
-	</select>
 	
 	<!-- 포인트 차감 로직 -->
 	<update id="deductPoints">
 		update member set points=#{remainingPoints} where member_id=#{member_id} 
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePW">
+		update member set pw=#{temppw} where member_id=#{member_id} and name=#{name} and email=#{email} 
 	</update>
 </mapper>

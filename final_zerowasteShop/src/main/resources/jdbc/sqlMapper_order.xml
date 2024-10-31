@@ -128,4 +128,34 @@
 	update `order` set reusing = #{reusing} where member_id = #{member_id}
 </update>
 
+<!-- 나의 구매 내역 정보 불러오기 -->
+<select id="selectAllPageBlockByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
+    SELECT DISTINCT o.merchant_uid, o.order_date, p.product_name, p.price, p.point, p.product_img, 
+                    i.quantity, i.product_num, d.delivery_status, d.delivery_date
+    FROM (
+        SELECT *
+        FROM `order`
+        WHERE member_id = #{userId}
+    ) o
+    JOIN order_item i ON o.merchant_uid = i.merchant_uid
+    JOIN product p ON i.product_num = p.product_num
+    LEFT JOIN delivery d ON d.merchant_uid = o.merchant_uid  <!-- delivery 테이블을 LEFT JOIN으로 추가 -->
+    ORDER BY o.merchant_uid DESC
+    LIMIT #{startRow}, #{pageBlock}
+</select>
+
+<select id="getTotalRowsByUser" resultType="int">
+    select count(*) total_rows from `order`
+    WHERE member_id = #{userId}
+</select>
+
+<select id="selectAllByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
+    SELECT DISTINCT o.merchant_uid, p.product_name, p.price, p.point, p.product_img, i.quantity, i.product_num
+    FROM `order` o
+    JOIN order_item i ON o.merchant_uid = i.merchant_uid
+    JOIN product p ON i.product_num = p.product_num
+    where o.merchant_uid = #{merchant_uid} and i.product_num = #{product_num}
+    ORDER BY o.merchant_uid DESC
+</select>
+
 </mapper>
