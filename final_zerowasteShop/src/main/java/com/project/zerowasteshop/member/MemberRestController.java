@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +42,13 @@ public class MemberRestController {
 	
 	//아이디 찾기
 		@PostMapping({"/api/selectIdCheck"})
-		public String api_selectIdCheck(Model model,MemberVO vo) {
+		public String api_selectIdCheck(Model model,@RequestParam("email") String email,@RequestParam("name") String name) {
 			log.info("/api/selectIdCheck");
-			log.info("vo:{}", vo);
+			log.info("email:{}", email);
+			log.info("name:{}", name);
+			MemberVO vo = new MemberVO();
+			vo.setEmail(email);
+			vo.setName(name);
 			MemberVO vo2 = service.selectId(vo);
 			log.info("vo2:{}",vo2);
 			String result="";
