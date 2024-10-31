@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.member.admin.AdminMapper">
+
+	<select id = "selectAll" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member order by member_num desc
+	</select>
+	
+	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member order by member_num desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from member 
+	</select>
+	
+	<select id="searchListId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} order by member_num desc
+	</select>
+	
+	<select id="searchListName" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where name like #{searchWord} order by member_num desc
+	</select>
+	
+	<select id="getSearchTotalRowsId" resultType="int">
+		select count(*) total_rows from member 
+		where member_id like #{searchWord}
+	</select>
+	
+	<select id="getSearchTotalRowsName" resultType="int">
+		select count(*) total_rows from member 
+		where name like #{searchWord}	
+	</select>
+	
+	<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} 
+		order by member_num desc limit #{startRow},#{pageBlock}
+		
+	</select>
+	
+	<select id="searchListPageBlockName" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where name like #{searchWord} 
+		order by member_num desc limit #{startRow},#{pageBlock}	
+	</select>
+	<select id="searchListPageBlockAdminId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id like #{searchWord} and adCheck=true
+		order by member_num desc limit #{startRow},#{pageBlock}	
+	</select>
+	
+	<select id="selectOne" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_num=#{member_num}
+	</select>
+	
+	<insert id="insertOK">
+		insert into member(member_id,name,pw,email,phone_number,postcode,address,address_detail,adCheck) 
+		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{postcode},#{address},#{address_detail},#{adCheck})
+	</insert>
+	
+	<update id="updateOK">
+		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},
+		postcode=#{postcode},address=#{address},address_detail=#{address_detail} where member_num=#{member_num} 
+	</update>
+	
+	<delete id="deleteOK">
+		delete from member where member_num=#{member_num}
+	</delete>
+	
+	<select id="login" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id from member where member_id=#{member_id} and pw=#{pw} and adCheck=true
+	</select>
+
+</mapper>
