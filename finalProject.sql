@@ -288,12 +288,13 @@ INSERT INTO `finalproject`.`recyclelife` (member_id, recycleLife_title, recycleL
 CREATE TABLE `finalproject`.`product` (
   `product_num` INT NOT NULL AUTO_INCREMENT,
   `product_name` VARCHAR(255) NOT NULL,
+  `count` INT NOT NULL DEFAULT 1,
   `price` INT NOT NULL,
   `point` INT NOT NULL,
   `company` VARCHAR(255) NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
   `category` VARCHAR(255) NULL,
-  `rating` DOUBLE NULL,
+  `rating` DOUBLE NULL DEFAULT 1,
   PRIMARY KEY (`product_num`));
   
 # 상품 더미값 20개
@@ -317,7 +318,7 @@ INSERT INTO `finalproject`.`product` (product_name, price, point, company, produ
 ('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5),
 ('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4),
 ('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3),
-('Product 20', 34711, 269, 'Company20', 'product20.jpg', 'Stationery', 5);
+('Product 20', 990, 269, '청년리빙', 'https://shopping-phinf.pstatic.net/main_8426046/84260465446.jpg', '생활/건강', 5);
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
@@ -407,7 +408,9 @@ INSERT INTO `finalproject`.`donateitem` (member_id, donateItem_title, donateItem
   `total_price` INT NOT NULL,
   `final_price` INT  NULL,
   `order_state` VARCHAR(45),
-  PRIMARY KEY (`merchant_uid`));
+  PRIMARY KEY (`merchant_uid`),
+  UNIQUE INDEX `coupon_code_UNIQUE` (`coupon_code` ASC) VISIBLE,
+  UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
   
   # 주문 더미값 20개
 INSERT INTO `finalproject`.`order` (merchant_uid,product_num ,member_id, coupon_code, postcode, address, address_detail, tel, reusing, discount, delivery_fee, delivery_memo,total_price,order_state) VALUES 
@@ -422,7 +425,6 @@ CREATE TABLE `finalproject`.`order_item` (
   `order_item_id` INT NOT NULL AUTO_INCREMENT,
   `merchant_uid` VARCHAR(255)  NULL,
   `product_num` INT  NULL,
-  `product_name` VARCHAR(255)  NULL,
   `quantity` INT  NULL,
   `price` INT  NULL,
   PRIMARY KEY (`order_item_id`));
@@ -517,7 +519,7 @@ CREATE TABLE `review` (
 (17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4'),
 (18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19'),
 (19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22'),
-(20, 'user20', 3, 'Review content for product 20', 3, 'review20.jpg', '2024-10-24'); 
+(20, 'user02', 20, '이쁘네요 마음에 들어요 배송도 빨라요', 3, 'img_1730191790842.PNG', '2024-10-24');
 
   # 재활용 라이프 댓글
   CREATE TABLE `finalproject`.`recyclelifecomment` (
@@ -525,7 +527,7 @@ CREATE TABLE `review` (
   `recycleLife_num` INT NOT NULL,
   `member_id` VARCHAR(255) NOT NULL,
   `lifeComment_content` VARCHAR(1000) NOT NULL,
-  `lifeComment_wdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lifeComment_wdate` TIMESTAMP NOT NULL,
   PRIMARY KEY (`lifeComment_num`));
   
   # 재활용 라이프 댓글 더미값 20개
@@ -613,6 +615,11 @@ ALTER TABLE `finalproject`.`review`
 ADD INDEX `FK_REVIEW_PRODUCT_idx` (`product_num` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`review` 
+ADD CONSTRAINT `FK_REVIEW_MEMBER`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `finalproject`.`member` (`member_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_REVIEW_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -668,6 +675,11 @@ ADD CONSTRAINT `FK_DELIVERY_PRODUCT`
   REFERENCES `finalproject`.`product` (`product_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_DELIVERY_MEMBER`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `finalproject`.`member` (`member_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_DELIVERY_ORDER`
   FOREIGN KEY (`merchant_uid`)
   REFERENCES `finalproject`.`order` (`merchant_uid`)
