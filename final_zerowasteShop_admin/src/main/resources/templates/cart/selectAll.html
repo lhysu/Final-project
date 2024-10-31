@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>내 장바구니</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 140px; }
+        
+        .position-relative {
+		    display: flex;
+		    flex-wrap: wrap; /* 줄 바꿈을 허용하여 버튼들이 겹치지 않도록 함 */
+		    justify-content: flex-start; /* 왼쪽 정렬 */
+		}
+		
+		.position-relative > div {
+		    flex: 1; /* 요소가 공간을 균등하게 차지하도록 설정 */
+		}
+		
+		@media (max-width: 768px) {
+		    .position-relative {
+		        flex-direction: column; /* 작은 화면에서는 세로로 배치 */
+		        align-items: flex-start; /* 왼쪽 정렬 */
+		    }
+		
+		    .position-relative > div {
+		        width: 100%; /* 각 버튼이 전체 너비를 차지하도록 설정 */
+		        margin-bottom: 10px; /* 버튼 간의 간격 */
+		    }
+		}
+        
+        .position-relative {
+		    display: flex; /* 플렉스 박스 모델 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		}
+		
+		select {
+			margin-right : 5px;
+		}
+		
+		#selectAllTable {
+		    width: 100%; /* 테이블 너비를 100%로 설정 */
+		    border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+		    margin: 20px 0; /* 상하 마진 설정 */
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+		}
+		
+		#selectAllTable thead {
+		    
+		    color: black; /* 헤더 글자색 */
+		}
+		
+		#selectAllTable th,
+		#selectAllTable td {
+		    padding: 15px; /* 셀 내 여백 */
+		    text-align: center; /* 텍스트 가운데 정렬 */
+		    border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+		}
+		
+		#selectAllTable tbody tr:hover {
+		    background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+		}
+		
+		#selectAllTable img {
+		    border-radius: 5px; /* 이미지 모서리 둥글게 */
+		}
+		
+		#selectAllTable tfoot {
+		    
+		    
+		}
+		
+		.pagination {
+		    margin: 0; /* 페이지네이션 마진 제거 */
+		    padding: 10px 0; /* 상하 패딩 추가 */
+		}
+		
+		.pagination .page-item .page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.pagination .page-item .page-link:hover {
+		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+		}
+		
+		.quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* 가운데 정렬 추가 */
+            padding: 5px;
+            width: 120px;
+            margin: 0 auto; /* 중앙 정렬을 위한 여백 */
+        }
+        .button {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .number {
+            width: 30px;
+            text-align: center;
+        }
+        
+        /* 푸터 스타일 */
+        .footer-summary {
+            text-align: center; /* 가운데 정렬 */
+            
+        }
+        
+        .footer-summary table {
+        	background-color: #f8f9fa; /* 푸터 배경색 */
+        	border-top: 1px solid #dee2e6;
+            width: 50% !important; /* 테이블 너비를 자동으로 설정하여 크기를 줄임 */
+            margin: 0 auto; /* 중앙 정렬을 위한 마진 */
+        }
+
+        .footer-summary th,
+        .footer-summary td {
+            padding: 5px; /* 셀 내 여백을 줄임 */
+
+        }
+
+        .footer-summary td:first-child {
+            text-align: left; /* 첫 번째 열은 왼쪽 정렬 */
+        }
+
+        /* 결제 금액을 볼드 처리 */
+        #final-price {
+            font-weight: bold; /* 볼드 처리 */
+        }    
+        
+        
+</style>
+</head>
+<body>
+	<!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+    
+	<div class="content" th:fragment="content" style="margin-top: 220px">
+        <table id="selectAllTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
+            <thead>
+                <tr>
+                	<!-- <th>선택</th> -->
+                    <th>제품이미지</th>
+                    <th>제품명</th>
+                    <th>갯수</th>
+                    <th>총 가격</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="vo : ${list}">
+                    <tr>
+                    	<!-- <td>
+                            <input type="checkbox" class="checkbox" id="'checkbox"> 체크박스 추가
+                        </td> -->
+                        <td>
+                            <img style="width: 100px;" th:src="${vo.product_img.startsWith('http')} ? ${vo.product_img} : |/uploadimgPath/${vo.product_img}|" alt="">
+                        </td>
+                        <td th:utext="${vo.product_name}"></td>
+                        <td>
+                            <div class="quantity-selector">
+                                <div class="button" th:onclick="changeQuantity(-1, [[${vo.price}]], this)">-</div>
+                                <div class="number" th:id="'quantity-' + ${vo.cart_num}">[[${vo.count}]]</div>
+                                <div class="button" th:onclick="changeQuantity(1, [[${vo.price}]], this)">+</div>
+                            </div>
+                        </td>
+                        <td th:id="'total-' + ${vo.cart_num}">[[${vo.count} * ${vo.price}]]</td>
+                        <td>
+						    <form action="/cart/deleteOK" method="post" style="display:inline;">
+						        <input type="hidden" name="cart_num" th:value="${vo.cart_num}"/>
+						        <button type="submit" class="delete-button" style = "background-color: transparent; border: none; color: red; cursor: pointer;">삭제</button>
+						    </form>
+						</td>
+                    </tr>
+                </th:block>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <!-- 푸터 요약 테이블 -->
+				        <div class="footer-summary">
+				            <table style="width: 100%;">
+				                <tr>
+				                    <td>총 상품 금액</td>
+				                    <td id="totalPrice">0원</td> <!-- 총 상품 금액 -->
+				                </tr>
+				                <tr>
+				                    <td>배송비</td>
+				                    <td>3000원</td> <!-- 배송비 -->
+				                </tr>
+				                <tr>
+				                    <td style="font-weight: bold;">결제 금액</td>
+				                    <td id="final-price">0원</td> <!-- 결제 금액 -->
+				                </tr>
+				                <tr>
+				                	<td colspan="2">
+				                		<div style="display: flex; justify-content: flex-start; gap: 10px; display:inline-block; width: 200px !important;">
+						       				<a href="/order/order" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style = "width : 100% !important; font-size : 120%; padding : 16px !important">구매하기</a>
+										</div>
+									</td>
+								</tr>
+				            </table>
+				        </div>
+				    
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+ 
+    </div>
+    
+    
+
+    <div th:replace="footer :: footer"></div>
+
+    <script>
+    function changeQuantity(delta, price, button) {
+        const quantityElement = button.parentNode.querySelector('.number');
+        const totalElement = document.getElementById('total-' + quantityElement.id.split('-')[1]); // 해당 제품의 총 가격 요소 찾기
+        let currentQuantity = parseInt(quantityElement.textContent);
+        currentQuantity += delta;
+        if (currentQuantity < 1) currentQuantity = 1; // 최소값 설정
+        quantityElement.textContent = currentQuantity;
+
+        const totalPrice = (currentQuantity * price).toFixed(0);
+        totalElement.textContent = totalPrice + '원'; // 총 가격 업데이트
+
+        updateTotalPrice(); // 총 가격 재계산
+        
+     	// AJAX 요청으로 수량 저장
+        updateQuantityInCart(quantityElement.id.split('-')[1], currentQuantity);
+    }
+
+    function updateQuantityInCart(cartNum, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/cart/updateQuantity", true); // 서버의 적절한 URL로 수정
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("수량이 성공적으로 업데이트되었습니다.");
+            }
+        };
+        xhr.send(JSON.stringify({ cart_num: cartNum, count: quantity }));
+    }
+    
+    function updateTotalPrice() {
+        const totals = document.querySelectorAll('td[id^="total-"]'); // 총 가격 요소 선택
+        let totalPrice = 0;
+
+        totals.forEach(total => {
+            totalPrice += parseInt(total.textContent.replace('원', '').replace(',', '') || 0); // 총 가격 계산
+        });
+
+        document.getElementById('totalPrice').textContent = totalPrice + '원'; // 총 상품 금액 업데이트
+        const shippingFee = 3000; // 배송비
+        const finalPrice = totalPrice + shippingFee; // 배송비 추가
+        document.getElementById('final-price').textContent = finalPrice + '원'; // 결제 금액 업데이트
+    }
+
+    // 페이지 로드 시 총 가격 계산
+    window.onload = updateTotalPrice;
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+      
+<!-- 필요없을듯? -->
+<div layout:fragment="content">
+    <table>
+        <tr>
+            <th>제목</th>
+            <th>이미지</th>
+            <th>가격</th>
+        </tr>
+        <tr th:each="items : ${itemDtos}">
+
+
+            <td>
+            <!--<a th:href="${items.link}" target="_blank">-->
+                <span th:utext="${items.product_name}"></span>
+            </a>
+            </td>
+
+            <td>
+                <!--<a th:href="${items.link}" target="_blank">-->
+                <img style="width: 100px;" th:src="${items.product_img}" alt="">
+                </a>
+            </td>
+
+            <td th:text="${items.price}"></td>
+
+        </tr>
+    </table>
+</div>
+
+
+<script layout:fragment="script">
+
+</script>
+
+</html>

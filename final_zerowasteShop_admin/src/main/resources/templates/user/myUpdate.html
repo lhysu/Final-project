@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>My Page - myUpdate</title>
+ 
+ <!-- Modal css -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+
+	<h1>내 정보 수정 및 관리</h1>
+	
+	
+	<form action="/member/m_updateOK" method="post">
+	<table border="1">
+	
+		
+    	<tr>
+        <th>아이디</th>
+        <td>[[${session.user_id}]]<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}">
+        <input type="hidden" id="member_num" name=member_num th:value="${vo2.member_num}" ></td>
+        </tr>
+        
+        <tr>
+        <th>이름</th>
+        <td><input type="text" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>이메일</th>
+        <td><input type="text" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>전화번호</th>
+        <td><input type="text" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>회원주소</th>
+        <td><input type="text" id="postcode" name="postcode" th:value="${vo2.postcode}" placeholder="우편번호">
+        	<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+        	<input type="text" id="address" name="address" th:value="${vo2.address}" placeholder="주소"><br>
+        	<input type="text" id="address_detail" name="address_detail" th:value="${vo2.address_detail}" placeholder="상세주소"></td>
+        
+        </tr>
+        
+        <tr>
+        <th>비밀번호</th>
+        <td><input type="pw" id="pw" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        </tr>
+        
+        <tr>
+        <th>비밀번호 확인</th>
+        <td><input type="pw" id="pwCheck" name="pwCheck"  th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        </tr>
+        <tr>
+        	
+			<td colspan="2"><input type="submit" value="수정완료"></td>
+		</tr>
+                
+	</table>
+	</form>
+	
+	<!-- 우편번호 찾기 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	    function execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	           
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('postcode').value = data.zonecode;
+	                document.getElementById("address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("address_detail").focus();
+	            }
+	        }).open();
+	    }
+	</script>
+	
+	<!-- 회원 탈퇴 -->	
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+ 	 회원 탈퇴
+	</button>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        정말 회원을 탈퇴하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+	        <button type="button" class="btn btn-primary" onclick="clickDel(deleteForm)">예</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<form name="deleteForm">
+		<input type="hidden" id="member_num" name="member_num" th:value="${vo2.member_num}">
+	</form>
+	
+	<script>
+		function clickDel(formName){
+			formName.action = "/member/m_deleteOK";
+			formName.method="post";
+			formName.submit();
+		}
+	
+	</script>
+	
+	
+<!-- Modal js -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+</body>
+</html>
