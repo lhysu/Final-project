@@ -27,7 +27,7 @@ public class MailService implements MailServiceInter {
 		MimeMessage message = emailsender.createMimeMessage();
 
 		message.addRecipients(RecipientType.TO, to);// 보내는 대상
-		message.setSubject("비밀번호 찾기 이메일 인증코드");// 제목
+		message.setSubject("zero-C 이메일 인증코드");// 제목
 
 		String msgg = "";
 		msgg += "<div style='margin:100px;'>";

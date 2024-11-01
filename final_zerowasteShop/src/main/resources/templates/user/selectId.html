@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thmeleaf.org">
+<html xmlns:th="http://www.thmeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Login Page</title>
@@ -114,34 +115,58 @@
     border: none;
     border-radius: 10px;
     transition: box-shadow 0.2s;
+    position: relative;
 }
 
 .modal-wrapper{
+	width: 400px;
+	height: 250px;
 	place-items: center;
-	padding: 20px;
-	position: relative;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
 }
 
 
 
 #modal-title{
- padding: 15px;
+ padding-top: 10px;
  color: black;
  font-size: 20pt;
  font: bold;
+ text-align: center;
 }
 
 #result{
+	padding-top: 15px;
 	color: green;
-	font-weight: 700; 
-	font-size: 40pt;
+	font-weight: 1000; 
+	font-size: 45pt;
+	text-align: center;
 	
 }
 
 #owner{
-	color: blue;
+	color: #4169e1;
 	font-size: 23pt;
-	font: bold;
+	font-weight: 700;
+	
+}
+.no-exist-text{
+	text-align: center;	
+	font-weight: 700; 
+	text-align: center;
+	font-size: 20pt;
+}
+#exist{
+	width:100%;
+	padding: 20px;
+}
+
+#no-exist{
+	padding-top: 80px;
 }
 
 </style>
@@ -181,13 +206,19 @@
     <div class="modal_popup">
     <div class="modal-wrapper">
         <div id="exist">
-        <p id="modal-title"><span id="owner">???</span>님의 아이디</p>
-        <div>
-        <p id="result"></p>
-        </div>              
+	        <p id="modal-title"><span id="owner">???</span>님의 아이디</p>
+	        <hr>
+	        <div>
+	        <p id="result"></p>
+	        </div>              
         </div>
+        <div id="no-exist">
+       		<p class="no-exist-text">일치하는 회원정보가 </p>
+       		<p class="no-exist-text">존재하지 않습니다.</p>
        	</div>
-       	<p id="no-exist">일치하는 회원정보가 존재하지 않습니다.</p>
+       	</div>
+       
+       	
         <div class="d-md-flex justify-content-md-end" style="position: absolute; right: 20px; bottom: 20px;">
 		  
 		  <button type="button" class="close_btn btn btn-primary mx-3" style="">닫기</button>

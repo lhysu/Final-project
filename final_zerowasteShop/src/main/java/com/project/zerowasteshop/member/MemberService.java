@@ -70,6 +70,10 @@ public class MemberService {
 	 { String temppw = encoder.encode(code); 
 	 return mapper.updatePW(member_id,
 	 name, email, temppw ); }
+
+	public MemberVO emailCheck(String email) {
+		return mapper.emailCheck(email);
+	}
 	 
 
 }
