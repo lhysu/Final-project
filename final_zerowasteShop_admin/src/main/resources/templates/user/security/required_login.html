@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thmeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Login Page</title>
+<title>Admin Login Page</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -26,21 +26,20 @@
     <link href="/css/style.css" rel="stylesheet">
 <style>
 
-
-.login-wrapper{
+ .login-wrapper{
     display: grid;
 	place-items: center;
 	
 	
-}
-.login-wrapper2{
+} 
+ .login-wrapper2{
     display: grid;
 	place-items: center;
-	min-height: 35dvh;
+	min-height: 40dvh;
 	
- }
+ } 
 
-.content{
+.contents{
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 	padding: 20px;
 	border-radius: 20px;
@@ -50,13 +49,15 @@
 }
 
 .login-wrapper2 > h1{
-    font-size: 40px;
+    font-size: 35px;
     color: #81c408;
+    padding-top: 50px;
     margin-bottom: 10px;
-    padding-top: 50px
+    
 }
 #login-form > input{
-    width: 100%;
+    font-size: 20px;
+	width: 300px;
     height: 48px;
     padding: 0 10px;
     box-sizing: border-box;
@@ -69,10 +70,6 @@
     font-size: 16px;
 }
 
-#login-form > input{
-	font-size: 20px;
-	width: 300px;
-}
 #login-form > input[type="submit"]{
     color: #fff;
     font-size: 16px;
@@ -83,47 +80,32 @@
 	color: #D2D2D2;
 }
 
-</style>
 
+
+</style>
 </head>
-<body>
-<!-- 헤더 시작 -->
+<body >
+	<!-- 헤더 시작 -->
 	 <div th:replace="~{header_community :: header}"></div>
     <!-- 해더 끝 -->
 
 <div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px; ">
-	<div class="login-wrapper">
-	<div class="content">
+<div class="login-wrapper">
+	<div class="contents">
 	<div class="login-wrapper2">
-	<h1>Login</h1>
+	<h1>관리자 로그인</h1>
 	
 	<form id="login-form" action="/login" method="post">
-	      <input type="text" class="form-control" name="member_id" id="member_id" value="user02" placeholder="아이디를 입력하세요">
-	      <input type="password" class="form-control" name="pw" id="pw" value="password002" placeholder="비밀번호를 입력하세요">
-	      <button type="submit" class="btn btn-primary w-100 text-white" value="로그인">로그인</button>
+	      <input type="text" class="form-control" name="member_id" id="member_id" value="admin" placeholder="아이디를 입력하세요">
+	      <input type="password" class="form-control" name="pw" id="pw" value="1111" placeholder="비밀번호를 입력하세요">
+	      <button type="submit" class="btn btn-primary w-100 text-white">로그인</button>
 
 	</form>
 	
-	<div>
- 	<!-- 아이디 찾기 -->
- 	<a th:href="|/member/selectId|" class="mx-1">아이디 찾기</a>
- 	<!-- 비밀번호 찾기 -->
- 	<a th:href="|/member/selectPw|" class="mx-1">비밀번호 찾기</a>
- 	<!-- 회원가입 -->
- 	<a th:href="|/member/m_insert|" class="mx-1">회원 가입</a>
- 	</div>
- 	</div>
- 	
- 	<div  style="position: absolute; left: 15px; bottom: 10px;">
- 	<a th:href="|/home|" >HOME</a>
- 	</div>
- 	
- 	<div  style="position: absolute; right: 15px; bottom: 10px;">
- 	<a href="http://localhost:8833/admin/ad_login" id="admin-login" target="_blank" >관리자 로그인</a>
- 	<!-- target="_blank" 추가하면 링크가 새창으로 열림 -->
- 	</div>
+	<a th:href="|/home|">HOME</a>
  	
 	
+</div>
 </div>
 </div>
 </div>

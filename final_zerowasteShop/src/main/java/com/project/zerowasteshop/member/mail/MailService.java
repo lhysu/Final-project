@@ -114,7 +114,7 @@ public class MailService implements MailServiceInter {
 		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
 		msgg += "<h3 style='color:blue;'>임시 비밀번호 입니다.</h3>";
 		msgg += "<div style='font-size:130%'>";
-		msgg += "CODE : <strong>";
+		msgg += "임시 비밀번호 : <strong>";
 		msgg += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기
 		msgg += "</div>";
 		message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
