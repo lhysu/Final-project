@@ -5,9 +5,9 @@
 
 <mapper namespace="com.project.zerowasteshop.payment.PaymentMapper">
 
-<update id="updateOK">
-	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
-	where coupon_code = #{coupon_code}
+<update id="updatePaymentStatus">
+	update payment set pay_status=#{pay_status}
+	where merchant_uid = #{merchant_uid}
 </update>
 
 <delete id="deleteCoupon">

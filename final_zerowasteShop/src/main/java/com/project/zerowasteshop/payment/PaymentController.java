@@ -1,13 +1,19 @@
 package com.project.zerowasteshop.payment;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.zerowasteshop.coupon.CouponVO;
 import com.project.zerowasteshop.order.OrderItemVO;
@@ -24,6 +30,9 @@ public class PaymentController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	IamportService iamportService;
 
     // 결제 완료 페이지로 이동하는 메소드
     @GetMapping("/payment/payment")
@@ -45,5 +54,6 @@ public class PaymentController {
         
         return "payment/payment";  // 결제 완료 화면으로 이동
     }
-	
+    
+    
 }

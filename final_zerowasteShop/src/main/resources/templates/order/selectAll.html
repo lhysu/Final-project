@@ -117,21 +117,37 @@ h1 {
 
 .product-details {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
-.product-details p {
-    margin: 3px 0;
-    font-size: 16px;
-    line-height: 1.5;
+.product-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #1E90FF;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.review-button:hover {
+    background-color: #1C86EE;
 }
 
 /* 액션 버튼 */
 .action-buttons {
     display: flex;
-    justify-content: space-around;
-    margin-top: 0px;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .action-buttons button {
@@ -163,6 +179,45 @@ h1 {
 	background-color: #e9ecef; /* 페이지 링크 호버 색상 */
 }
 </style>
+
+
+<script>
+function requestRefund(button) {
+    const merchantUid = button.getAttribute("data-merchant-uid");
+    const amount = button.getAttribute("data-amount");
+    const delivery_state = button.getAttribute("data-delivery-state");
+
+    console.log("merchantUid:", merchantUid); // 디버깅용
+    console.log("amount:", amount); // 디버깅용
+
+    if (confirm("해당 상품을 취소 또는 환불 처리하시겠습니까?")) {
+        fetch('/payment/refund', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchant_uid: merchantUid,
+                amount: amount,
+                delivery_state:delivery_state
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("취소 또는 환불이 완료되었습니다.");
+                location.reload();
+            } else {
+                alert("취소 또는 환불에 실패했습니다. 다시 시도해주세요.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("취소 또는 환불 요청 중 오류가 발생했습니다.");
+        });
+    }
+}
+</script>
 </head>
 <body>
 
@@ -175,37 +230,45 @@ h1 {
 		<div th:each="entry : ${groupedOrders}">
         <div class="order-box">
             <div class="order-header">
-                <p>주문번호: <a th:href="|/order/selectOne?merchant_uid=${entry.key}|">[[${entry.key}]]</a></p>
+                <p>주문번호: <a th:href="|/order/selectOne?merchant_uid=${entry.key}|">[[${entry.key}]]</a> [[${entry.value[0].order_state}]]</p>
                 <!-- 각 주문의 첫 번째 상품의 주문 일자를 표시 (key는 주문번호, value는 상품목록) -->
                 
                 <p>주문 일자: <span th:text="${entry.value[0].order_date}"></span></p>
             </div>
-
             <!-- 배송 상태와 도착 날짜 -->
             <div class="delivery-status">
                 <p>
-                    <span th:text="${entry.value[0].delivery_status} + ' : '"></span>
+                    <span th:text="'배송상태 : '+${entry.value[0].delivery_status} "></span>
                     <span th:if="${entry.value[0].delivery_status == '배송중'}"
                           th:text="${entry.value[0].delivery_date.substring(0, 10)} + ' 도착예정'"></span>
                 </p>
             </div>
-
             <!-- 상품 목록을 출력 -->
             <div th:each="product : ${entry.value}" class="product-info">
-                <img th:src="${product.product_img}" class="product-image" alt="Product Image" width="150">
-                <div class="product-details">
-                    <p>상품명: <span>[[${product.product_name}]]</span></p>
-                    <p>개수: <span>[[${product.quantity}]]개</span></p>
-                    <p>가격: <span>[[${product.price * product.quantity}]]원</span></p>
-                </div>
-            </div>
+                 <img th:src="${product.product_img}" class="product-image" alt="Product Image" width="150">
+                 <div class="product-details">
+                     <div class="product-info-text">
+                         <p>상품명: <span>[[${product.product_name}]]</span></p>
+                         <p>개수: <span>[[${product.quantity}]]개</span></p>
+                         <p>가격: <span>[[${product.price * product.quantity}]]원</span></p>
+                     </div>
+                     <button class="review-button" th:if="${(entry.value[0].delivery_status == '배송완료') && (entry.value[0].order_state != '환불완료')}" th:onclick="|location.href='/product/detail?product_num=${product.product_num}'|">리뷰 작성</button>
+                 </div>
+             </div>
 
-            <!-- 액션 버튼  추후에 배송조회,교환환불,고객센터 연동하기-->
+            <!-- 액션 버튼  추후에 배송조회,취소,고객센터 연동하기-->
             <div class="action-buttons">
-                <button th:onclick="|location.href='/delivery/selectAll?member_id=${entry.value[0].member_id}'|">배송 조회</button>
-                <button th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button>
+ 				<button th:onclick="|location.href='/delivery/selectAll?member_id=${entry.value[0].member_id}'|">배송 조회</button>
                 <!--<button th:if="${entry.value[0].order_state=='배송완료'}" th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button> -->
-                <button>교환/환불</button>
+                <button 
+                	th:if="${(entry.value[0].delivery_status == '배송완료' || entry.value[0].delivery_status == '배송준비중') 
+             				&& (entry.value[0].order_state != '결제취소' && entry.value[0].order_state != '환불완료')}"
+				    th:data-merchant-uid="${entry.key}" 
+				    th:data-amount="${entry.value[0].final_price}" 
+				    th:data-delivery-state="${entry.value[0].delivery_status}"
+				    onclick="requestRefund(this)">
+				    취소/환불
+				</button>
                 <button th:onclick="|location.href='/community/help/help?member_id=${entry.value[0].member_id}'|">문의하기</button>
             </div>
         </div>

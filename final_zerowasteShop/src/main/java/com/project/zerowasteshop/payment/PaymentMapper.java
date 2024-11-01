@@ -10,4 +10,6 @@ public interface PaymentMapper {
 	void savePayment(PaymentVO paymentInfo);
 
 	PaymentVO getPaymentInfo(String merchantUid);
+
+	void updatePaymentStatus(String merchant_uid, String pay_status);
 }
