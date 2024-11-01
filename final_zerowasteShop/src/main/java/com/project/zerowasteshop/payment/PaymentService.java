@@ -90,20 +90,22 @@ public class PaymentService {
                 deliveryService.saveDelivery(deliveryInfo); // 배송 정보 저장
 
                 // 6. 주문 상태 업데이트
-                orderService.updateOrderState(merchant_uid, "결제 완료");
+                orderService.updateOrderState(merchant_uid, "결제완료");
 
                 response.put("status", "success");
                 response.put("message", "결제가 성공적으로 처리되었습니다.");
             } else {
                 response.put("status", "error");
                 response.put("message", "결제 금액이 다릅니다.");
-                orderService.updateOrderState(merchant_uid, "결제 실패");
+                orderService.updateOrderState(merchant_uid, "결제실패");
+                mapper.updatePaymentStatus(merchant_uid, "결제실패");
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.put("status", "error");
             response.put("message", "서버 오류: " + e.getMessage());
-            orderService.updateOrderState(merchant_uid, "결제 실패");
+            orderService.updateOrderState(merchant_uid, "결제실패");
+            mapper.updatePaymentStatus(merchant_uid, "결제실패");
         }
 
         return response;

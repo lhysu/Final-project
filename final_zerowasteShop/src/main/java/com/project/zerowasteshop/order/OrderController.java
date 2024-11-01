@@ -2,6 +2,7 @@ package com.project.zerowasteshop.order;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -236,10 +237,14 @@ public class OrderController {
 		
 		// 주문 번호별로 데이터를 그룹화
 		Map<String, List<OrderJoinProductVO>> groupedOrders = list.stream()
-			    .sorted(Comparator.comparing(OrderJoinProductVO::getOrder_date).reversed()) // 최신순으로 정렬
-			    .collect(Collectors.groupingBy(OrderJoinProductVO::getMerchant_uid));
-
+			    .collect(Collectors.groupingBy(
+			        OrderJoinProductVO::getMerchant_uid,
+			        LinkedHashMap::new, // 순서를 유지하기 위해 LinkedHashMap 사용
+			        Collectors.toList()
+			    ));
+		
 	    model.addAttribute("groupedOrders", groupedOrders);
+	    model.addAttribute("list", list);
 		model.addAttribute("cpage",cpage);
 		
 		// 

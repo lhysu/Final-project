@@ -131,7 +131,7 @@
 <!-- 나의 구매 내역 정보 불러오기 -->
 <select id="selectAllPageBlockByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
     SELECT DISTINCT o.merchant_uid, o.order_date, p.product_name, p.price, p.point, p.product_img, 
-                    i.quantity, i.product_num, d.delivery_status, d.delivery_date
+                    i.quantity, i.product_num, d.delivery_status, d.delivery_date,i.order_item_id,o.order_state,o.final_price
     FROM (
         SELECT *
         FROM `order`
