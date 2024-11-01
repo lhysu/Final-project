@@ -1,5 +1,7 @@
 package com.project.zerowasteshop.product.model;
 
+import java.util.Random;
+
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,12 +22,15 @@ public class ProductVO {
     
 
     public ProductVO(JSONObject itemJson) {
+    	Random random = new Random();
+    	
         this.product_name = itemJson.getString("title");     
         this.price = itemJson.getInt("lprice");
-        this.point = itemJson.getInt("lprice") / 1000;
+        this.point = itemJson.getInt("lprice") / 148;
         this.company = itemJson.getString("brand");
         this.product_img = itemJson.getString("image");
         this.category = itemJson.getString("category1");
+        this.rating = (double)(random.nextInt(5) + 1);
     }
 
     public ProductVO() {
