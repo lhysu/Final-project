@@ -29,4 +29,6 @@ public interface MemberMapper {
 
 	public MemberVO findById(String member_id);
 
+	public MemberVO emailCheck(String email);
+
 }

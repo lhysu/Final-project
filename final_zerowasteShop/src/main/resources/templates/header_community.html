@@ -47,21 +47,16 @@
 	                <div class="d-flex m-3 me-0" style = "margin-right: 20px !important">
 	                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
 						<div class="top-link pe-2" style="background-color: #81c408; width: 100px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 25px; margin-right: 20px !important">
-						    <th:block th:if="${session.user_id == null && session.admin_id == null}">
-							    <a href="/member/m_login" class="text-white">
-							        <small class="text-white ms-2">로그인</small>
-							    </a>
-							</th:block>
-							<th:block th:if="${session.user_id != null}">
-							    <a href="/member/m_logout" class="text-white">
-							        <small class="text-white ms-2">로그아웃</small>
-							    </a>
-						    </th:block>
-						    <th:block th:if="${session.admin_id != null}">
-							    <a href="/admin/ad_logout" class="text-white">
-							        <small class="text-white ms-2">로그아웃</small>
-							    </a>
-						    </th:block>
+						    <div sec:authorize="isAnonymous()">
+						    <a href="/member/m_login" class="text-white">
+						        <small class="text-white ms-2">로그인</small>
+						    </a>
+						</div>
+						<div sec:authorize="isAuthenticated()">
+						    <a href="/logout" class="text-white">
+						        <small class="text-white ms-2">로그아웃</small>
+						    </a>
+					    </div>
 						</div>
 	                    <a href="#" class="position-relative me-4 my-auto">
 	                        <i class="fa fa-shopping-bag fa-2x"></i>

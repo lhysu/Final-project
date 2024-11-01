@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.zerowasteshop.member.MemberService;
+import com.project.zerowasteshop.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,10 +26,16 @@ public class MailController {
 	// 이메일 인증
 	@PostMapping("login/mailConfirm")
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
-
-	   String code = mailService.sendSimpleMessage(email);
-	   log.info("인증코드 : " + code);
-	   return code;
+		String code="";
+		//이메일 중복 체크
+		MemberVO vo = memberservice.emailCheck(email);
+		if(vo!=null) {
+			code="-1";
+		}else {
+			code = mailService.sendSimpleMessage(email);
+			log.info("인증코드 : " + code);			
+		}
+		return code;
 	}
 	
 	//임시 비밀번호 전송

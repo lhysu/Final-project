@@ -51,14 +51,23 @@ public class MemberController {
 		log.info("/member/m_insertOK");
 		log.info("vo:{}",vo);
 		
-		int result = service.insertOK(vo);
-		
-		if(result==1) {
-			return "redirect:/member/m_login";		
+		//아이디 중복 체크
+		MemberVO vo2 = service.idCheck(vo.getMember_id());
+		if(vo2!=null) {
+			return "user/security/duplicateId";
 		}else {
-			return "redirect:/member/m_insert";		
+			int result = service.insertOK(vo);
 			
+			if(result==1) {
+				return "redirect:/member/m_login";		
+			}else {
+				return "redirect:/member/m_insert";		
+				
+			}
 		}
+		
+		
+		
 	}
 	
 	//회원정보 수정페이지로 이동
@@ -118,26 +127,6 @@ public class MemberController {
 		return "user/login";
 	}
 	
-	
-	  //로그인
-	  
-//	  @PostMapping({"/member/m_loginOK"}) public String m_loginOK(MemberVO vo) {
-//	  log.info("/member/m_loginOK"); log.info("{}",vo);
-//	  
-//	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); 
-//	  if(vo2!=null) {
-//	  session.setAttribute("user_id", vo2.getMember_id()); 
-//	  return "redirect:/home";
-//	  }else { return "redirect:/member/m_login"; } }
-	 
-	
-	//로그아웃
-	
-//	  @GetMapping({"/member/m_logout"}) public String m_logout() {
-//	  log.info("/member/m_logout"); session.removeAttribute("user_id");
-//	  //session.invalidate();
-//	  
-//	  return "redirect:/home"; }
 	 
 	
 	//아이디 찾기 페이지로 이동

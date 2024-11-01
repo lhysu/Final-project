@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thmeleaf.org">
+<html xmlns:th="http://www.thmeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>My Page - myUpdate</title>
@@ -13,7 +14,7 @@
 	<h1>내 정보 수정 및 관리</h1>
 	
 	
-	<form action="/member/m_updateOK" method="post">
+	<form action="/member/m_updateOK" method="post" class="needs-validation" novalidate>
 	<table border="1">
 	
 		
@@ -25,17 +26,19 @@
         
         <tr>
         <th>이름</th>
-        <td><input type="text" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요"></td>
+        <td><input type="text" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요" required>
+        	<div class="invalid-feedback">이름을 입력해주세요.</div></td>
         </tr>
         
         <tr>
         <th>이메일</th>
-        <td><input type="text" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
+        <td>[[${vo2.email}]]<input type="hidden" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
         </tr>
         
         <tr>
         <th>전화번호</th>
-        <td><input type="text" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요"></td>
+        <td><input type="text" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요" required>
+        	<div class="invalid-feedback">전화번호를 입력해주세요.</div></td>
         </tr>
         
         <tr>
@@ -49,12 +52,14 @@
         
         <tr>
         <th>비밀번호</th>
-        <td><input type="pw" id="pw" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        <td><input type="password" id="pw" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요" required>
+            <div class="invalid-feedback">비밀번호를 입력해주세요.</div></td>
         </tr>
         
         <tr>
         <th>비밀번호 확인</th>
-        <td><input type="pw" id="pwCheck" name="pwCheck"  th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요"></td>
+        <td><input type="password" id="pwCheck" name="pwCheck"  th:value="${vo2.pw}" placeholder="비밀번호를 한번 더 입력하세요" required>
+           <div class="invalid-feedback">비밀번호를 입력해주세요.</div></td>
         </tr>
         <tr>
         	
@@ -135,6 +140,24 @@
 		}
 	
 	</script>
+	
+	<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공)-->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                        	event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 	
 	
 <!-- Modal js -->
