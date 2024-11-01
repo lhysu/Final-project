@@ -46,12 +46,20 @@
 		<h1 class="mb-4"><a th:href="@{delivery/selectOne}" >배송조회 상세</a></h1>
 			<table id="insertTable" class="table table-striped table-bordered">
 				<tr>
+					<td>주문번호</td>
+					<td th:text="${vo2.merchant_uid}"></td>					
+				</tr>
+				<tr>
 					<td>배송추적번호</td>
 					<td th:text="${vo2.tracking_num}"></td>					
 				</tr>
 				<tr>
-				<td>배송상태</td>
-				<td th:text="${vo2.delivery_status}"></td>
+					<td>배송상태</td>
+					<td th:text="${vo2.delivery_status}"></td>
+				</tr>
+				<tr>
+					<td>발송일</td>
+					<td th:text="${vo2.shipped_date}"></td>
 				</tr>
 				<tr>
 					<td>배송사</td>
@@ -65,25 +73,14 @@
 					<td>받는사람</td>
 					<td th:text="${vo2.member_id}">받는사람</td>
 				</tr>
-				<!-- <thead>
-					<tr>
-					<th>번호</th>
-					<th>제품명</th>
-					<th>주문번호</th>
-					<th>배송추적번호</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>[[${vo2.delivery_num}]]</td>
-						<td>[[${vo2.product_name}]]</td>
-						<td>[[${vo2.order_num}]]</td>
-						<td>[[${vo2.tracking_num}]]</td>       
-					</tr>
-				</tbody> -->
+				
 			</table>
 		</div>
 		
+		<div class="container my-4" style="padding-left : 1000px">		
+			<a th:href="@{'/delivery/selectAll'}" class="btn btn-secondary">
+			<i class="fas fa-list"></i> 목록으로</a>
+		</div>
 		<!-- Footer Start -->
 			<div th:replace="footer :: footer"></div>
 			<!-- Footer End -->
