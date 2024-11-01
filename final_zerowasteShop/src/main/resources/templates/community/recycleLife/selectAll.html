@@ -52,6 +52,27 @@
    			border-color: #81c408; /* 원하는 테두리 색 */
 		}
     </style>
+    <style>
+        .gallery {
+            display: flex;
+            justify-content: space-around;;
+            margin: 20px;
+        }
+        .gallery-item {
+            text-align: center;
+            width: 30%;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .image-title {
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -65,21 +86,24 @@
     </div>
  
  	<!-- 조회수 높은 게시물 정렬 -->
-    <div class="container my-4" >
-    	<h3 class="mb-4"><a th:href="@{/community/recycleLife/selectAll}" >조회수 Top3 게시물</a></h3>
-    	
-	    <ul>
-            <li th:each="post : ${post}">
-                <a th:href="|/community/recycleLife/selectOne?recycleLife_num=${post.recycleLife_num}|">
+    <div class="container my-4">
+    <h3 class="mb-4">
+        <a th:href="@{/community/recycleLife/selectAll}">조회수 Top3 게시물</a>
+    </h3>
+    <div class="gallery" style="display: flex; justify-content: space-between;">
+        <div class="gallery-item" th:each="post : ${post}">
+            <a th:href="@{/community/recycleLife/selectOne(recycleLife_num=${post.recycleLife_num})}">
+                <img th:src="@{/upload_img/thumb_${vo.recycleLife_img}}" alt="썸네일 이미지">   
+                <p>
                     <span th:text="${post.recycleLife_title}">Post Title</span>
-                </a>
-                <span th:text="${post.recycleLife_views}">0</span> views
-                <span th:text="${post.recycleLife_likes}">0</span> likes
-            </li>
-        </ul>
-		</div>
-		
-		
+                    <span th:text="${post.recycleLife_views}">0</span> views
+                    <span th:text="${post.recycleLife_likes}">0</span> likes
+                </p>
+            </a>
+        </div>
+    </div>
+</div>
+
 		<!-- 검색 폼 추가 -->
 		<div class="container my-4" >
         <form th:action="@{/community/recycleLife/searchList}" method="get" class="row g-3 mb-4">
