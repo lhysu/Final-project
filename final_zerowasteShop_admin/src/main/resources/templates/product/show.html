@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>상품 목록 페이지</title>
@@ -94,31 +94,37 @@
 			
 			
 			<nav>
-    			<ul class="pagination justify-content-center">
-    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
-                        <a class="page-link" th:href="|/product/show?cpage=${cpage - 1}|">이전</a>
-                    </li>
+				<ul class="pagination justify-content-center">
+	  				<th:block th:if="${param.searchWord == null}">
+	  					<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+	                      	<a class="page-link" th:href="|/product/show?cpage=${cpage - 1}|">이전</a>
+	                  	</li>
 					<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
-						<th:block th:if="${param.searchKey == null}">
-							<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-                            	<a class="page-link" th:href="|/product/show?cpage=${i}|">[[${i}]]</a>
-                        	</li>	
-						</th:block>
-						
-						<th:block th:if="${param.searchKey != null}" >
-							<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
-								<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-		                            <a class="page-link" th:href="|/product/showSearchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
-		                        </li>							
-							</th:block>
-						</th:block>
-						
+						<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+	                          	<a class="page-link" th:href="|/product/show?cpage=${i}|">[[${i}]]</a>
+	                      	</li>	
 					</th:block>
-						
 					<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
-                        <a class="page-link" th:href="|/admin/product/selectAll?cpage=${cpage + 1}|">다음</a>
-                    </li>
-			
+	                       <a class="page-link" th:href="|/product/show?cpage=${cpage + 1}|">다음</a>
+	                   </li>
+					</th:block>
+								
+								
+					<th:block th:if="${param.searchWord != null}">
+						<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+		   					<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+		                       	<a class="page-link" th:href="|/product/showSearchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+		                   	</li>
+							<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+								<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+		                           	<a class="page-link" th:href="|/product/showSearchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+		                       	</li>	
+							</th:block>
+							<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+		                        <a class="page-link" th:href="|/product/showSearchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+		                    </li>
+						</th:block>
+					</th:block>	
 				</ul>
 			</nav>
 					

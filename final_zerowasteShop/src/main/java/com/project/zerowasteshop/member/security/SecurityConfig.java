@@ -21,7 +21,7 @@ public class SecurityConfig {
 		String[] whiteList= {"/","/home", "/member/m_insert", "/member/m_insertOK", 
 				"/member/m_login","/member/required_login","/member/denied","/member/expired", "login/mailConfirm","login/newPassword",
 				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**","/admin/ad_login",
-				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/community/**"
+				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/community/**","/product/**"
 				};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음

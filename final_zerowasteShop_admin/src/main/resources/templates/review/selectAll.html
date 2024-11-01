@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>내가 쓴 리뷰</title>
@@ -158,12 +158,12 @@
 						<nav>
 			    			<ul class="pagination justify-content-center">
 			    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
-			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage - 1}&user_id=${session.user_id}|">이전</a>
+			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage - 1}|">이전</a>
 			                    </li>
 								<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
 									<th:block th:if="${param.searchKey == null}">
 										<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-			                            	<a class="page-link" th:href="|/review/selectAll?cpage=${i}&user_id=${session.user_id}|">[[${i}]]</a>
+			                            	<a class="page-link" th:href="|/review/selectAll?cpage=${i}|">[[${i}]]</a>
 			                        	</li>	
 									</th:block>
 									
@@ -178,7 +178,7 @@
 								</th:block>
 									
 								<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
-			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage + 1}&user_id=${session.user_id}|">다음</a>
+			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage + 1}|">다음</a>
 			                    </li>
 						
 							</ul>
