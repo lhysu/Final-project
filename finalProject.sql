@@ -52,32 +52,32 @@ CREATE TABLE `finalproject`.`help` (
   `response` VARCHAR(2000) NULL,
   `responded_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `help_views` INT NULL,
+  `help_img` VARCHAR(255) NULL,
   `file` VARCHAR(255) NULL,
-  PRIMARY KEY (`help_num`),
-  UNIQUE INDEX `member_id_UNIQUE` (`member_id` ASC) VISIBLE);
+  PRIMARY KEY (`help_num`));
   
 # 고객센터 더미값 20개
-INSERT INTO `finalproject`.`help` (member_id, inquiry_type, inquiry_text, status, help_views, file) VALUES 
-('user01', 'Return', 'I have an issue with product 1.', 'Pending', 13, 'file1.jpg'),
-('user02', 'Account', 'I have an issue with product 2.', 'Resolved', 17, 'file2.jpg'),
-('user03', 'Return', 'I have an issue with product 3.', 'Resolved', 8, 'file3.jpg'),
-('user04', 'Return', 'I have an issue with product 4.', 'Resolved', 11, 'file4.jpg'),
-('user05', 'Coupon', 'I have an issue with product 5.', 'Resolved', 12, 'file5.jpg'),
-('user06', 'Product', 'I have an issue with product 6.', 'Resolved', 9, 'file6.jpg'),
-('user07', 'Product', 'I have an issue with product 7.', 'Resolved', 6, 'file7.jpg'),
-('user08', 'Delivery', 'I have an issue with product 8.', 'Pending', 14, 'file8.jpg'),
-('user09', 'Product', 'I have an issue with product 9.', 'Pending', 18, 'file9.jpg'),
-('user10', 'Delivery', 'I have an issue with product 10.', 'Resolved', 6, 'file10.jpg'),
-('user11', 'Delivery', 'I have an issue with product 11.', 'Resolved', 14, 'file11.jpg'),
-('user12', 'Delivery', 'I have an issue with product 12.', 'Pending', 17, 'file12.jpg'),
-('user13', 'Delivery', 'I have an issue with product 13.', 'Pending', 20, 'file13.jpg'),
-('user14', 'Return', 'I have an issue with product 14.', 'Resolved', 7, 'file14.jpg'),
-('user15', 'Account', 'I have an issue with product 15.', 'Pending', 19, 'file15.jpg'),
-('user16', 'Return', 'I have an issue with product 16.', 'Resolved', 15, 'file16.jpg'),
-('user17', 'Product', 'I have an issue with product 17.', 'Resolved', 18, 'file17.jpg'),
-('user18', 'Account', 'I have an issue with product 18.', 'Pending', 5, 'file18.jpg'),
-('user19', 'Return', 'I have an issue with product 19.', 'Pending', 11, 'file19.jpg'),
-('user20', 'Return', 'I have an issue with product 20.', 'Pending', 19, 'file20.jpg');
+INSERT INTO `finalproject`.`help` (member_id, inquiry_type, inquiry_text, status, help_views, help_img, file) VALUES 
+('user01', 'Return', 'I have an issue with product 1.', 'Pending', 13, 'help1.jpg', 'file1.jpg'),
+('user02', 'Account', 'I have an issue with product 2.', 'Resolved', 17, 'help1.jpg', 'file2.jpg'),
+('user03', 'Return', 'I have an issue with product 3.', 'Resolved', 8, 'help1.jpg', 'file3.jpg'),
+('user04', 'Return', 'I have an issue with product 4.', 'Resolved', 11, 'help1.jpg', 'file4.jpg'),
+('user05', 'Coupon', 'I have an issue with product 5.', 'Resolved', 12, 'help1.jpg', 'file5.jpg'),
+('user06', 'Product', 'I have an issue with product 6.', 'Resolved', 9, 'help1.jpg', 'file6.jpg'),
+('user07', 'Product', 'I have an issue with product 7.', 'Resolved', 6, 'help1.jpg', 'file7.jpg'),
+('user08', 'Delivery', 'I have an issue with product 8.', 'Pending', 14, 'help1.jpg', 'file8.jpg'),
+('user09', 'Product', 'I have an issue with product 9.', 'Pending', 18, 'help1.jpg', 'file9.jpg'),
+('user10', 'Delivery', 'I have an issue with product 10.', 'Resolved', 6, 'help1.jpg', 'file10.jpg'),
+('user11', 'Delivery', 'I have an issue with product 11.', 'Resolved', 14, 'help1.jpg', 'file11.jpg'),
+('user12', 'Delivery', 'I have an issue with product 12.', 'Pending', 17, 'help1.jpg', 'file12.jpg'),
+('user13', 'Delivery', 'I have an issue with product 13.', 'Pending', 20, 'help1.jpg', 'file13.jpg'),
+('user14', 'Return', 'I have an issue with product 14.', 'Resolved', 7, 'help1.jpg', 'file14.jpg'),
+('user15', 'Account', 'I have an issue with product 15.', 'Pending', 19, 'help1.jpg', 'file15.jpg'),
+('user16', 'Return', 'I have an issue with product 16.', 'Resolved', 15, 'help1.jpg', 'file16.jpg'),
+('user17', 'Product', 'I have an issue with product 17.', 'Resolved', 18, 'help1.jpg', 'file17.jpg'),
+('user18', 'Account', 'I have an issue with product 18.', 'Pending', 5, 'help1.jpg', 'file18.jpg'),
+('user19', 'Return', 'I have an issue with product 19.', 'Pending', 11, 'help1.jpg', 'file19.jpg'),
+('user20', 'Return', 'I have an issue with product 20.', 'Pending', 19, 'help1.jpg', 'file20.jpg');
   
 # 이벤트
 CREATE TABLE `finalproject`.`event` (

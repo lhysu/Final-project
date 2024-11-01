@@ -48,14 +48,12 @@
 
     <!-- 문의 업데이트 -->
     <update id="updateOK" parameterType="com.project.zerowasteshop.help.HelpVO">
-        UPDATE help
-        SET inquiry_type = #{inquiry_type},
-            inquiry_text = #{inquiry_text},
-            help_img = #{help_img},
-            status = #{status},
-            response = #{response},
-            responsed_at = NOW()
-        WHERE help_num = #{help_num}
+	    UPDATE help
+	    SET response = #{response},
+	        status = #{status},
+	        responded_at = NOW(),
+	        help_img = #{help_img}
+	    WHERE help_num = #{help_num}
     </update>
 
     <!-- 전체 문의 수 가져오기 -->

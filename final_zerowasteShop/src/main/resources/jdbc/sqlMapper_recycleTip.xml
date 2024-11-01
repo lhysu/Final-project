@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.recycletip.RecycleTipMapper">
+
+    <!-- 모든 Recycle Tip 조회 -->
+    <select id="selectAll" resultType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        SELECT * FROM recycle_tip ORDER BY recycleTip_num DESC
+    </select>
+
+    <!-- 페이징 처리를 위한 Recycle Tip 조회 -->
+    <select id="selectAllPageBlock" parameterType="map" resultType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        SELECT * FROM recycle_tip
+        ORDER BY recycleTip_num DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 단일 Recycle Tip 조회 -->
+    <select id="selectOne" parameterType="com.project.zerowasteshop.recycletip.RecycleTipVO" resultType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        SELECT * FROM recycle_tip WHERE recycleTip_num = #{recycleTip_num}
+    </select>
+
+    <!-- 전체 Recycle Tip 수 가져오기 -->
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) FROM recycle_tip
+    </select>
+
+    <!-- Recycle Tip 추가 -->
+    <insert id="insertOK" parameterType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        INSERT INTO recycle_tip (member_id, recycleTip_title, recycleTip_content, recycleTip_img, recycleTip_wdate, recycleTip_views, recycleTip_likes)
+        VALUES (#{member_id}, #{recycleTip_title}, #{recycleTip_content}, #{recycleTip_img}, NOW(), 0, 0)
+    </insert>
+
+    <!-- Recycle Tip 업데이트 -->
+    <update id="updateOK" parameterType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        UPDATE recycle_tip
+        SET recycleTip_title = #{recycleTip_title},
+            recycleTip_content = #{recycleTip_content},
+            recycleTip_img = #{recycleTip_img}
+        WHERE recycleTip_num = #{recycleTip_num}
+    </update>
+
+    <!-- Recycle Tip 삭제 -->
+    <delete id="deleteOK" parameterType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        DELETE FROM recycle_tip WHERE recycleTip_num = #{recycleTip_num}
+    </delete>
+
+    <!-- 검색 결과 조회 -->
+    <select id="searchList" resultType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        SELECT * FROM recycle_tip
+        WHERE ${searchField} LIKE #{searchWord}
+        ORDER BY recycleTip_num DESC
+    </select>
+
+    <!-- 검색 결과의 총 행 수 가져오기 -->
+    <select id="getSearchTotalRows" resultType="int">
+        SELECT COUNT(*) FROM recycle_tip
+        WHERE ${searchField} LIKE #{searchWord}
+    </select>
+
+    <!-- 검색 결과에 대한 페이징 처리 -->
+    <select id="searchListPageBlock" resultType="com.project.zerowasteshop.recycletip.RecycleTipVO">
+        SELECT * FROM recycle_tip
+        WHERE ${searchField} LIKE #{searchWord}
+        ORDER BY recycleTip_num DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="incrementViewCount" parameterType="int">
+        UPDATE recycle_tip
+        SET recycleTip_views = recycleTip_views + 1
+        WHERE recycleTip_num = #{recycleTip_num}
+    </update>
+
+</mapper>
