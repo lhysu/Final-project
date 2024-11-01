@@ -58,6 +58,19 @@
 		FROM review  
 		WHERE review_num = #{review_num};
 	</select>
+	
+	<select id="selectProduct"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		SELECT * 
+		FROM product  
+		WHERE product_num = #{product_num};
+	</select>
+	
+	<update id = "updateProductRating">
+		UPDATE product
+		SET rating = #{rating}
+		where product_num = #{product_num}
+	</update>
 
 	<insert id="insertOK">
 		insert into review(member_id, product_num, content, rating, review_img, createdDate)

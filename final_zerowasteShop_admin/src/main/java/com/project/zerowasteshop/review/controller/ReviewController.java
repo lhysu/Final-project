@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.review.model.ReviewVO;
 import com.project.zerowasteshop.review.service.ReviewService;
 
@@ -277,7 +278,11 @@ public class ReviewController {
  		log.info("/review/insertOK");
 		/* vo.setPoint(vo.getPrice() / 1000); */
  		log.info("vo:{}", vo);
-
+ 		
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		log.info("vo2:{}", vo2);
+ 		double rating = ( vo.getRating() + vo2.getRating() ) / 2;
+ 		service.updateProductRating(vo2.getProduct_num(), rating);
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
  		// String realPath = context.getRealPath("resources/upload_img");
 

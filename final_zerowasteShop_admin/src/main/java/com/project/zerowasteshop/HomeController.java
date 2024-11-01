@@ -33,12 +33,16 @@ public class HomeController {
     	// 여러 검색어에서 상품을 가져오기
         List<ProductVO> itemDtos = naverShopSearch.search();
     
-        if (check == 0) {
+        check = service.getTotalRows();
+        
+        if (check < 21) {
         	// 데이터베이스에 저장
         	service.saveProducts(itemDtos);
-        	check = 1;
+        	log.info("추가");
         }
         
+        log.info("추가 안 함");
+        log.info("check:{}", check);
         model.addAttribute("itemDtos", itemDtos);
 		
 		return "home";//resources/templates폴더에서 찾는다

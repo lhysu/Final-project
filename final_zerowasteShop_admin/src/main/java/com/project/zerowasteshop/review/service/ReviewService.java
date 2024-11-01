@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.review.mapper.ReviewMapper;
 import com.project.zerowasteshop.review.model.ReviewVO;
 
@@ -62,6 +63,14 @@ public class ReviewService {
 		log.info("pageBlock:{}", pageBlock);
 
 		return mapper.selectAllPageBlock(startRow, pageBlock, userID);
+	}
+
+	public ProductVO selectProduct(ReviewVO vo) {
+		return mapper.selectProduct(vo);
+	}
+
+	public int updateProductRating(int product_num, double rating) {
+		return mapper.updateProductRating(product_num, rating);
 	}
 
 //	public int getSearchTotalRows(String searchKey, String searchWord) {
