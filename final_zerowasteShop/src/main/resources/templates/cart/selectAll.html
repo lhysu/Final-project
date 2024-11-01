@@ -200,6 +200,7 @@
                         </td>
                         <td th:id="'total-' + ${vo.cart_num}">[[${vo.count} * ${vo.price}]]</td>
                         <td>
+                        	<input type="hidden" name="product_num" th:value="${vo.product_num}">
 						    <form action="/cart/deleteOK" method="post" style="display:inline;">
 						        <input type="hidden" name="cart_num" th:value="${vo.cart_num}"/>
 						        <button type="submit" class="delete-button" style = "background-color: transparent; border: none; color: red; cursor: pointer;">삭제</button>
@@ -228,9 +229,13 @@
 				                </tr>
 				                <tr>
 				                	<td colspan="2">
-				                		<div style="display: flex; justify-content: flex-start; gap: 10px; display:inline-block; width: 200px !important;">
-						       				<a href="/order/order" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style = "width : 100% !important; font-size : 120%; padding : 16px !important">구매하기</a>
-										</div>
+				                		<form id="purchaseForm" action="/order/cartOrder" method="POST" style="display:inline;">
+			                                <input type="hidden" name="productNums" id="productNums">
+			                                <input type="hidden" name="member_id" th:value="${session.user_id}">
+			                                <input type="hidden" name="prices" id="prices">
+    										<input type="hidden" name="quantities" id="quantities">
+			                                <button type="button" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" onclick="submitPurchase()" style="width : 20% !important; font-size : 120%; padding : 16px !important">구매하기</button>
+			                            </form>
 									</td>
 								</tr>
 				            </table>
@@ -290,7 +295,34 @@
         const finalPrice = totalPrice + shippingFee; // 배송비 추가
         document.getElementById('final-price').textContent = finalPrice + '원'; // 결제 금액 업데이트
     }
+    
+    function submitPurchase() {
+        // 모든 product_num, price, quantity를 수집하여 배열에 추가
+        const productNums = [];
+        const prices = [];
+        const quantities = [];
+        
+        document.querySelectorAll('input[name="product_num"]').forEach(input => {
+            productNums.push(input.value);
+        });
+        document.querySelectorAll('td[id^="total-"]').forEach(totalElement => {
+            const rowId = totalElement.id.split('-')[1];
+            const price = document.querySelector(`#total-${rowId}`).textContent.replace('원', '').trim();
+            prices.push(price); // 각 상품의 가격을 배열에 추가
+        });
+        document.querySelectorAll('.number').forEach(quantityElement => {
+            quantities.push(quantityElement.textContent); // 각 상품의 수량을 배열에 추가
+        });
 
+        // 배열을 콤마로 구분된 문자열로 변환하여 히든 필드에 설정
+        document.getElementById('productNums').value = productNums.join(',');
+        document.getElementById('prices').value = prices.join(',');
+        document.getElementById('quantities').value = quantities.join(',');
+
+        // 폼 전송
+        document.getElementById('purchaseForm').submit();
+    }
+    
     // 페이지 로드 시 총 가격 계산
     window.onload = updateTotalPrice;
     </script>
