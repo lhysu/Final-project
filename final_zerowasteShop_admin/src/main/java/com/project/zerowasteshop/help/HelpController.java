@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/help")
 public class HelpController {
 
     @Autowired
@@ -33,16 +31,16 @@ public class HelpController {
     private String realPath;
 
     // h_insert() : String
-    @GetMapping("/insert")
+    @GetMapping("/community/help/insert")
     public String h_insert() {
-        log.info("/help/insert");
-        return "help/insert";
+        log.info("/community/help/insert");
+        return "community/help/insert";
     }
 
     // h_update(HelpVO, Model) : String
-    @GetMapping("/update")
+    @GetMapping("/community/help/update")
     public String h_update(HelpVO vo, Model model) {
-        log.info("/help/update");
+        log.info("/community/help/update");
         log.info("vo:{}", vo);
 
         HelpVO vo2 = service.selectOne(vo);
@@ -50,20 +48,20 @@ public class HelpController {
 
         model.addAttribute("vo2", vo2);
 
-        return "help/update";
+        return "community/help/update";
     }
 
     // h_delete() : String
-    @GetMapping("/delete")
+    @GetMapping("/community/help/delete")
     public String h_delete() {
-        log.info("/help/delete");
-        return "help/delete";
+        log.info("/community/help/delete");
+        return "community/help/delete";
     }
 
     // h_selectOne(HelpVO, Model) : String
-    @GetMapping("/selectOne")
+    @GetMapping("/community/help/selectOne")
     public String h_selectOne(HelpVO vo, Model model) {
-        log.info("/help/selectOne");
+        log.info("/community/help/selectOne");
         log.info("vo:{}", vo);
 
         HelpVO vo2 = service.selectOne(vo);
@@ -76,28 +74,15 @@ public class HelpController {
 
         model.addAttribute("vo2", vo2);
 
-        return "help/selectOne";
-    }
-
-    // h_selectAll(Model) : String
-    @GetMapping("/selectAll")
-    public String h_selectAll(Model model) {
-        log.info("/help/selectAll");
-
-        List<HelpVO> list = service.selectAll();
-        log.info("list.size():{}", list.size());
-
-        model.addAttribute("list", list);
-
-        return "help/selectAll";
+        return "community/help/selectOne";
     }
 
     // h_selectAllPageBlock(Model, int, int) : String
-    @GetMapping("/selectAllPageBlock")
-    public String h_selectAllPageBlock(Model model,
+    @GetMapping("/community/help/selectAll")
+    public String h_selectAll(Model model,
                                        @RequestParam(defaultValue = "1") int cpage,
                                        @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/help/selectAllPageBlock");
+        log.info("/community/help/selectAllPageBlock");
         log.info("cpage:{}", cpage);
         log.info("pageBlock:{}", pageBlock);
 
@@ -121,16 +106,16 @@ public class HelpController {
         model.addAttribute("totalPageCount", totalPageCount);
         model.addAttribute("cpage", cpage);
 
-        return "help/selectAllPageBlock";
+        return "community/help/selectAll";
     }
 
     // h_searchList(Model, String, String) : String
-    @GetMapping("/searchList")
+    @GetMapping("/community/help/searchList")
     public String h_searchList(Model model,
                                @RequestParam(defaultValue = "") String searchWord,
                                @RequestParam(defaultValue = "1") int cpage,
                                @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/help/searchList");
+        log.info("/community/help/searchList");
         log.info("searchWord:{}", searchWord);
         log.info("cpage:{}", cpage);
         log.info("pageBlock:{}", pageBlock);
@@ -155,13 +140,13 @@ public class HelpController {
         model.addAttribute("cpage", cpage);
         model.addAttribute("searchWord", searchWord);
 
-        return "help/searchList";
+        return "community/help/searchList";
     }
 
     // h_insertOK(HelpVO) : String
-    @PostMapping("/insertOK")
+    @PostMapping("/community/help/insertOK")
     public String h_insertOK(HelpVO vo) throws IllegalStateException, IOException {
-        log.info("/help/insertOK");
+        log.info("/community/help/insertOK");
         log.info("vo:{}", vo);
 
         log.info("realPath:{}", realPath);
@@ -194,31 +179,32 @@ public class HelpController {
         int result = service.insertOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/help/selectAll";
+            return "redirect:/community/help/selectAll";
         } else {
-            return "redirect:/help/insert";
+            return "redirect:/community/help/insert";
         }
     }
 
+
     // h_deleteOK(HelpVO) : String
-    @PostMapping("/deleteOK")
-    public String h_deleteOK(HelpVO vo) {
+    @PostMapping("/community/help/deleteOK")
+    public String h_deleteOK(Model model, HelpVO vo) {
         log.info("/help/deleteOK");
         log.info("vo:{}", vo);
 
         int result = service.deleteOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/help/selectAll";
+            return "redirect:/community/help/selectAll";
         } else {
-            return "redirect:/help/delete?help_num=" + vo.getHelp_num();
+            return "redirect:/community/help/delete?help_num=" + vo.getHelp_num();
         }
     }
 
     // h_updateOK(HelpVO) : String
-    @PostMapping("/updateOK")
+    @PostMapping("/community/help/updateOK")
     public String h_updateOK(HelpVO vo) throws IllegalStateException, IOException {
-        log.info("/help/updateOK");
+        log.info("/community/help/updateOK");
         log.info("vo:{}", vo);
 
         log.info("realPath:{}", realPath);
@@ -251,9 +237,10 @@ public class HelpController {
         int result = service.updateOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-            return "redirect:/help/selectOne?help_num=" + vo.getHelp_num();
+        	vo.setStatus("답변완료");
+            return "redirect:/community/help/selectOne?help_num=" + vo.getHelp_num();
         } else {
-            return "redirect:/help/update?help_num=" + vo.getHelp_num();
+            return "redirect:/community/help/update?help_num=" + vo.getHelp_num();
         }
     }
 }
