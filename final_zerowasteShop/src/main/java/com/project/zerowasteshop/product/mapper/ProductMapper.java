@@ -11,15 +11,15 @@ import com.project.zerowasteshop.review.model.ReviewVO;
 public interface ProductMapper {
 
 //	//추상메소드명(예:insertOK)이 sqlMapper_*.xml 문서의 id와 같아야한다.
-	public int insertOK(ProductVO vo);
+//	public int insertOK(ProductVO vo);
 //	
 //	public List<CartVO> selectAll();
 
 	public ProductVO selectOne(ProductVO vo);
 	public List<ReviewVO> selectAllReview(ProductVO vo);
 
-	public int updateOK(ProductVO vo);
-	public int deleteOK(ProductVO vo);
+//	public int updateOK(ProductVO vo);
+//	public int deleteOK(ProductVO vo);
 
 //	public List<CartVO> searchListId(String searchWord);
 //
