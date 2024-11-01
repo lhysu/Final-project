@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>상품 상세 페이지</title>
@@ -67,9 +67,9 @@
 		    transition: background-color 0.3s, transform 0.2s; /* 애니메이션 효과 */
 		}
 		
-		#buyNowForm:hover {
-		    background-color: #007bff; /* 호버 색상 */
-		    color: white; /* 호버 시 글자색 */
+		#buyNowForm button:hover {
+		    background-color: #007bff !important; /* 호버 색상 */
+		    color: white !important; /* 호버 시 글자색 */
 		    transform: translateY(-2px); /* 호버 시 약간 위로 이동 */
 		}
 		
@@ -277,7 +277,7 @@
 				        <input type="hidden" name="product_name" th:value="${vo2.product_name}">
 				        <input type="hidden" name="quantity" id="quantityInput" th:value="${vo2.count}">
 				        
-				        <button type="button" onclick="submitBuyNowForm()" style="background-color: #ff6600; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+				        <button type="button" onclick="submitBuyNowForm()" style="background-color: #ff6600; border: none; color: black; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
 				            바로 구매
 				        </button>
 				    </form>
@@ -292,7 +292,27 @@
 			            <div class="col-md-12 mb-4">
 			                <div class="review-flex-container d-flex align-items-center"> <!-- align-items-center로 변경 -->
 			                	<div class="review-member_id ml-3">[[${vo.member_id}]]</div>
-			                	<div class="review-rating ml-3">[[${vo.rating}]]</div>
+			                	<div class="d-flex my-1 justify-content-center" style = "margin:10px !important; margin-top : 20px!important">
+								    <th:block th:if="${vo.rating != null}">
+								        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
+								            <!-- 전체 별 출력 -->
+								            <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
+								                <i class="fas fa-star text-primary"></i>
+								            </th:block>
+								            <!-- 반 별 출력 -->
+								            <th:block th:if="${halfStar >= 0.5 && fullStars < 5}">
+								                <i class="fas fa-star-half-alt text-primary"></i>
+								            </th:block>
+								            <!-- 빈 별 출력 -->
+								            <th:block th:if="${fullStars + (halfStar >= 0.5 && fullStars < 5 ? 1 : 0) != 5}">
+									            <th:block th:each="star : ${#numbers.sequence(fullStars + (halfStar >= 0.5 && fullStars < 5 ? 2 : 1), 5)}">
+									                <i class="fas fa-star"></i>
+									            </th:block>
+								            </th:block>
+								        </th:block>
+								        
+								    </th:block>
+								</div>
 			                    <img style="width: 100px; margin-left : 10px" th:src="${vo.review_img}" th:if="${vo.review_img.startsWith('http')}" class="img-fluid rounded" alt="">
 			                    <img style="width: 100px; margin-left : 10px" th:src="|/uploadimgPath/${vo.review_img}|" th:if="${!vo.review_img.startsWith('http')}" class="img-fluid rounded" alt="">
 			                    <div class="review-content ml-3">[[${vo.content}]]</div>

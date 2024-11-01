@@ -212,6 +212,16 @@ body {
                     <label>결제상태:</label>
                     <span>[[${payment.pay_status}]]</span>
                 </div>
+
+                <div th:if="${(order.order_state =='결제취소') || (order.order_state =='환불완료')}">
+                    <label>환불수단:</label>
+                    <span>[[${payment.pay_method}]]</span>
+                </div>
+                <div th:if="${(order.order_state =='결제취소') || (order.order_state =='환불완료')}">
+                    <label>환불금액:</label>
+                    <span>[[${payment.paid_amount}]]원</span>
+                </div>
+                
             </div>
         </div>
     </div>

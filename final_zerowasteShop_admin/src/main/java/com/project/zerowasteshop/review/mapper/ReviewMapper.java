@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.review.model.ReviewVO;
 
 @Mapper
@@ -11,7 +12,9 @@ public interface ReviewMapper {
 
 //	//추상메소드명(예:insertOK)이 sqlMapper_*.xml 문서의 id와 같아야한다.
 	public int insertOK(ReviewVO vo);
-//	
+
+	public ProductVO selectProduct(ReviewVO vo);
+	
 //	public List<CartVO> selectAll();
 
 	public ReviewVO selectOne(ReviewVO vo);
@@ -36,4 +39,6 @@ public interface ReviewMapper {
 //	public List<ReviewVO> searchListPageBlockCompany(String searchWord, int startRow, int endRow);
 //
 //	public List<ReviewVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
+
+	public int updateProductRating(int product_num, double rating);
 }

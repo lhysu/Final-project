@@ -18,9 +18,9 @@ public class ProductService {
 	@Autowired
 	ProductMapper mapper;
 
-	public int insertOK(ProductVO vo) {
-		return mapper.insertOK(vo);
-	}
+//	public int insertOK(ProductVO vo) {
+//		return mapper.insertOK(vo);
+//	}
 //
 //	public List<ProductVO> selectAll() {
 //		return mapper.selectAll();
@@ -34,13 +34,13 @@ public class ProductService {
 		return mapper.selectAllReview(vo);
 	}
 
-	public int updateOK(ProductVO vo) {
-		return mapper.updateOK(vo);
-	}
-
-	public int deleteOK(ProductVO vo) {
-		return mapper.deleteOK(vo);
-	}
+//	public int updateOK(ProductVO vo) {
+//		return mapper.updateOK(vo);
+//	}
+//
+//	public int deleteOK(ProductVO vo) {
+//		return mapper.deleteOK(vo);
+//	}
 
 //	public List<ProductVO> searchList(String searchKey, String searchWord) {
 //		if (searchKey.equals("id")) {
