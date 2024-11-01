@@ -140,7 +140,7 @@
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
     JOIN product p ON i.product_num = p.product_num
     LEFT JOIN delivery d ON d.merchant_uid = o.merchant_uid  <!-- delivery 테이블을 LEFT JOIN으로 추가 -->
-    ORDER BY o.merchant_uid DESC
+    ORDER BY o.order_date DESC
     LIMIT #{startRow}, #{pageBlock}
 </select>
 

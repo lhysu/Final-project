@@ -178,7 +178,7 @@ h1 {
                 <p>주문번호: <a th:href="|/order/selectOne?merchant_uid=${entry.key}|">[[${entry.key}]]</a></p>
                 <!-- 각 주문의 첫 번째 상품의 주문 일자를 표시 (key는 주문번호, value는 상품목록) -->
                 
-                <p>주문 일자: <span th:text="${entry.value[0].order_date.substring(0, 10)}"></span></p>
+                <p>주문 일자: <span th:text="${entry.value[0].order_date}"></span></p>
             </div>
 
             <!-- 배송 상태와 도착 날짜 -->
@@ -200,12 +200,13 @@ h1 {
                 </div>
             </div>
 
-            <!-- 액션 버튼 -->
+            <!-- 액션 버튼  추후에 배송조회,교환환불,고객센터 연동하기-->
             <div class="action-buttons">
-                <button>배송 조회</button>
-                <button>리뷰 작성</button>
+                <button th:onclick="|location.href='/delivery/selectAll?member_id=${entry.value[0].member_id}'|">배송 조회</button>
+                <button th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button>
+                <!--<button th:if="${entry.value[0].order_state=='배송완료'}" th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button> -->
                 <button>교환/환불</button>
-                <button>문의하기</button>
+                <button th:onclick="|location.href='/community/help/help?member_id=${entry.value[0].member_id}'|">문의하기</button>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 package com.project.zerowasteshop.order;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -231,11 +232,12 @@ public class OrderController {
 		
 		// 주문과 상품 정보 불러오기
 		List<OrderJoinProductVO> list = service.selectAllPageBlockByUser(cpage,pageBlock,userId); //해당 페이지에 보여줄 5개행씩 만 검색
-		log.info("list.size():{}",list.size());
+		log.info("list:{}",list);
 		
-		 // 주문 번호별로 데이터를 그룹화
-	    Map<String, List<OrderJoinProductVO>> groupedOrders = list.stream()
-	            .collect(Collectors.groupingBy(OrderJoinProductVO::getMerchant_uid)); // OrderJoinProductVO에 주문 번호를 반환하는 getOrderNumber() 메소드가 필요
+		// 주문 번호별로 데이터를 그룹화
+		Map<String, List<OrderJoinProductVO>> groupedOrders = list.stream()
+			    .sorted(Comparator.comparing(OrderJoinProductVO::getOrder_date).reversed()) // 최신순으로 정렬
+			    .collect(Collectors.groupingBy(OrderJoinProductVO::getMerchant_uid));
 
 	    model.addAttribute("groupedOrders", groupedOrders);
 		model.addAttribute("cpage",cpage);
@@ -321,7 +323,7 @@ public class OrderController {
 		log.info("order_item:{}",order_item);
 		
 		// 상품이미지, 상품개수,상품가격 불러오기
-		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid,product_num);
+		List<OrderJoinProductVO> list = service.selectAllByUser(merchant_uid);
 		log.info("list.size():{}",list.size());
 		
 		model.addAttribute("list",list);

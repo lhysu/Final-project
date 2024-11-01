@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -34,6 +36,7 @@ public class OrderJoinProductVO {
     private String category;
     private double rating;
     private MultipartFile file;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String order_date;
     private String delivery_status;
     private String delivery_date;
