@@ -102,9 +102,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             height: 50px; /* 리뷰 이미지 크기 */
             border-radius: 5px; /* 모서리 둥글게 */
         }
-        .review-content {
-            margin-top: 10px;
-        }
         .review-form {
             margin-top: 20px;
         }
@@ -292,7 +289,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			            <div class="col-md-12 mb-4">
 			                <div class="review-flex-container d-flex align-items-center"> <!-- align-items-center로 변경 -->
 			                	<div class="review-member_id ml-3">[[${vo.member_id}]]</div>
-			                	<div class="d-flex my-1 justify-content-center" style = "margin:10px !important; margin-top : 20px!important">
+			                	<div class="d-flex my-1 justify-content-center" style = "margin:10px !important;">
 								    <th:block th:if="${vo.rating != null}">
 								        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
 								            <!-- 전체 별 출력 -->
