@@ -40,7 +40,7 @@ public class MailController {
 	   String tmeppw = mailService.sendPasswordMessage(email);
 	   log.info("임시 비밀번호 : " + tmeppw);
 	   int result=0;
-//	   result = memberservice.updatePW(member_id,name,email,tmeppw);
+	   result = memberservice.updatePW(member_id,name,email,tmeppw);
 	   log.info("result:{}",result);
 	   
 	   return result;

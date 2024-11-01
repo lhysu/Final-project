@@ -132,6 +132,15 @@
 		    <artifactId>spring-boot-starter-mail</artifactId>
 		    <version>3.3.0</version>
 		</dependency>
+		<!--		security관련-->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

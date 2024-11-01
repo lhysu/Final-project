@@ -2,6 +2,8 @@ package com.project.zerowasteshop.order;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -22,5 +24,6 @@ public class OrderVO {
 	private int final_price;
 	private String order_state;
 	private List<OrderItemVO> orderItems;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private String order_date;
 }

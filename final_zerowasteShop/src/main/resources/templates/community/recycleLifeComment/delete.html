@@ -39,33 +39,37 @@
 </head>
 <body>
 
+<th:block th:fragment="deleteModalFragment">
+	<div class="modal fade" id="deleteModal" data-bs-backdrop="static" 
+	tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
 	<!-- 모달 헤더 -->
 	<div class="modal-header">
-	<h3 class="modal-title" id="deleteCommentLabel">재활용 라이프 댓글 삭제</h3>
+	<h3 class="modal-title" id="staticBackdropLabel">재활용 라이프 댓글 삭제</h3>
 	<button type="button" class="btn-close" data-bs-dismiss="modal"
-	aria-label="Close"></button>
+	aria-label="Close"><a th:href="@{/community/recycleLife/selectOne}"></a></button>
 	</div>
 	
 	<!-- 모달 바디 -->
-	<div th:fragment="content" class="modal-body">		
+	<div class="modal-body">		
 		<div>
 			<form action="/community/recycleLifeComment/deleteOK" method="post">
 				<input type="hidden" name="lifeComment_num" th:value="${param.lifeComment_num}">
-				<table id="insertTable">
-					<tr>
-						<th>[[${param.lifeComment_num}]]번 댓글을 정말 삭제하시겠습니까?					
-					</tr>
-				</table>
+				<p>[[${param.lifeComment_num}]]번 댓글을 정말 삭제하시겠습니까?</p>					
 				<button type="submit" class="btn btn-danger">삭제</button>
-				<a th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">취소</a></th>
+				<a th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">취소</a>
 			</form>
 		</div>
 	</div>
 	
 	<!-- 모달 푸터 -->
 	<div class="modal-footer">
-	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+<!-- 	<button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+ -->	</div>
 	</div>
-	
+	</div>
+	</div>
+	</th:block>
 </body>
 </html>

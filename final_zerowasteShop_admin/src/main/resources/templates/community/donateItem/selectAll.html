@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thmeleaf.org">
+<html xmlns:th="http://www.thmeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>DonateItem</title>
@@ -63,7 +64,7 @@
             <!-- 제목 영역: 섹션의 제목을 표시 -->
 		<h1>기부가능 물품 신청</h1>
 		</div>
-		<form action="/donateItem/d_searchList">
+		<form action="/community/donateItem/d_searchList">
 			<div class=" mx-auto mb-2" >
 				<div class="d-flex align-items-center">	
 				    <select name="searchKey" class="btn btn-primary dropdown-toggle me-2">
@@ -94,7 +95,7 @@
 	        <tbody>
 	        <th:block th:each="vo:${list}">
 	            <tr><td>[[${vo.donateItem_num}]]</td>
-	                <td style="width: 50%;"><a th:href="|/donateItem/d_selectOne?donateItem_num=${vo.donateItem_num}|" class="text-decoration-none">[[${vo.donateItem_title}]]</a></td>
+	                <td style="width: 50%;"><a th:href="|/community/donateItem/d_selectOne?donateItem_num=${vo.donateItem_num}|" class="text-decoration-none">[[${vo.donateItem_title}]]</a></td>
 	                <td>[[${vo.member_id}]]</td>
 	                <td th:text="${#dates.format(vo.donateItem_wdate, 'yyyy-MM-dd HH:mm')}"></td>
 	                <td>[[${vo.donate_state}]]</td>

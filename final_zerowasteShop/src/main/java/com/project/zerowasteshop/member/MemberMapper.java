@@ -27,5 +27,6 @@ public interface MemberMapper {
 
 	public int updatePW(String member_id, String name, String email, String temppw);
 
+	public MemberVO findById(String member_id);
 
 }

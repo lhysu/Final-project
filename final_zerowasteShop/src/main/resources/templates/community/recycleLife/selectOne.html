@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title th:text="${vo2.recycleLife_title}">재활용 라이프 게시글 상세</title>
-<!-- <p th:text="${vo2.recycleLife_content != null ? vo2.recycleLife_content : '내용 없음'}"></p> -->
-<!-- <link rel="stylesheet" href="/css/main.css"> -->
+<link rel="stylesheet" href="/css/main.css">
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -33,6 +32,15 @@
     
     <!-- 페이지네이션 가로 처리 -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
     
     <style>
         .recycleLife-image {
@@ -72,17 +80,21 @@
         .catch(error => console.error("Error:", error));
     }
 </script>
-
+<script>
+    // 모달이 열릴 때 실행되는 이벤트 리스너
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // 모달을 여는 버튼
+        var lifeCommentNum = button.data('lifeComment_num'); // data-lifeComment_num 속성에서 값 읽기
+        var modal = $(this);
+        
+        // 모달의 hidden input과 메시지 업데이트
+        modal.find('#lifeCommentNum').val(lifeCommentNum);
+        modal.find('#deleteConfirmMessage').text(lifeCommentNum + '번 댓글을 정말 삭제하시겠습니까?');
+    });
+</script>
 </head>
 <body>
-    
-    <script>
-     function openDeleteCommentModal() {
-    	 $('#deleteModal .modal-content').load('/community/recycleLifeComment/deleteModal');
-    	 $('#deleteModal').modal();
-     }
-    </script>
-    
+ 
 	<!-- Header -->
     <div th:replace="~{header_community :: header}"></div>
 	
@@ -125,29 +137,15 @@
                 <a th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2">
                     <i class="fas fa-edit"></i> 수정
                 </a>
-                <!-- <a th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2">
+                <a th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2">
                     <i class="fas fa-trash-alt"></i> 삭제
-                </a> -->
-                
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                onclick="openDeleteCommentModal()" style="margin-right : 10px">
-                <i class="fas fa-edit"></i>삭제</button>
-                <div class="modal fade" id="deleteModal" tabindex="-1"
-                aria-labelledby="deleteCommentLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                <!-- 모달 창에 띄울 내용이 들어올 부분 -->
-                </div>
-                </div>
-                </div>
-                
+                </a>               
                 <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary">
                     <i class="fas fa-list"></i> 목록으로
                 </a>
             </div>
         </div>
     </div>
-
     
     	<!-- 댓글 조회 폼 -->
     	<div class="container my-6">
@@ -170,17 +168,23 @@
     			<td>[[${vo.lifeComment_content}]]</td>
     			<td>[[${vo.lifeComment_wdate}]]</td>
     			<td>
-    			<a th:href="|/community/recycleLifeComment/update?lifeComment_num=${vo.lifeComment_num}|">수정</a>
-    			<a th:href="|/community/recycleLifeComment/delete?lifeComment_num=${vo.lifeComment_num}|">삭제</a>
+    			<a th:href="|/community/recycleLifeComment/update?lifeComment_num=${vo.lifeComment_num}|"
+    			class="btn btn-primary">수정</a>
+    			              			
+     			<!-- <a th:href="|/community/recycleLifeComment/delete?lifeComment_num=${vo.lifeComment_num}|">삭제</a> -->
+     			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
+     			</div>
+ 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+     			data-bs-target="#deleteModal">삭제</button>
     			</td>
     			</tr>
     			</th:block>
     		</tbody>
     	</table>
  		</div>
- 		
+		
  		<!-- 댓글 조회 폼 -->
- 		<div class="container my-6">
+ 		<!-- <div class="container my-6">
  		<h5>댓글 목록 ver.2</h5>
  		<th:block th:each="vo : ${list}">
  		<a>
@@ -190,19 +194,40 @@
  		</a>
  		<p><span th:text="${vo.lifeComment_content}"></span></p>
  		</th:block>
- 		</div>
+ 		</div> -->
  		
  		<!-- 댓글 작성 폼 -->
- 		<form class="container my-4" action="/community/recycleLifeComment/insertOK" 
+ 		<form class="container my-4" th:action="@{/community/recycleLifeComment/insertOK}" 
  		method="post" name="lifeComment_content">
  		<h5>댓글 작성</h5>
  		<label for="member_id">작성자 [[${session.user_id}]]</label>
-        <input type="hidden" id="member_id" name="member_id" th:value ="${session.user_id}" required>
+        <input type="hidden" id="member_id" name="member_id" th:value ="${session.user_id}" required>        
  		<div class="form-group">        
-        <textarea class="form-control" id="content" rows="3" name="content" placeholder="리뷰 내용을 입력하세요" required></textarea>
+        <textarea class="form-control" id="content" rows="3" name="lifeComment_content" placeholder="댓글을 입력하세요" required></textarea>
     	</div>
        <button type="submit" class="btn btn-success mt-2">작성하기</button>
  		</form>
+ 		
+ 		<!-- 부트스트랩 JS 및 의존성 추가 (CDN 사용 권장) -->
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+		<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공) -->
+	    <script>
+	        (function () {
+	            'use strict'
+	            var forms = document.querySelectorAll('.needs-validation')
+	            Array.prototype.slice.call(forms)
+	                .forEach(function (form) {
+	                    form.addEventListener('submit', function (event) {
+	                        if (!form.checkValidity()) {
+	                            event.preventDefault()
+	                            event.stopPropagation()
+	                        }
+	                        form.classList.add('was-validated')
+	                    }, false)
+	                })
+	        })()
+	    </script>
  		
 		<!-- Footer -->
 		<div th:replace="footer :: footer"></div>

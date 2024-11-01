@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -140,10 +141,11 @@ public class RecycleLifeCommentController {
 		}	
 	}
 	
-	@RequestMapping(value="/deleteModel", method={RequestMethod.GET, RequestMethod.POST})
-		public void deleteModel() {
-			log.info("댓글 삭제 모달창으로 이동");
-		}
+	@RequestMapping(value="/deleteModal", method= {RequestMethod.GET, RequestMethod.POST})
+	public void deleteModal() {
+	    log.info("댓글 삭제 모달창");
+	}
+	
 	}
 	
 	

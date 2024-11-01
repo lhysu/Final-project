@@ -46,6 +46,6 @@ public interface OrderMapper {
 
 	int getTotalRowsByUser(String userId);
 
-	List<OrderJoinProductVO> selectAllByUser(String merchant_uid,int product_num);
+	List<OrderJoinProductVO> selectAllByUser(String merchant_uid);
 
 }

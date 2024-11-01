@@ -82,9 +82,7 @@
 #admin-login{
 	color: #D2D2D2;
 }
-h2{
-    text-align: center;
-}
+
 
 /*모달 팝업 영역 스타일링*/
 .modal {
@@ -110,26 +108,40 @@ h2{
     width: 400px;
     height: 350px;
 }
-.modal .modal_popup .close_btn  {
+.modal .modal_popup {
     display: block;
     padding: 10px 20px;
-    background-color: rgb(116, 0, 0);
     border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
+    border-radius: 10px;
     transition: box-shadow 0.2s;
 }
 
-.login_btn{
- 	display: block;
-    padding: 10px 20px;
-    background-color: rgb(116, 0, 0);
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    transition: box-shadow 0.2s;
+.modal-wrapper{
+	place-items: center;
+	padding: 20px;
+	position: relative;
+}
+
+
+
+#modal-title{
+ padding: 15px;
+ color: black;
+ font-size: 20pt;
+ font: bold;
+}
+
+#result{
+	color: green;
+	font-weight: 700; 
+	font-size: 40pt;
+	
+}
+
+#owner{
+	color: blue;
+	font-size: 23pt;
+	font: bold;
 }
 
 </style>
@@ -167,15 +179,21 @@ h2{
 <!-- 아이디찾기 결과 창 -->
 <div class="modal">
     <div class="modal_popup">
-        <h3>아이디 찾기</h3>
+    <div class="modal-wrapper">
+        <div id="exist">
+        <p id="modal-title"><span id="owner">???</span>님의 아이디</p>
         <div>
-        <p></p>
         <p id="result"></p>
-        </div>        
-        <div>
-        <button type="button" class="close_btn">닫기</button>
-        <button type="button" class="login_btn" onclick="location.href='/m_login' ">로그인</button>
+        </div>              
         </div>
+       	</div>
+       	<p id="no-exist">일치하는 회원정보가 존재하지 않습니다.</p>
+        <div class="d-md-flex justify-content-md-end" style="position: absolute; right: 20px; bottom: 20px;">
+		  
+		  <button type="button" class="close_btn btn btn-primary mx-3" style="">닫기</button>
+          <button type="button" class="login_btn btn btn-primary" onclick="location.href='/m_login'" style="float:right">로그인</button>
+		</div>
+
     </div>
 </div>
 
@@ -201,12 +219,17 @@ h2{
 		      success : function(data){
 		         if(!data){
 		        	 result="일치하는 회원정보가 존재하지 않습니다."
-	        		 document.getElementById('result').innerHTML = result;
+					 $("#exist").hide();
+		        	 $("#no-exist").show();
 	        		 modal.style.display = 'block'; 
 		        	 
 		         }else {
 		        	 result=data;
 		        	 document.getElementById('result').innerHTML = result;
+		        	 const name=document.getElementById('name').value
+		    		 document.getElementById('owner').innerHTML = name;
+		        	 $("#no-exist").hide();
+		        	 $("#exist").show();
 		        	 modal.style.display = 'block';
 		        	 
 		        	 

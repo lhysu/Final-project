@@ -63,7 +63,7 @@ public class DonateItemController {
 		return "community/donateItem/selectAll";
 	}
 	
-	@GetMapping({"/donateItem/d_selectOne"})
+	@GetMapping({"/community/donateItem/d_selectOne"})
 	public String d_selectOne(Model model,DonateItemVO vo) {
 		log.info("/donateItem/d_selectOne");
 		log.info("vo:{}",vo);
@@ -74,7 +74,7 @@ public class DonateItemController {
 		return "community/donateItem/selectOne";
 	}
 	
-	@GetMapping({"/donateItem/d_searchList"})
+	@GetMapping({"/community/donateItem/d_searchList"})
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
 			@RequestParam(defaultValue = "us")String searchWord,
@@ -130,7 +130,7 @@ public class DonateItemController {
 		if(result==1) {
 			return "redirect:/community/donateItem/d_selectAll";			
 		}else {
-			return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();	
+			return "redirect:/community/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();	
 			
 		}
 		

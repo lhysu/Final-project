@@ -172,40 +172,44 @@ h1 {
 	
 	<div class="content" th:fragment="content" style="margin-top: 300px;">
 		<h1>나의 구매내역</h1>			
-		<div th:each="vo:${list}" class="order-box">
-			<div class="order-header">
-				<p>주문번호: <a th:href="|/order/selectOne?merchant_uid=${vo.merchant_uid}&product_num=${vo.product_num}|">[[${vo.merchant_uid}]]</a></p>
-				<p>주문 일자: [[${vo.order_date.substring(0, 10)}]]</p>
-			</div>
-			
-			<div class="delivery-status">
-	            <!-- 배송 상태와 도착 날짜 -->
-	            <p>
-	                <span th:text="${vo.delivery_status} + ' : '"></span>
-	                <span th:if="${vo.delivery_status == '배송중'}" th:text="${vo.delivery_date.substring(0, 10)} + ' 도착예정'"></span>
-	            </p>
-        	</div>
+		<div th:each="entry : ${groupedOrders}">
+        <div class="order-box">
+            <div class="order-header">
+                <p>주문번호: <a th:href="|/order/selectOne?merchant_uid=${entry.key}|">[[${entry.key}]]</a></p>
+                <!-- 각 주문의 첫 번째 상품의 주문 일자를 표시 (key는 주문번호, value는 상품목록) -->
+                
+                <p>주문 일자: <span th:text="${entry.value[0].order_date}"></span></p>
+            </div>
 
-			<div class="product-info">
-				<img th:src="${vo.product_img}" class="product-image" alt="Product Image" width="150">
-				<div class="product-details">
-					<p>상품명: <span>[[${vo.product_name}]]</span></p>
-        			<p>개수: <span>[[${vo.quantity}]]개</span></p>
-        			<p>가격: <span>[[${vo.price}]]원</span></p>
-				</div>
-			</div>
+            <!-- 배송 상태와 도착 날짜 -->
+            <div class="delivery-status">
+                <p>
+                    <span th:text="${entry.value[0].delivery_status} + ' : '"></span>
+                    <span th:if="${entry.value[0].delivery_status == '배송중'}"
+                          th:text="${entry.value[0].delivery_date.substring(0, 10)} + ' 도착예정'"></span>
+                </p>
+            </div>
 
-			<div class="action-buttons">
-				<!-- 배송 조회로 이동 -->
-				<button>배송 조회</button>
-				<!-- 리뷰 작성 버튼 -->
-				<button>리뷰 작성</button>
-				<!-- 교환/환불 버튼 -->
-				<button>교환/환불</button>
-				<!-- 고객센터로 이동 -->
-				<button>문의하기</button>
-			</div>
-		</div>
+            <!-- 상품 목록을 출력 -->
+            <div th:each="product : ${entry.value}" class="product-info">
+                <img th:src="${product.product_img}" class="product-image" alt="Product Image" width="150">
+                <div class="product-details">
+                    <p>상품명: <span>[[${product.product_name}]]</span></p>
+                    <p>개수: <span>[[${product.quantity}]]개</span></p>
+                    <p>가격: <span>[[${product.price * product.quantity}]]원</span></p>
+                </div>
+            </div>
+
+            <!-- 액션 버튼  추후에 배송조회,교환환불,고객센터 연동하기-->
+            <div class="action-buttons">
+                <button th:onclick="|location.href='/delivery/selectAll?member_id=${entry.value[0].member_id}'|">배송 조회</button>
+                <button th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button>
+                <!--<button th:if="${entry.value[0].order_state=='배송완료'}" th:onclick="|location.href='/product/detail?product_num=${entry.value[0].product_num}'|">리뷰 작성</button> -->
+                <button>교환/환불</button>
+                <button th:onclick="|location.href='/community/help/help?member_id=${entry.value[0].member_id}'|">문의하기</button>
+            </div>
+        </div>
+    </div>
 
 		<div>
 			<!-- 페이지 네이션 -->

@@ -65,6 +65,7 @@
         WHERE event_title LIKE #{searchWord} OR event_content LIKE #{searchWord}
     </select>
     
+    <!--  조회수 증가  -->
     <update id="incrementViewCount" parameterType="int">
 	    UPDATE event
 	    SET event_views = event_views + 1

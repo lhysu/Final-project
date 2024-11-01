@@ -40,4 +40,6 @@ public interface AdminMapper {
 
 	public MemberVO login(MemberVO vo);
 
+	public MemberVO findById(String member_id);
+
 }
