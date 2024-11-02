@@ -18,11 +18,9 @@ public class SecurityConfig {
 	@Bean //메소드에서 리턴되는 SecurityFilterChain 을 bean 으로 만들어준다.
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
-		String[] whiteList= {"/","/home", "/member/m_insert", "/member/m_insertOK", 
-				"/member/m_login","/member/required_login","/member/denied","/member/expired", "login/mailConfirm","login/newPassword",
-				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**","/admin/ad_login",
-				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img",
-				"/community/**"};
+		String[] whiteList= {"/member/required_login","/member/denied","/member/expired", "login/mailConfirm",
+				"/member/login_fail","/member/login_success","/api/**","/admin/ad_login",
+				"/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/admin/adminJoin","/admin/adminInsert"};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		httpSecurity
@@ -53,7 +51,7 @@ public class SecurityConfig {
 		.logout(config ->
 			config
 				.logoutUrl("/logout")//Spring Security 가 자동으로 로그아웃 처리 해줄 경로 설정
-				.logoutSuccessUrl("/")//로그 아웃 이후에 리다일렉트 시킬 경로 설정
+				.logoutSuccessUrl("/admin/ad_login")//로그 아웃 이후에 리다일렉트 시킬 경로 설정
 				.permitAll()
 		)
 		.exceptionHandling(config ->
