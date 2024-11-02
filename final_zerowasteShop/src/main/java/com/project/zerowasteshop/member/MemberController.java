@@ -86,15 +86,12 @@ public class MemberController {
 	
 	//회원정보 수정
 	@PostMapping("/member/m_updateOK")
-	public String m_updateOK(MemberVO vo, String pwCheck){
+	public String m_updateOK(MemberVO vo){
 		log.info("/member/m_updateOK");
 		log.info("vo:{}",vo);
-		log.info("pwCheck:{}",pwCheck);
 		int result=0;
 		
-		if(vo.getPw().equals(pwCheck)) {
-			result = service.updateOK(vo);
-		}
+		result = service.updateOK(vo);
 		log.info("result:{}",result);
 		if(result==1) {
 			return "redirect:/member/m_selectOne";			
