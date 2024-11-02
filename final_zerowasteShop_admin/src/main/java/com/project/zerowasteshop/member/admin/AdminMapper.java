@@ -42,4 +42,6 @@ public interface AdminMapper {
 
 	public MemberVO findById(String member_id);
 
+	public MemberVO idCheck(String member_id);
+
 }

@@ -91,8 +91,10 @@ public class AdminService {
 		return mapper.deleteOK(vo);
 	}
 
-	/*
-	 * public MemberVO login(MemberVO vo) { return mapper.login(vo); }
-	 */
+	public MemberVO idCheck(String member_id) {
+		return mapper.idCheck(member_id);
+	}
+
+
 
 }
