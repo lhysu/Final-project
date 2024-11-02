@@ -19,7 +19,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
 		String[] whiteList= {"/","/home", "/member/m_insert", "/member/m_insertOK", 
-				"/member/m_login","/member/required_login","/member/denied","/member/expired", "login/mailConfirm","login/newPassword",
+				"/member/m_login","/member/required_login","/member/denied","/member/expired", "/login/mailConfirm","/login/newPassword","/login/pwmailConfirm",
 				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**","/admin/ad_login",
 				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/community/**","/product/**"
 				};

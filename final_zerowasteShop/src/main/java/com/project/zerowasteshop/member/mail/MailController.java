@@ -24,7 +24,7 @@ public class MailController {
 	MemberService memberservice;
 	
 	// 이메일 인증
-	@PostMapping("login/mailConfirm")
+	@PostMapping("/login/mailConfirm")
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
 		String code="";
 		//이메일 중복 체크
@@ -39,19 +39,45 @@ public class MailController {
 	}
 	
 	//임시 비밀번호 전송
-	@PostMapping("login/newPassword")
+	@PostMapping("/login/newPassword")
 	int newPassword(@RequestParam("email") String email, 
 						@RequestParam("member_id") String member_id,
 						@RequestParam("name") String name) throws Exception {
-
-	   String tmeppw = mailService.sendPasswordMessage(email);
-	   log.info("임시 비밀번호 : " + tmeppw);
-	   int result=0;
-	   result = memberservice.updatePW(member_id,name,email,tmeppw);
-	   log.info("result:{}",result);
+		MemberVO vo = new MemberVO();
+		vo.setMember_id(member_id);
+		MemberVO vo2 = memberservice.selectOne(member_id);
+		log.info("vo2:{}",vo2);
+		int result=0;
+		
+		if(vo2!=null && vo2.isAdCheck()==false) {
+			String tmeppw = mailService.sendPasswordMessage(email);
+			log.info("임시 비밀번호 : " + tmeppw);
+		   
+		   result = memberservice.updatePW(member_id,name,email,tmeppw);
+		   log.info("result:{}",result);
+		}
+	   
+	   
 	   
 	   return result;
 	}
+	
+	//비밀번호 찾기 이메일 인증
+		@PostMapping("/login/pwmailConfirm")
+		String pwmailConfirm(@RequestParam("email") String email) throws Exception {
+			String code="";
+			//이메일 중복 체크
+			MemberVO vo = memberservice.emailCheck(email);
+			log.info("vo:{}",vo);
+			if(vo!=null) {
+				code = mailService.sendSimpleMessage(email);
+				
+			}else {
+				code="-1";		
+			}
+			log.info("인증코드 : " + code);	
+			return code;
+		}
 	
 
 }

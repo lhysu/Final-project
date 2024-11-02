@@ -74,6 +74,8 @@ public class MemberService {
 	public MemberVO emailCheck(String email) {
 		return mapper.emailCheck(email);
 	}
+
+
 	 
 
 }

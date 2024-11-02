@@ -31,4 +31,5 @@ public interface MemberMapper {
 
 	public MemberVO emailCheck(String email);
 
+
 }
