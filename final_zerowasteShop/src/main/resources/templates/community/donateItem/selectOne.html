@@ -141,6 +141,16 @@
 		  </div>
 		</div>
 		
+    	<div class="row g-3">
+		  <div class="col-md-8">
+		    <div class="row">
+			 	<label for="donateItem_address" class="col-md-2 col-form-label my-3">지역</label>
+			    <div class="col-md-10 my-3">
+		     		<input type="text" id="donateItem_address" class="form-control-plaintext" name="donateItem_address" th:value="${vo2.donateItem_address}" readonly >
+		    	</div>
+		  	</div>
+		  </div>
+		</div>
     	
     	<div class="form-item w-100">
     		<label class="form-label my-3"> 물품 정보</label>
@@ -155,7 +165,7 @@
     	</div>
     	</th:block>  
     	
-    	<div class="row">
+    	<div class="row mb-3">
 		 	<label for="donate_state" class="col-sm-1 col-form-label my-3" >처리상태</label>
 		    <div class="col-sm-3 my-3">
 		     	<input type="text" id="donate_state" class="form-control-plaintext" name="donate_state" th:value="${vo2.donate_state}" >
@@ -167,7 +177,7 @@
         </div>
         
 		<!-- 처리상태 변경 -->
-		<th:block th:if="${session.admin_id}"> 
+<!-- 		<th:block th:if="${session.admin_id}"> 
 		<form action="/donateItem/d_updateOK">
 			
 			<label class="mx-3">
@@ -189,7 +199,7 @@
 			<input type="submit" class="btn btn-primary my-3 mx-3" value="확인"> 
 
 		</form>
-		</th:block>		
+		</th:block>	 -->	
 
 		
 	
@@ -237,7 +247,7 @@
 	
 	</script>
 
-	<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary" >
+	<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary"  >
       	<i class="fas fa-list"></i> 목록으로
     </a>
 	
