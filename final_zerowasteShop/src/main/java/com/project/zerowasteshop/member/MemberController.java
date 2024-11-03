@@ -111,7 +111,7 @@ public class MemberController {
 		log.info("result:{}",result);
 		
 		if(result==1) {
-			return "redirect:/home";			
+			return "redirect:/logout";			
 		}else {
 			return "redirect:/member/update?member_num="+vo.getMember_num();	
 		}

@@ -23,7 +23,7 @@ public class MailController {
 	@Autowired
 	MemberService memberservice;
 	
-	// 이메일 인증
+	//회원가입 이메일 인증
 	@PostMapping("/login/mailConfirm")
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
 		String code="";
