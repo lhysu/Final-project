@@ -75,6 +75,16 @@ public class MemberService {
 		return mapper.emailCheck(email);
 	}
 
+	public MemberVO memberCheck(MemberVO vo) {
+		MemberVO vo2 = mapper.selectOne(vo.member_id);
+		if(encoder.matches(vo.getPw(), vo2.getPw())) {
+			return vo2;
+		}else {
+			return null;
+		}
+		
+	}
+
 
 	 
 
