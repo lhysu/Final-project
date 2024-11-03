@@ -111,6 +111,37 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			width: 50%;}
 		
     </style>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+
+$(function (){
+
+    console.log("ready...");
+
+    $("#btn_idCheck").click(function(){
+        console.log("click...")
+        let url2="http://localhost:8833/api/idCheck";
+        $.ajax({
+            url:url2,
+            data:{member_id:$("#member_id").val()},
+            type:"get",
+            dataType:"json",
+            success:function(response){
+                console.log(response)
+                let text="";
+                if(response.result==="OK"){text="사용가능한 아이디"}
+                else text="중복된 아이디"
+                $("#result").html(text);
+            },
+            error:function (ex){
+                console.log(ex)
+            }
+        });
+    });
+});
+</script>
 </head>
 <body>
 
@@ -135,10 +166,20 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
     	<tr>
         <th>아이디</th>
-        <td><input type="text" id="member_id" class="form-control" name="member_id" th:value="${vo2.member_id}" placeholder="아이디를 입력하세요" required>
-            <div class="invalid-feedback">아이디를 입력해주세요.</div>
+        <td>
+            <div class="col-md-8">
+                <input type="text" id="member_id" class="form-control" name="member_id" th:value="${vo2.member_id}" style="float:left" placeholder="아이디를 입력하세요" required>
+                <div class="invalid-feedback">아이디를 입력해주세요.</div>
+            </div>
+            <div class="col-md-4 d-flex">
+                <input type="button" id="btn_idCheck" class="btn btn-primary mx-2" value="중복체크">
+                <span id="result"> 사용가능 or 중복된 아이디</span>
+            </div>
          </td>
         </tr>
+        
+        
+        	
         
         <tr>
         <th>이름</th>
