@@ -55,7 +55,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body >
 	<!-- 헤더 시작 -->
-	 <div th:replace="~{header_community :: header}"></div>
+	 <div th:replace="~{header_admin :: header}"></div>
     <!-- 해더 끝 -->
 
 
@@ -73,9 +73,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				    </select>
 				    <input type="text" name="searchWord" value="user" style="width:300px;" class="form-control">
 				    <input type="submit" value="검색" class="btn btn-primary ms-2">
-				   <th:block th:if="${session.user_id}"> 
-				   <a th:href="|/donateItem/d_insert|" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" id="btn-insert" style="float: right;">신청하기</a>
-			    </th:block>
+				   
+				   <!-- <a th:href="|/donateItem/d_insert|" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" id="btn-insert" style="float: right;">신청하기</a> -->
+			    
 			    </div>
 			    
 		    </div>
@@ -102,23 +102,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	            </tr>
 			</th:block>
 	        </tbody>
-	        <!-- <tfoot>
-		      <tr>
-		        <td colspan="5">
-			      	<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
-			      		<th:block th:if="${param.searchKey==null}">
-					      	<a th:href="|/community/donateItem/d_selectAll?cpage=${i}|">[[${i}]]</a>
-						</th:block>
-			      		<th:block th:if="${param.searchKey!=null}">
-			      			<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
-					      	<a th:href="|/donateItem/d_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
-							</th:block>
-						</th:block>
-						   	
-			      	</th:block>
-		      	</td>
-		      </tr>
-	        </tfoot> -->
 	
 	    </table>
 	    

@@ -31,6 +31,6 @@ public interface DonateItemMapper {
 
 	public int deleteOK(DonateItemVO vo);
 
-	public int insertOK(DonateItemVO vo);
+//	public int insertOK(DonateItemVO vo);
 
 }

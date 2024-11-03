@@ -92,7 +92,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body>
 	<!-- 헤더 시작 -->
-	 <div th:replace="~{header_community :: header}"></div>
+	 <div th:replace="~{header_admin :: header}"></div>
     <!-- 해더 끝 -->
 
 	<div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px;">
@@ -141,6 +141,17 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		  </div>
 		</div>
 		
+		<div class="row g-3">
+		  <div class="col-md-8">
+		    <div class="row">
+			 	<label for="donateItem_address" class="col-md-2 col-form-label my-3">지역</label>
+			    <div class="col-md-10 my-3">
+		     		<input type="text" id="donateItem_address" class="form-control-plaintext" name="donateItem_address" th:value="${vo2.donateItem_address}" readonly >
+		    	</div>
+		  	</div>
+		  </div>
+		</div>
+
     	
     	<div class="form-item w-100">
     		<label class="form-label my-3"> 물품 정보</label>
@@ -155,7 +166,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     	</div>
     	</th:block>  
     	
-    	<div class="row">
+    	<div class="row mb-3">
 		 	<label for="donate_state" class="col-sm-1 col-form-label my-3" >처리상태</label>
 		    <div class="col-sm-3 my-3">
 		     	<input type="text" id="donate_state" class="form-control-plaintext" name="donate_state" th:value="${vo2.donate_state}" >
@@ -167,7 +178,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </div>
         
 		<!-- 처리상태 변경 -->
-		<th:block th:if="${session.admin_id}"> 
 		<form action="/donateItem/d_updateOK">
 			
 			<label class="mx-3">
@@ -189,17 +199,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<input type="submit" class="btn btn-primary my-3 mx-3" value="확인"> 
 
 		</form>
-		</th:block>		
+
 
 		
 	
 	<!-- 게시글 삭제 -->
 	<!-- Button trigger modal -->
-	<th:block th:if="${session.admin_id != null || vo2.member_id==session.user_id}">
 	<button type="button" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" style="float: right;" data-toggle="modal" data-target="#staticBackdrop">
  	 글 삭제
 	</button>
-	</th:block>
+
 	
 
 	
