@@ -147,13 +147,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </td>
         </tr>
         
-        
+        <th:block th:if="${vo2.adCheck==true}">
         <tr>
         <th>비밀번호</th>
-        <td><input type="text" id="pw" class="form-control" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요" required>
+        <td><input type="text" id="pw" class="form-control" name="pw" placeholder="비밀번호를 입력하세요" required>
         	<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
         </td>
         </tr>
+        </th:block>
         
         <tr>
         <th>이메일</th>
@@ -179,6 +180,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         	<input type="text" id="address" class="form-control" name="address" th:value="${vo2.address}" placeholder="주소"><br>
         	<input type="text" id="address_detail" class="form-control" name="address_detail" th:value="${vo2.address_detail}" placeholder="상세주소"></td>
         </tr>
+        <tr>
+	        <th>관리자 여부</th>
+	        <td>[[${vo2.adCheck}]]
+	        	<input type="hidden" id="adCheck" name=adCheck class="form-control" th:value="${vo2.adCheck}">	
+	        </td>
+	    </tr>
         
         
         <tr>

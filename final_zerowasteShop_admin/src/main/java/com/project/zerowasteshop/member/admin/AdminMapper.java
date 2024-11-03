@@ -44,4 +44,6 @@ public interface AdminMapper {
 
 	public MemberVO idCheck(String member_id);
 
+	public int userUpdateOK(MemberVO vo);
+
 }

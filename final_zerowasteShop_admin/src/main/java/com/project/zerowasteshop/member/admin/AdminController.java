@@ -147,8 +147,12 @@ public class AdminController {
 	public String ad_updateOK(MemberVO vo){
 		log.info("/admin/ad_updateOK");
 		log.info("vo:{}",vo);
-		
-		int result = service.updateOK(vo);
+		int result=0;
+		if(vo.isAdCheck()==true) {
+		result = service.adminUpdateOK(vo);
+		}else {
+			result=service.userUpdateOK(vo);
+		}
 		log.info("result:{}",result);
 		if(result==1) {
 			return "redirect:/admin/ad_selectOne?member_num="+vo.getMember_num();			

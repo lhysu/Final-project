@@ -80,7 +80,7 @@ public class AdminService {
 		return mapper.insertOK(vo);
 	}
 
-	public int updateOK(MemberVO vo) {
+	public int adminUpdateOK(MemberVO vo) {
 		String encodedPwd = encoder.encode(vo.getPw());
 		vo.setPw(encodedPwd);
 		return mapper.updateOK(vo);
@@ -94,6 +94,12 @@ public class AdminService {
 	public MemberVO idCheck(String member_id) {
 		return mapper.idCheck(member_id);
 	}
+
+	public int userUpdateOK(MemberVO vo) {
+		return mapper.userUpdateOK(vo);
+	}
+
+
 
 
 
