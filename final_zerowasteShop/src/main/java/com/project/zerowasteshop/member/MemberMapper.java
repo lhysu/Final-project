@@ -19,8 +19,6 @@ public interface MemberMapper {
 
 	public MemberVO idCheck(String member_id);
 
-	public MemberVO login(MemberVO vo);
-
 	public MemberVO selectId(MemberVO vo);
 
 	public void deductPoints(String member_id, int remainingPoints);

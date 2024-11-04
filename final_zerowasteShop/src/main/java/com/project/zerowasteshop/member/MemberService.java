@@ -45,11 +45,6 @@ public class MemberService {
 	public MemberVO idCheck(String member_id) {
 		return mapper.idCheck(member_id);
 	}
-
-	
-	  public MemberVO login(MemberVO vo) { 
-		  return mapper.login(vo);
-	  }
 	 
 
 	public MemberVO selectId(MemberVO vo) {

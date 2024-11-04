@@ -1,14 +1,10 @@
 package com.project.zerowasteshop.member;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 import jakarta.servlet.ServletContext;
@@ -141,14 +137,14 @@ public class MemberController {
 		return "user/selectPw";
 	}
 	
-	//로그인 페이지 이동
+	//내정보 수정 관리 전 회원 확인페이지로 이동
 	@GetMapping({"/member/memberCheck"})
 	public String memberCheck() {
 		log.info("/member/memberCheck");
 		return "user/memberCheck";
 	}
 	
-	//로그인 페이지 이동
+	//내정보 수정 관리 전 회원 확인
 	@PostMapping({"/member/memberCheckOK"})
 	public String memberCheckOK(MemberVO vo) {
 		log.info("/member/memberCheckOK");
