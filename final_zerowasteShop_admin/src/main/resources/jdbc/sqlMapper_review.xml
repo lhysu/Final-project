@@ -11,6 +11,13 @@
 		JOIN product p ON r.product_num = p.product_num
 		SET r.product_name = p.product_name;
 	</update>
+	
+	<select id="selectAllPageBlockAdmin"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		SELECT * 
+	    FROM review
+	    ORDER BY review_num ASC limit #{startRow},#{pageBlock}
+	</select>
 
 	<select id="selectAllPageBlock"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
@@ -18,6 +25,11 @@
 	    FROM review
 	    WHERE member_id = #{userID}
 	    ORDER BY review_num ASC limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRowsAdmin" resultType="int">
+		select count(*) total_rows
+		from review
 	</select>
 	
 	<select id="getTotalRows" resultType="int">
@@ -59,6 +71,13 @@
 		WHERE review_num = #{review_num};
 	</select>
 	
+		<select id="selectOneAdmin"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		SELECT * 
+		FROM review  
+		WHERE review_num = #{review_num};
+	</select>
+	
 	<select id="selectProduct"
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		SELECT * 
@@ -83,7 +102,17 @@
 		where review_num=#{review_num}
 	</update>	
 	
+	<update id="updateOKAdmin">
+		update review set
+		content=#{content}, rating=#{rating}, review_img=#{review_img}, createdDate= NOW()
+		where review_num=#{review_num}
+	</update>	
+	
 	<delete id="deleteOK">
+		delete from review where review_num=#{review_num}
+	</delete>
+	
+	<delete id="deleteOKAdmin">
 		delete from review where review_num=#{review_num}
 	</delete>
 	

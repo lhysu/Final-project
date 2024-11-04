@@ -8,6 +8,8 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class IamportService {
 	
@@ -84,7 +87,8 @@ public class IamportService {
         payment.setMember_id((String) responseData.get("member_id"));
         return payment;
     }
-
+    
+    // 결제 취소 로직
     public boolean cancelPayment(String merchant_uid, int amount,String delivery_state) {
         String token = getToken();
         RestTemplate restTemplate = new RestTemplate();
@@ -120,8 +124,7 @@ public class IamportService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // 예외 로그 출력
-            // 실패 시 false 반환
+        	log.error("Error during payment cancellation", e); // 예외 로그 출력
             return false;
         }
 

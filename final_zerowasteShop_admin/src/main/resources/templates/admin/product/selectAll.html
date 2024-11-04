@@ -119,9 +119,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 해더 끝 -->
     
 	<div class ="content" th:fragment="content">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+            <h1>상품 관리</h1>
+		</div>	
 		
-		
-		<form action="/admin/product/searchList" style="margin-top: 160px !important;">
+		<form action="/admin/product/searchList">
 		    <div class="position-relative mx-auto" style="margin-left: 50px !important;">
 		        <div class="d-flex align-items-center">
 		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2">

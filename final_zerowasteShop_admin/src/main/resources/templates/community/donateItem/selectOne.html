@@ -155,16 +155,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     	
     	<div class="form-item w-100">
     		<label class="form-label my-3"> 물품 정보</label>
-    		<textarea type="text" id="donateItem_content" class="form-control" spellcheck="false" name="donateItem_content" th:value="${vo2.donateItem_content}" readonly ></textarea>
+    		<textarea type="text" id="donateItem_content" class="form-control" spellcheck="false" name="donateItem_content" readonly >[[${vo2.donateItem_content}]]</textarea>
     	</div>
     	
-    	<th:block th:if="${vo2.donateItem_img!=null}">
+  
     	<div class="form-item w-100 my-3">
     		
-    		<img th:src="|/uploadimgPath/${vo2.donateItem_img}|" width="300">  
+    		<img th:src="|/uploadimgPath/${vo2.donateItem_img}|" width="300" onerror="this.style.display='none'">  
     			
     	</div>
-    	</th:block>  
+ 
     	
     	<div class="row mb-3">
 		 	<label for="donate_state" class="col-sm-1 col-form-label my-3" >처리상태</label>

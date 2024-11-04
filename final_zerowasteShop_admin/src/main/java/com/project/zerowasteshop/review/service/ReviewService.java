@@ -29,13 +29,25 @@ public class ReviewService {
 	public ReviewVO selectOne(ReviewVO vo) {
 		return mapper.selectOne(vo);
 	}
+	
+	public ReviewVO selectOneAdmin(ReviewVO vo) {
+		return mapper.selectOneAdmin(vo);
+	}
 
 	public int updateOK(ReviewVO vo) {
 		return mapper.updateOK(vo);
 	}
+	
+	public int updateOKAdmin(ReviewVO vo) {
+		return mapper.updateOKAdmin(vo);
+	}
 
 	public int deleteOK(ReviewVO vo) {
 		return mapper.deleteOK(vo);
+	}
+	
+	public int deleteOKAdmin(ReviewVO vo) {
+		return mapper.deleteOKAdmin(vo);
 	}
 
 //	public List<ReviewVO> searchList(String searchKey, String searchWord) {
@@ -47,12 +59,26 @@ public class ReviewService {
 //
 //	}
 //
+	public int getTotalRowsAdmin() {
+		return mapper.getTotalRowsAdmin();
+	}
+	
 	public int getTotalRows(String userID) {
 		return mapper.getTotalRows(userID);
 	}
 
 	public int updateProductName() {
 		return mapper.updateProductName();
+	}
+	
+	public List<ReviewVO> selectAllPageBlockAdmin(int cpage, int pageBlock) {
+		// MySql 인경우 limit 시작행을얻어내는 알고리즘이 필요하다.
+		// 예:1페이지(0,pageBlock),2페이지(5,pageBlock),3페이지(10,pageBlock)
+		int startRow = (cpage - 1) * pageBlock ;
+		log.info("startRow:{}", startRow);
+		log.info("pageBlock:{}", pageBlock);
+
+		return mapper.selectAllPageBlockAdmin(startRow, pageBlock);
 	}
 	
 	public List<ReviewVO> selectAllPageBlock(int cpage, int pageBlock, String userID) {
@@ -64,6 +90,7 @@ public class ReviewService {
 
 		return mapper.selectAllPageBlock(startRow, pageBlock, userID);
 	}
+	
 
 	public ProductVO selectProduct(ReviewVO vo) {
 		return mapper.selectProduct(vo);
