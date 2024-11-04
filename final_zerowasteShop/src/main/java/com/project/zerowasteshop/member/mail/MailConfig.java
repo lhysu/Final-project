@@ -15,7 +15,7 @@ public class MailConfig {
 
         javaMailSender.setHost("smtp.naver.com");
         javaMailSender.setUsername("zerocfinal33@naver.com");
-        javaMailSender.setPassword("MJRRLEVDY1P5");
+        javaMailSender.setPassword("WRJREYN8JVL1");
 
         javaMailSender.setPort(465);
 
