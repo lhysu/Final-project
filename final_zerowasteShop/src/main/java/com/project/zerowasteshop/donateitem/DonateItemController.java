@@ -164,15 +164,6 @@ public class DonateItemController {
 			File f = new File(realPath, save_name);
 			vo.getFile().transferTo(f);
 
-			//// create thumbnail image/////////
-			BufferedImage original_buffer_img = ImageIO.read(f);
-			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-			Graphics2D graphic = thumb_buffer_img.createGraphics();
-			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
-
-			File thumb_file = new File(realPath, "thumb_" + save_name);
-
-			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
 
 		}
 		
