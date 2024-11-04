@@ -124,11 +124,13 @@ select {
 
 
 	<div class="content" th:fragment="content">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+            <h1>쿠폰 관리</h1>
+		</div>	
 
 
-
-		<div class="d-flex justify-content-between align-items-center"
-			style="margin-top: 300px !important;">
+		<div class="d-flex justify-content-between align-items-center">
 			<!-- 첫 번째 검색 폼 -->
 			<form action="/admin/coupon/searchList"
 				class="d-flex align-items-center">
