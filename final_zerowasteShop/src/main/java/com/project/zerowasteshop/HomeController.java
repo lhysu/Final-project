@@ -35,7 +35,7 @@ public class HomeController {
     
         check = service.getTotalRows();
         
-        if (check < 210) {
+        if (check < 1) {
         	// 데이터베이스에 저장
         	service.saveProducts(itemDtos);
         	log.info("추가");
