@@ -32,21 +32,21 @@
 </select>
 
 <select id="searchListPageBlockId" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON o.product_num = p.product_num
+    JOIN product p ON i.product_num = p.product_num
 	where member_id like #{searchWord}
 	order by o.merchant_uid desc 
 	limit #{startRow}, #{pageBlock}
 </select>
 
 <select id="searchListPageBlockPname" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
-	join product p on o.product_num = p.product_num
-	where product_name like #{searchWord}
+	join product p on i.product_num = p.product_num
+	where i.product_name like #{searchWord}
 	order by o.merchant_uid desc 
 	limit #{startRow}, #{pageBlock}
 </select>
@@ -70,13 +70,9 @@
 
 <select id="getSearchTotalRowsPname" resultType="java.lang.Integer">
 	select count(*) total_rows 
-	from `order` o
-	join product p on o.product_num = p.product_num
-	where product_name like #{searchWord}
-</select>
-
-<select id="getSearchTotalRowsPayCheck" resultType="java.lang.Integer">
-	select count(*) total_rows from `order` where payCheck like #{searchWord}
+	from order_item i
+	join product p on i.product_num = p.product_num
+	where p.product_name like #{searchWord}
 </select>
 
 <!-- 쿠폰 코드 확인 -->

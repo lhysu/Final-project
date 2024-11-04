@@ -56,12 +56,17 @@
 	update coupon set member_id = #{member_id} where coupon_code = #{couponCode}
 </update>
 
+<!-- 쿠폰 사용여부 변경 -->
+<update id="updateCouponStatus">
+	update coupon set used = #{i} where coupon_code = #{coupon_code}
+</update>
+
 <insert id="createCoupons">
 	insert into coupon(coupon_code,member_id, coupon_name, use_sdate, use_edate,discount_rate,used)
 	values(#{coupon_code},#{member_id},#{coupon_name},#{use_sdate},#{use_edate},#{discount_rate},#{used})
 </insert>
 
-<!-- 쿠폰 코드 확인 -->
+
 <select id="getCouponInfo" resultType="com.project.zerowasteshop.coupon.CouponVO">
 	select * from coupon where coupon_code = #{couponCode}
 </select>

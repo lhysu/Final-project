@@ -110,11 +110,6 @@ public class OrderService {
         return merchantUid;
 	}
 	
-//	private int calculateTotalPrice(OrderVO vo) {
-//        // 상품 총액 계산 로직
-//        return 100;  // 예시 값
-//    }
-
 	private int calculateDiscount(String couponCode) {
 	    log.info("쿠폰 코드: {}", couponCode);	    
 	    if (couponCode != null) {
@@ -187,6 +182,21 @@ public class OrderService {
 	public List<OrderJoinProductVO> selectAllByUser(String merchant_uid) {
 		// TODO Auto-generated method stub
 		return mapper.selectAllByUser(merchant_uid);
+	}
+
+	public OrderVO getOrderInfo(String merchant_uid) {
+		return mapper.getOrderInfo(merchant_uid);
+		
+	}
+
+	public void deleteOrder(String merchant_uid) {
+		mapper.deleteOrder(merchant_uid);
+		
+	}
+
+	public void deleteOrderItem(String merchant_uid) {
+		mapper.deleteOrderItem(merchant_uid);
+		
 	}
 
 

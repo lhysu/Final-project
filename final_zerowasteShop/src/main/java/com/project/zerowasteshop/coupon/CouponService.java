@@ -89,5 +89,9 @@ public class CouponService {
 		// TODO Auto-generated method stub
 		return mapper.getCouponInfo(couponCode);
 	}
+
+	public void updateCouponStatus(String coupon_code, int i) {
+		mapper.updateCouponStatus(coupon_code,i);
+	}
 	
 }
