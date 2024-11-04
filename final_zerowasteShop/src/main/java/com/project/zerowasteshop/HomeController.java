@@ -1,5 +1,6 @@
 package com.project.zerowasteshop;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,8 @@ public class HomeController {
 	@GetMapping({"/","/home"})//웰컴파일없이 제어가능(index.html무시)
 	public String home(Model model) {
 		log.info("/home");
-	
-		// ? 뒤에 오는 것을 쓰고 싶다면 @RequestParam
-    	// 여러 검색어에서 상품을 가져오기
+		
+		// 여러 검색어에서 상품을 가져오기
         List<ProductVO> itemDtos = naverShopSearch.search();
     
         check = service.getTotalRows();
@@ -39,13 +39,36 @@ public class HomeController {
         	// 데이터베이스에 저장
         	service.saveProducts(itemDtos);
         	log.info("추가");
+        } else {
+        	log.info("추가 안 함");
         }
-        
-        log.info("추가 안 함");
         log.info("check:{}", check);
-        model.addAttribute("itemDtos", itemDtos);
-		
-		return "home";//resources/templates폴더에서 찾는다
+        
+		// 저장된 상품 정보 가져오기
+        List<ProductVO> itemDtos2 = service.getProducts();
+    
+        int totalRows = service.getTotalRows();
+    
+        log.info("Total rows in database: {}", totalRows);
+        itemDtos2.sort(Comparator.comparingInt(ProductVO::getProduct_num).reversed());
+    
+        // 슬라이싱: 상위 8개 상품만 표시
+        List<ProductVO> displayItems;
+        if (itemDtos2.size() > 8) {
+            displayItems = itemDtos2.subList(0, 8);
+        } else {
+            displayItems = itemDtos2;
+        }
+    
+        // 디버깅 로그 추가
+        for (ProductVO product : displayItems) {
+            log.debug("Display Product - Num: {}, Name: {}", product.getProduct_num(), product.getProduct_name());
+        }
+    
+        model.addAttribute("displayItems", displayItems);
+        model.addAttribute("totalItems", itemDtos2.size());
+    
+        return "home";
 	}
 	
 	@GetMapping("/user/myPage")
