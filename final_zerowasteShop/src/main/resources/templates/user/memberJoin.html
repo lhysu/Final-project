@@ -176,7 +176,8 @@ $(function (){
 	       	<label for="email" class="form-label">이메일</label>
 		    <div >
 		    <div class="emailCheck-text col-md-8">
-        		<input type="text" class="form-control" name="email" id="email" value="zerocfinal33@naver.com" style="float:left" placeholder="이메일을 입력해주세요">
+        		<input type="email" class="form-control" name="email" id="email" value="zerocfinal33@naver.com" style="float:left" placeholder="이메일을 입력해주세요" required>
+        		<div class="invalid-feedback">이메일을 입력해주세요</div>
         	</div>
         	<div class="col-md-4 d-flex">
         		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="sendEmailCode" >인증번호 받기</button>
@@ -229,22 +230,31 @@ $(function (){
 			const target = document.getElementById('memberJoinOK');
 			// 이메일 인증번호
 			$("#sendEmailCode").click(function() {
-			   $.ajax({
-			      type : "POST",
-			      url : "/login/mailConfirm",
-			      data : {
-			         "email" : $("#email").val()
-			      },
-			      success : function(data){
-			    	 if(data=="-1"){
-			    		 alert("사용할 수 없는 이메일 입니다.")
-			    	 }else{
-			    		 alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-				         code=data; 
-			    	 }
-			         
-			      }
-			   })
+				email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;		//이메일 패턴
+				var email = document.getElementById("email").value;
+				
+				//이메일 유효성 검사
+				if(email_regex.test(email)){ 
+					$.ajax({
+					      type : "POST",
+					      url : "/login/mailConfirm",
+					      data : {
+					         "email" : $("#email").val()
+					      },
+					      success : function(data){
+					    	 if(data=="-1"){
+					    		 alert("사용할 수 없는 이메일 입니다.")
+					    	 }else{
+					    		 alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+						         code=data; 
+					    	 }
+					         
+					      }
+					   })
+				}else{
+					alert("이메일 형식이 올바르지 않습니다.")
+				}
+			   
 			})
 			
 			$("#checkEmailCode").click(function() {
