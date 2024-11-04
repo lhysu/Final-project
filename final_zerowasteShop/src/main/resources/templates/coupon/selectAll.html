@@ -124,7 +124,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/coupon/insertOK',
-                data: { couponCode: couponCode,member_id:'User19' },
+                data: { couponCode: couponCode,member_id:$('#user_id').val() },
                 success: function(response) {
                     // 서버 응답 처리
                     if (response.status === 'success') {
@@ -158,6 +158,7 @@
 			<label for="couponCode"></label>
 			<input type="text" id="couponCode" name="couponCode" placeholder="쿠폰 코드를 입력해주세요" class="form-control border-2 border-secondary py-3 px-4 rounded-pill me-2" style="max-width: 400px;">
 			<input type="submit" value="쿠폰 등록" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">
+			<input type="hidden" id="user_id" name="user_id" th:value="${user_id}">
 				</div>
 			</div>
 		</form>
@@ -178,7 +179,7 @@
 						<td>[[${vo.coupon_code}]]</td>
 						<td>[[${vo.coupon_name}]]</td>
 						<td>[[${vo.discount_rate}]]%</td>
-						<td>5000원 이상 구매시</td>
+						<td>카드 결제시</td>
 						<td th:text="${vo.use_edate}"></td>
 					</tr>
 				</th:block>
