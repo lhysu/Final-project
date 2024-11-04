@@ -96,49 +96,49 @@ public class MailService implements MailServiceInter {
 	}
 	
 	
-	public MimeMessage creatPasswordMessage(String to) throws MessagingException, UnsupportedEncodingException {
-		MimeMessage message = emailsender.createMimeMessage();
-
-		message.addRecipients(RecipientType.TO, to);// 보내는 대상
-		message.setSubject("zero-C 임시비밀번호 입니다.");// 제목
-
-		String msgg = "";
-		msgg += "<div style='margin:100px;'>";
-		msgg += "<h1> 안녕하세요</h1>";
-		msgg += "<h1> 제로웨이스트 쇼핑 플랫폼 zero-C 입니다.</h1>";
-		msgg += "<br>";
-		msgg += "<p>아래의 임시 비밀번호로 로그인 후 비밀번호를 변경해주세요<p>";
-		msgg += "<br>";
-		msgg += "<p>저희 쇼핑몰을 이용해주셔서 감사합니다!<p>";
-		msgg += "<br>";
-		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-		msgg += "<h3 style='color:blue;'>임시 비밀번호 입니다.</h3>";
-		msgg += "<div style='font-size:130%'>";
-		msgg += "CODE : <strong>";
-		msgg += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기
-		msgg += "</div>";
-		message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
-		// 보내는 사람의 이메일 주소, 보내는 사람 이름
-		message.setFrom(new InternetAddress("zerocfinal33@naver.com", "zero-C"));// 보내는 사람
-
-		return message;
-	}
-
-	public String sendPasswordMessage(String email) throws UnsupportedEncodingException, MessagingException {
-		ePw = createKey(); // 랜덤 인증번호 생성
-
-		// TODO Auto-generated method stub
-		MimeMessage message = creatPasswordMessage(email); // 메일 발송
-		try {// 예외처리
-			emailsender.send(message);
-		} catch (MailException es) {
-			es.printStackTrace();
-			throw new IllegalArgumentException();
-		}
-
-
-		return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
-	}
+//	public MimeMessage creatPasswordMessage(String to) throws MessagingException, UnsupportedEncodingException {
+//		MimeMessage message = emailsender.createMimeMessage();
+//
+//		message.addRecipients(RecipientType.TO, to);// 보내는 대상
+//		message.setSubject("zero-C 임시비밀번호 입니다.");// 제목
+//
+//		String msgg = "";
+//		msgg += "<div style='margin:100px;'>";
+//		msgg += "<h1> 안녕하세요</h1>";
+//		msgg += "<h1> 제로웨이스트 쇼핑 플랫폼 zero-C 입니다.</h1>";
+//		msgg += "<br>";
+//		msgg += "<p>아래의 임시 비밀번호로 로그인 후 비밀번호를 변경해주세요<p>";
+//		msgg += "<br>";
+//		msgg += "<p>저희 쇼핑몰을 이용해주셔서 감사합니다!<p>";
+//		msgg += "<br>";
+//		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+//		msgg += "<h3 style='color:blue;'>임시 비밀번호 입니다.</h3>";
+//		msgg += "<div style='font-size:130%'>";
+//		msgg += "CODE : <strong>";
+//		msgg += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기
+//		msgg += "</div>";
+//		message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
+//		// 보내는 사람의 이메일 주소, 보내는 사람 이름
+//		message.setFrom(new InternetAddress("zerocfinal33@naver.com", "zero-C"));// 보내는 사람
+//
+//		return message;
+//	}
+//
+//	public String sendPasswordMessage(String email) throws UnsupportedEncodingException, MessagingException {
+//		ePw = createKey(); // 랜덤 인증번호 생성
+//
+//		// TODO Auto-generated method stub
+//		MimeMessage message = creatPasswordMessage(email); // 메일 발송
+//		try {// 예외처리
+//			emailsender.send(message);
+//		} catch (MailException es) {
+//			es.printStackTrace();
+//			throw new IllegalArgumentException();
+//		}
+//
+//
+//		return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
+//	}
 
 
 }

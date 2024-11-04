@@ -10,7 +10,7 @@ CREATE TABLE `finalproject`.`member` (
   `email` VARCHAR(255) NOT NULL,
   `phone_number` VARCHAR(255) NOT NULL,
   `postcode` VARCHAR(255) NULL,
-  `address` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(255) NULL,
   `address_detail` VARCHAR(255) NULL,
   `signup_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `points` INT NULL,
@@ -39,7 +39,8 @@ INSERT INTO `finalproject`.`member` (member_id, member_num, name, pw, email, pho
 ('user17', 17, 'User17', 'password017', 'user17@example.com', '010-2409-2204', 'Seoul', 128, 0),
 ('user18', 18, 'User18', 'password018', 'user18@example.com', '010-3575-8441', 'Seoul', 75, 0),
 ('user19', 19, 'User19', 'password019', 'user19@example.com', '010-5111-4827', 'Seoul', 116, 1),
-('user20', 20, 'User20', 'password020', 'user20@example.com', '010-7462-7230', 'Seoul', 121, 0);
+('user20', 20, 'User20', 'password020', 'user20@example.com', '010-7462-7230', 'Seoul', 121, 0)
+;
 
 # 고객센터
 CREATE TABLE `finalproject`.`help` (

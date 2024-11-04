@@ -45,11 +45,6 @@ public class MemberService {
 	public MemberVO idCheck(String member_id) {
 		return mapper.idCheck(member_id);
 	}
-
-	
-	  public MemberVO login(MemberVO vo) { 
-		  return mapper.login(vo);
-	  }
 	 
 
 	public MemberVO selectId(MemberVO vo) {
@@ -74,6 +69,18 @@ public class MemberService {
 	public MemberVO emailCheck(String email) {
 		return mapper.emailCheck(email);
 	}
+
+	public MemberVO memberCheck(MemberVO vo) {
+		MemberVO vo2 = mapper.selectOne(vo.member_id);
+		if(encoder.matches(vo.getPw(), vo2.getPw())) {
+			return vo2;
+		}else {
+			return null;
+		}
+		
+	}
+
+
 	 
 
 }

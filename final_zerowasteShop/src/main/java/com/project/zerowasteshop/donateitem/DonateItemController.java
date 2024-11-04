@@ -63,9 +63,9 @@ public class DonateItemController {
 		return "community/donateItem/selectAll";
 	}
 	
-	@GetMapping({"/donateItem/d_selectOne"})
+	@GetMapping({"/community/donateItem/d_selectOne"})
 	public String d_selectOne(Model model,DonateItemVO vo) {
-		log.info("/donateItem/d_selectOne");
+		log.info("/community/donateItem/d_selectOne");
 		log.info("vo:{}",vo);
 		DonateItemVO vo2 = service.selectOne(vo);
 		log.info("vo2:{}",vo2);
@@ -77,7 +77,7 @@ public class DonateItemController {
 	@GetMapping({"/donateItem/d_searchList"})
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
-			@RequestParam(defaultValue = "us")String searchWord,
+			@RequestParam(defaultValue = "")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/donateItem/d_searchList");
@@ -110,15 +110,15 @@ public class DonateItemController {
 		return "community/donateItem/selectAll";
 	}
 	
-	@GetMapping({"/donateItem/d_updateOK"})
-	public String d_updateOK(Model model,DonateItemVO vo) {
-		log.info("/donateItem/d_updateOK");
-		log.info("vo:{}",vo);
-		int result = service.updateOK(vo);
-		log.info("result:{}",result);
-		
-		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
-	}
+//	@GetMapping({"/donateItem/d_updateOK"})
+//	public String d_updateOK(Model model,DonateItemVO vo) {
+//		log.info("/donateItem/d_updateOK");
+//		log.info("vo:{}",vo);
+//		int result = service.updateOK(vo);
+//		log.info("result:{}",result);
+//		
+//		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
+//	}
 	
 	@PostMapping({"/donateItem/d_deleteOK"})
 	public String d_deleteOK(Model model,DonateItemVO vo) {

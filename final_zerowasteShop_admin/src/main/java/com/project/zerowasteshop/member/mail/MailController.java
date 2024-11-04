@@ -32,19 +32,19 @@ public class MailController {
 	}
 	
 	//임시 비밀번호 전송
-	@PostMapping("login/newPassword")
-	int newPassword(@RequestParam("email") String email, 
-						@RequestParam("member_id") String member_id,
-						@RequestParam("name") String name) throws Exception {
-
-	   String tmeppw = mailService.sendPasswordMessage(email);
-	   log.info("임시 비밀번호 : " + tmeppw);
-	   int result=0;
-	   result = memberservice.updatePW(member_id,name,email,tmeppw);
-	   log.info("result:{}",result);
-	   
-	   return result;
-	}
+//	@PostMapping("login/newPassword")
+//	int newPassword(@RequestParam("email") String email, 
+//						@RequestParam("member_id") String member_id,
+//						@RequestParam("name") String name) throws Exception {
+//
+//	   String tmeppw = mailService.sendPasswordMessage(email);
+//	   log.info("임시 비밀번호 : " + tmeppw);
+//	   int result=0;
+//	   result = memberservice.updatePW(member_id,name,email,tmeppw);
+//	   log.info("result:{}",result);
+//	   
+//	   return result;
+//	}
 	
 
 }

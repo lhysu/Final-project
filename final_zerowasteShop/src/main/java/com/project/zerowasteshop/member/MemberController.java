@@ -1,14 +1,10 @@
 package com.project.zerowasteshop.member;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 import jakarta.servlet.ServletContext;
@@ -86,15 +82,12 @@ public class MemberController {
 	
 	//회원정보 수정
 	@PostMapping("/member/m_updateOK")
-	public String m_updateOK(MemberVO vo, String pwCheck){
+	public String m_updateOK(MemberVO vo){
 		log.info("/member/m_updateOK");
 		log.info("vo:{}",vo);
-		log.info("pwCheck:{}",pwCheck);
 		int result=0;
 		
-		if(vo.getPw().equals(pwCheck)) {
-			result = service.updateOK(vo);
-		}
+		result = service.updateOK(vo);
 		log.info("result:{}",result);
 		if(result==1) {
 			return "redirect:/member/m_selectOne";			
@@ -114,7 +107,7 @@ public class MemberController {
 		log.info("result:{}",result);
 		
 		if(result==1) {
-			return "redirect:/home";			
+			return "redirect:/logout";			
 		}else {
 			return "redirect:/member/update?member_num="+vo.getMember_num();	
 		}
@@ -144,7 +137,35 @@ public class MemberController {
 		return "user/selectPw";
 	}
 	
+	//내정보 수정 관리 전 회원 확인페이지로 이동
+	@GetMapping({"/member/memberCheck"})
+	public String memberCheck() {
+		log.info("/member/memberCheck");
+		return "user/memberCheck";
+	}
+	
+	//내정보 수정 관리 전 회원 확인
+	@PostMapping({"/member/memberCheckOK"})
+	public String memberCheckOK(MemberVO vo) {
+		log.info("/member/memberCheckOK");
+		String user_id = (String) session.getAttribute("user_id");
+		if(user_id.equals(vo.getMember_id())) {
+			MemberVO vo2 = service.memberCheck(vo);
+			if(vo2!=null) {
+				return "user/security/validMember";
+			}else {
+				return "user/security/invalidMember";
+			}
+		}else {
+			return "user/security/wrongID";
+		}
 
+	}
+	
+	
+	
+	
+	
 	// 로그인이 필요한 요청경로를 로그인 하지 않은 상태로 요청하면 리다일렉트 되는 요청경로
 	@GetMapping("/member/required_login")
 	public String required_login() {

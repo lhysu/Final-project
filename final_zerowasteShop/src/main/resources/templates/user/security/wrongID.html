@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>login.html</title>
-<link rel="stylesheet" href="/css/main.css">
+
 </head>
-<body>
-	<div>
+<body >
+	<div th:fragment="content">
 		<script>
-			alert("로그인 되었습니다");
-			location.href = "[[@{/home}]]";
+			alert("아이디가 일치하지 않습니다.");
+			location.href = "[[@{/member/m_selectOne}]]";
 		</script>
 	</div>
 

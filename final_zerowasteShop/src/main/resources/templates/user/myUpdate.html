@@ -7,67 +7,143 @@
  
  <!-- Modal css -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta content="" name="description">
 
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    label{
+    	font-weight: bold;
+    	font-size: large;
+    }
+    
+    .form-content{
+    	width: 100%;
+    	
+    	
+    }
+    .form-item > label{
+    	padding-top: 15px;
+    }
+    
+    .btn-delete{
+    	background-color: #d8d8d8;
+    	color: white;
+    	border-color: #d8d8d8;
+    }
+    </style>
 </head>
 <body>
 
-	<h1>내 정보 수정 및 관리</h1>
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header_community :: header}"></div>
+    <!-- 해더 끝 -->
+
+	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+			<h1>내 정보 수정 및 관리</h1>
+		<hr>
+		</div>
 	
 	
+	<div class="form-content">
 	<form action="/member/m_updateOK" method="post" class="needs-validation" novalidate>
-	<table border="1">
+		<div class="mb-5">
+		<div class="row">
+             <div class="col-md-12 col-lg-6">
+                 <div class="form-item w-100">
+                     <label class="form-label my-3">아이디<sup>*</sup></label>
+       					<input type="text" class="form-control" id="member_id" name="member_id" th:value="${vo2.member_id}" readonly>
+			    		<input type="hidden" id="member_num" name=member_num th:value="${vo2.member_num}" >
+			    		<div class="invalid-feedback">아이디를 입력해주세요.</div>
+                 </div>
+             </div>
+             <div class="col-md-12 col-lg-6">
+                 <div class="form-item w-100">
+                    <label class="form-label my-3">이메일<sup>*</sup></label>
+       				<input type="text" class="form-control" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요" readonly>
+    				<div class="invalid-feedback">이메일을 입력해주세요.</div>
+                 </div>
+             </div>
+       </div>
 	
-		
-    	<tr>
-        <th>아이디</th>
-        <td>[[${session.user_id}]]<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}">
-        <input type="hidden" id="member_num" name=member_num th:value="${vo2.member_num}" ></td>
-        </tr>
+    	
+    	<div class="form-item w-100">
+    		<label class="form-label my-3">비밀번호<sup>*</sup></label>
+    		<input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호를 입력하세요" style="width: 50%;" required>
+            <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+    	</div>
+    	
+    	<div class="row">
+             <div class="col-md-12 col-lg-6">
+                 <div class="form-item w-100">
+                     <label class="form-label my-3">이름<sup>*</sup></label>
+       					<input type="text" class="form-control" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요" required>
+    					<div class="invalid-feedback">이름을 입력해주세요.</div>
+                 </div>
+             </div>
+             <div class="col-md-12 col-lg-6">
+                 <div class="form-item w-100">
+                    <label class="form-label my-3">전화번호<sup>*</sup></label>
+       				<input type="text" class="form-control" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요" required>
+       			 	<div class="invalid-feedback">전화번호를 입력해주세요.</div>
+                 </div>
+             </div>
+       </div>
+    	
+     
+        <div class="form-item w-100">
+    		<label class="form-label my-3">회원주소</label>
+    		<div class="row mb-4">
+	        		<div class=" col-md-4">
+			       	<input type="text" class="form-control" id="postcode" name="postcode" style="float:left" th:value="${vo2.postcode}" placeholder="우편번호">
+			       	</div>
+			       	<div class="col-md-5 d-flex">
+			       	<button type="button" onclick="execDaumPostcode()" class=" btn btn-primary text-white mx-2 w-20" >우편번호 찾기</button><br>
+			       	</div>
+		       	</div>
+        	<input type="text" class="form-control" id="address" name="address" th:value="${vo2.address}" style="width: 70%;" placeholder="주소"><br>
+        	<input type="text" class="form-control" id="address_detail" name="address_detail" th:value="${vo2.address_detail}" style="width: 70%;" placeholder="상세주소">
+    	</div>	
+        </div>	
         
-        <tr>
-        <th>이름</th>
-        <td><input type="text" id="name" name="name" th:value="${vo2.name}" placeholder="이름을 입력하세요" required>
-        	<div class="invalid-feedback">이름을 입력해주세요.</div></td>
-        </tr>
-        
-        <tr>
-        <th>이메일</th>
-        <td>[[${vo2.email}]]<input type="hidden" id="email" name="email" th:value="${vo2.email}" placeholder="이메일을 입력하세요"></td>
-        </tr>
-        
-        <tr>
-        <th>전화번호</th>
-        <td><input type="text" id="phone_number" name="phone_number" th:value="${vo2.phone_number}" placeholder="전화번호를 입력하세요" required>
-        	<div class="invalid-feedback">전화번호를 입력해주세요.</div></td>
-        </tr>
-        
-        <tr>
-        <th>회원주소</th>
-        <td><input type="text" id="postcode" name="postcode" th:value="${vo2.postcode}" placeholder="우편번호">
-        	<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-        	<input type="text" id="address" name="address" th:value="${vo2.address}" placeholder="주소"><br>
-        	<input type="text" id="address_detail" name="address_detail" th:value="${vo2.address_detail}" placeholder="상세주소"></td>
-        
-        </tr>
-        
-        <tr>
-        <th>비밀번호</th>
-        <td><input type="password" id="pw" name="pw" th:value="${vo2.pw}" placeholder="비밀번호를 입력하세요" required>
-            <div class="invalid-feedback">비밀번호를 입력해주세요.</div></td>
-        </tr>
-        
-        <tr>
-        <th>비밀번호 확인</th>
-        <td><input type="password" id="pwCheck" name="pwCheck"  th:value="${vo2.pw}" placeholder="비밀번호를 한번 더 입력하세요" required>
-           <div class="invalid-feedback">비밀번호를 입력해주세요.</div></td>
-        </tr>
-        <tr>
-        	
-			<td colspan="2"><input type="submit" value="수정완료"></td>
-		</tr>
-                
-	</table>
+        <div align="center">
+		<input type="submit" class="btn border-secondary py-3 px-5 text-uppercase w-30 text-primary mb-3" value="수정완료">
+		</div>
+		<hr>
+		<div align="right" >
+		<!-- Button trigger modal -->
+		<button type="button" class=" btn-delete btn btn-primary mt-3" data-toggle="modal" data-target="#staticBackdrop">
+	 	 회원 탈퇴
+		</button>
+        </div>        
 	</form>
+	</div>
+	</div>
 	
 	<!-- 우편번호 찾기 -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -102,11 +178,6 @@
 	</script>
 	
 	<!-- 회원 탈퇴 -->	
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
- 	 회원 탈퇴
-	</button>
-	
 	<!-- Modal -->
 	<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -158,6 +229,10 @@
                 })
         })()
     </script>
+    
+    <!-- Footer Start -->
+	<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
 	
 	
 <!-- Modal js -->

@@ -27,7 +27,7 @@ public interface DonateItemMapper {
 
 	public int getSearchTotalRowsItem(String searchWord);
 
-	public int updateOK(DonateItemVO vo);
+//	public int updateOK(DonateItemVO vo);
 
 	public int deleteOK(DonateItemVO vo);
 

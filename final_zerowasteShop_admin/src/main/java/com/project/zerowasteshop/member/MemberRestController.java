@@ -41,25 +41,25 @@ public class MemberRestController {
 	}
 	
 	//아이디 찾기
-		@PostMapping({"/api/selectIdCheck"})
-		public String api_selectIdCheck(Model model,@RequestParam("email") String email,@RequestParam("name") String name) {
-			log.info("/api/selectIdCheck");
-			log.info("email:{}", email);
-			log.info("name:{}", name);
-			MemberVO vo = new MemberVO();
-			vo.setEmail(email);
-			vo.setName(name);
-			MemberVO vo2 = service.selectId(vo);
-			log.info("vo2:{}",vo2);
-			String result="";
-			if(vo2!=null) {
-				result= vo2.getMember_id();
-						
-			}
-			
-			return result;	
-			
-		}
+//		@PostMapping({"/api/selectIdCheck"})
+//		public String api_selectIdCheck(Model model,@RequestParam("email") String email,@RequestParam("name") String name) {
+//			log.info("/api/selectIdCheck");
+//			log.info("email:{}", email);
+//			log.info("name:{}", name);
+//			MemberVO vo = new MemberVO();
+//			vo.setEmail(email);
+//			vo.setName(name);
+//			MemberVO vo2 = service.selectId(vo);
+//			log.info("vo2:{}",vo2);
+//			String result="";
+//			if(vo2!=null) {
+//				result= vo2.getMember_id();
+//						
+//			}
+//			
+//			return result;	
+//			
+//		}
 	
 
 }

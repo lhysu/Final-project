@@ -75,8 +75,8 @@ public class DonateItemService {
 		
 	}
 
-	public int insertOK(DonateItemVO vo) {
-		return mapper.insertOK(vo);
-		
-	}
+//	public int insertOK(DonateItemVO vo) {
+//		return mapper.insertOK(vo);
+//		
+//	}
 }

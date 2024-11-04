@@ -19,8 +19,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
 		String[] whiteList= {"/","/home", "/member/m_insert", "/member/m_insertOK", 
-				"/member/m_login","/member/required_login","/member/denied","/member/expired", "login/mailConfirm","login/newPassword",
-				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**","/admin/ad_login",
+				"/member/m_login","/member/required_login","/member/denied","/member/expired", "/login/mailConfirm","/login/newPassword","/login/pwmailConfirm",
+				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**",
 				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/community/**","/product/**"
 				};
 		
@@ -34,7 +34,7 @@ public class SecurityConfig {
 		.authorizeHttpRequests(config -> 
 			config
 				.requestMatchers(whiteList).permitAll() //whiteList 요청은 로그인과 상관없이 모두 허용
-				.requestMatchers("/admin/**").hasRole("ADMIN")// 접근제한
+//				.requestMatchers("/admin/**").hasRole("ADMIN")// 접근제한
 				.anyRequest().authenticated() //위에 명시한 이외의 모든 요청은 로그인해야지 요청가능하게
 		)
 		.formLogin(config -> 
