@@ -133,13 +133,15 @@ public class OrderController {
 	@PostMapping("/order/order")
 	public String insert(Model model,
 			@RequestParam("product_num")int product_num,
-			@RequestParam("member_id")String member_id,
 			@RequestParam("price")String price,
 			@RequestParam("product_name")String product_name,
-			@RequestParam("quantity")int quantity) {
+			@RequestParam("quantity")int quantity,
+			HttpSession session) {
+		//로그인 정보 불러오기
+		String user_id = (String) session.getAttribute("user_id");
 		
 		//배송지 정보 불러오고 넘기기
-		MemberVO member = memberService.selectOne(member_id);
+		MemberVO member = memberService.selectOne(user_id);
 		model.addAttribute("name",member.getName());
 		model.addAttribute("tel",member.getPhone_number());
 		model.addAttribute("postcode",member.getPostcode());
@@ -155,7 +157,7 @@ public class OrderController {
 		model.addAttribute("product",product);		
 		model.addAttribute("quantity",quantity);				
 		
-	    List<CouponVO> coupons = service.getAvailableCouponsForUser(member_id); // 유저별 사용 가능한 쿠폰 조회
+	    List<CouponVO> coupons = service.getAvailableCouponsForUser(user_id); // 유저별 사용 가능한 쿠폰 조회
 	    log.info("coupons:{}",coupons);
 	    model.addAttribute("coupons", coupons);
 		

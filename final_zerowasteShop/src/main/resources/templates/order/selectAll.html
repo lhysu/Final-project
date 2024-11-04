@@ -270,7 +270,7 @@ function requestRefund(button) {
 				    onclick="requestRefund(this)">
 				    취소/환불
 				</button>
-                <button th:onclick="|location.href='/community/help/help?member_id=${entry.value[0].member_id}'|">문의하기</button>
+                <button th:onclick="|location.href='/community/help/selectAll?member_id=${entry.value[0].member_id}'|">문의하기</button>
             </div>
         </div>
     </div>
