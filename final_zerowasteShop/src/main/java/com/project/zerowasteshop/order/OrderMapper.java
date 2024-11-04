@@ -48,5 +48,11 @@ public interface OrderMapper {
 
 	List<OrderJoinProductVO> selectAllByUser(String merchant_uid);
 
+	OrderVO getOrderInfo(String merchant_uid);
+
+	void deleteOrder(String merchant_uid);
+
+	void deleteOrderItem(String merchant_uid);
+
 
 }

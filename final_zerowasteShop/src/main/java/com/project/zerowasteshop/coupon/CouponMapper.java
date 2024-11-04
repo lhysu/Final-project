@@ -36,4 +36,6 @@ public interface CouponMapper {
 
 	public CouponVO getCouponInfo(String couponCode);
 
+	public void updateCouponStatus(String coupon_code, int i);
+
 }

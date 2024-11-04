@@ -72,16 +72,18 @@ public class OrderRestController {
 	    @RequestParam("merchant_uid") String merchant_uid, 
 	    @RequestParam("paid_amount") int paid_amount,
 	    @RequestParam("member_id") String member_id,      
-	    @RequestParam("points_used") int points_used 
+	    @RequestParam("points_used") int points_used,
+	    @RequestParam("coupon_code") String coupon_code
 	) {
 		 // PaymentService의 completePayment 메서드를 호출하여 결제 처리를 진행
-        Map<String, String> response = paymentService.completePayment(imp_uid, merchant_uid, paid_amount, member_id, points_used);
+        Map<String, String> response = paymentService.completePayment(imp_uid, merchant_uid, paid_amount, member_id, points_used,coupon_code);
 
         // 결과에 따라 메시지 추가
         if ("success".equals(response.get("status"))) {
             response.put("statusCode", "200"); // 성공 상태 코드 추가
         } else {
             response.put("statusCode", "400"); // 실패 상태 코드 추가
+            orderService.getOrderInfo(merchant_uid);
         }
 
         return response; // ResponseEntity 없이 Map 직접 반환
@@ -109,6 +111,21 @@ public class OrderRestController {
         response.put("merchantUid", merchantUid);
         response.put("finalAmount", Integer.toString(vo2.getFinal_price()) );
         return response;
+    }
+    
+    // 결제 실패시 주문 삭제 요청 처리
+    @PostMapping("/order/delete")
+    public Map<String, String> deleteOrder(@RequestParam("merchant_uid") String merchant_uid) {
+
+            orderService.deleteOrderItem(merchant_uid);
+            orderService.deleteOrder(merchant_uid);
+            
+            Map<String, String> response = new HashMap<>();
+            
+            response.put("success", "주문이 성공적으로 삭제되었습니다.");
+            response.put("error", "주문 삭제 중 오류 발생" );
+            
+            return response;
     }
     
 	// 재사용 포장재 반환 신청

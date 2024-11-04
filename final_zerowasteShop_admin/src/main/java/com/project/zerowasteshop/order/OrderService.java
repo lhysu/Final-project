@@ -44,10 +44,8 @@ public class OrderService {
 		
 		if(searchKey.equals("member_id")) {
 			return mapper.searchListPageBlockId("%"+searchWord+"%",startRow,pageBlock);
-		}else if(searchKey.equals("product_name")){
-			return mapper.searchListPageBlockPname("%"+searchWord+"%",startRow,pageBlock);
 		}else {
-			return mapper.searchListPageBlockPayCheck("%"+searchWord+"%",startRow,pageBlock);
+			return mapper.searchListPageBlockPname("%"+searchWord+"%",startRow,pageBlock);
 		}
 	}
 

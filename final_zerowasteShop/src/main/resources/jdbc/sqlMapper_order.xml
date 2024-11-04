@@ -5,13 +5,12 @@
 
 <mapper namespace="com.project.zerowasteshop.order.OrderMapper">
 
-<update id="updateOK">
-	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
-	where coupon_code = #{coupon_code}
-</update>
+<delete id="deleteOrderItem">
+	delete from order_item where merchant_uid = #{merchant_uid}
+</delete>
 
-<delete id="deleteCoupon">
-	delete from coupon where coupon_code = #{coupon_code}
+<delete id="deleteOrder">
+	delete from `order` where merchant_uid = #{merchant_uid}
 </delete>
 
 <select id="selectOneOrder" resultType="com.project.zerowasteshop.order.OrderVO">
@@ -80,25 +79,10 @@
 </select>
 
 <!-- 쿠폰 코드 확인 -->
-<select id="checkCouponCode" resultType="int">
-	select count(*) from coupon where coupon_code = #{couponCode} and member_id IS NULL
-</select>
-
-<!-- 쿠폰 등록 -->
-<update id="registerCoupon">
-	update coupon set member_id = #{member_id} where coupon_code = #{couponCode}
-</update>
-
-<insert id="createCoupons">
-	insert into coupon(coupon_code,member_id, coupon_name, use_sdate, use_edate,discount_rate,used)
-	values(#{coupon_code},#{member_id},#{coupon_name},#{use_sdate},#{use_edate},#{discount_rate},#{used})
-</insert>
-
-<!-- 쿠폰 코드 확인 -->
 <select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.coupon.CouponVO">
 	select c.*
 	from coupon c
-	where member_id = #{member_id}
+	where member_id = #{member_id} and used = 0
 </select>
 
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.zerowasteshop.coupon.CouponService;
 import com.project.zerowasteshop.delivery.DeliveryService;
 import com.project.zerowasteshop.delivery.DeliveryVO;
 import com.project.zerowasteshop.member.MemberService;
@@ -37,6 +38,9 @@ public class PaymentService {
     @Autowired
     private DeliveryService deliveryService;
     
+    @Autowired
+    private CouponService couponService;
+    
 	public void savePayment(PaymentVO paymentInfo) {
 		mapper.savePayment(paymentInfo);
 		
@@ -49,7 +53,7 @@ public class PaymentService {
 
 	@Transactional
 	public Map<String, String> completePayment(String imp_uid, String merchant_uid, int paid_amount, String member_id,
-			int points_used) {
+			int points_used,String coupon_code) {
 		Map<String, String> response = new HashMap<>();
 
         try {
@@ -59,7 +63,7 @@ public class PaymentService {
 
             // 2. 주문 금액 검증
             int orderAmount = orderService.getOrderAmount(merchant_uid);
-            if (paymentInfo.getPaid_amount() == orderAmount) {
+            if (paymentInfo.getPaid_amount() == orderAmount && "paid".equals(paymentInfo.getPay_status())) {
                 
                 // 3. 결제 정보 저장 및 운송장 번호 생성
                 Random random = new Random();
@@ -70,6 +74,12 @@ public class PaymentService {
                 paymentInfo.setPay_status("결제 완료");
                 paymentInfo.setPay_method("카드");
                 this.savePayment(paymentInfo);
+                
+                //쿠폰 적용 used 업데이트
+                if (coupon_code != null && !coupon_code.isEmpty()) {
+                    // 쿠폰 사용 상태 업데이트 로직
+                    couponService.updateCouponStatus(coupon_code, 1); // 사용됨으로 표시
+                }
 
                 // 4. 포인트 차감
                 memberService.deductPoints(member_id, points_used);

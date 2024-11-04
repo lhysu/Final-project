@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">rg">
 <head>
 <meta charset="UTF-8">
 <title>쿠폰관리</title>
@@ -156,7 +157,7 @@ select {
 					<th>쿠폰명</th>
 					<th>사용가능 시작날짜</th>
 					<th>사용가능 종료날짜</th>
-					<th>할인율</th>
+					<th>할인율(%)</th>
 					<th>사용여부</th>
 				</tr>
 			</thead>
@@ -179,10 +180,24 @@ select {
 					<td colspan="7">
 						<nav>
 							<ul class="pagination justify-content-center">
+								<th:block th:if="${param.searchKey!=null}">
+									<th:block
+											th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
 								<li class="page-item"
-									th:classappend="${cpage == 1} ? 'disabled'"><a
-									class="page-link"
-									th:href="|/admin/coupon/selectAll?cpage=${cpage - 1}|">이전</a></li>
+									th:classappend="${cpage == 1} ? 'disabled'">
+									<a class="page-link"
+									th:href="|/admin/coupon/searchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+								</li>
+									</th:block>
+								</th:block>
+								<th:block th:if="${param.searchKey==null}">
+
+								<li class="page-item"
+									th:classappend="${cpage == 1} ? 'disabled'">
+									<a class="page-link"
+									th:href="|/admin/coupon/selectAll?cpage=${cpage - 1}|">이전</a>
+								</li>
+								</th:block>
 								<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
 									<th:block th:if="${param.searchKey==null}">
 										<li class="page-item"
@@ -201,12 +216,24 @@ select {
 										</th:block>
 									</th:block>
 								</th:block>
+								<th:block th:if="${param.searchKey!=null}">
+									<th:block
+											th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+								<li class="page-item"
+									th:classappend="${cpage == totalPageCount} ? 'disabled'">
+									<a class="page-link"
+									th:href="|/admin/coupon/searchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+								</li>
+									</th:block>
+								</th:block>
+								<th:block th:if="${param.searchKey==null}">
 
 								<li class="page-item"
 									th:classappend="${cpage == totalPageCount} ? 'disabled'">
 									<a class="page-link"
 									th:href="|/admin/coupon/selectAll?cpage=${cpage + 1}|">다음</a>
 								</li>
+								</th:block>
 							</ul>
 						</nav>
 					</td>
