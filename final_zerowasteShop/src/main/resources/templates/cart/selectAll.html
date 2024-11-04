@@ -221,7 +221,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				                </tr>
 				                <tr>
 				                    <td>배송비</td>
-				                    <td>3000원</td> <!-- 배송비 -->
+				                    <td>0원</td> <!-- 배송비 -->
 				                </tr>
 				                <tr>
 				                    <td style="font-weight: bold;">결제 금액</td>
@@ -291,7 +291,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         });
 
         document.getElementById('totalPrice').textContent = totalPrice + '원'; // 총 상품 금액 업데이트
-        const shippingFee = 3000; // 배송비
+        const shippingFee = 0; // 배송비
         const finalPrice = totalPrice + shippingFee; // 배송비 추가
         document.getElementById('final-price').textContent = finalPrice + '원'; // 결제 금액 업데이트
     }

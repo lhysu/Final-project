@@ -266,7 +266,7 @@ public class LikeListController {
  	@GetMapping("/likeList/insertOK")
  	public String insertOK(LikeListVO vo) throws IllegalStateException, IOException {
  		log.info("/likeList/insertOK");
-		/* vo.setPoint(vo.getPrice() / 1000); */
+ 		vo.setMember_id((String)session.getAttribute("user_id"));
  		log.info("vo:{}", vo);
 
  		int check = service.likeListCheck(vo);

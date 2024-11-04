@@ -226,7 +226,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             	<img th:if="${vo2.product_img.startsWith('http')}" th:src="${vo2.product_img}" class="img-fluid rounded" alt="">
 				<img th:if="${!vo2.product_img.startsWith('http')}" th:src="|/uploadimgPath/${vo2.product_img}|" class="img-fluid rounded" alt="">
 				<div class="flex-container">
-                    <a th:href="|/likeList/insertOK?product_num=${vo2.product_num}&member_id=${session.user_id}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style="margin-top: 10px;">상품 찜하기</a>
+                    <a th:href="|/likeList/insertOK?product_num=${vo2.product_num}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style="margin-top: 10px;">상품 찜하기</a>
                     <div class="d-flex my-1 justify-content-center" style = "margin:10px !important; margin-top : 20px!important">
 					    <th:block th:if="${vo2.rating != null}">
 					        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo2.rating)}, halfStar=${vo2.rating - T(java.lang.Math).floor(vo2.rating)}">
@@ -265,7 +265,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     				<h5 class="mb-3" style="color: green;">탄소 중립 포인트 : [[${vo2.point}]]</h5>
                 </div>
                 <div class="button-container">
-                    <a th:href="|/cart/insertOK?product_num=${vo2.product_num}&member_id=${session.user_id}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary	">장바구니 추가</a>
+                    <a th:href="|/cart/insertOK?product_num=${vo2.product_num}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary	">장바구니 추가</a>
                     <form id="buyNowForm" action="/order/order" method="POST" style="display:inline;">
 				        <input type="hidden" name="product_num" th:value="${vo2.product_num}">
 				        <input type="hidden" name="member_id" th:value="${session.user_id}">
@@ -316,14 +316,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			            </div>
 			        </th:block>
 	            </div>
+	            
+		<!-- 로그인 상태에 따라 리뷰 작성 폼을 조건부로 표시 -->
+		<div th:if="${session.user_id != null}">
             <form class="review-form mt-4" action="/review/insertOK" method="post" enctype="multipart/form-data"> <!-- form 태그로 변경 -->
 		        <h5>리뷰 작성</h5>
 		        <div class="form-group">
 				    <label for="member_id">회원아이디</label>
 				    <span th:if="${session.user_id != null}">[[${session.user_id}]]</span>
-				    <span th:if="${session.admin_id != null}">[[${session.admin_id}]]</span>
-				    <input type="hidden" id="member_id" name="member_id" 
-				           th:value="${session.user_id != null ? session.user_id : session.admin_id}" required>
+					<input type="hidden" id="member_id" name="member_id" 
+					       th:value="${session.user_id}" required>
 				</div>
 			    <div class="form-group">
 			        <label for="product_name"></label>
@@ -348,9 +350,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		        <button type="submit" class="btn btn-success mt-2">작성하기</button> <!-- type="submit" 추가 -->
 		    </form>
         </div>
-        
-    </div>
+		<!-- 로그인하지 않은 경우 보여줄 메시지 
+		<div th:if="${session.user_id == null}">
+		    <p>리뷰 작성을 위해서는 로그인이 필요합니다. <a href="/login">로그인</a> 해주세요.</p>
+		</div>
+		-->
+	</div>
     
+</div>
 
 	<!-- Footer Start -->
 	<div th:replace="footer :: footer"></div>

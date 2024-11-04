@@ -18,17 +18,25 @@ public interface ReviewMapper {
 //	public List<CartVO> selectAll();
 
 	public ReviewVO selectOne(ReviewVO vo);
+	public ReviewVO selectOneAdmin(ReviewVO vo);
 
 	public int updateOK(ReviewVO vo);
+	public int updateOKAdmin(ReviewVO vo);
+
 	public int deleteOK(ReviewVO vo);
+	public int deleteOKAdmin(ReviewVO vo);
 
 //	public List<CartVO> searchListId(String searchWord);
 //
 //	public List<CartVO> searchListName(String searchWord);
 //
+	public int getTotalRowsAdmin();
+	
 	public int getTotalRows(String userID);
 //
 	public int updateProductName();
+	
+	public List<ReviewVO> selectAllPageBlockAdmin(int startRow, int pageBlock);
 	
 	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock, String userID);
 //
