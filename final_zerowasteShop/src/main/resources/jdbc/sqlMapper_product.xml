@@ -110,8 +110,8 @@
 	
 	<!-- 상품 정보 저장 -->
     <insert id="insertProduct" parameterType="com.project.zerowasteshop.product.model.ProductVO">
-        INSERT INTO product (product_name, price, point, company, product_img, category)
-        VALUES (#{product_name}, #{price}, #{point}, #{company}, #{product_img}, #{category});
+        INSERT INTO product (product_name, price, point, company, product_img, category, rating)
+        VALUES (#{product_name}, #{price}, #{point}, #{company}, #{product_img}, #{category}, #{rating});
     </insert>
 
     <!-- 모든 상품 정보 조회 -->
