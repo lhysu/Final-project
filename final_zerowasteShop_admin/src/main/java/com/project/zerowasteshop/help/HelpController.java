@@ -233,11 +233,10 @@ public class HelpController {
             File thumbnailFile = new File(realPath, "thumb_" + saveName);
             ImageIO.write(thumbnailImage, saveName.substring(saveName.lastIndexOf(".") + 1), thumbnailFile);
         }
-
+        vo.setStatus("답변완료");
         int result = service.updateOK(vo);
         log.info("result:{}", result);
         if (result == 1) {
-        	vo.setStatus("답변완료");
             return "redirect:/community/help/selectOne?help_num=" + vo.getHelp_num();
         } else {
             return "redirect:/community/help/update?help_num=" + vo.getHelp_num();

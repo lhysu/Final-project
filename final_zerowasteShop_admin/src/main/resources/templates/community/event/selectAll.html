@@ -1,6 +1,7 @@
 <!-- src/main/resources/templates/community/event/selectAll.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>이벤트 목록</title>
@@ -48,7 +49,7 @@
 <body>
     
     <!-- 헤더 삽입-->
-    <div th:replace="header :: header"></div>
+    <div th:replace="~{header_community :: header}"></div>     
     
     <div class="container my-4" style="padding-top:250px;">
         <h1 class="mb-4"><a th:href="@{/community/event/selectAll}" >이벤트</a></h1>

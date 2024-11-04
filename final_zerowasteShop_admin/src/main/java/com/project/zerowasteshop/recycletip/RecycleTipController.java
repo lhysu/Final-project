@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.project.zerowasteshop.recycletipcomment.RecycleTipCommentService;
+import com.project.zerowasteshop.recycletipcomment.RecycleTipCommentVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,19 +30,22 @@ public class RecycleTipController {
     @Autowired
     private RecycleTipService service;
 
+    @Autowired
+    private RecycleTipCommentService commentService; // 댓글 서비스 주입
+
     // application.properties에서 설정한 변수(file.dir)를 DI
     @Value("${file.dir}")
     private String realPath;
 
-    @GetMapping("/community/recycletip/insert")
+    @GetMapping("/community/recycleTip/insert")
     public String rt_insert() {
-        log.info("/community/recycletip/insert 요청");
-        return "community/recycletip/insert";
+        log.info("/community/recycleTip/insert 요청");
+        return "community/recycleTip/insert";
     }
 
-    @GetMapping("/community/recycletip/update")
-    public String rt_update(int recycleTip_num, Model model) {
-        log.info("/community/recycletip/update 요청");
+    @GetMapping("/community/recycleTip/update")
+    public String rt_update(@RequestParam("recycleTip_num") int recycleTip_num, Model model) {
+        log.info("/community/recycleTip/update 요청");
         log.info("recycleTip_num: {}", recycleTip_num);
 
         RecycleTipVO vo = new RecycleTipVO();
@@ -49,24 +56,24 @@ public class RecycleTipController {
 
         model.addAttribute("vo2", vo2);
 
-        return "community/recycletip/update";
+        return "community/recycleTip/update";
     }
 
-    @GetMapping("/community/recycletip/delete")
-    public String rt_delete(int recycleTip_num, Model model) {
-        log.info("/community/recycletip/delete 요청");
+    @GetMapping("/community/recycleTip/delete")
+    public String rt_delete(@RequestParam("recycleTip_num") int recycleTip_num, Model model) {
+        log.info("/community/recycleTip/delete 요청");
         log.info("recycleTip_num: {}", recycleTip_num);
 
         model.addAttribute("recycleTip_num", recycleTip_num);
 
-        return "community/recycletip/delete";
+        return "community/recycleTip/delete";
     }
 
-    @GetMapping("/community/recycletip/selectAll")
+    @GetMapping("/community/recycleTip/selectAll")
     public String rt_selectAll(Model model,
                                @RequestParam(defaultValue = "1") int cpage,
                                @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/community/recycletip/selectAll 요청");
+        log.info("/community/recycleTip/selectAll 요청");
         log.info("cpage: {}", cpage);
         log.info("pageBlock: {}", pageBlock);
 
@@ -74,6 +81,7 @@ public class RecycleTipController {
         log.info("list.size(): {}", list.size());
 
         model.addAttribute("list", list);
+        model.addAttribute("cpage", cpage); // cpage를 모델에 추가
 
         // 총 페이지 수 계산
         int total_rows = service.getTotalRows();
@@ -83,16 +91,16 @@ public class RecycleTipController {
 
         model.addAttribute("totalPageCount", totalPageCount);
 
-        return "community/recycletip/selectAll";
+        return "community/recycleTip/selectAll";
     }
 
-    @GetMapping("/community/recycletip/searchList")
+    @GetMapping("/community/recycleTip/searchList")
     public String rt_searchList(Model model,
                                 @RequestParam String searchField,
                                 @RequestParam String searchWord,
                                 @RequestParam(defaultValue = "1") int cpage,
                                 @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/community/recycletip/searchList 요청");
+        log.info("/community/recycleTip/searchList 요청");
         log.info("searchField: {}", searchField);
         log.info("searchWord: {}", searchWord);
         log.info("cpage: {}", cpage);
@@ -102,6 +110,7 @@ public class RecycleTipController {
         log.info("list.size(): {}", list.size());
 
         model.addAttribute("list", list);
+        model.addAttribute("cpage", cpage); // cpage를 모델에 추가
 
         int total_rows = service.getSearchTotalRows(searchField, searchWord);
         log.info("total_rows: {}", total_rows);
@@ -110,12 +119,12 @@ public class RecycleTipController {
 
         model.addAttribute("totalPageCount", totalPageCount);
 
-        return "community/recycletip/selectAll";
+        return "community/recycleTip/selectAll";
     }
 
-    @GetMapping("/community/recycletip/selectOne")
-    public String rt_selectOne(int recycleTip_num, Model model) {
-        log.info("/community/recycletip/selectOne 요청");
+    @GetMapping("/community/recycleTip/selectOne")
+    public String rt_selectOne(@RequestParam("recycleTip_num") int recycleTip_num, Model model) {
+        log.info("/community/recycleTip/selectOne 요청");
         log.info("recycleTip_num: {}", recycleTip_num);
 
         RecycleTipVO vo = new RecycleTipVO();
@@ -126,18 +135,22 @@ public class RecycleTipController {
 
         if (vo2 != null) {
             // 조회수 증가
-            service.incrementViewCount(vo2.getRecycleTip_num());
-            vo2.setRecycleTip_views(vo2.getRecycleTip_views() + 1);
+            service.incrementViewCount(recycleTip_num);
         }
 
         model.addAttribute("vo2", vo2);
 
-        return "community/recycletip/selectOne";
+        // 해당 게시글에 달린 댓글 목록 조회
+        List<RecycleTipCommentVO> comments = commentService.selectByRecycleTipNum(recycleTip_num);
+        log.info("comments.size(): {}", comments.size());
+        model.addAttribute("comments", comments);
+
+        return "community/recycleTip/selectOne";
     }
 
-    @PostMapping("/community/recycletip/insertOK")
+    @PostMapping("/community/recycleTip/insertOK")
     public String rt_insertOK(RecycleTipVO vo) throws IllegalStateException, IOException {
-        log.info("/community/recycletip/insertOK 요청");
+        log.info("/community/recycleTip/insertOK 요청");
         log.info("vo: {}", vo);
 
         log.info("파일 저장 경로: {}", realPath);
@@ -171,15 +184,15 @@ public class RecycleTipController {
         int result = service.insertOK(vo);
         log.info("result: {}", result);
         if (result == 1) {
-            return "redirect:/community/recycletip/selectAll";
+            return "redirect:/community/recycleTip/selectAll";
         } else {
-            return "redirect:/community/recycletip/insert";
+            return "redirect:/community/recycleTip/insert";
         }
     }
 
-    @PostMapping("/community/recycletip/updateOK")
+    @PostMapping("/community/recycleTip/updateOK")
     public String rt_updateOK(RecycleTipVO vo) throws IllegalStateException, IOException {
-        log.info("/community/recycletip/updateOK 요청");
+        log.info("/community/recycleTip/updateOK 요청");
         log.info("vo: {}", vo);
 
         log.info("파일 저장 경로: {}", realPath);
@@ -188,10 +201,7 @@ public class RecycleTipController {
         String originName = file.getOriginalFilename();
         log.info("originName: {}", originName);
 
-        if (originName == null || originName.isEmpty()) {
-            // 기존 이미지 유지
-            vo.setRecycleTip_img(vo.getRecycleTip_img());
-        } else {
+        if (originName != null && !originName.isEmpty()) {
             String saveName = "img_" + System.currentTimeMillis()
                     + originName.substring(originName.lastIndexOf("."));
             log.info("saveName: {}", saveName);
@@ -210,19 +220,20 @@ public class RecycleTipController {
             File thumbnailFile = new File(realPath, "thumb_" + saveName);
             ImageIO.write(thumbnailImage, saveName.substring(saveName.lastIndexOf(".") + 1), thumbnailFile);
         }
+        // 이미지 변경이 없을 경우 기존 이미지 유지
 
         int result = service.updateOK(vo);
         log.info("result: {}", result);
         if (result == 1) {
-            return "redirect:/community/recycletip/selectOne?recycleTip_num=" + vo.getRecycleTip_num();
+            return "redirect:/community/recycleTip/selectOne?recycleTip_num=" + vo.getRecycleTip_num();
         } else {
-            return "redirect:/community/recycletip/update?recycleTip_num=" + vo.getRecycleTip_num();
+            return "redirect:/community/recycleTip/update?recycleTip_num=" + vo.getRecycleTip_num();
         }
     }
 
-    @PostMapping("/community/recycletip/deleteOK")
-    public String rt_deleteOK(int recycleTip_num) {
-        log.info("/community/recycletip/deleteOK 요청");
+    @PostMapping("/community/recycleTip/deleteOK")
+    public String rt_deleteOK(@RequestParam("recycleTip_num") int recycleTip_num, RedirectAttributes redirectAttributes) {
+        log.info("/community/recycleTip/deleteOK 요청");
         log.info("recycleTip_num: {}", recycleTip_num);
 
         RecycleTipVO vo = new RecycleTipVO();
@@ -231,9 +242,10 @@ public class RecycleTipController {
         int result = service.deleteOK(vo);
         log.info("result: {}", result);
         if (result == 1) {
-            return "redirect:/community/recycletip/selectAll";
+            return "redirect:/community/recycleTip/selectAll";
         } else {
-            return "redirect:/community/recycletip/delete?recycleTip_num=" + recycleTip_num;
+            redirectAttributes.addFlashAttribute("msg", "삭제에 실패했습니다.");
+            return "redirect:/community/recycleTip/delete?recycleTip_num=" + recycleTip_num;
         }
     }
 }
