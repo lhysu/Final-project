@@ -5,7 +5,7 @@
 
 <mapper namespace="com.project.zerowasteshop.payment.PaymentMapper">
 
-<!-- 결제 정보 저장 -->
+<!-- 결제 상태 업데이트 -->
 <update id="updatePaymentStatus">
 	update payment set pay_status=#{pay_status}
 	where merchant_uid = #{merchant_uid}

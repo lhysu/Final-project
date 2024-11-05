@@ -23,51 +23,12 @@ public class OrderService {
 	@Autowired
 	CouponMapper couponMapper;
 
-	public List<OrderJoinProductVO> selectAllPageBlock(int cpage, int pageBlock) {
-		//mysql인 경우 limit 시작행을 얻어내는 알고리즘이 필요하다.
-		//예: 1페이지(0,5), 2페이지(5,5),3페이지(10,5)
-		int startRow = pageBlock*(cpage-1);
-		log.info("startRow:{}",startRow);
-		log.info("pageBlock:{}",pageBlock);
-		
-		return mapper.selectAllPageBlock(startRow,pageBlock);
-	}
-
-	public int getTotalRows() {
-		return mapper.getTotalRows();
-	}
-
-	public List<OrderVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
-		int startRow = pageBlock*(cpage-1); //mysql은 limit 처리시 0행부터 시작
-		log.info("startRow:{}",startRow);
-		log.info("pageBlock:{}",pageBlock);
-		
-		if(searchKey.equals("member_id")) {
-			return mapper.searchListPageBlockId("%"+searchWord+"%",startRow,pageBlock);
-		}else if(searchKey.equals("product_name")){
-			return mapper.searchListPageBlockPname("%"+searchWord+"%",startRow,pageBlock);
-		}else {
-			return mapper.searchListPageBlockPayCheck("%"+searchWord+"%",startRow,pageBlock);
-		}
-	}
-
-	public int getSearchTotalRows(String searchKey, String searchWord) {
-		if(searchKey.equals("member_id")) {
-			return mapper.getSearchTotalRowsId("%"+searchWord+"%");
-		}else if(searchKey.equals("product_name")){
-			return mapper.getSearchTotalRowsPname("%"+searchWord+"%");
-		}else {
-			return mapper.getSearchTotalRowsPayCheck("%"+searchWord+"%");
-		}
-	}
-
+	//사용가능한 유저의 쿠폰 목록을 불러오기
 	public List<CouponVO> getAvailableCouponsForUser(String member_id) {
-		// TODO Auto-generated method stub
 		return mapper.getAvailableCouponsForUser(member_id);
 	}
 
 	public int getOrderAmount(String merchant_uid) {
-		// TODO Auto-generated method stub
 		return mapper.getOrderAmount(merchant_uid);
 	}
 
@@ -128,14 +89,14 @@ public class OrderService {
 	    }
 	}
 
+	// 고유 주문 번호 생성
     private String generateMerchantUid() {
-        return "O" + System.currentTimeMillis();  // 고유 주문 번호 생성
+        return "O" + System.currentTimeMillis();  
     }
 
-	public void updateOrderState(String merchant_uid, String orderState) {
-		// 주문 상태 업데이트 로직
-	    mapper.updateOrderState(merchant_uid, orderState);
-		
+ // 주문 상태 업데이트 로직
+	public void updateOrderState(String merchant_uid, String orderState) {		
+	    mapper.updateOrderState(merchant_uid, orderState);		
 	}
 
 	public void saveOrderItems(String merchant_uid, List<OrderItemVO> orderItems) {

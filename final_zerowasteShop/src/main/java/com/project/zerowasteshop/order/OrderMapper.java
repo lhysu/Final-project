@@ -10,22 +10,6 @@ import com.project.zerowasteshop.coupon.CouponVO;
 @Mapper
 public interface OrderMapper {
 
-	List<OrderJoinProductVO> selectAllPageBlock(int startRow, int pageBlock);
-
-	int getTotalRows();
-
-	List<OrderVO> searchListPageBlockId(String searchWord, int startRow, int pageBlock);
-
-	List<OrderVO> searchListPageBlockPname(String searchWord, int startRow, int pageBlock);
-
-	List<OrderVO> searchListPageBlockPayCheck(String searchWord, int startRow, int pageBlock);
-
-	int getSearchTotalRowsId(String searchWord);
-
-	int getSearchTotalRowsPname(String searchWord);
-
-	int getSearchTotalRowsPayCheck(String searchWord);
-
 	List<CouponVO> getAvailableCouponsForUser(String member_id);
 
 	int getOrderAmount(String merchant_uid);

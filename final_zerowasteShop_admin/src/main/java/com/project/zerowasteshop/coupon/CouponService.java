@@ -13,23 +13,6 @@ public class CouponService {
 
 	@Autowired
 	CouponMapper mapper;
-	
-	public List<CouponVO> selectAll(String user_id){
-		return mapper.selectAll(user_id);
-	}
-	
-	public int insertOK(CouponVO vo) {
-		return mapper.insertOK(vo);
-	}
-
-	public boolean checkCouponCode(String couponCode) {
-		return mapper.checkCouponCode(couponCode)>0;
-	}
-
-	public void registerCoupon(String couponCode,String member_id) {
-		mapper.registerCoupon(couponCode,member_id);
-		
-	}
 
 	public List<CouponVO> selectAllPageBlock(int cpage, int pageBlock) {
 		//mysql인 경우 limit 시작행을 얻어내는 알고리즘이 필요하다.
@@ -83,11 +66,6 @@ public class CouponService {
 
 	public int deleteCoupon(CouponVO vo) {
 		return mapper.deleteCoupon(vo);
-	}
-
-	public CouponVO getCouponInfo(String couponCode) {
-		// TODO Auto-generated method stub
-		return mapper.getCouponInfo(couponCode);
 	}
 	
 }
