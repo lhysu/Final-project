@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.zerowasteshop.cart.model.CartVO;
 import com.project.zerowasteshop.product.NaverShopSearch;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
@@ -69,96 +68,96 @@ public class ProductController {
  		return "admin/product/delete";
  	}
 
- 	@GetMapping("/product/show")
- 	public String show(Model model, @RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "12") int pageBlock) {
- 		log.info("/product/show");
- 		log.info("cpage:{}", cpage);
- 		log.info("pageBlock:{}", pageBlock);
-
-// 		List<MemberVO> list = service.selectAll();
- 		List<ProductVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
- 		log.info("list.size():{}", list.size());
-
- 		model.addAttribute("list", list);
-
- 		// 디비로부터 얻은 검색결과의 모든 행수
- 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
- 		log.info("total_rows:{}", total_rows);
- 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
- 		int totalPageCount = 0;
-
- 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가하기
- 		if (total_rows / pageBlock == 0) {
- 			totalPageCount = 1;
- 		} else if (total_rows % pageBlock == 0) {
- 			totalPageCount = total_rows / pageBlock;
- 		} else {
- 			totalPageCount = total_rows / pageBlock + 1;
- 		}
- 		log.info("totalPageCount:{}", totalPageCount);
-
- 		model.addAttribute("cpage", cpage);
- 		model.addAttribute("totalPageCount", totalPageCount);
- 		
- 		// 페이지네이션 범위 계산	
- 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
- 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
-
- 	    model.addAttribute("startPage", startPage);
- 	    model.addAttribute("endPage", endPage);
-
- 		return "product/show";
- 	}
- 	
- 	@GetMapping("/product/showSearchList")
- 	public String showSearchList(Model model, @RequestParam(defaultValue = "product_name") String searchKey,
- 			@RequestParam(defaultValue = "") String searchWord,
- 			@RequestParam(defaultValue = "1") int cpage,
- 			@RequestParam(defaultValue = "12") int pageBlock) {
- 		log.info("/product/showSearchList");
- 		log.info("searchKey:{}", searchKey);
- 		log.info("searchWord:{}", searchWord);
- 		log.info("cpage:{}", cpage);
- 		log.info("pageBlock:{}", pageBlock);
-
-// 		List<MemberVO> list = service.searchList(searchKey, searchWord);
- 		List<ProductVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
- 		log.info("list.size():{}", list.size());
-
- 		model.addAttribute("list", list);
-
- 		// 디비로부터 얻은 검색결과의 모든 행수
+// 	@GetMapping("/product/show")
+// 	public String show(Model model, @RequestParam(defaultValue = "1") int cpage,
+// 			@RequestParam(defaultValue = "12") int pageBlock) {
+// 		log.info("/product/show");
+// 		log.info("cpage:{}", cpage);
+// 		log.info("pageBlock:{}", pageBlock);
+//
+//// 		List<MemberVO> list = service.selectAll();
+// 		List<ProductVO> list = service.selectAllPageBlock(cpage, pageBlock);// 해당페이지에 보여줄 5개행씩만 검색
+// 		log.info("list.size():{}", list.size());
+//
+// 		model.addAttribute("list", list);
+//
+// 		// 디비로부터 얻은 검색결과의 모든 행수
 // 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
- 		// select count(*) total_rows from member where id like '%ad%';
- 		// select count(*) total_rows from member where name like '%ki%';
- 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
- 		log.info("total_rows:{}", total_rows);
- 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
- 		int totalPageCount = 0;
-
- 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
- 		if (total_rows / pageBlock == 0) {
- 			totalPageCount = 1;
- 		} else if (total_rows % pageBlock == 0) {
- 			totalPageCount = total_rows / pageBlock;
- 		} else {
- 			totalPageCount = total_rows / pageBlock + 1;
- 		}
- 		log.info("totalPageCount:{}", totalPageCount);
-
- 		model.addAttribute("cpage", cpage);
- 		model.addAttribute("totalPageCount", totalPageCount);
-
- 		// 페이지네이션 범위 계산	
- 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
- 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
-
- 	    model.addAttribute("startPage", startPage);
- 	    model.addAttribute("endPage", endPage);
- 		
- 		return "product/show";
- 	}
+// 		log.info("total_rows:{}", total_rows);
+// 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
+// 		int totalPageCount = 0;
+//
+// 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가하기
+// 		if (total_rows / pageBlock == 0) {
+// 			totalPageCount = 1;
+// 		} else if (total_rows % pageBlock == 0) {
+// 			totalPageCount = total_rows / pageBlock;
+// 		} else {
+// 			totalPageCount = total_rows / pageBlock + 1;
+// 		}
+// 		log.info("totalPageCount:{}", totalPageCount);
+//
+// 		model.addAttribute("cpage", cpage);
+// 		model.addAttribute("totalPageCount", totalPageCount);
+// 		
+// 		// 페이지네이션 범위 계산	
+// 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+// 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+//
+// 	    model.addAttribute("startPage", startPage);
+// 	    model.addAttribute("endPage", endPage);
+//
+// 		return "product/show";
+// 	}
+// 	
+// 	@GetMapping("/product/showSearchList")
+// 	public String showSearchList(Model model, @RequestParam(defaultValue = "product_name") String searchKey,
+// 			@RequestParam(defaultValue = "") String searchWord,
+// 			@RequestParam(defaultValue = "1") int cpage,
+// 			@RequestParam(defaultValue = "12") int pageBlock) {
+// 		log.info("/product/showSearchList");
+// 		log.info("searchKey:{}", searchKey);
+// 		log.info("searchWord:{}", searchWord);
+// 		log.info("cpage:{}", cpage);
+// 		log.info("pageBlock:{}", pageBlock);
+//
+//// 		List<MemberVO> list = service.searchList(searchKey, searchWord);
+// 		List<ProductVO> list = service.searchListPageBlock(searchKey, searchWord,cpage,pageBlock);
+// 		log.info("list.size():{}", list.size());
+//
+// 		model.addAttribute("list", list);
+//
+// 		// 디비로부터 얻은 검색결과의 모든 행수
+//// 		int total_rows = service.getTotalRows();// select count(*) total_rows from member;
+// 		// select count(*) total_rows from member where id like '%ad%';
+// 		// select count(*) total_rows from member where name like '%ki%';
+// 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
+// 		log.info("total_rows:{}", total_rows);
+// 		// int pageBlock = 5;//1개페이지에서 보여질 행수,파라메터로 받으면됨.
+// 		int totalPageCount = 0;
+//
+// 		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
+// 		if (total_rows / pageBlock == 0) {
+// 			totalPageCount = 1;
+// 		} else if (total_rows % pageBlock == 0) {
+// 			totalPageCount = total_rows / pageBlock;
+// 		} else {
+// 			totalPageCount = total_rows / pageBlock + 1;
+// 		}
+// 		log.info("totalPageCount:{}", totalPageCount);
+//
+// 		model.addAttribute("cpage", cpage);
+// 		model.addAttribute("totalPageCount", totalPageCount);
+//
+// 		// 페이지네이션 범위 계산	
+// 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+// 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+//
+// 	    model.addAttribute("startPage", startPage);
+// 	    model.addAttribute("endPage", endPage);
+// 		
+// 		return "product/show";
+// 	}
  	
  	@GetMapping("/admin/product/selectAll")
  	public String selectAll(Model model, @RequestParam(defaultValue = "1") int cpage,
@@ -265,24 +264,24 @@ public class ProductController {
  		return "admin/product/selectOne";
  	}
  	
- 	@GetMapping("/product/detail")
- 	public String detail(ProductVO vo, Model model) {
- 		log.info("/product/detail");
- 		log.info("vo:{}", vo);
-
- 		ProductVO vo2 = service.selectOne(vo);
- 		List<ReviewVO> list = service.selectAllReview(vo);
- 		log.info("vo2:{}", vo2);
- 		
- 		model.addAttribute("vo2", vo2);
- 		
- 		log.info("list.size():{}", list.size());
-
- 		model.addAttribute("list", list);
-
-
- 		return "product/detail";
- 	}
+// 	@GetMapping("/product/detail")
+// 	public String detail(ProductVO vo, Model model) {
+// 		log.info("/product/detail");
+// 		log.info("vo:{}", vo);
+//
+// 		ProductVO vo2 = service.selectOne(vo);
+// 		List<ReviewVO> list = service.selectAllReview(vo);
+// 		log.info("vo2:{}", vo2);
+// 		
+// 		model.addAttribute("vo2", vo2);
+// 		
+// 		log.info("list.size():{}", list.size());
+//
+// 		model.addAttribute("list", list);
+//
+//
+// 		return "product/detail";
+// 	}
  	
  	@PostMapping("/product/updateQuantity")
     public ResponseEntity<Void> updateQuantity(@RequestBody ProductVO request) {
