@@ -82,7 +82,8 @@
     <div th:replace="~{header_community :: header}"></div>      
 	
 	<div class="container my-4" style="padding-top : 150px;">
-	<h1 class="mb-4"><a th:href="@{/community/recycleLife/selectAll}" >재활용 라이프 게시판</a></h1>
+	<h1 class="mb-4">
+	<a th:href="@{/community/recycleLife/selectAll}">재활용 라이프 게시판</a></h1>
 		<h4>나의 재활용 라이프를 자랑해보세요!</h4>	
     </div>
  
@@ -94,12 +95,13 @@
     <div class="gallery" style="display: flex; justify-content: space-between;">
         <div class="gallery-item" th:each="post : ${post}">
             <a th:href="@{/community/recycleLife/selectOne(recycleLife_num=${post.recycleLife_num})}">
-                <img th:src="@{/upload_img/thumb_${vo.recycleLife_img}}" alt="썸네일 이미지">   
-                <p>
-                    <span th:text="${post.recycleLife_title}">Post Title</span>
-                    <span th:text="${post.recycleLife_views}">0</span> views
-                    <span th:text="${post.recycleLife_likes}">0</span> likes
-                </p>
+                <img th:src="|/upload_img/thumb_${post.recycleLife_img}|" alt="썸네일 이미지">   
+                <p>조회수
+                    <span th:text="${post.recycleLife_views}">0</span> 좋아요
+                    <span th:text="${post.recycleLife_likes}">0</span>
+                    </p>
+                    <p><span th:text="${post.recycleLife_title}">Post Title</span></p>
+                
             </a>
         </div>
     </div>

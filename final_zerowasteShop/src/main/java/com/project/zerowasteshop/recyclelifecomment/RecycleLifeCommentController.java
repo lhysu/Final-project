@@ -22,10 +22,11 @@ public class RecycleLifeCommentController {
 	RecycleLifeCommentService service;
 
 	@GetMapping("/community/recycleLifeComment/insert") 
-	public String insert() {
+	public String insert(@RequestParam("recycleLife_num") int recycleLife_num, Model model) {
 	log.info("/community/recycleLifeComment/insert"); 
+	model.addAttribute("recycleLife_num", recycleLife_num);
 	
-	return "community/recycleLifeComment/insert"; 
+	return "community/recycleLife/selectOne"; 
 	}
 	
 	@GetMapping("/community/recycleLifeComment/delete") 
@@ -97,7 +98,10 @@ public class RecycleLifeCommentController {
 	}
 	
 	@PostMapping("/community/recycleLifeComment/insertOK") 
-	public String insertOK(RecycleLifeCommentVO vo) {
+	public String insertOK(@RequestParam("recycleLife_num") int recycleLife_num,
+			@RequestParam("member_id") String member_id, 
+            @RequestParam("lifeComment_content") String lifeComment_content,
+			RecycleLifeCommentVO vo) {
 	log.info("/community/recycleLifeComment/insertOK"); 
 	log.info("vo : {}", vo);
 	
@@ -105,9 +109,9 @@ public class RecycleLifeCommentController {
 	log.info("result : {}", result);
 	
 	if(result == 1) { 
-		return "redirect:/community/recycleLifeComment/selectAll";
+		return "redirect:/community/recycleLife/selectOne?recycleLife_num=" + recycleLife_num;
 	} else { 
-		return "redirect:/community/recycleLife/selectOne"; 
+		return "redirect:/community/recycleLife/selectOne?recycleLife_num=" + recycleLife_num; 
 		} 
 	}
 	

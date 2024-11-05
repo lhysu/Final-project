@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.coupon.CouponMapper">
+
+<update id="updateOK">
+	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
+	where coupon_code = #{coupon_code}
+</update>
+
+<delete id="deleteCoupon">
+	delete from coupon where coupon_code = #{coupon_code}
+</delete>
+
+<select id="selectOne" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where coupon_code =#{coupon_code}
+</select>
+
+<select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where member_id = #{user_id} order by coupon_code desc
+</select>
+
+<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon order by coupon_code desc limit #{startRow}, #{pageBlock}
+</select>
+
+<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where member_id like #{searchWord} order by coupon_code desc limit #{startRow}, #{pageBlock}
+</select>
+
+<select id="searchListPageBlockUsed" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where used like #{searchWord} order by coupon_code desc limit #{startRow}, #{pageBlock}
+</select>
+
+<select id="getTotalRows" resultType="java.lang.Integer">
+	select count(*) total_rows from coupon 
+</select>
+
+<select id="getSearchTotalRowsId" resultType="java.lang.Integer">
+	select count(*) total_rows from coupon where member_id like #{searchWord}
+</select>
+
+<select id="getSearchTotalRowsUsed" resultType="java.lang.Integer">
+	select count(*) total_rows from coupon where used like #{searchWord}
+</select>
+
+<!-- 쿠폰 코드 확인 -->
+<select id="checkCouponCode" resultType="int">
+	select count(*) from coupon where coupon_code = #{couponCode} and member_id IS NULL
+</select>
+
+<!-- 쿠폰 등록 -->
+<update id="registerCoupon">
+	update coupon set member_id = #{member_id} where coupon_code = #{couponCode}
+</update>
+
+<insert id="createCoupons">
+	insert into coupon(coupon_code,member_id, coupon_name, use_sdate, use_edate,discount_rate,used)
+	values(#{coupon_code},#{member_id},#{coupon_name},#{use_sdate},#{use_edate},#{discount_rate},#{used})
+</insert>
+
+<!-- 쿠폰 코드 확인 -->
+<select id="getCouponInfo" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select * from coupon where coupon_code = #{couponCode}
+</select>
+
+
+</mapper>
