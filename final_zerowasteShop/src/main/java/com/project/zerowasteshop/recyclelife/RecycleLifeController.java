@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentService;
 import com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -72,7 +73,8 @@ public class RecycleLifeController {
         // 조회수 Top3 게시물 조회
         List<RecycleLifeVO> post = service.selectTopViews();
 		model.addAttribute("post", post);
-        
+		log.info("post : {}", post);
+		
 		return "community/recycleLife/selectAll";
 	}
 	
@@ -102,6 +104,14 @@ public class RecycleLifeController {
 		int likes = service.getLikeCount(recycleLife_num);
         model.addAttribute("recycleLife_num", recycleLife_num);
         model.addAttribute("recycleLife_likes", likes);
+        
+        // 게시글 가져오기 (가정)
+        RecycleLifeVO post = service.getPost(recycleLife_num);
+        model.addAttribute("post", post);
+        
+        // 해당 게시글의 댓글 가져오기
+        List<RecycleLifeCommentVO> comments = commentService.getCommentsByPost(recycleLife_num);
+        model.addAttribute("comments", comments);
         
 		return "community/recycleLife/selectOne";
 	}
@@ -159,11 +169,13 @@ public class RecycleLifeController {
 	}
 
 	@PostMapping("/community/recycleLife/insertOK")
-	public String insertOK(RecycleLifeVO vo) throws IllegalStateException, IOException {
+	public String insertOK(RecycleLifeVO vo, HttpSession session) throws IllegalStateException, IOException {
 		log.info("/community/recycleLife/insertOK");
 		log.info("vo : {}", vo);
 
 		log.info(realPath);
+		
+		String member_id = (String) session.getAttribute("user_id");
 
         MultipartFile file = vo.getFile();
         String originName = file.getOriginalFilename();

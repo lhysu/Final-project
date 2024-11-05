@@ -54,12 +54,15 @@
 	<!-- 모달 바디 -->
 	<div class="modal-body">		
 		<div>
+		<th:block th:each="comment : ${comment}">
 			<form action="/community/recycleLifeComment/deleteOK" method="post">
-				<input type="hidden" name="lifeComment_num" th:value="${param.lifeComment_num}">
-				<p>[[${param.lifeComment_num}]]번 댓글을 정말 삭제하시겠습니까?</p>					
+			<input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}">
+				<input type="hidden" name="lifeComment_num" th:value="${comment.lifeComment_num}">
+				<p> 댓글을 정말 삭제하시겠습니까?</p>					
 				<button type="submit" class="btn btn-danger">삭제</button>
 				<a th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">취소</a>
 			</form>
+		</th:block>
 		</div>
 	</div>
 	

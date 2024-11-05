@@ -40,9 +40,9 @@
 <body>
 
 	<!-- Header -->
-    <!-- <div th:replace="header :: header"></div> -->
+    <div th:replace="~{header_community :: header}"></div>
  
-	<div th:fragment="content" class="container my-4">
+	<div th:fragment="content" class="container my-4" style="padding-top : 150px">
 		<h1 class="mb-4">재활용 라이프 글 삭제</h1>
 		<div>
 			<form action="/community/recycleLife/deleteOK" method="post">

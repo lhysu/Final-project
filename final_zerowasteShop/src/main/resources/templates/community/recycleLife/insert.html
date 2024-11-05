@@ -43,10 +43,15 @@
     <div th:replace="~{header_community :: header}"></div>
     
    <div class="container my-4" style="padding-top : 150px;">
-        <h1 class="mb-4">재활용 게시판 글 작성</h1>
+        <h1 class="mb-4">재활용 라이프 게시판 글 작성</h1>
         
         <!-- 게시판 글 작성 폼 -->
         <form th:action="@{/community/recycleLife/insertOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="mb-3">
+            <label for="member_id">작성자 : [[${session.user_id}]]</label>
+            <input type="hidden" id="member_id" name="member_id" th:value="${session.user_id}" />
+            </div>
+            
             <div class="mb-3">
                 <label for="recycleLife_title" class="form-label">제목 : </label>
                 <input type="text" id="recycleLife_title" name="recycleLife_title" class="form-control" required>

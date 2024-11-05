@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>update.html</title>
+<link rel="stylesheet" href="/css/main.css">
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 20px auto; }
+    </style>
+</head>
+<body>
+	
+	<!-- Header -->
+    <!-- <div th:replace="header :: header"></div> -->
+   
+	<div class="container my-4">
+        <h1 class="mb-4">재활용 게시판 글 수정</h1>
+        
+        <!-- 재활용 게시판 글 수정 폼 -->
+        <form th:action="@{/community/recycleLife/updateOK}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}">
+            <input type="hidden" name="recycleLife_img" th:value="${vo2.recycleLife_img}">
+            
+            <div class="mb-3">
+                <label for="recycleLife_title" class="form-label">제목 : </label>
+                <input type="text" id="recycleLife_title" name="recycleLife_title" class="form-control" th:value="${vo2.recycleLife_title}" required>
+                <div class="invalid-feedback">
+                    제목을 입력해주세요.
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="recycleLife_content" class="form-label">내용:</label>
+                <textarea id="recycleLife_content" name="recycleLife_content" class="form-control" rows="5" required
+                          th:text="${vo2.recycleLife_content}"></textarea>
+                <div class="invalid-feedback">
+                    내용을 입력해주세요.
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <p>현재 이미지 : </p>
+                <img th:src="@{'/images/' + ${vo2.recycleLife_img}}" alt="RecycleLife Image" class="img-fluid mb-3" style="max-width: 200px;">
+            </div>
+            
+            <div class="mb-3">
+                <label for="file" class="form-label">이미지 변경:</label>
+                <input type="file" id="file" name="file" class="form-control" accept="image/*">
+                <div class="form-text">이미지 파일을 선택하세요 (선택 사항).</div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button type="submit" class="btn btn-primary me-2">수정</button>
+                    <button type="reset" class="btn btn-secondary">초기화</button>
+                </div>
+                <div>
+                    <a th:href="@{/community/recycleLife/selectAll}" class="btn btn-link">목록으로</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+		<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공) -->
+	    <script>
+	        (function () {
+	            'use strict'
+	            var forms = document.querySelectorAll('.needs-validation')
+	            Array.prototype.slice.call(forms)
+	                .forEach(function (form) {
+	                    form.addEventListener('submit', function (event) {
+	                        if (!form.checkValidity()) {
+	                            event.preventDefault()
+	                            event.stopPropagation()
+	                        }
+	                        form.classList.add('was-validated')
+	                    }, false)
+	                })
+	        })()
+	    </script>
+
+		<!-- Footer Start -->
+		<div th:replace="footer :: footer"></div>
+		<!-- Footer End -->
+		
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.zerowasteshop.recyclelife.RecycleLifeMapper">
+  
+  	<insert id="insertOK" parameterType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		insert into recyclelife (member_id, recycleLife_title, recycleLife_content, recycleLife_views, recycleLife_likes, recycleLife_img, recycleLife_wdate)
+  		values (#{member_id}, #{recycleLife_title}, #{recycleLife_content}, #{recycleLife_views}, #{recycleLife_likes}, #{recycleLife_img}, NOW())
+  	</insert>
+  	
+  	<update id="updateOK">
+  		update recyclelife set 
+  		recycleLife_title=#{recycleLife_title}, 
+  		recycleLife_content=#{recycleLife_content},
+  		recycleLife_img=#{recycleLife_img} where recycleLife_num=#{recycleLife_num}
+  	</update>
+  	
+  	<delete id="deleteOK">
+  		delete from recyclelife where recycleLife_num=#{recycleLife_num}
+  	</delete>
+  	
+  	<select id="selectAll" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife order by recycleLife_num desc
+  	</select>
+  	
+  	<select id="selectOne" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife where recycleLife_num = #{recycleLife_num}
+  	</select>
+  	
+  	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  		select * from recyclelife order by recycleLife_num desc limit #{startRow}, #{pageBlock}
+  	</select>
+  	
+  	<select id="getTotalRows" resultType="int">
+  		select count(*) total_rows from recyclelife
+  	</select>
+  	
+  	<select id="searchList" parameterType="string" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+        select * from recyclelife
+        where recycleLife_title like #{searchWord} or recycleLife_content like #{searchWord}
+        order by recycleLife_num desc
+    </select>
+  	
+  	<update id="increaseViews">
+	  update recyclelife
+	  set recycleLife_views = recycleLife_views + 1
+	  where recycleLife_num = #{recycleLife_num}
+	</update>
+	
+	<select id="selectTopViews">
+	    SELECT *
+	    FROM recyclelife
+	    WHERE recycleLife_views >= 100
+	    ORDER BY recycleLife_views DESC
+	    LIMIT 3
+	</select>
+	
+	<!-- 좋아요 증가 -->
+    <update id="increaseLikeCount" parameterType="int">
+        UPDATE recyclelife
+        SET recycleLife_likes = recycleLife_likes + 1
+        WHERE recycleLife_num = #{recycleLife_num}
+    </update>
+	
+	<!-- 좋아요 감소 -->
+    <update id="decreaseLikeCount" parameterType="int">
+        UPDATE recyclelife
+        SET recycleLife_likes = recycleLife_likes - 1
+        WHERE recycleLife_num = #{recycleLife_num}
+    </update>
+
+    <!-- 좋아요 수 조회 -->
+    <select id="getLikeCount" parameterType="int" resultType="Integer">
+        SELECT recycleLife_likes
+        FROM recyclelife
+        WHERE recycleLife_num = #{recycleLife_num}
+    </select>
+	
+  </mapper>

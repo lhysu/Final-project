@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+<title>배송조회 상세</title>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 20px auto; }
+    </style>
+</head>
+
+<body>
+
+	<!-- Header -->
+    <div th:replace="header :: header"></div>
+  
+		<div class="container my-4" style="padding-top:200px;">
+		<h1 class="mb-4"><a th:href="@{delivery/selectOne}" >배송조회 상세</a></h1>
+			<table id="insertTable" class="table table-striped table-bordered">
+				<tr>
+					<td>배송추적번호</td>
+					<td th:text="${vo2.tracking_num}"></td>					
+				</tr>
+				<tr>
+				<td>배송상태</td>
+				<td th:text="${vo2.delivery_status}"></td>
+				</tr>
+				<tr>
+					<td>배송사</td>
+					<td th:text="${vo2.courier}"></td>					
+				</tr>
+				<tr>
+					<td>배송번호</td>
+					<td th:text="${vo2.delivery_num}">배송번호</td>
+				</tr>
+				<tr>
+					<td>받는사람</td>
+					<td th:text="${vo2.member_id}">받는사람</td>
+				</tr>
+				<!-- <thead>
+					<tr>
+					<th>번호</th>
+					<th>제품명</th>
+					<th>주문번호</th>
+					<th>배송추적번호</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>[[${vo2.delivery_num}]]</td>
+						<td>[[${vo2.product_name}]]</td>
+						<td>[[${vo2.order_num}]]</td>
+						<td>[[${vo2.tracking_num}]]</td>       
+					</tr>
+				</tbody> -->
+			</table>
+		</div>
+		
+		<!-- Footer Start -->
+			<div th:replace="footer :: footer"></div>
+			<!-- Footer End -->
+		
+</body>
+</html>
