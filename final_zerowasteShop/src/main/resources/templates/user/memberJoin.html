@@ -103,6 +103,10 @@ span{
 .hide{
 	display: none;
 }
+.pw-under-text2{
+	color: green;
+	font-size: 10pt;
+}
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -156,12 +160,14 @@ $(function (){
 				<div class="memberJoin col-md-8">
 		        <input type="text" class="form-control" name="member_id" id="member_id" value="hello" style="float:left" placeholder="아이디를 입력하세요" required>
 		        <div class="invalid-feedback">아이디를 입력해주세요</div>
+			    <div class="failure-message pw-under-text hide">아이디는 4~12글자이어야 합니다</div>
+			    <div class="failure-message2 pw-under-text hide">영어 또는 숫자만 가능합니다</div>
 		        </div>
 		        <div class="col-md-4 d-flex">
 		     	<button type="button" id="btn_idCheck" class="memberjoin-btn btn btn-primary text-white mx-1">중복체크</button><br>
 		     	</div>
 	     	</div>
-	        <span id="result"> </span>
+	        <div id="result" class="pw-under-text2"> </div>
         </div>
         
         <div class="item">
@@ -244,6 +250,54 @@ $(function (){
 	</div>
 	
 	</div>
+	<!-- 아이디 유효성 검사 -->
+	<script>
+	// 1. 아이디 입력창 정보 가져오기
+	let elInputUsername = document.querySelector('#member_id'); 
+	// 2. 실패 메시지 정보 가져오기 (글자수 제한 4~12글자)
+	let elFailureMessage = document.querySelector('.failure-message'); 
+	// 3. 실패 메시지2 정보 가져오기 (영어 또는 숫자)
+	let elFailureMessageTwo = document.querySelector('.failure-message2');
+	
+	//아이디 유효성 검사 - 아이디 길이 제한
+	function idLength(value) {
+		  return value.length >= 4 && value.length <= 12
+		}
+	//아이디 유효성 검사 - 숫자 혹은 영문자로 사용 제한
+	function onlyNumberAndEnglish(str) {
+		  return /^[A-Za-z0-9][A-Za-z0-9]*$/.test(str);
+		}
+	
+	//아이디 유효성 검사 이벤트
+	  elInputUsername.onkeyup = function () {
+	  // 값을 입력한 경우
+	  if (elInputUsername.value.length !== 0) {
+	    // 영어 또는 숫자 외의 값을 입력했을 경우
+	    if(onlyNumberAndEnglish(elInputUsername.value) === false) {
+	      elFailureMessage.classList.add('hide');
+	      elFailureMessageTwo.classList.remove('hide'); // 영어 또는 숫자만 가능합니다
+	    }
+	    // 글자 수가 4~12글자가 아닐 경우
+	    else if(idLength(elInputUsername.value) === false) {
+	      elFailureMessage.classList.remove('hide'); // 아이디는 4~12글자이어야 합니다
+	      elFailureMessageTwo.classList.add('hide'); // 실패 메시지2가 가려져야 함
+	    }
+	    // 조건을 모두 만족할 경우
+	    else if(idLength(elInputUsername.value) || onlyNumberAndEnglish(elInputUsername.value)) {
+	      elFailureMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+	      elFailureMessageTwo.classList.add('hide'); // 실패 메시지2가 가려져야 함
+	    }
+	  }
+	  // 값을 입력하지 않은 경우 (지웠을 때)
+	  // 모든 메시지를 가린다.
+	  else {
+	    elFailureMessage.classList.add('hide');
+	    elFailureMessageTwo.classList.add('hide');
+	  }
+	}
+
+	
+	</script>
 	
 	<!-- 비밀번호 유효성 검사 -->
 	<script>
