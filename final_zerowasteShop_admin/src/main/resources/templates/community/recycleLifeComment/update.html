@@ -39,6 +39,8 @@
 </head>
 <body>
 
+	<div th:replace="~{header_admin :: header}"></div>
+
 	<div class="container my-4">
        <h1 class="mb-4">재활용 라이프 게시판 댓글 수정</h1>
        <form th:action="@{/community/recycleLifeComment/updateOK}" method="post" 
