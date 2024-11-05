@@ -15,10 +15,7 @@ public class RecycleLifeCommentService {
 		return mapper.selectOne(vo);
 	}
 
-	public List<RecycleLifeCommentVO> selectAll() {
-		return mapper.selectAll();
-	}
-
+	
 	public int insertOK(RecycleLifeCommentVO vo) {
 		return mapper.insertOK(vo);
 	}
@@ -41,7 +38,7 @@ public class RecycleLifeCommentService {
 	}
 
 	public List<RecycleLifeCommentVO> selectAll(int recycleLife_num) {
-		return mapper.selectAll();
+		return mapper.selectAll(recycleLife_num);
 	}
 
 	public List<RecycleLifeCommentVO> getCommentsByPost(int recycleLife_num) {

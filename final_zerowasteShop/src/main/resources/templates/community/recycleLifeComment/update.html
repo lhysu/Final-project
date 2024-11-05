@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>댓글 수정 페이지</title>
 <link rel="stylesheet" href="/css/main.css">
@@ -39,7 +40,10 @@
 </head>
 <body>
 
-	<div class="container my-4">
+	<!-- Header -->
+    <div th:replace="~{header_community :: header}"></div>
+
+	<div class="container my-4" style="padding-top : 150px;">
        <h1 class="mb-4">재활용 라이프 게시판 댓글 수정</h1>
        <form th:action="@{/community/recycleLifeComment/updateOK}" method="post" 
         class="needs-validation" novalidate>

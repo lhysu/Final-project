@@ -106,4 +106,8 @@ public class ProductService {
         return mapper.getProducts();
     }
 
+	public int getPointsByUserId(String user_id) {
+		return mapper.getPointsByUserId(user_id);
+	}
+
 }
