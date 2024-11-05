@@ -9,7 +9,7 @@ public interface RecycleLifeCommentMapper {
 
 	RecycleLifeCommentVO selectOne(RecycleLifeCommentVO vo);
 
-	List<RecycleLifeCommentVO> selectAll();
+	List<RecycleLifeCommentVO> selectAll(int recycleLife_num);
 
 	int insertOK(RecycleLifeCommentVO vo);
 

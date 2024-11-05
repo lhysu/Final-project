@@ -51,4 +51,6 @@ public interface ProductMapper {
      */
     ProductVO findProductByNum(Long productNum);
     
+	public int getPointsByUserId(String user_id);
+    
 }

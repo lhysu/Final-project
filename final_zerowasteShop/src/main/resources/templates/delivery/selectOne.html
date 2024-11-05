@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thmeleaf.org">
+<html xmlns:th="http://www.thmeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>배송조회 상세</title>
 <meta charset="UTF-8">
@@ -43,7 +44,7 @@
     <div th:replace="header :: header"></div>
   
 		<div class="container my-4" style="padding-top:200px;">
-		<h1 class="mb-4"><a th:href="@{delivery/selectOne}" >배송조회 상세</a></h1>
+		<h1 class="mb-4"><a th:href="@{/delivery/selectOne}" >배송조회 상세</a></h1>
 			<table id="insertTable" class="table table-striped table-bordered">
 				<tr>
 					<td>주문번호</td>
@@ -71,7 +72,7 @@
 				</tr>
 				<tr>
 					<td>받는사람</td>
-					<td th:text="${vo2.member_id}">받는사람</td>
+					<td th:text="${session.user_id}">받는사람</td>
 				</tr>
 				
 			</table>

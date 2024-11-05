@@ -13,6 +13,7 @@ import com.project.zerowasteshop.product.NaverShopSearch;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,8 +80,21 @@ public class HomeController {
 	}
 	
 	@GetMapping("/user/myPage")
-	public String myPage() {
+	public String myPage(Model model, HttpSession session) {
 		log.info("/myPage");
+		
+		String user_id = (String) session.getAttribute("user_id");
+		log.info("user_id : {}", user_id);
+		
+		// 포인트 조회
+	    if (user_id != null) {
+	        int points = service.getPointsByUserId(user_id);
+	        model.addAttribute("points", points);
+	    } else {
+	        // user_id가 없는 경우 로그인 페이지로 리다이렉트
+	        return "redirect:/login"; 
+	    }
+				
 		return "user/myPage";
 	}
 	

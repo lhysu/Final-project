@@ -85,10 +85,11 @@ public class RecycleLifeController {
 		log.info("vo : {}", vo);
 		
 		RecycleLifeVO vo2 = service.selectOne(vo);
-		log.info("vo2", vo2);
-		
+		log.info("vo2:{}", vo2);
+		model.addAttribute("vo2", vo2);
 		// 댓글 목록 조회
 		List<RecycleLifeCommentVO> list = commentService.selectAll(vo.getRecycleLife_num());
+		log.info("list : {}", list);
 		model.addAttribute("list", list);
 		
 		if (vo2 == null) {
@@ -99,7 +100,7 @@ public class RecycleLifeController {
 	    	service.increaseViews(vo2.getRecycleLife_num());
 	    }			
 		
-		model.addAttribute("vo2", vo2);
+		
 		
 		int likes = service.getLikeCount(recycleLife_num);
         model.addAttribute("recycleLife_num", recycleLife_num);

@@ -123,5 +123,11 @@
     <select id="findProductByNum" parameterType="long" resultType="com.project.zerowasteshop.product.model.ProductVO">
         SELECT * FROM product WHERE product_num = #{productNum}
     </select>
+    
+    <select id="getPointsByUserId" parameterType="string" resultType="int">
+    SELECT points
+    FROM member
+    WHERE member_id = #{user_id}
+	</select>
 
 </mapper>

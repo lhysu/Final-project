@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thmeleaf.org">
+<html xmlns:th="http://www.thmeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>배송조회 게시판</title>
 <meta charset="UTF-8">
@@ -58,7 +59,7 @@
     <div th:replace="header :: header"></div> 
     
     <div class="container my-4" style="padding-top:200px;">
-    <h1 class="mb-4"><a th:href="@{delivery/selectAll}" >배송조회</a></h1>
+    <h1 class="mb-4"><a th:href="@{/delivery/selectAll}" >배송조회</a></h1>
 	<!-- 검색 폼 추가 -->
         <form th:action="@{/delivery/searchList}" method="get" class="row g-3 mb-4">
             <div class="col-md-8">
