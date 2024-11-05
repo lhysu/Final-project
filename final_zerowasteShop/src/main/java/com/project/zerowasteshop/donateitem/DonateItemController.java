@@ -74,7 +74,7 @@ public class DonateItemController {
 		return "community/donateItem/selectOne";
 	}
 	
-	@GetMapping({"/donateItem/d_searchList"})
+	@GetMapping({"/community/donateItem/d_searchList"})
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
 			@RequestParam(defaultValue = "")String searchWord,
