@@ -138,10 +138,10 @@
         <!-- 수정, 삭제, 목록으로 버튼 -->
         <div class="row my-4">
             <div class="col-12">
-                <a th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2">
+                <a th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
                     <i class="fas fa-edit"></i> 수정
                 </a>
-                <a th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2">
+                <a th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
                     <i class="fas fa-trash-alt"></i> 삭제
                 </a>               
                 <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary">
@@ -165,11 +165,11 @@
 	    		<span th:text="${comment.lifeComment_num}"></span> |
 	            <span th:text="${comment.lifeComment_wdate}"></span> |
 	            <a th:href="|/community/recycleLifeComment/update?lifeComment_num=${comment.lifeComment_num}|"
-    			class="btn btn-link">수정</a> |
+    			class="btn btn-link" sec:authorize="isAuthenticated()">수정</a> |
     			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
      			</div>
  				<button type="button" class="btn btn-link" data-bs-toggle="modal" 
-     			data-bs-target="#deleteModal" data-lifeComment_num="${comment.lifeComment_num}">삭제</button>
+     			data-bs-target="#deleteModal" data-lifeComment_num="${comment.lifeComment_num}" sec:authorize="isAuthenticated()">삭제</button>
             </a>
             <p>
             <span th:text="${comment.member_id}"></span> 
@@ -190,7 +190,7 @@
  		<div class="form-group">        
         <textarea class="form-control" id="content" rows="3" name="lifeComment_content" placeholder="댓글을 입력하세요" required></textarea>
     	</div>
-       <button type="submit" class="btn btn-success mt-2">작성하기</button>
+       <button type="submit" class="btn btn-success mt-2" sec:authorize="isAuthenticated()">작성하기</button>
  		</form>
  		
  		<!-- 부트스트랩 JS 및 의존성 추가 (CDN 사용 권장) -->

@@ -53,8 +53,7 @@
         <!-- 문의 이미지 -->
         <div class="row my-4">
             <div class="col-12 text-center">
-                <img th:if="${vo2.help_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.help_img}}" alt="Help Image" class="img-fluid help-image">
-                <p th:if="${vo2.help_img == null}">이미지가 없습니다.</p>
+                <img th:if="${vo2.help_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.help_img}}" alt="Help Image" class="img-fluid help-image" onerror="this.style.display='none';">
             </div>
         </div>
         

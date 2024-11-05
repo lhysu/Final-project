@@ -1,4 +1,4 @@
-<!DOCTYPE mapper
+<!-- <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
@@ -56,25 +56,24 @@
 	    LIMIT 3
 	</select>
 	
-	<!-- 좋아요 증가 -->
+	
     <update id="increaseLikeCount" parameterType="int">
         UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes + 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
 	
-	<!-- 좋아요 감소 -->
+	
     <update id="decreaseLikeCount" parameterType="int">
         UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes - 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
-
-    <!-- 좋아요 수 조회 -->
+   
     <select id="getLikeCount" parameterType="int" resultType="Integer">
         SELECT recycleLife_likes
         FROM recyclelife
         WHERE recycleLife_num = #{recycleLife_num}
     </select>
 	
-  </mapper>
+  </mapper> -->

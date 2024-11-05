@@ -48,7 +48,7 @@
 <body>
     
     <!-- 헤더 삽입 -->
-    <div th:replace="~{header_community :: header}"></div>     
+    <div th:replace="~{header :: header}"></div>     
     
     <div class="container my-4" style="padding-top:250px;">
         <h1 class="mb-4"><a th:href="@{/community/help/selectAll}" >고객센터</a></h1>
@@ -120,10 +120,6 @@
         </nav>
         <!-- 페이징 UI 끝 -->
 
-        <!-- 새 문의 등록 버튼 -->
-        <div class="mt-4">
-            <a th:href="@{/community/help/insert}" class="btn btn-primary-custom">새 문의 등록</a>
-        </div>
     </div>
     
     <!-- 푸터 삽입 -->

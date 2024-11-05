@@ -16,11 +16,7 @@ public class CouponService {
 	
 	public List<CouponVO> selectAll(String user_id){
 		return mapper.selectAll(user_id);
-	}
-	
-	public int insertOK(CouponVO vo) {
-		return mapper.insertOK(vo);
-	}
+	}	
 
 	public boolean checkCouponCode(String couponCode) {
 		return mapper.checkCouponCode(couponCode)>0;
@@ -29,60 +25,6 @@ public class CouponService {
 	public void registerCoupon(String couponCode,String member_id) {
 		mapper.registerCoupon(couponCode,member_id);
 		
-	}
-
-	public List<CouponVO> selectAllPageBlock(int cpage, int pageBlock) {
-		//mysql인 경우 limit 시작행을 얻어내는 알고리즘이 필요하다.
-		//예: 1페이지(0,5), 2페이지(5,5),3페이지(10,5)
-		int startRow = pageBlock*(cpage-1);
-		log.info("startRow:{}",startRow);
-		log.info("pageBlock:{}",pageBlock);
-		
-		return mapper.selectAllPageBlock(startRow,pageBlock);
-	}
-
-	public int getTotalRows() {
-		return mapper.getTotalRows();
-	}
-
-	public void createCoupons(List<CouponVO> list) {
-		for (CouponVO coupon : list) {
-			mapper.createCoupons(coupon);
-		}
-		
-	}
-
-	public List<CouponVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
-		int startRow = pageBlock*(cpage-1); //mysql은 limit 처리시 0행부터 시작
-		log.info("startRow:{}",startRow);
-		log.info("pageBlock:{}",pageBlock);
-		
-		
-		if(searchKey.equals("member_id")) {
-			return mapper.searchListPageBlockId("%"+searchWord+"%",startRow,pageBlock);
-		}else {
-			return mapper.searchListPageBlockUsed("%"+searchWord+"%",startRow,pageBlock);
-		}
-	}
-
-	public int getSearchTotalRows(String searchKey, String searchWord) {
-		if(searchKey.equals("member_id")) {
-			return mapper.getSearchTotalRowsId("%"+searchWord+"%");
-		}else {
-			return mapper.getSearchTotalRowsUsed("%"+searchWord+"%");
-		}
-	}
-
-	public CouponVO selectOne(CouponVO vo) {
-		return mapper.selectOne(vo);
-	}
-
-	public int updateOK(CouponVO vo) {
-		return mapper.updateOK(vo);
-	}
-
-	public int deleteCoupon(CouponVO vo) {
-		return mapper.deleteCoupon(vo);
 	}
 
 	public CouponVO getCouponInfo(String couponCode) {

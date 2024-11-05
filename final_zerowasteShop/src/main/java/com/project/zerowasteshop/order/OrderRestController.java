@@ -3,25 +3,17 @@ package com.project.zerowasteshop.order;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.zerowasteshop.coupon.CouponService;
 import com.project.zerowasteshop.member.MemberService;
-import com.project.zerowasteshop.member.MemberVO;
 import com.project.zerowasteshop.payment.IamportService;
 import com.project.zerowasteshop.payment.PaymentService;
-import com.project.zerowasteshop.payment.PaymentVO;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 

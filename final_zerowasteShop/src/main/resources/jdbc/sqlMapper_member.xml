@@ -40,7 +40,6 @@
 	<select id="selectId" resultType="com.project.zerowasteshop.member.MemberVO">
 		select member_id, name from member where name=#{name} and email=#{email} and adCheck=false
 	</select>
-
 	
 	<!-- 포인트 차감 로직 -->
 	<update id="deductPoints">
