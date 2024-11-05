@@ -55,14 +55,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body >
 	<!-- 헤더 시작 -->
-	 <div th:replace="~{header_admin :: header}"></div>
+	 <div th:replace="~{header :: header}"></div>
     <!-- 해더 끝 -->
 
 
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-		<h1>기부가능 물품 신청</h1>
+		<h1><a th:href="@{/community/donateItem/d_selectAll}">기부가능 물품 신청</a></h1>
 		</div>
 		<form action="/community/donateItem/d_searchList">
 			<div class=" mx-auto mb-2" >
