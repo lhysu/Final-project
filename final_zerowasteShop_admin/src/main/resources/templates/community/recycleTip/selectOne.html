@@ -48,7 +48,7 @@
 <body>
     
     <!-- 헤더 삽입 -->
-    <div th:replace="~{header_community :: header}"></div>     
+    <div th:replace="~{header :: header}"></div>     
     
     <div class="container my-5" style="padding-top:250px;">
         <!-- 제목, 작성일, 조회수 -->
@@ -65,7 +65,7 @@
         <!-- 이미지 -->
         <div class="row my-4">
             <div class="col-12 text-center">
-                <img th:if="${vo2.recycleTip_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.recycleTip_img}}" alt="Recycle Tip Image" class="img-fluid recycletip-image">
+                <img th:if="${vo2.recycleTip_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.recycleTip_img}}" alt="Recycle Tip Image" class="img-fluid recycletip-image" onerror="this.style.display='none';">
                 <p th:if="${vo2.recycleTip_img == null}">이미지가 없습니다.</p>
             </div>
         </div>
