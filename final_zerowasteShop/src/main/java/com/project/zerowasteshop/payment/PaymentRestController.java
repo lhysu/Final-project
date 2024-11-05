@@ -48,11 +48,12 @@ public class PaymentRestController {
 			// 포트원 결제 취소 API 호출
 			boolean refundResult = iamportService.cancelPayment(merchant_uid, amount,delivery_state);
 			response.put("success", refundResult);
-			
+			log.info("refundResult:{}", refundResult);
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			response.put("success", false);
 			response.put("error", e.getMessage());
+			log.info("e.getMessage:{}", e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
