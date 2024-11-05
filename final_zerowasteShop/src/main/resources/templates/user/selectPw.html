@@ -164,17 +164,28 @@
 			const target = document.getElementById('selectPwCheck');
 			// 이메일 인증번호
 			$("#sendEmailCode").click(function() {
-			   $.ajax({
-			      type : "POST",
-			      url : "/login/mailConfirm",
-			      data : {
-			         "email" : $("#email").val()
-			      },
-			      success : function(data){
-			         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-			         code=data;
-			      }
-			   })
+				email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;		//이메일 패턴
+				var email = document.getElementById("email").value;
+				if(email_regex.test(email)){ 
+				   $.ajax({
+				      type : "POST",
+				      url : "/login/pwmailConfirm",
+				      data : {
+				         "email" : $("#email").val()
+				      },
+				      success : function(data){
+				    	  if(data=="-1"){
+				    		  alert("해당 이메일을 가진 회원이 존재하지 않습니다.");
+				    	  }else{
+				    		  alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+						      code=data;  
+				    	  }
+				         
+				      }
+				   })
+				}else{
+					alert("이메일 형식이 올바르지 않습니다.")
+				}
 			})
 			
 			$("#checkEmailCode").click(function() {

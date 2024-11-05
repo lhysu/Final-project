@@ -77,7 +77,7 @@ public class DonateItemController {
 	@GetMapping({"/community/donateItem/d_searchList"})
 	public String d_searchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
-			@RequestParam(defaultValue = "us")String searchWord,
+			@RequestParam(defaultValue = "")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/donateItem/d_searchList");
@@ -117,7 +117,7 @@ public class DonateItemController {
 		int result = service.updateOK(vo);
 		log.info("result:{}",result);
 		
-		return "redirect:/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
+		return "redirect:/community/donateItem/d_selectOne?donateItem_num="+vo.getDonateItem_num();
 	}
 	
 	@PostMapping({"/donateItem/d_deleteOK"})
@@ -136,56 +136,56 @@ public class DonateItemController {
 		
 	}
 	
-	@GetMapping({"/donateItem/d_insert"})
-	public String d_insert() {
-		log.info("/donateItem/d_insert");
-		return "community/donateItem/insert";
-		
-	}
+//	@GetMapping({"/donateItem/d_insert"})
+//	public String d_insert() {
+//		log.info("/donateItem/d_insert");
+//		return "community/donateItem/insert";
+//		
+//	}
 	
-	@PostMapping({"/donateItem/d_insertOK"})
-	public String d_insertOK(Model model,DonateItemVO vo) throws IllegalStateException, IOException {
-		log.info("/donateItem/d_insertOK");
-		log.info("vo:{}",vo);
-		
-		log.info(realPath);
-
-		String originName = vo.getFile().getOriginalFilename();
-		log.info("originName:{}", originName);
-		
-		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
-			vo.setDonateItem_img(originName);
-		} else {
-			// 중복이미지 이름을 배제하기위한 처리
-			String save_name = "donateItem_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
-			log.info("save_name:{}", save_name);
-			vo.setDonateItem_img(save_name);
-
-			File f = new File(realPath, save_name);
-			vo.getFile().transferTo(f);
-
-			//// create thumbnail image/////////
-			BufferedImage original_buffer_img = ImageIO.read(f);
-			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-			Graphics2D graphic = thumb_buffer_img.createGraphics();
-			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
-
-			File thumb_file = new File(realPath, "thumb_" + save_name);
-
-			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
-
-		}
-		
-		
-		int result = service.insertOK(vo);
-		
-		if(result==1) {
-			return "redirect:/community/donateItem/d_selectAll";		
-		}else {
-			return "redirect:/donateItem/insert";		
-			
-		}
-
-	}
+//	@PostMapping({"/donateItem/d_insertOK"})
+//	public String d_insertOK(Model model,DonateItemVO vo) throws IllegalStateException, IOException {
+//		log.info("/donateItem/d_insertOK");
+//		log.info("vo:{}",vo);
+//		
+//		log.info(realPath);
+//
+//		String originName = vo.getFile().getOriginalFilename();
+//		log.info("originName:{}", originName);
+//		
+//		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
+//			vo.setDonateItem_img(originName);
+//		} else {
+//			// 중복이미지 이름을 배제하기위한 처리
+//			String save_name = "donateItem_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+//			log.info("save_name:{}", save_name);
+//			vo.setDonateItem_img(save_name);
+//
+//			File f = new File(realPath, save_name);
+//			vo.getFile().transferTo(f);
+//
+//			//// create thumbnail image/////////
+//			BufferedImage original_buffer_img = ImageIO.read(f);
+//			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+//			Graphics2D graphic = thumb_buffer_img.createGraphics();
+//			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+//
+//			File thumb_file = new File(realPath, "thumb_" + save_name);
+//
+//			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
+//
+//		}
+//		
+//		
+//		int result = service.insertOK(vo);
+//		
+//		if(result==1) {
+//			return "redirect:/community/donateItem/d_selectAll";		
+//		}else {
+//			return "redirect:/donateItem/insert";		
+//			
+//		}
+//
+//	}
 
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>나의 구매내역</title>
@@ -204,6 +205,7 @@ function requestRefund(button) {
         })
         .then(response => response.json())
         .then(data => {
+        	console.log("data:", data); 
             if (data.success) {
                 alert("취소 또는 환불이 완료되었습니다.");
                 location.reload();
@@ -269,7 +271,7 @@ function requestRefund(button) {
 				    onclick="requestRefund(this)">
 				    취소/환불
 				</button>
-                <button th:onclick="|location.href='/community/help/help?member_id=${entry.value[0].member_id}'|">문의하기</button>
+                <button th:onclick="|location.href='/community/help/selectAll?member_id=${entry.value[0].member_id}'|">문의하기</button>
             </div>
         </div>
     </div>

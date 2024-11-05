@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>재활용 팁 상세</title>
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <style>
+        .help-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .comment-section {
+            margin-top: 50px;
+        }
+        .comment-form textarea {
+            resize: none;
+        }
+        .comment-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .comment-actions {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 헤더 삽입 -->
+    <div th:replace="~{header_community :: header}"></div>     
+    
+    <div class="container my-5" style="padding-top:250px;">
+        <!-- 제목, 작성일, 조회수 -->
+        <div class="row">
+            <div class="col-12">
+                <h1 th:text="${vo2.recycleTip_title}">제목</h1>
+                <p class="text-muted">
+                    작성일: <span th:text="${#dates.format(vo2.recycleTip_wdate, 'yyyy-MM-dd HH:mm')}"></span> |
+                    조회수: <span th:text="${vo2.recycleTip_views}"></span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 이미지 -->
+        <div class="row my-4">
+            <div class="col-12 text-center">
+                <img th:if="${vo2.recycleTip_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.recycleTip_img}}" alt="Recycle Tip Image" class="img-fluid recycletip-image">
+                <p th:if="${vo2.recycleTip_img == null}">이미지가 없습니다.</p>
+            </div>
+        </div>
+        
+        <!-- 내용 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-4">
+                    <p th:utext="${vo2.recycleTip_content}"></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 수정, 삭제, 목록으로 버튼 -->
+        <div class="row my-4">
+            <div class="col-12">
+                <!-- 수정 및 삭제 버튼 -->
+                <a th:href="@{'/community/recycleTip/update?recycleTip_num=' + ${vo2.recycleTip_num}}" class="btn btn-primary me-2">
+                    <i class="fas fa-edit"></i> 수정
+                </a>
+                <a th:href="@{'/community/recycleTip/delete?recycleTip_num=' + ${vo2.recycleTip_num}}" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt"></i> 삭제
+                </a>
+                <a th:href="@{'/community/recycleTip/selectAll'}" class="btn btn-secondary">
+                    <i class="fas fa-list"></i> 목록으로
+                </a>
+            </div>
+        </div>
+        
+        <!-- 댓글 섹션 -->
+        <div class="comment-section">
+            <h3>댓글</h3>
+            
+			<!-- 댓글 목록 -->
+			<div th:if="${comments != null and #lists.size(comments) > 0}">
+			    <div th:each="comment : ${comments}" class="comment-item mb-3 p-3 border rounded">
+			        <div class="d-flex justify-content-between align-items-start">
+			            <div>
+			                <p>
+			                    <strong th:text="${comment.member_id}">작성자</strong>
+			                    <span class="text-muted" th:text="${#dates.format(comment.tipComment_wdate, 'yyyy-MM-dd HH:mm')}"></span>
+			                </p>
+			                <p th:text="${comment.tipComment_content}">댓글 내용</p>
+			            </div>
+			            <div class="comment-actions">
+			                <!-- 댓글 수정 버튼 -->
+			                <!--
+			                <form th:action="@{/community/recycleTipComment/updateOK}" method="post" class="d-inline me-2">
+			                    <input type="hidden" name="tipComment_num" th:value="${comment.tipComment_num}" />
+			                    <input type="hidden" name="recycleTip_num" th:value="${vo2.recycleTip_num}" />
+			                    <input type="hidden" name="member_id" th:value="${comment.member_id}" />
+			                    <input type="text" name="tipComment_content" th:value="${comment.tipComment_content}" required />
+			                    <button type="submit" class="btn btn-sm btn-warning">수정</button>
+			                </form>
+			                -->
+			                
+			                <!-- 댓글 삭제 버튼 -->
+			                <form th:action="@{/community/recycleTipComment/deleteOK}" method="post" class="d-inline" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+			                    <input type="hidden" name="tipComment_num" th:value="${comment.tipComment_num}" />
+			                    <input type="hidden" name="recycleTip_num" th:value="${vo2.recycleTip_num}" />
+			                    <input type="hidden" name="member_id" th:value="${#authentication.name}" /> <!-- 현재 로그인한 사용자 ID -->
+			                    <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+			                </form>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<div th:if="${comments == null or #lists.size(comments) == 0}">
+			    <p>작성된 댓글이 없습니다.</p>
+			</div>
+            
+            <!-- 댓글 작성 폼 -->
+            <div class="mt-4">
+                <h4>댓글 작성</h4>
+                <form th:action="@{/community/recycleTipComment/insertOK}" method="post" class="comment-form">
+                    <input type="hidden" name="recycleTip_num" th:value="${vo2.recycleTip_num}" />
+                    <input type="hidden" name="member_id" th:value="${#authentication.name}" /> <!-- 현재 로그인한 사용자 ID -->
+                    <div class="mb-3">
+                        <textarea class="form-control" name="tipComment_content" rows="3" placeholder="댓글을 입력하세요." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">댓글 작성</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 삽입 -->
+    <div th:replace="~{footer :: footer}"></div>
+
+    <!-- 부트스트랩 JS 및 의존성 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

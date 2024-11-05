@@ -276,7 +276,6 @@ public class ReviewController {
  	@PostMapping("/review/insertOK")
  	public String insertOK(ReviewVO vo) throws IllegalStateException, IOException {
  		log.info("/review/insertOK");
-		/* vo.setPoint(vo.getPrice() / 1000); */
  		log.info("vo:{}", vo);
  		
  		ProductVO vo2 = service.selectProduct(vo);

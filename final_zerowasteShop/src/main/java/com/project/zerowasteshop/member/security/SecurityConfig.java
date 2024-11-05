@@ -19,9 +19,15 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
 		String[] whiteList= {"/","/home", "/member/m_insert", "/member/m_insertOK", 
+<<<<<<< HEAD
 				"/member/m_login","/member/required_login","/member/denied","/member/expired", "login/mailConfirm","login/newPassword",
 				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**","/admin/ad_login",
 				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img/**","/community/**","/product/**"
+=======
+				"/member/m_login","/member/required_login","/member/denied","/member/expired", "/login/mailConfirm","/login/newPassword","/login/pwmailConfirm",
+				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**",
+				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/community/**","/product/**"
+>>>>>>> 64dc5113fcdee94a09316d8b1fd1cb5a63cc0ab0
 				};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
@@ -34,7 +40,7 @@ public class SecurityConfig {
 		.authorizeHttpRequests(config -> 
 			config
 				.requestMatchers(whiteList).permitAll() //whiteList 요청은 로그인과 상관없이 모두 허용
-				.requestMatchers("/admin/**").hasRole("ADMIN")// 접근제한
+//				.requestMatchers("/admin/**").hasRole("ADMIN")// 접근제한
 				.anyRequest().authenticated() //위에 명시한 이외의 모든 요청은 로그인해야지 요청가능하게
 		)
 		.formLogin(config -> 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>주문관리</title>
@@ -118,12 +119,15 @@ select {
 <body>
 
 	<!-- 헤더 시작 -->
-	<div th:replace="header :: header"></div>
-	<!-- 헤더 끝 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 해더 끝 -->
 	
 	<div class="content" th:fragment="content">
-		<h1>관리자: 주문 관리 페이지</h1>
-		<form action="/admin/order/searchList" style="margin-top: 160px !important;">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+            <h1>주문 관리</h1>
+		</div>
+		<form action="/admin/order/searchList" >
 			<div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
 				<div class="d-flex align-items-center">
 					<select name="searchKey" class="btn btn-secondary dropdown-toggle me-2">
@@ -167,9 +171,18 @@ select {
 					<td colspan="9">
 						<nav>
 							<ul class="pagination justify-content-center">
-								<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
-			                        <a class="page-link" th:href="|/admin/order/selectAll?cpage=${cpage - 1}|">이전</a>
-			                    </li>
+								<th:block th:if="${param.searchKey!=null}">
+									<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+										<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+					                        <a class="page-link" th:href="|/admin/order/searchList?cpage=${cpage-1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+					                    </li>
+			                    	</th:block>
+			                    </th:block>
+			                    <th:block th:if="${param.searchKey==null}">
+									<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+				                        <a class="page-link" th:href="|/admin/order/selectAll?cpage=${cpage - 1}|">이전</a>
+				                    </li>
+			                    </th:block>
 								<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
 									<th:block th:if="${param.searchKey==null}">
 										<li class="page-item" th:classappend="${i == cpage} ? 'active'">
@@ -186,9 +199,19 @@ select {
 									</th:block>						
 								</th:block>
 								
-								<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
-			                        <a class="page-link" th:href="|/admin/order/selectAll?cpage=${cpage + 1}|">다음</a>
-			                    </li>
+								<th:block th:if="${param.searchKey!=null}">
+									<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+										<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					                        <a class="page-link" th:href="|/admin/order/searchList?cpage=${cpage+1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+					                    </li>
+			                    	</th:block>
+			                    </th:block>
+			                    <th:block th:if="${param.searchKey==null}">
+									<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+				                        <a class="page-link" th:href="|/admin/order/selectAll?cpage=${cpage + 1}|">다음</a>
+				                    </li>
+			                    </th:block>
+			                    
 							</ul>							
 						</nav>				
 					</td>

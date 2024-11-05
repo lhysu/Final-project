@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>구매 페이지</title>
@@ -326,6 +327,16 @@
 	                        
 	                    });
 	                });
+	             
+	                // 주문 상품 리스트에서 제품명을 추출하여 결합
+	                var productNames = [];
+	                $('.order-item').each(function() {
+	                    var product_name = $(this).find('.product_name').text();
+	                    productNames.push(product_name);
+	                });
+	                
+	                // 여러 제품 이름을 쉼표로 구분하여 하나의 문자열로 결합
+	                var productNameStr = productNames.join(', ');
 
 	                // 주문 정보를 먼저 서버에 전송
 	                var orderData = {
@@ -361,13 +372,13 @@
 	                            pg: 'html5_inicis',  // 결제 대행사
 	                            pay_method: 'card',  // 결제 방식
 	                            merchant_uid: merchantUid,  // 서버에서 받은 주문 번호 사용
-	                            name: '주문명: 결제 테스트',
+	                            name: productNameStr,
 	                            amount: finalAmount,  // 최종 결제 금액
 	                            buyer_email: 'test@example.com',
-	                            buyer_name: '홍길동',
-	                            buyer_tel: '010-1234-5678',
-	                            buyer_addr: '서울특별시 강남구 삼성동',
-	                            buyer_postcode: '123-456'
+	                            buyer_name: $('#name').val(),
+	                            buyer_tel: $('#tel').val(),
+	                            buyer_addr: $('#address').val() + ' ' + $('#address_detail').val(),
+	                            buyer_postcode: $('#postcode').val()
 	                        }, function(rsp) {
 	                            if (rsp.success) {
 	                            	console.log('결제 응답 객체:', rsp.pay_method);  // 전체 응답 객체 확인
@@ -381,7 +392,8 @@
 	                                        paid_amount: rsp.paid_amount,
 	                                        pay_method : rsp.pay_method,	                     
 	                                      	member_id : member_id,
-	                                      	points_used : totalPointsUsed
+	                                      	points_used : totalPointsUsed,
+	                                      	coupon_code : $('#couponSelect').val()
 	                                    },
 	                                    success: function(response) {
 	                                        if (response.status === 'success') {
@@ -394,6 +406,19 @@
 	                                });
 	                            } else {
 	                                alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
+	                             	// 결제 실패 시 주문 삭제 요청
+	                                $.ajax({
+	                                    url: '/order/delete',
+	                                    method: 'POST',
+	                                    data: { merchant_uid: rsp.merchant_uid },
+	                                    success: function(response) {
+	                                        //alert('결제가 취소되었습니다.');
+	                                    },
+	                                    error: function(error) {
+	                                        console.error('주문 삭제 중 오류 발생:', error);
+	                                    }
+	                                });
+	                  
 	                            }
 	                        });
 	                    },

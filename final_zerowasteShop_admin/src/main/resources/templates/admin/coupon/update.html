@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>쿠폰 수정 및 삭제</title>
@@ -174,8 +175,8 @@
 <body>
 
 	<!-- 헤더 시작 -->
-    <div th:replace="header :: header"></div>
-    <!-- 헤더 끝 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 해더 끝 -->
     
 	<div th:fragment="content" style="margin-top: 300px;">
     <form id="updateCoupon" action="/coupon/updateOK" method="post">

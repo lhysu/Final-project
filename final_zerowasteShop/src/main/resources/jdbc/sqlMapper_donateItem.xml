@@ -51,9 +51,9 @@
 		order by donateItem_num desc limit #{startRow},#{pageBlock}	
 	</select>
 	
-	<update id="updateOK">
+<!--	<update id="updateOK">
 		update donateitem set donate_state=#{donate_state} where donateItem_num=#{donateItem_num} 
-	</update>
+	</update>-->
 	<delete id="deleteOK">
 		delete from donateitem where donateItem_num=#{donateItem_num}
 	</delete> 

@@ -14,31 +14,25 @@ public interface ReviewMapper {
 	public int insertOK(ReviewVO vo);
 
 	public ProductVO selectProduct(ReviewVO vo);
-	
-//	public List<CartVO> selectAll();
 
 	public ReviewVO selectOne(ReviewVO vo);
+	public ReviewVO selectOneAdmin(ReviewVO vo);
 
 	public int updateOK(ReviewVO vo);
-	public int deleteOK(ReviewVO vo);
+	public int updateOKAdmin(ReviewVO vo);
 
-//	public List<CartVO> searchListId(String searchWord);
-//
-//	public List<CartVO> searchListName(String searchWord);
-//
+	public int deleteOK(ReviewVO vo);
+	public int deleteOKAdmin(ReviewVO vo);
+
+	public int getTotalRowsAdmin();
+	
 	public int getTotalRows(String userID);
-//
+
 	public int updateProductName();
 	
+	public List<ReviewVO> selectAllPageBlockAdmin(int startRow, int pageBlock);
+	
 	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock, String userID);
-//
-//	public int getSearchTotalRowsCompany(String searchWord);
-//
-//	public int getSearchTotalRowsProduct_name(String searchWord);
-//
-//	public List<ReviewVO> searchListPageBlockCompany(String searchWord, int startRow, int endRow);
-//
-//	public List<ReviewVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
 
 	public int updateProductRating(int product_num, double rating);
 }

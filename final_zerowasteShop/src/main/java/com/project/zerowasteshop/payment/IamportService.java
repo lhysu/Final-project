@@ -2,11 +2,14 @@ package com.project.zerowasteshop.payment;
 
 import org.springframework.web.client.RestTemplate;
 
+import com.project.zerowasteshop.delivery.DeliveryMapper;
 import com.project.zerowasteshop.order.OrderMapper;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,6 +22,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class IamportService {
 	
@@ -27,6 +31,9 @@ public class IamportService {
 	
 	@Autowired
 	PaymentMapper paymentMapper;
+	
+	@Autowired
+	DeliveryMapper deliveryMapper;
 	
 
     private static final String IMP_KEY = "4265656253258734";
@@ -84,8 +91,13 @@ public class IamportService {
         payment.setMember_id((String) responseData.get("member_id"));
         return payment;
     }
-
+    
+    // 결제 취소 로직
     public boolean cancelPayment(String merchant_uid, int amount,String delivery_state) {
+    	log.info("merchant_uid:{}", merchant_uid);
+    	log.info("amount:{}", amount);
+    	log.info("delivery_state:{}", delivery_state);
+    	
         String token = getToken();
         RestTemplate restTemplate = new RestTemplate();
 
@@ -95,15 +107,45 @@ public class IamportService {
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("merchant_uid", merchant_uid);
         requestMap.put("amount", amount); // 부분 취소할 금액 설정
+        log.info("requestMap:{}", requestMap);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestMap, headers);
+        log.info("entity:{}", entity);
 
         try {
             ResponseEntity<Map> response = restTemplate.exchange(CANCEL_URL, HttpMethod.POST, entity, Map.class);
+            log.info("response:{}", response);
             Map<String, Object> body = response.getBody();
-
+            log.info("body:{}", body);
+            log.info("body.get(\"code\"):{}",body.get("code"));
+            log.info("body.get(\"code\").equals(\"1\"):{}",((Integer)body.get("code"))==1);
+            
+            while (true) {
+                // code 값을 검사하여 1이면 다시 요청을 보냄
+                if ((Integer) body.get("code") == 1) {
+                    log.info("한번더");
+                    response = restTemplate.exchange(CANCEL_URL, HttpMethod.POST, entity, Map.class);
+                    body = response.getBody();
+                    log.info("body:{}", body);
+                } else if ((Integer) body.get("code") == 0) {
+                    // code가 0이면 루프 탈출
+                    break;
+                } else {
+                    log.info("Unexpected code value: {}", body.get("code"));
+                    return false;
+                }
+                
+                // 요청 사이에 잠시 대기 (서버 부하 방지)
+                try {
+                    Thread.sleep(500); // 0.5초 대기
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
             if (body != null) {
                 Map<String, Object> responseData = (Map<String, Object>) body.get("response");
+                log.info("responseData:{}", responseData);
 
                 // 아임포트에서 상태가 'cancelled'일 경우에만 취소 성공으로 간주
                 if (responseData != null && "cancelled".equals(responseData.get("status"))) {
@@ -111,6 +153,7 @@ public class IamportService {
                 	if (delivery_state.equals("배송준비중")) {
                 		updateOrderState(merchant_uid,"결제취소");
                         updatePaymentStatus(merchant_uid,"결제취소");
+                        updateDeliveryState(merchant_uid,"배송취소"); // 배송취소 반영
                 	} else if (delivery_state.equals("배송완료")) {
                 		updateOrderState(merchant_uid,"환불완료");
                         updatePaymentStatus(merchant_uid,"결제취소");
@@ -120,21 +163,26 @@ public class IamportService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // 예외 로그 출력
-            // 실패 시 false 반환
+        	log.info("Error during payment cancellation", e); // 예외 로그 출력
             return false;
         }
 
         return false;
     }
 
-    // 부분 환불 성공 시 데이터베이스의 order_item 상태를 업데이트하는 메서드
+    //환불 성공 시 데이터베이스의 order_item 상태를 업데이트하는 메서드
     private void updateOrderState(String merchant_uid,String orderState) {
     	orderMapper.updateOrderState(merchant_uid,orderState);
-    }    
+    }   
     
+    //환불 성공 시 데이터베이스의 payment 상태를 업데이트하는 메서드
     private void updatePaymentStatus(String merchant_uid,String pay_status) {
     	paymentMapper.updatePaymentStatus(merchant_uid,pay_status);
+    }
+    
+    //환불 성공 시 데이터베이스의 delivery 상태를 업데이트하는 메서드
+    private void updateDeliveryState(String merchant_uid,String delivery_status) {
+    	deliveryMapper.updateDeliveryState(merchant_uid,delivery_status);
     }
     
     

@@ -91,9 +91,11 @@
  
 </head>
 <body>
+
 	<!-- 헤더 시작 -->
 	 <div th:replace="~{header_community :: header}"></div>
     <!-- 해더 끝 -->
+    
 
 	<div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px;">
 		<div class="row g-4 mb-2">
@@ -141,21 +143,30 @@
 		  </div>
 		</div>
 		
+    	<div class="row g-3">
+		  <div class="col-md-8">
+		    <div class="row">
+			 	<label for="donateItem_address" class="col-md-2 col-form-label my-3">지역</label>
+			    <div class="col-md-10 my-3">
+		     		<input type="text" id="donateItem_address" class="form-control-plaintext" name="donateItem_address" th:value="${vo2.donateItem_address}" readonly >
+		    	</div>
+		  	</div>
+		  </div>
+		</div>
     	
     	<div class="form-item w-100">
     		<label class="form-label my-3"> 물품 정보</label>
-    		<textarea type="text" id="donateItem_content" class="form-control" spellcheck="false" name="donateItem_content" th:value="${vo2.donateItem_content}" readonly ></textarea>
+    		<textarea id="donateItem_content" class="form-control" spellcheck="false" name="donateItem_content" readonly >[[${vo2.donateItem_content}]]</textarea>
     	</div>
     	
-    	<th:block th:if="${vo2.donateItem_img!=null}">
-    	<div class="form-item w-100 my-3">
+    	<div class="form-item w-100 my-3" id="donateitem-img">
     		
-    		<img th:src="|/uploadimgPath/${vo2.donateItem_img}|" width="300">  
+    		<img th:src="|/uploadimgPath/${vo2.donateItem_img}|" width="300" onerror="this.style.display='none'">  
     			
     	</div>
-    	</th:block>  
+
     	
-    	<div class="row">
+    	<div class="row mb-3">
 		 	<label for="donate_state" class="col-sm-1 col-form-label my-3" >처리상태</label>
 		    <div class="col-sm-3 my-3">
 		     	<input type="text" id="donate_state" class="form-control-plaintext" name="donate_state" th:value="${vo2.donate_state}" >
@@ -165,31 +176,6 @@
 		    </th:block>
 		  </div>
         </div>
-        
-		<!-- 처리상태 변경 -->
-		<th:block th:if="${session.admin_id}"> 
-		<form action="/donateItem/d_updateOK">
-			
-			<label class="mx-3">
-			<input type="radio"  value="승인" name="donate_state" id="donate_state1">
-			<span>승인</span>
-			</label>
-			
-			<label class="mx-3">
-			<input type="radio"  value="거절" name="donate_state" id="donate_state2">
-			<span>거절</span>
-			</label>
-
-			<label class="mx-3">
-			<input type="radio"  value="처리중" name="donate_state" id="donate_state3">
-			<span>처리중</span>
-			</label>
-			
-			<input type="hidden"  name="donateItem_num" id="donateItem_num" th:value="${vo2.donateItem_num}">
-			<input type="submit" class="btn btn-primary my-3 mx-3" value="확인"> 
-
-		</form>
-		</th:block>		
 
 		
 	
@@ -237,7 +223,7 @@
 	
 	</script>
 
-	<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary" >
+	<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary"  >
       	<i class="fas fa-list"></i> 목록으로
     </a>
 	

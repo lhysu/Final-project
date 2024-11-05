@@ -1,6 +1,7 @@
 <!-- src/main/resources/templates/community/notice/selectOne.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="${vo2.notice_title}">공지사항 상세</title>
@@ -35,7 +36,7 @@
 <body>
     
     <!-- 헤더 삽입-->
-    <div th:replace="header :: header"></div>
+    <div th:replace="~{header_community :: header}"></div>     
     
     <div class="container my-5" style="padding-top:250px;">
         <!-- 공지사항 제목, 작성일, 조회수 -->

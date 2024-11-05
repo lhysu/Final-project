@@ -63,7 +63,7 @@ public class AdminController {
 	@GetMapping({"/admin/ad_searchList"})
 	public String ad_searchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
-			@RequestParam(defaultValue = "us")String searchWord,
+			@RequestParam(defaultValue = "")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/admin/ad_searchList");
@@ -107,12 +107,15 @@ public class AdminController {
 		return "admin/member/selectOne";
 	}
 	
+	//회원 추가
 	@GetMapping({"/admin/ad_insert"})
 	public String ad_insert() {
 		log.info("/admin/ad_insert");
 		return "admin/member/insert";
 		
 	}
+	
+	
 	
 	@PostMapping({"/admin/ad_insertOK"})
 	public String ad_insertOK(Model model,MemberVO vo) {
@@ -144,8 +147,12 @@ public class AdminController {
 	public String ad_updateOK(MemberVO vo){
 		log.info("/admin/ad_updateOK");
 		log.info("vo:{}",vo);
-		
-		int result = service.updateOK(vo);
+		int result=0;
+		if(vo.isAdCheck()==true) {
+		result = service.adminUpdateOK(vo);
+		}else {
+			result=service.userUpdateOK(vo);
+		}
 		log.info("result:{}",result);
 		if(result==1) {
 			return "redirect:/admin/ad_selectOne?member_num="+vo.getMember_num();			
@@ -179,31 +186,34 @@ public class AdminController {
 		return "admin/member/login";
 	}
 	
-	//관리자 로그인 
-//	
-//	  @PostMapping({"/admin/ad_loginOK"}) public String ad_loginOK(MemberVO vo) {
-//	  log.info("/admin/ad_loginOK"); log.info("{}",vo);
-//	  
-//	  MemberVO vo2 = new MemberVO(); vo2 = service.login(vo); if(vo2!=null) {
-//	  session.setAttribute("admin_id", vo2.getMember_id()); return
-//	  "redirect:/home"; }else { return "redirect:/admin/ad_login"; } }
-	 
 	
-	//관리자 로그아웃
-//	@GetMapping({"/admin/ad_logout"})
-//	public String ad_logout() {
-//		log.info("/admin/ad_logout");
-//		session.removeAttribute("admin_id");
-//		//session.invalidate();
-//		
-//		return "redirect:/home";
-//	}
+	//관리자 회원가입
+	@GetMapping({"/admin/adminJoin"})
+	public String adminJoin() {
+		log.info("/admin/adminJoin");
+		return "admin/member/adminJoin";
+		
+	}
 	
-	@GetMapping({"/admin/home"})
-	public String home() {
-		log.info("/admin/home");
-	
-		return "admin/member/home";
+	//관리자 회원가입
+	@PostMapping({"/admin/adminInsert"})
+	public String adminInsert(Model model,MemberVO vo) {
+		log.info("/admin/adminInsert");
+		log.info("vo:{}",vo);
+		vo.setAdCheck(true);	//관리자 여부 표시
+		//아이디 중복 체크
+		MemberVO vo2 = service.idCheck(vo.getMember_id());
+		if(vo2!=null) {
+			return "user/security/duplicateId";
+		}else {
+		int result = service.insertOK(vo);
+		
+		if(result==1) {
+			return "redirect:/admin/ad_login";		
+		}else {
+			return "redirect:/admin/ad_insert";		
+		}
+		}
 	}
 	
 	// 로그인이 필요한 요청경로를 로그인 하지 않은 상태로 요청하면 리다일렉트 되는 요청경로

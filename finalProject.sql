@@ -10,7 +10,7 @@ CREATE TABLE `finalproject`.`member` (
   `email` VARCHAR(255) NOT NULL,
   `phone_number` VARCHAR(255) NOT NULL,
   `postcode` VARCHAR(255) NULL,
-  `address` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(255) NULL,
   `address_detail` VARCHAR(255) NULL,
   `signup_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `points` INT NULL,
@@ -39,7 +39,8 @@ INSERT INTO `finalproject`.`member` (member_id, member_num, name, pw, email, pho
 ('user17', 17, 'User17', 'password017', 'user17@example.com', '010-2409-2204', 'Seoul', 128, 0),
 ('user18', 18, 'User18', 'password018', 'user18@example.com', '010-3575-8441', 'Seoul', 75, 0),
 ('user19', 19, 'User19', 'password019', 'user19@example.com', '010-5111-4827', 'Seoul', 116, 1),
-('user20', 20, 'User20', 'password020', 'user20@example.com', '010-7462-7230', 'Seoul', 121, 0);
+('user20', 20, 'User20', 'password020', 'user20@example.com', '010-7462-7230', 'Seoul', 121, 0)
+;
 
 # 고객센터
 CREATE TABLE `finalproject`.`help` (
@@ -122,29 +123,6 @@ CREATE TABLE `finalproject`.`likeList` (
   `product_img` VARCHAR(255) NOT NULL,
   `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`likeList_num`));
-  
-# 찜 더미값 20개
-INSERT INTO `finalproject`.`likeList` (product_num, member_id, price, product_img, product_name) VALUES 
-(9, 'user01', 25448, 'product9.jpg' , 'Product 9'),
-(11, 'user02', 25448, 'product11.jpg' , 'Product 11'),
-(16, 'user03', 25448, 'product16.jpg' , 'Product 16'),
-(1, 'user04', 25448, 'product1.jpg' , 'Product 1'),
-(2, 'user05', 25448, 'product2.jpg' , 'Product 2'),
-(15, 'user06', 25448, 'product15.jpg' , 'Product 15'),
-(2, 'user07', 25448, 'product2.jpg' , 'Product 2'),
-(18, 'user08', 25448, 'product18.jpg' , 'Product 18'),
-(12, 'user09', 25448, 'product12.jpg' , 'Product 12'),
-(5, 'user10', 25448, 'product5.jpg' , 'Product 5'),
-(17, 'user11', 25448, 'product17.jpg' , 'Product 17'),
-(18, 'user12', 25448, 'product18.jpg' , 'Product 18'),
-(17, 'user13', 25448, 'product17.jpg' , 'Product 17'),
-(16, 'user14', 25448, 'product16.jpg' , 'Product 16'),
-(7, 'user15', 25448, 'product7.jpg' , 'Product 7'),
-(6, 'user16', 25448, 'product6.jpg' , 'Product 6'),
-(13, 'user17', 25448, 'product13.jpg' , 'Product 13'),
-(6, 'user18', 25448, 'product6.jpg' , 'Product 6'),
-(10, 'user19', 25448, 'product10.jpg' , 'Product 10'),
-(4, 'user20', 25448, 'product4.jpg' , 'Product 4');
   
 # 공지사항
 CREATE TABLE `finalproject`.`notice` (
@@ -294,31 +272,8 @@ CREATE TABLE `finalproject`.`product` (
   `company` VARCHAR(255) NOT NULL,
   `product_img` VARCHAR(255) NOT NULL,
   `category` VARCHAR(255) NULL,
-  `rating` DOUBLE NULL DEFAULT 4,
+  `rating` DOUBLE NULL,
   PRIMARY KEY (`product_num`));
-  
-# 상품 더미값 20개
-INSERT INTO `finalproject`.`product` (product_name, price, point, company, product_img, category, rating) VALUES 
-('Product 1', 7951, 370, 'Company1', 'product1.jpg', 'Bathroom', 4),
-('Product 2', 30918, 170, 'Company2', 'product2.jpg', 'Living', 3),
-('Product 3', 29930, 382, 'Company3', 'product3.jpg', 'Kitchen', 5),
-('Product 4', 19530, 66, 'Company4', 'product4.jpg', 'Living', 5),
-('Product 5', 12877, 417, 'Company5', 'product5.jpg', 'Kitchen', 4),
-('Product 6', 26066, 98, 'Company6', 'product6.jpg', 'Gift', 4),
-('Product 7', 49129, 317, 'Company7', 'product7.jpg', 'Stationery', 4),
-('Product 8', 38649, 289, 'Company8', 'product8.jpg', 'Kitchen', 4),
-('Product 9', 46600, 436, 'Company9', 'product9.jpg', 'Stationery', 4),
-('Product 10', 12937, 105, 'Company10', 'product10.jpg', 'Kitchen', 3),
-('Product 11', 33039, 474, 'Company11', 'product11.jpg', 'Stationery', 4),
-('Product 12', 35260, 82, 'Company12', 'product12.jpg', 'Gift', 5),
-('Product 13', 31018, 78, 'Company13', 'product13.jpg', 'Kitchen', 4),
-('Product 14', 1018, 392, 'Company14', 'product14.jpg', 'Bathroom', 3),
-('Product 15', 5608, 141, 'Company15', 'product15.jpg', 'Stationery', 4),
-('Product 16', 33479, 216, 'Company16', 'product16.jpg', 'Stationery', 4),
-('Product 17', 34953, 388, 'Company17', 'product17.jpg', 'Stationery', 5),
-('Product 18', 24041, 329, 'Company18', 'product18.jpg', 'Gift', 4),
-('Product 19', 26763, 474, 'Company19', 'product19.jpg', 'Kitchen', 3),
-('Product 20', 990, 269, '청년리빙', 'https://shopping-phinf.pstatic.net/main_8426046/84260465446.jpg', '생활/건강', 5);
 
 # 장바구니
 CREATE TABLE `finalproject`.`cart` (
@@ -330,29 +285,6 @@ CREATE TABLE `finalproject`.`cart` (
   `product_img` VARCHAR(255) NOT NULL,
   `product_name` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`cart_num`));
-  
-# 장바구니 더미값 20개
-INSERT INTO `finalproject`.`cart` (cart_num, product_num, member_id, count, price, product_img) VALUES 
-(1, 7, 'user01', 3, 25448, 'product1.jpg'),
-(2, 11, 'user02', 2, 21163, 'product2.jpg'),
-(3, 7, 'user03', 1, 33893, 'product3.jpg'),
-(4, 4, 'user04', 5, 26723, 'product4.jpg'),
-(5, 20, 'user05', 1, 41399, 'product5.jpg'),
-(6, 12, 'user06', 5, 5384, 'product6.jpg'),
-(7, 14, 'user07', 4, 38249, 'product7.jpg'),
-(8, 16, 'user08', 4, 22802, 'product8.jpg'),
-(9, 13, 'user09', 4, 5812, 'product9.jpg'),
-(10, 17, 'user10', 1, 19468, 'product10.jpg'),
-(11, 1, 'user11', 5, 20518, 'product11.jpg'),
-(12, 4, 'user12', 1, 36434, 'product12.jpg'),
-(13, 5, 'user13', 5, 46165, 'product13.jpg'),
-(14, 4, 'user14', 1, 15172, 'product14.jpg'),
-(15, 14, 'user15', 1, 24661, 'product15.jpg'),
-(16, 15, 'user16', 5, 25433, 'product16.jpg'),
-(17, 15, 'user17', 2, 9261, 'product17.jpg'),
-(18, 8, 'user18', 5, 47287, 'product18.jpg'),
-(19, 20, 'user19', 2, 2434, 'product19.jpg'),
-(20, 15, 'user20', 2, 2885, 'product20.jpg');
 
 # 기부 가능 물품
 CREATE TABLE `finalproject`.`donateitem` (
@@ -497,29 +429,6 @@ CREATE TABLE `review` (
   PRIMARY KEY (`review_num`)
 );
 
-  # 리뷰 더미값 20개
- INSERT INTO `finalproject`.`review` (review_num, member_id, product_num, content, rating, review_img, createdDate) VALUES 
-(1, 'user01', 12, 'Review content for product 1', 2, 'review1.jpg', '2024-10-10'),
-(2, 'user02', 4, 'Review content for product 2', 4, 'review2.jpg', '2024-10-2'),
-(3, 'user03', 1, 'Review content for product 3', 3, 'review3.jpg', '2024-10-6'),
-(4, 'user04', 8, 'Review content for product 4', 4, 'review4.jpg', '2024-10-19'),
-(5, 'user05', 5, 'Review content for product 5', 2, 'review5.jpg', '2024-10-14'),
-(6, 'user06', 14, 'Review content for product 6', 3, 'review6.jpg', '2024-10-21'),
-(7, 'user07', 19, 'Review content for product 7', 1, 'review7.jpg', '2024-10-2'),
-(8, 'user08', 1, 'Review content for product 8', 5, 'review8.jpg', '2024-10-15'),
-(9, 'user09', 12, 'Review content for product 9', 5, 'review9.jpg', '2024-10-16'),
-(10, 'user10', 18, 'Review content for product 10', 2, 'review10.jpg', '2024-10-16'),
-(11, 'user11', 6, 'Review content for product 11', 2, 'review11.jpg', '2024-10-1'),
-(12, 'user12', 13, 'Review content for product 12', 1, 'review12.jpg', '2024-10-2'),
-(13, 'user13', 3, 'Review content for product 13', 4, 'review13.jpg', '2024-10-22'),
-(14, 'user14', 20, 'Review content for product 14', 3, 'review14.jpg', '2024-10-16'),
-(15, 'user15', 6, 'Review content for product 15', 1, 'review15.jpg', '2024-10-9'),
-(16, 'user16', 11, 'Review content for product 16', 3, 'review16.jpg', '2024-10-8'),
-(17, 'user17', 16, 'Review content for product 17', 3, 'review17.jpg', '2024-10-4'),
-(18, 'user18', 18, 'Review content for product 18', 1, 'review18.jpg', '2024-10-19'),
-(19, 'user19', 12, 'Review content for product 19', 5, 'review19.jpg', '2024-10-22'),
-(20, 'user02', 20, '이쁘네요 마음에 들어요 배송도 빨라요', 3, 'img_1730191790842.PNG', '2024-10-24');
-
   # 재활용 라이프 댓글
   CREATE TABLE `finalproject`.`recyclelifecomment` (
   `lifeComment_num` INT NOT NULL,
@@ -566,7 +475,7 @@ CREATE TABLE `review` (
   PRIMARY KEY (`delivery_num`));
   
  # 배송 조회 더미값 20개
- INSERT INTO `finalproject`.`delivery` (delivery_num, pay_num, product_num, member_id, merchant_uid, tracking_num, courier, delivery_status, shipped_date, delivery_date) VALUES 
+ INSERT INTO `finalproject`.`delivery` (delivery_num, pay_num, product_name, member_id, merchant_uid, tracking_num, courier, delivery_status, shipped_date, delivery_date) VALUES 
 (1, 1, 8, 'user01', 'O111122226', 'TRACK1', 'Courier 1', 'Shipped', '2024-10-18', '2024-10-26'),
 (2, 2, 19, 'user02', 'O456645612', 'TRACK2', 'Courier 2', 'Delivered', '2024-10-21', '2024-10-24'),
 (3, 3, 20, 'user03', 'O884551222', 'TRACK3', 'Courier 3', 'Delivered', '2024-10-25', '2024-10-23'),
@@ -613,11 +522,6 @@ ALTER TABLE `finalproject`.`review`
 ADD INDEX `FK_REVIEW_PRODUCT_idx` (`product_num` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`review` 
-ADD CONSTRAINT `FK_REVIEW_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_REVIEW_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -647,7 +551,7 @@ ADD CONSTRAINT `FK_LIKELIST_MEMBER`
 FOREIGN KEY (`member_id`) 
 REFERENCES `finalproject`.`member` (`member_id`)
 ON DELETE CASCADE 
-ON UPDATE NO ACTION;
+ON UPDATE CASCADE;
 
 ALTER TABLE `finalproject`.`likeList`
 ADD CONSTRAINT `FK_LIKELIST_PRODUCT`
@@ -687,21 +591,11 @@ ADD CONSTRAINT `FK_PAYMENT_MEMBER`
   
 # 주문에서 상품,회원,쿠폰 참조
 ALTER TABLE `finalproject`.`order` 
-ADD CONSTRAINT `FK_ORDER_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
-ADD CONSTRAINT `FK_ORDER_COUPON`
-  FOREIGN KEY (`coupon_code`)
-  REFERENCES `finalproject`.`coupon` (`coupon_code`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_ORDER_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 #주문 상세에서 주문 참조
 ALTER TABLE `finalproject`.`order_item` 
@@ -717,8 +611,8 @@ ADD CONSTRAINT `FK_ITEM_ORDER`
 ADD CONSTRAINT `FK_ITEM_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
   
 # 쿠폰에서 회원 참조
 ALTER TABLE `finalproject`.`coupon` 

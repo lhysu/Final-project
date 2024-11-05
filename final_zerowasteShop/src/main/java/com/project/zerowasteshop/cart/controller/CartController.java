@@ -279,7 +279,7 @@ public class CartController {
  	@GetMapping("/cart/insertOK")
  	public String insertOK(CartVO vo) throws IllegalStateException, IOException {
  		log.info("/cart/insertOK");
-		/* vo.setPoint(vo.getPrice() / 1000); */
+		vo.setMember_id((String)session.getAttribute("user_id"));
  		log.info("vo:{}", vo);
 
  		int check = service.cartCheck(vo);

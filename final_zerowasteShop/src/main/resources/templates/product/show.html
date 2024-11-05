@@ -34,7 +34,64 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 20px auto; }
+		body {
+		    font-family: 'Open Sans', sans-serif;
+		    background-color: #f8f9fa; /* 배경색 설정 */
+		}
+		
+		h4 {
+		    color: #333; /* 제목 색상 */
+		}
+		
+		.content {
+		    padding: 20px;
+		    background-color: #ffffff; /* 콘텐츠 배경색 */
+		    border-radius: 8px; /* 모서리 둥글게 */
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+		}
+		
+		.text-center {
+		    transition: transform 0.2s; /* 호버 시 애니메이션 효과 */
+		}
+		
+		.text-center:hover {
+		    transform: scale(1.05); /* 호버 시 약간 커지기 */
+		}
+		
+		.img-fluid {
+		    border-radius: 8px; /* 이미지 모서리 둥글게 */
+		}
+		
+		.btn {
+		    transition: background-color 0.3s, color 0.3s; /* 버튼 호버 애니메이션 */
+		}
+		
+		.btn:hover {
+		    background-color: #007bff; /* 호버 시 배경색 변경 */
+		    color: #fff; /* 호버 시 텍스트 색상 변경 */
+		}
+		
+		.pagination {
+		    margin-top: 20px; /* 페이지네이션 여백 */
+		}
+		
+		.page-item.active .page-link {
+		    background-color: #007bff; /* 활성 페이지 색상 */
+		    color: white; /* 활성 페이지 텍스트 색상 */
+		}
+		
+		.page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.page-link:hover {
+		    color: #0056b3; /* 페이지 링크 호버 색상 */
+		    text-decoration: underline; /* 호버 시 밑줄 */
+		}
+		
+		.position-relative {
+		    margin-bottom: 20px; /* 검색창 여백 */
+		}
     </style>
 </head>
 <body>
@@ -57,7 +114,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div class ="content" th:fragment="content">
 		<div class="row">
 			<th:block th:each="vo : ${list}">
-				<div class="col-md-6 col-lg-6 col-xl-3">
+				<div class="col-md-6 col-lg-6 col-xl-3" style = "width : 23.5%; margin : 12px !important">
                  	<div class="text-center">
                      	<img style="width: 100px;" th:src="${vo.product_img}" th:if="${vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
                      	<img style="width: 100px;" th:src="|/uploadimgPath/${vo.product_img}|" th:if="${!vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
@@ -86,7 +143,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 							</div>
 			                         <h4 class="mb-3">[[${vo.price}]]</h4>
-			                     <a th:href="|/cart/insertOK?product_num=${vo.product_num}&member_id=${session.user_id}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+			                     <a th:href="|/cart/insertOK?product_num=${vo.product_num}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
 			                </div>
 			        </div>
 			    </div>             

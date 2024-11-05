@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>주문 상세 - 관리자 페이지</title>
@@ -136,8 +137,8 @@ body {
 <body>
 
 	<!-- 헤더 시작 -->
-	<div th:replace="header :: header"></div>
-	<!-- 헤더 끝 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 해더 끝 -->
 			
     <div class="content" th:fragment="content" style="margin-top: 300px;">
         <!-- 주문 상세 -->
