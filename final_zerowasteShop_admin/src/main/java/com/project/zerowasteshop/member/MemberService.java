@@ -39,9 +39,9 @@ public class MemberService {
 //		return mapper.deleteOK(vo);
 //	}
 
-	public MemberVO idCheck(String member_id) {
-		return mapper.idCheck(member_id);
-	}
+//	public MemberVO idCheck(String member_id) {
+//		return mapper.idCheck(member_id);
+//	}
 
 	
 //	  public MemberVO login(MemberVO vo) { 

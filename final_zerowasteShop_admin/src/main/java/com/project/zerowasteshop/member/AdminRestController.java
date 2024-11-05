@@ -4,22 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.project.zerowasteshop.member.admin.AdminService;
 
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
 @RestController
-public class MemberRestController {
+public class AdminRestController {
 	
 	@Autowired
-	MemberService service;
+	AdminService service;
 	
 	//아이디 중복 체크
 	@GetMapping({"/api/idCheck"})

@@ -75,7 +75,7 @@ public class HomeController {
         model.addAttribute("bestsellers", bestsellers);
         model.addAttribute("totalBestsellers", bestsellers.size());
     
-        return "home";
+        return "redirect:/admin/product/selectAll";
 	}
 	
 	@GetMapping("/user/myPage")
