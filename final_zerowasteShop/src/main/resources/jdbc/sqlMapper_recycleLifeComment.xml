@@ -4,6 +4,14 @@
   
   <mapper namespace="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentMapper">
   
+	<select id="selectCommentsByPost" parameterType="int" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+	    SELECT * FROM recyclelifecomment WHERE recycleLife_num = #{recycleLife_num}
+	</select>
+	
+	<select id="getCommentsByPost" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+    SELECT * FROM recyclelifecomment WHERE recycleLife_num = #{recycleLife_num}
+	</select>
+  
   	<insert id="insertOK" parameterType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
   		insert into recyclelifecomment (lifeComment_num, recycleLife_num, member_id, lifeComment_content, lifeComment_wdate)
   		values (#{lifeComment_num}, #{recycleLife_num}, #{member_id}, #{lifeComment_content}, NOW())

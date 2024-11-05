@@ -33,6 +33,8 @@ public interface DeliveryMapper {
 	public List<DeliveryVO> searchListPageBlockTracking_num(String string, int startRow, int endRow);
 
 	public void saveDelivery(DeliveryVO deliveryInfo);
+
+	public void updateDeliveryState(String merchant_uid, String delivery_status);
 	
 
 }

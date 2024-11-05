@@ -48,6 +48,7 @@
             max-width: 100%;
             height: auto;
         }
+        
     </style>
     
     <script>
@@ -92,7 +93,9 @@
         modal.find('#lifeCommentNum').val(lifeCommentNum);
         modal.find('#deleteConfirmMessage').text(lifeCommentNum + '번 댓글을 정말 삭제하시겠습니까?');
     });
+    
 </script>
+
 </head>
 <body>
  
@@ -148,61 +151,42 @@
         </div>
     </div>
     
-    	<!-- 댓글 조회 폼 -->
-    	<div class="container my-6">
-    	<h5>댓글 목록</h5>
+    	<!-- 지우면 빈 페이지 에러가 남 -->
+    	<div class="container my-6">  	
     	<table id="insertTable" class="table table-striped table-bordered">
-    		<thead class="table-dark">
-    		<tr>			
-    			<th>댓글번호</th>
-    			<th>작성자</th>
-    			<th>댓글내용</th>
-    			<th>작성일</th>
-    			<th>수정 삭제</th>
-    		</tr>
-    		</thead>
-    		<tbody>
-    		<th:block th:each="vo : ${list}">
-    			<tr>   
-    			<td>[[${vo.lifeComment_num}]]</td>			
-    			<td>[[${vo.member_id}]]</td>
-    			<td>[[${vo.lifeComment_content}]]</td>
-    			<td>[[${vo.lifeComment_wdate}]]</td>
-    			<td>
-    			<a th:href="|/community/recycleLifeComment/update?lifeComment_num=${vo.lifeComment_num}|"
-    			class="btn btn-primary">수정</a>
-    			              			
-     			<!-- <a th:href="|/community/recycleLifeComment/delete?lifeComment_num=${vo.lifeComment_num}|">삭제</a> -->
-     			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
-     			</div>
- 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" 
-     			data-bs-target="#deleteModal">삭제</button>
-    			</td>
-    			</tr>
-    			</th:block>
-    		</tbody>
+    		<th:block th:each="vo : ${list}"></th:block> 		
     	</table>
  		</div>
-		
- 		<!-- 댓글 조회 폼 -->
- 		<!-- <div class="container my-6">
- 		<h5>댓글 목록 ver.2</h5>
- 		<th:block th:each="vo : ${list}">
- 		<a>
- 		댓글번호 <span th:text="${vo.lifeComment_num}"></span> |
- 		작성자 <span th:text="${vo.member_id}"></span> |
- 		작성일 <span th:text="${#dates.format(vo.lifeComment_wdate, 'yyyy-MM-dd HH:mm')}"></span> 
- 		</a>
- 		<p><span th:text="${vo.lifeComment_content}"></span></p>
- 		</th:block>
- 		</div> -->
  		
+		<div class="container my-6">
+	    <h5>댓글 목록</h5>   
+	    <th:block th:each="comment : ${comments}">
+	    	<a>
+	    		<span th:text="${comment.lifeComment_num}"></span> |
+	            <span th:text="${comment.lifeComment_wdate}"></span> |
+	            <a th:href="|/community/recycleLifeComment/update?lifeComment_num=${comment.lifeComment_num}|"
+    			class="btn btn-link">수정</a> |
+    			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
+     			</div>
+ 				<button type="button" class="btn btn-link" data-bs-toggle="modal" 
+     			data-bs-target="#deleteModal" data-lifeComment_num="${comment.lifeComment_num}">삭제</button>
+            </a>
+            <p>
+            <span th:text="${comment.member_id}"></span> 
+            <span th:text="${comment.lifeComment_content}"></span>
+            </p>        
+	      </th:block>	      
+		</div>
+		
  		<!-- 댓글 작성 폼 -->
  		<form class="container my-4" th:action="@{/community/recycleLifeComment/insertOK}" 
  		method="post" name="lifeComment_content">
  		<h5>댓글 작성</h5>
- 		<label for="member_id">작성자 [[${session.user_id}]]</label>
-        <input type="hidden" id="member_id" name="member_id" th:value ="${session.user_id}" required>        
+ 		<label for="member_id" style="padding-bottom : 10px">작성자 [[${session.user_id}]]</label>
+        <input type="hidden" id="member_id" name="member_id" th:value ="${session.user_id}" required>
+        <input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}" required>
+        <input type="hidden" name="lifeComment_id" th:value="${lifeComment_id}" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>        
  		<div class="form-group">        
         <textarea class="form-control" id="content" rows="3" name="lifeComment_content" placeholder="댓글을 입력하세요" required></textarea>
     	</div>

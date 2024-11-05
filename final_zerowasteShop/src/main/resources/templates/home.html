@@ -336,48 +336,57 @@
                     looks reasonable.</p>
             </div>
             <div class="row g-4">
-                <!-- 상품 목록 반복 -->
-				<th:block th:if="${displayItems != null and !#lists.isEmpty(displayItems)}">
-				    <th:block th:each="vo : ${displayItems}">
-				        <div class="col-md-6 col-lg-6 col-xl-3">
-				            <div class="text-center">
-				                <!-- 이미지 처리 -->
-				                <div class="product-image-container">
-								    <img th:src="${vo.product_img.startsWith('http') ? vo.product_img : '/uploadimgPath/' + vo.product_img}" 
-								         class="img-fluid rounded mb-3 product-image" alt="[[${vo.product_name}]]">
-								</div>	                
-				                <div class="py-3">
-				                    <a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:text="${vo.product_name}"></a>
-				                    <div class="d-flex my-1 justify-content-center">
-				                        <th:block th:if="${vo.rating != null}">
-				                            <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
-				                                <!-- 전체 별 출력 -->
-				                                <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
-				                                    <i class="fas fa-star text-primary"></i>
-				                                </th:block>
-				                                <!-- 반 별 출력 -->
-				                                <th:block th:if="${halfStar >= 0.5 and fullStars < 5}">
-				                                    <i class="fas fa-star-half-alt text-primary"></i>
-				                                </th:block>
-				                                <!-- 빈 별 출력 -->
-				                                <th:block th:if="${fullStars + (halfStar >= 0.5 and fullStars < 5 ? 1 : 0) != 5}">
-				                                    <th:block th:each="star : ${#numbers.sequence(fullStars + (halfStar >= 0.5 and fullStars < 5 ? 2 : 1), 5)}">
-				                                        <i class="fas fa-star"></i>
-				                                    </th:block>
-				                                </th:block>
-				                            </th:block>
-				                        </th:block>
-				                    </div>
-				                    <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
-				                    <a th:href="|/cart/insertOK?product_num=${vo.product_num}&member_id=${session.user_id}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name}|" 
-				                       class="btn border border-secondary rounded-pill px-3 text-primary">
-				                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-				                    </a>
-				                </div>
-				            </div>
-				        </div>
-				    </th:block>
-				</th:block>               
+               <!-- 베스트셀러 목록이 있을 때만 표시 -->
+                <th:block th:if="${bestsellers != null and !#lists.isEmpty(bestsellers)}">
+                    <!-- 베스트셀러 목록 반복 -->
+                    <th:block th:each="product : ${bestsellers}">
+                        <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="text-center">
+                                <!-- 이미지 컨테이너 추가 -->
+                                <div class="product-image-container">
+                                    <img th:src="${product.product_img != null and product.product_img.startsWith('http') ? product.product_img : '/uploadimgPath/' + product.product_img}" 
+                                         class="img-fluid rounded mb-3 product-image" alt="[[${product.product_name}]]">
+                                    <!-- 베스트셀러 배지 추가 -->
+                                    <div class="badge badge-success">Bestseller</div>
+                                </div>	                
+                                <div class="py-3">
+                                    <a th:href="|/product/detail?product_num=${product.product_num}|" class="h5" th:text="${product.product_name}"></a>
+                                    <div class="d-flex my-1 justify-content-center">
+                                        <th:block th:if="${product.rating != null}">
+                                            <th:block th:with="fullStars=${T(java.lang.Math).floor(product.rating)}, halfStar=${product.rating - T(java.lang.Math).floor(product.rating)}">
+                                                <!-- 전체 별 출력 -->
+                                                <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
+                                                    <i class="fas fa-star text-primary"></i>
+                                                </th:block>
+                                                <!-- 반 별 출력 -->
+                                                <th:block th:if="${halfStar >= 0.5 and fullStars < 5}">
+                                                    <i class="fas fa-star-half-alt text-primary"></i>
+                                                </th:block>
+                                                <!-- 빈 별 출력 -->
+                                                <th:block th:if="${fullStars + (halfStar >= 0.5 and fullStars < 5 ? 1 : 0) != 5}">
+                                                    <th:block th:each="star : ${#numbers.sequence(fullStars + (halfStar >= 0.5 and fullStars < 5 ? 2 : 1), 5)}">
+                                                        <i class="fas fa-star"></i>
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
+                                    </div>
+                                    <h4 class="mb-3">[[${product.price}]]원</h4>
+                                    <a th:href="|/cart/insertOK?product_num=${product.product_num}&member_id=${session.user_id}&price=${product.price}&product_img=${product.product_img}&product_name=${product.product_name}|" 
+                                       class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </th:block>
+                <!-- 베스트셀러가 없을 때 메시지 표시 -->
+                <th:block th:if="${bestsellers == null or #lists.isEmpty(bestsellers)}">
+                    <p>No bestsellers available.</p>
+                </th:block>
+                <!-- 베스트셀러 목록 끝 -->
+
             </div>
         </div>
     </div>

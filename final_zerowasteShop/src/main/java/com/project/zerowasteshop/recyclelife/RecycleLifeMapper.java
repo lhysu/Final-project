@@ -35,5 +35,7 @@ public interface RecycleLifeMapper {
 
 	public int getLikeCount(@Param("recycleLife_num") int recycleLife_num);
 
+	public RecycleLifeVO getPost(int recycleLife_num);
+
 	
 }

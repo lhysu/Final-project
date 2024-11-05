@@ -44,4 +44,8 @@ public class RecycleLifeCommentService {
 		return mapper.selectAll();
 	}
 
+	public List<RecycleLifeCommentVO> getCommentsByPost(int recycleLife_num) {
+		return mapper.getCommentsByPost(recycleLife_num);
+	}
+
 }

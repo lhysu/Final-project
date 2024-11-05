@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.project.zerowasteshop.order.BestsellerService;
 import com.project.zerowasteshop.product.NaverShopSearch;
 import com.project.zerowasteshop.product.model.ProductVO;
 import com.project.zerowasteshop.product.service.ProductService;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 	
+	private final BestsellerService bestsellerService;
 	private final NaverShopSearch naverShopSearch;
     private int check = 0;
     
@@ -67,6 +69,11 @@ public class HomeController {
     
         model.addAttribute("displayItems", displayItems);
         model.addAttribute("totalItems", itemDtos2.size());
+        
+        // 베스트셀러 데이터 가져오기
+        List<ProductVO> bestsellers = bestsellerService.getBestsellers(8); // 판매량 높은 상위 8개 상품
+        model.addAttribute("bestsellers", bestsellers);
+        model.addAttribute("totalBestsellers", bestsellers.size());
     
         return "home";
 	}

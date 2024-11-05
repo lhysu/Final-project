@@ -522,11 +522,6 @@ ALTER TABLE `finalproject`.`review`
 ADD INDEX `FK_REVIEW_PRODUCT_idx` (`product_num` ASC) VISIBLE;
 ;
 ALTER TABLE `finalproject`.`review` 
-ADD CONSTRAINT `FK_REVIEW_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
 ADD CONSTRAINT `FK_REVIEW_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -556,7 +551,7 @@ ADD CONSTRAINT `FK_LIKELIST_MEMBER`
 FOREIGN KEY (`member_id`) 
 REFERENCES `finalproject`.`member` (`member_id`)
 ON DELETE CASCADE 
-ON UPDATE NO ACTION;
+ON UPDATE CASCADE;
 
 ALTER TABLE `finalproject`.`likeList`
 ADD CONSTRAINT `FK_LIKELIST_PRODUCT`
@@ -596,16 +591,6 @@ ADD CONSTRAINT `FK_PAYMENT_MEMBER`
   
 # 주문에서 상품,회원,쿠폰 참조
 ALTER TABLE `finalproject`.`order` 
-ADD CONSTRAINT `FK_ORDER_MEMBER`
-  FOREIGN KEY (`member_id`)
-  REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
-ADD CONSTRAINT `FK_ORDER_COUPON`
-  FOREIGN KEY (`coupon_code`)
-  REFERENCES `finalproject`.`coupon` (`coupon_code`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_ORDER_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)

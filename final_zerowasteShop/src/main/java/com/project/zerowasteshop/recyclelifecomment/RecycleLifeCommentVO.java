@@ -12,5 +12,6 @@ public class RecycleLifeCommentVO {
 	private String member_id;
 	private String lifeComment_content;
 	private Timestamp lifeComment_wdate;
+	private String lifeComment_id;
 	
 }

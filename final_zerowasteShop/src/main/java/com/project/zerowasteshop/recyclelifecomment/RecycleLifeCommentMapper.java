@@ -21,4 +21,6 @@ public interface RecycleLifeCommentMapper {
 
 	int getTotalRows();
 
+	List<RecycleLifeCommentVO> getCommentsByPost(int recycleLife_num);
+
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.event.EventMapper">
+
+    <!-- 단일 이벤트 조회 -->
+    <select id="selectOne" parameterType="com.project.zerowasteshop.event.EventVO" resultType="com.project.zerowasteshop.event.EventVO">
+        SELECT * FROM event WHERE event_num = #{event_num}
+    </select>
+
+    <!-- 모든 이벤트 조회 -->
+    <select id="selectAll" resultType="com.project.zerowasteshop.event.EventVO">
+        SELECT * FROM event ORDER BY event_num DESC
+    </select>
+
+    <!-- 페이징 처리를 위한 이벤트 조회 -->
+    <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.event.EventVO">
+    	SELECT * FROM event ORDER BY event_num DESC LIMIT #{startRow}, #{pageBlock}
+	</select>
+    <!-- 이벤트 검색 -->
+    <select id="searchList" parameterType="string" resultType="com.project.zerowasteshop.event.EventVO">
+        SELECT * FROM event
+        WHERE event_title LIKE #{searchWord} OR event_content LIKE #{searchWord}
+        ORDER BY event_num DESC
+    </select>
+
+    <!-- 검색 결과에 대한 페이징 처리 -->
+    <select id="searchListPageBlock" parameterType="map" resultType="com.project.zerowasteshop.event.EventVO">
+        SELECT * FROM event
+        WHERE event_title LIKE #{searchWord} OR event_content LIKE #{searchWord}
+        ORDER BY event_num DESC LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 이벤트 추가 -->
+    <insert id="insertOK" parameterType="com.project.zerowasteshop.event.EventVO">
+        INSERT INTO event (event_title, event_content, event_img, event_wdate, event_views)
+        VALUES (#{event_title}, #{event_content}, #{event_img}, NOW(), 0)
+    </insert>
+
+    <!-- 이벤트 삭제 -->
+    <delete id="deleteOK" parameterType="com.project.zerowasteshop.event.EventVO">
+        DELETE FROM event WHERE event_num = #{event_num}
+    </delete>
+
+    <!-- 이벤트 업데이트 -->
+    <update id="updateOK" parameterType="com.project.zerowasteshop.event.EventVO">
+        UPDATE event
+        SET event_title = #{event_title},
+            event_content = #{event_content},
+            event_img = #{event_img}
+        WHERE event_num = #{event_num}
+    </update>
+
+    <!-- 전체 이벤트 수 가져오기 -->
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) FROM event
+    </select>
+
+    <!-- 검색 결과의 총 행 수 가져오기 -->
+    <select id="getSearchTotalRows" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM event
+        WHERE event_title LIKE #{searchWord} OR event_content LIKE #{searchWord}
+    </select>
+    
+    <update id="incrementViewCount" parameterType="int">
+	    UPDATE event
+	    SET event_views = event_views + 1
+	    WHERE event_num = #{event_num}
+	</update>
+
+</mapper>

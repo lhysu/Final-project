@@ -205,6 +205,7 @@ function requestRefund(button) {
         })
         .then(response => response.json())
         .then(data => {
+        	console.log("data:", data); 
             if (data.success) {
                 alert("취소 또는 환불이 완료되었습니다.");
                 location.reload();

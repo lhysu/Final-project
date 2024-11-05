@@ -94,7 +94,15 @@
 span{
 	color: green;
 }
+.pw-under-text{
+	color: red;
+	font-size: 10pt;
+	
+}
 
+.hide{
+	display: none;
+}
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -160,8 +168,20 @@ $(function (){
 	        <label for="pw" class="form-label"> 비밀번호</label>
 	        <div class="memberJoin">
 	        	<input type="password" class="form-control" name="pw" id="pw" value="hi1234" placeholder="비밀번호를 입력하세요" required>
-	        	<div class="invalid-feedback">비밀번호를 입력해주세요</div>
+	        	<div class="invalid-feedback pw-under-text ">비밀번호를 입력해주세요</div>
+	        	<div class="invalidPW pw-under-text hide">8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요</div>
 	        </div>
+	        
+        </div>
+        
+        <div class="item">
+        	<label for="pwCheck" class="form-label"> 비밀번호 확인</label>
+	        <div class="memberJoin">
+	        	<input type="password" class="form-control" name="pwCheck" id="pwCheck" value="hi1234" placeholder="비밀번호를 입력하세요" required>
+	        	<div class="invalid-feedback ">비밀번호를 입력해주세요</div>
+	        	<div class="wrongPW pw-under-text hide ">비밀번호가 일치하지 않습니다.</div>
+	        </div>
+        
         </div>
 		
 		<div class="item">
@@ -224,8 +244,69 @@ $(function (){
 	</div>
 	
 	</div>
+	
+	<!-- 비밀번호 유효성 검사 -->
+	<script>
+		// 1. 비밀번호 입력창 정보 가져오기
+		let elInputPassword = document.querySelector('#pw'); 
+		// 2. 비밀번호 확인 입력창 정보 가져오기
+		let elInputPasswordRetype = document.querySelector('#pwCheck'); 
+		// 3. 실패 메시지 정보 가져오기 (비밀번호 불일치)
+		let elMismatchMessage = document.querySelector('.wrongPW');
+		// 4. 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
+		let elStrongPasswordMessage = document.querySelector('.invalidPW'); 
+		
+		//비밀번호 유효성 검사
+		function strongPassword (str) {
+			  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(str);
+			}
+		//비밀번호 확인
+		function isMatch (password1, password2) {
+			  return password1 === password2;
+			}
+		
+		//비밀번호 유효성 검사 이벤트
+		elInputPassword.onkeyup = function () {
+
+			  // console.log(elInputPassword.value);
+			  // 값을 입력한 경우
+			  if (elInputPassword.value.length !== 0) {
+			    if(strongPassword(elInputPassword.value)) {
+			      elStrongPasswordMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+			    }
+			    else {
+			      elStrongPasswordMessage.classList.remove('hide'); // 실패 메시지가 보여야 함
+			    }
+			  }
+			  // 값을 입력하지 않은 경우 (지웠을 때)
+			  // 모든 메시지를 가린다.
+			  else {
+			    elStrongPasswordMessage.classList.add('hide');
+			  }
+			};
+			
+			//비밀번호 확인 이벤트
+			elInputPasswordRetype.onkeyup = function () {
+
+				  // console.log(elInputPasswordRetype.value);
+				  if (elInputPasswordRetype.value.length !== 0) {
+				    if(isMatch(elInputPassword.value, elInputPasswordRetype.value)) {
+				      elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+				    }
+				    else {
+				      elMismatchMessage.classList.remove('hide'); // 실패 메시지가 보여야 함
+				    }
+				  }
+				  else {
+				    elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+				  }
+				};
+	
+	</script>
+	
 	<!-- 이메일 인증 -->
 	<script>
+
 			let code="";
 			const target = document.getElementById('memberJoinOK');
 			// 이메일 인증번호
@@ -234,7 +315,7 @@ $(function (){
 				var email = document.getElementById("email").value;
 				
 				//이메일 유효성 검사
-				if(email_regex.test(email)){ 
+				if(email_regex.test(email)){ 	//유효성 검사 통과
 					$.ajax({
 					      type : "POST",
 					      url : "/login/mailConfirm",
@@ -251,7 +332,7 @@ $(function (){
 					         
 					      }
 					   })
-				}else{
+				}else{	//유효성 검사 통과 X
 					alert("이메일 형식이 올바르지 않습니다.")
 				}
 			   

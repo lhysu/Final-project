@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.member.MemberMapper">
+
+	
+	<select id="selectOne" resultType="com.project.zerowasteshop.member.MemberVO">
+		select * from member where member_id=#{member_id}
+	</select>
+	
+	<insert id="insertOK">
+		insert into member(member_id,name,pw,email,phone_number,postcode,address,address_detail,adCheck) 
+		values(#{member_id},#{name},#{pw},#{email},#{phone_number},#{postcode},#{address},#{address_detail},#{adCheck})
+	</insert>
+	
+	<update id="updateOK">
+		update member set member_id=#{member_id},pw=#{pw},name=#{name},email=#{email},phone_number=#{phone_number},
+		postcode=#{postcode},address=#{address},address_detail=#{address_detail} where member_num=#{member_num} 
+	</update>
+	
+	<delete id="deleteOK">
+		delete from member where member_num=#{member_num}
+	</delete>
+	
+	<select id="idCheck" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id from member where member_id=#{member_id}
+	</select>
+	
+	<select id="login" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id from member where member_id=#{member_id} and pw=#{pw} and adCheck=false
+	</select>
+	
+	<select id="selectId" resultType="com.project.zerowasteshop.member.MemberVO">
+		select member_id, name from member where name=#{name} and email=#{email} and adCheck=false
+	</select>
+
+	
+	<!-- 포인트 차감 로직 -->
+	<update id="deductPoints">
+		update member set points=#{remainingPoints} where member_id=#{member_id} 
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePW">
+		update member set pw=#{temppw} where member_id=#{member_id} and name=#{name} and email=#{email} 
+	</update>
+</mapper>

@@ -60,7 +60,7 @@
 	    ORDER BY review_num ASC
 	</select>
 
-	<insert id="insertOK">
+	<!-- <insert id="insertOK">
 		insert into product(product_name, price, point, company, product_img, category)
 		values(#{product_name},#{price},#{point},#{company},#{product_img},#{category})
 	</insert>
@@ -73,7 +73,7 @@
 	
 	<delete id="deleteOK">
 		delete from product where product_num=#{product_num}
-	</delete>
+	</delete> -->
 	
 	<!-- <select id="selectAll"
 		resultType="com.project.zerowasteshop.cart.model.CartVO">
@@ -117,6 +117,11 @@
     <!-- 모든 상품 정보 조회 -->
     <select id="getProducts" resultType="com.project.zerowasteshop.product.model.ProductVO">
         SELECT * FROM product;
+    </select>
+    
+     <!-- findProductByNum 매핑 -->
+    <select id="findProductByNum" parameterType="long" resultType="com.project.zerowasteshop.product.model.ProductVO">
+        SELECT * FROM product WHERE product_num = #{productNum}
     </select>
 
 </mapper>

@@ -68,6 +68,10 @@ public class RecycleLifeService {
 		return mapper.getLikeCount(recycleLife_num);
 	}
 
+	public RecycleLifeVO getPost(int recycleLife_num) {
+		return mapper.getPost(recycleLife_num);
+	}
+
 }
 
 	
