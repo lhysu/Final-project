@@ -16,7 +16,7 @@ public interface ProductMapper {
 //	public List<CartVO> selectAll();
 
 	public ProductVO selectOne(ProductVO vo);
-	public List<ReviewVO> selectAllReview(ProductVO vo);
+//	public List<ReviewVO> selectAllReview(ProductVO vo);
 
 	public int updateOK(ProductVO vo);
 	public int deleteOK(ProductVO vo);

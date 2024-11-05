@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <meta charset="utf-8">
-    <title>상품삭제</title>
+    <title>리뷰삭제</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -98,17 +97,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body>
 	
-			<!-- 헤더 시작 -->
-	 <div th:replace="~{header :: header}"></div>
-    <!-- 해더 끝 -->
+<div th:replace="~{header_admin :: header}"></div>
 	
 	<div th:fragment="content" class="content">
 		<div class="custom-form">
-			<form action="/admin/product/deleteOK" method="post">
-				<input type="hidden" name="product_num" th:value="${param.product_num}">
+			<form action="/admin/review/deleteOK" method="post">
+				<input type="hidden" name="review_num" th:value="${param.review_num}">
 				<table id="deleteTable">
 					<tr>
-						<th>[[${param.product_num}]]번 상품을 정말 삭제 하시겠습니까?</th>
+						<th>[[${param.review_num}]]번 리뷰를 정말 삭제 하시겠습니까?</th>
 					</tr>
 					<tr>
 						<th><input type="submit" value="삭제완료"></th>

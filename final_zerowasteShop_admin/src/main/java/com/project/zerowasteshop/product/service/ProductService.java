@@ -30,9 +30,9 @@ public class ProductService {
 		return mapper.selectOne(vo);
 	}
 	
-	public List<ReviewVO> selectAllReview(ProductVO vo) {
-		return mapper.selectAllReview(vo);
-	}
+//	public List<ReviewVO> selectAllReview(ProductVO vo) {
+//		return mapper.selectAllReview(vo);
+//	}
 
 	public int updateOK(ProductVO vo) {
 		return mapper.updateOK(vo);

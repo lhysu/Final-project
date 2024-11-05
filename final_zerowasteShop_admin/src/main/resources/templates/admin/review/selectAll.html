@@ -3,7 +3,7 @@
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
-    <title>내가 쓴 리뷰</title>
+    <title>리뷰 관리</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -115,11 +115,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body>
 	<!-- 헤더 시작 -->
-    <div th:replace="header :: header"></div>
+	 <div th:replace="~{header_admin :: header}"></div>
     <!-- 헤더 끝 -->
     
-	<div class ="content" th:fragment="content" style="margin-top : 220px">
+	<div class ="content" th:fragment="content" style="margin-top : 160px">
 	
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+            <h1>리뷰 관리</h1>
+		</div>	
 		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
 			<thead>
 				<tr>
@@ -135,7 +139,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<tbody>
 				<th:block th:each="vo : ${list}">
 					<tr>
-						<td><a th:href="|/review/selectOne?review_num=${vo.review_num}|">[[${vo.review_num}]]</a></td>
+						<td><a th:href="|/admin/review/selectOne?review_num=${vo.review_num}|">[[${vo.review_num}]]</a></td>
 						<td>[[${vo.member_id}]]</td>
 						<td th:utext="${vo.product_name}"></td>
 						<th:block th:if="${vo.review_img.startsWith('http')}">
@@ -158,19 +162,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<nav>
 			    			<ul class="pagination justify-content-center">
 			    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
-			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage - 1}|">이전</a>
+			                        <a class="page-link" th:href="|/admin/review/selectAll?cpage=${cpage - 1}|">이전</a>
 			                    </li>
 								<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
 									<th:block th:if="${param.searchKey == null}">
 										<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-			                            	<a class="page-link" th:href="|/review/selectAll?cpage=${i}|">[[${i}]]</a>
+			                            	<a class="page-link" th:href="|/admin/review/selectAll?cpage=${i}|">[[${i}]]</a>
 			                        	</li>	
 									</th:block>
 									
 									<th:block th:if="${param.searchKey != null}" >
 										<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
 											<li class="page-item" th:classappend="${i == cpage} ? 'active'">
-					                            <a class="page-link" th:href="|/review/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+					                            <a class="page-link" th:href="|/admin/review/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
 					                        </li>							
 										</th:block>
 									</th:block>
@@ -178,7 +182,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								</th:block>
 									
 								<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
-			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage + 1}|">다음</a>
+			                        <a class="page-link" th:href="|/admin/review/selectAll?cpage=${cpage + 1}|">다음</a>
 			                    </li>
 						
 							</ul>

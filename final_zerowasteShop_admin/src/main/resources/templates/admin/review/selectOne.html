@@ -3,7 +3,7 @@
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
-    <title>상품상세</title>
+    <title>리뷰상세</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -74,48 +74,46 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body>
 
-	<!-- 헤더 시작 -->
-	 <div th:replace="~{header :: header}"></div>
-    <!-- 해더 끝 -->
+		<!-- 헤더 시작 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 헤더 끝 -->
 	
 	<div th:fragment="content" class = "content">
 		<table id="selectOneTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
             <thead>
                 <tr>
-                    <th>상품번호</th>
-                    <th>상품이름</th>
-                    <th>가격</th>
-                    <th>포인트</th>
-                    <th>제조사</th>
-                    <th>상품이미지</th>
-                    <th>카테고리</th>
-                    <th>별점</th>
+                    <th>리뷰번호</th>
+					<th>회원아이디</th>
+					<th>상품이름</th>
+					<th>리뷰이미지</th>
+					<th>리뷰내용</th>
+					<th>별점</th>
+					<th>작성일</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>[[${vo2.product_num}]]</td>
-                    <td th:utext="${vo2.product_name}"></td>
-                    <td>[[${vo2.price}]]</td>
-                    <td>[[${vo2.point}]]</td>
-                    <td>[[${vo2.company}]]</td>
-                    <th:block th:if="${vo2.product_img.startsWith('http')}">
-                        <td><img style="width: 100px;" th:src="${vo2.product_img}" alt=""></td>
+                    <td>[[${vo2.review_num}]]</td>
+                    <td>[[${vo2.member_id}]]</td>
+                    <td th:utext="${vo2.product_name}"></td>     
+                    <th:block th:if="${vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="${vo2.review_img}" alt=""></td>
                     </th:block>
                     
-                    <th:block th:if="${!vo2.product_img.startsWith('http')}">
-                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.product_img}|" alt=""></td>
+                    <th:block th:if="${!vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.review_img}|" alt=""></td>
                     </th:block>
-                    <td>[[${vo2.category}]]</td>
+                    <td>[[${vo2.content}]]</td>
                     <td>[[${vo2.rating}]]</td>
+                    <td th:text="${#dates.format(vo2.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="8" style="text-align: left;">
                         <div style="display: flex; justify-content: flex-start; gap: 10px; margin-top: 10px;">
-                            <a th:href="|/admin/product/update?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품수정</a> 
-                            <a th:href="|/admin/product/delete?product_num=${vo2.product_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">상품삭제</a>
+                            <a th:href="|/admin/review/update?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰수정</a> 
+                            <a th:href="|/admin/review/delete?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰삭제</a>
                         </div>
                     </td>
                 </tr>

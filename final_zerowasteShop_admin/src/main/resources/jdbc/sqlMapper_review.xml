@@ -19,24 +19,24 @@
 	    ORDER BY review_num ASC limit #{startRow},#{pageBlock}
 	</select>
 
-	<select id="selectAllPageBlock"
+	<!-- <select id="selectAllPageBlock"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
 		SELECT * 
 	    FROM review
 	    WHERE member_id = #{userID}
 	    ORDER BY review_num ASC limit #{startRow},#{pageBlock}
-	</select>
+	</select> -->
 	
 	<select id="getTotalRowsAdmin" resultType="int">
 		select count(*) total_rows
 		from review
 	</select>
 	
-	<select id="getTotalRows" resultType="int">
+	<!-- <select id="getTotalRows" resultType="int">
 		select count(*) total_rows
 		from review
 		where member_id = #{userID}
-	</select>
+	</select> -->
 	
 	<!-- <select id="searchListPageBlockCompany"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
@@ -64,12 +64,12 @@
 		from review where review_name like #{searchWord} 
 	</select> -->
 	
-	<select id="selectOne"
+	<!-- <select id="selectOne"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
 		SELECT * 
 		FROM review  
 		WHERE review_num = #{review_num};
-	</select>
+	</select> -->
 	
 		<select id="selectOneAdmin"
 		resultType="com.project.zerowasteshop.review.model.ReviewVO">
@@ -78,12 +78,12 @@
 		WHERE review_num = #{review_num};
 	</select>
 	
-	<select id="selectProduct"
+	<!-- <select id="selectProduct"
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		SELECT * 
 		FROM product  
 		WHERE product_num = #{product_num};
-	</select>
+	</select> -->
 	
 	<update id = "updateProductRating">
 		UPDATE product
@@ -91,7 +91,7 @@
 		where product_num = #{product_num}
 	</update>
 
-	<insert id="insertOK">
+	<!-- <insert id="insertOK">
 		insert into review(member_id, product_num, content, rating, review_img, createdDate)
 		values(#{member_id},#{product_num}, #{content},#{rating},#{review_img}, NOW())
 	</insert>
@@ -100,7 +100,7 @@
 		update review set
 		content=#{content}, rating=#{rating}, review_img=#{review_img}, createdDate= NOW()
 		where review_num=#{review_num}
-	</update>	
+	</update>	 -->
 	
 	<update id="updateOKAdmin">
 		update review set
@@ -108,9 +108,9 @@
 		where review_num=#{review_num}
 	</update>	
 	
-	<delete id="deleteOK">
+	<!-- <delete id="deleteOK">
 		delete from review where review_num=#{review_num}
-	</delete>
+	</delete> -->
 	
 	<delete id="deleteOKAdmin">
 		delete from review where review_num=#{review_num}
