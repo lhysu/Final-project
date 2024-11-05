@@ -21,63 +21,6 @@
 	select * from order_item where merchant_uid = #{merchant_uid}
 </select>
 
-<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
-    FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON i.product_num = p.product_num
-    order by o.merchant_uid desc    
-    LIMIT #{startRow}, #{pageBlock}
-</select>
-
-<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
-    FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON o.product_num = p.product_num
-	where member_id like #{searchWord}
-	order by o.merchant_uid desc 
-	limit #{startRow}, #{pageBlock}
-</select>
-
-<select id="searchListPageBlockPname" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
-    FROM `order` o
-    JOIN order_item i ON o.merchant_uid = i.merchant_uid
-	join product p on o.product_num = p.product_num
-	where product_name like #{searchWord}
-	order by o.merchant_uid desc 
-	limit #{startRow}, #{pageBlock}
-</select>
-
-<select id="searchListPageBlockPayCheck" resultType="com.project.zerowasteshop.order.OrderVO">
-	select o.*,p.product_name
-	from `order` o
-	join product p on o.product_num = p.product_num
-	where payCheck like #{searchWord}
-	order by o.merchant_uid desc 
-	limit #{startRow}, #{pageBlock}
-</select>
-
-<select id="getTotalRows" resultType="java.lang.Integer">
-	select count(*) total_rows from `order` 
-</select>
-
-<select id="getSearchTotalRowsId" resultType="java.lang.Integer">
-	select count(*) total_rows from `order` where member_id like #{searchWord}
-</select>
-
-<select id="getSearchTotalRowsPname" resultType="java.lang.Integer">
-	select count(*) total_rows 
-	from `order` o
-	join product p on o.product_num = p.product_num
-	where product_name like #{searchWord}
-</select>
-
-<select id="getSearchTotalRowsPayCheck" resultType="java.lang.Integer">
-	select count(*) total_rows from `order` where payCheck like #{searchWord}
-</select>
-
 <!-- 쿠폰 코드 확인 -->
 <select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.coupon.CouponVO">
 	select c.*
@@ -85,7 +28,7 @@
 	where member_id = #{member_id} and used = 0
 </select>
 
-
+<!-- 최종 주문 금액 얻어오기 -->
 <select id="getOrderAmount" resultType="int">
 	select final_price from `order` where merchant_uid = #{merchant_uid}
 </select>
