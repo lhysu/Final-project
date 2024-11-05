@@ -5,13 +5,12 @@
 
 <mapper namespace="com.project.zerowasteshop.order.OrderMapper">
 
-<update id="updateOK">
-	update coupon set coupon_name=#{coupon_name}, use_sdate=#{use_sdate}, use_edate=#{use_edate},discount_rate=#{discount_rate}
-	where coupon_code = #{coupon_code}
-</update>
+<delete id="deleteOrderItem">
+	delete from order_item where merchant_uid = #{merchant_uid}
+</delete>
 
-<delete id="deleteCoupon">
-	delete from coupon where coupon_code = #{coupon_code}
+<delete id="deleteOrder">
+	delete from `order` where merchant_uid = #{merchant_uid}
 </delete>
 
 <select id="selectOneOrder" resultType="com.project.zerowasteshop.order.OrderVO">
@@ -32,21 +31,21 @@
 </select>
 
 <select id="searchListPageBlockId" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
-    JOIN product p ON i.product_num = p.product_num
+    JOIN product p ON o.product_num = p.product_num
 	where member_id like #{searchWord}
 	order by o.merchant_uid desc 
 	limit #{startRow}, #{pageBlock}
 </select>
 
 <select id="searchListPageBlockPname" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
-	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity,i.product_num
+	SELECT o.*, p.product_name, p.price, p.point,p.product_img,i.quantity
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
-	join product p on i.product_num = p.product_num
-	where i.product_name like #{searchWord}
+	join product p on o.product_num = p.product_num
+	where product_name like #{searchWord}
 	order by o.merchant_uid desc 
 	limit #{startRow}, #{pageBlock}
 </select>
@@ -70,31 +69,20 @@
 
 <select id="getSearchTotalRowsPname" resultType="java.lang.Integer">
 	select count(*) total_rows 
-	from order_item i
-	join product p on i.product_num = p.product_num
-	where p.product_name like #{searchWord}
+	from `order` o
+	join product p on o.product_num = p.product_num
+	where product_name like #{searchWord}
 </select>
 
-<!-- 쿠폰 코드 확인 -->
-<select id="checkCouponCode" resultType="int">
-	select count(*) from coupon where coupon_code = #{couponCode} and member_id IS NULL
+<select id="getSearchTotalRowsPayCheck" resultType="java.lang.Integer">
+	select count(*) total_rows from `order` where payCheck like #{searchWord}
 </select>
-
-<!-- 쿠폰 등록 -->
-<update id="registerCoupon">
-	update coupon set member_id = #{member_id} where coupon_code = #{couponCode}
-</update>
-
-<insert id="createCoupons">
-	insert into coupon(coupon_code,member_id, coupon_name, use_sdate, use_edate,discount_rate,used)
-	values(#{coupon_code},#{member_id},#{coupon_name},#{use_sdate},#{use_edate},#{discount_rate},#{used})
-</insert>
 
 <!-- 쿠폰 코드 확인 -->
 <select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.coupon.CouponVO">
 	select c.*
 	from coupon c
-	where member_id = #{member_id}
+	where member_id = #{member_id} and used = 0
 </select>
 
 
@@ -127,7 +115,7 @@
 <!-- 나의 구매 내역 정보 불러오기 -->
 <select id="selectAllPageBlockByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
     SELECT DISTINCT o.merchant_uid, o.order_date, p.product_name, p.price, p.point, p.product_img, 
-                    i.quantity, i.product_num, d.delivery_status, d.delivery_date
+                    i.quantity, i.product_num, d.delivery_status, d.delivery_date,i.order_item_id,o.order_state,o.final_price
     FROM (
         SELECT *
         FROM `order`
@@ -136,7 +124,7 @@
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
     JOIN product p ON i.product_num = p.product_num
     LEFT JOIN delivery d ON d.merchant_uid = o.merchant_uid  <!-- delivery 테이블을 LEFT JOIN으로 추가 -->
-    ORDER BY o.merchant_uid DESC
+    ORDER BY o.order_date DESC
     LIMIT #{startRow}, #{pageBlock}
 </select>
 
@@ -150,8 +138,22 @@
     FROM `order` o
     JOIN order_item i ON o.merchant_uid = i.merchant_uid
     JOIN product p ON i.product_num = p.product_num
-    where o.merchant_uid = #{merchant_uid} and i.product_num = #{product_num}
+    where o.merchant_uid = #{merchant_uid} 
     ORDER BY o.merchant_uid DESC
+</select>
+
+<!--베스트셀러 select문  -->
+<select id="findTopSellingProducts" resultType="com.project.zerowasteshop.order.BestsellerDTO" parameterType="int">
+    SELECT 
+        product_num, 
+        SUM(quantity) AS total_sales 
+    FROM 
+        order_item 
+    GROUP BY 
+        product_num 
+    ORDER BY 
+        total_sales DESC 
+    LIMIT #{limit}
 </select>
 
 </mapper>

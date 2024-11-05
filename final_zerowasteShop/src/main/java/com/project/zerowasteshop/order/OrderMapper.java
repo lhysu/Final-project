@@ -53,6 +53,11 @@ public interface OrderMapper {
 	void deleteOrder(String merchant_uid);
 
 	void deleteOrderItem(String merchant_uid);
+	
+    /**
+     * 전체 판매량을 기준으로 상위 N개의 베스트셀러 상품을 조회
+     */
+    List<BestsellerDTO> findTopSellingProducts(int limit);
 
 
 }

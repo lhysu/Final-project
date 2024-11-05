@@ -142,4 +142,18 @@
     ORDER BY o.merchant_uid DESC
 </select>
 
+<!--베스트셀러 select문  -->
+<select id="findTopSellingProducts" resultType="com.project.zerowasteshop.order.BestsellerDTO" parameterType="int">
+    SELECT 
+        product_num, 
+        SUM(quantity) AS total_sales 
+    FROM 
+        order_item 
+    GROUP BY 
+        product_num 
+    ORDER BY 
+        total_sales DESC 
+    LIMIT #{limit}
+</select>
+
 </mapper>

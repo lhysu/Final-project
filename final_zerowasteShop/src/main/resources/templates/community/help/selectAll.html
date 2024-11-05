@@ -1,6 +1,7 @@
 <!-- src/main/resources/templates/community/help/selectAll.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>고객센터</title>
@@ -51,6 +52,7 @@
     <div th:replace="~{header_community :: header}"></div>     
     
     <div class="container my-4" style="padding-top:250px;">
+    
         <h1 class="mb-4"><a th:href="@{/community/help/selectAll}" >고객센터</a></h1>
         
         <!-- 검색 폼 -->
@@ -120,9 +122,14 @@
         </nav>
         <!-- 페이징 UI 끝 -->
 
-        <!-- 새 문의 등록 버튼 -->
+        <!-- 문의사항 등록 버튼 -->
         <div class="mt-4">
-            <a th:href="@{/community/help/insert}" class="btn btn-primary-custom">새 문의 등록</a>
+			<!-- 로그인한 사용자에게만 등록 버튼 표시 -->
+			<a th:if="${#authentication != null and #authentication.authenticated}" 
+			   th:href="@{/community/help/insert}" class="btn btn-primary-custom">문의사항 등록</a>
+			<!-- 로그인하지 않은 사용자에게는 로그인 페이지로 연결되는 버튼 표시 -->
+			<a th:if="${#authentication == null or !#authentication.authenticated}" 
+			   th:href="@{/login}" class="btn btn-primary-custom">문의사항 등록 (로그인 필요)</a>
         </div>
     </div>
     
