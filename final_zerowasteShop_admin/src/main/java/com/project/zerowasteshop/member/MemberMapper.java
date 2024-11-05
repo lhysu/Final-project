@@ -17,7 +17,7 @@ public interface MemberMapper {
 //
 //	public int deleteOK(MemberVO vo);
 //
-	public MemberVO idCheck(String member_id);
+//	public MemberVO idCheck(String member_id);
 //
 //	public MemberVO login(MemberVO vo);
 //
