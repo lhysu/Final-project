@@ -49,7 +49,7 @@
 <body>
     
     <!-- 헤더 삽입 -->
-    <div th:replace="~{header_community :: header}"></div>     
+    <div th:replace="~{header_community :: header}"></div>          
     
     <div class="container my-4" style="padding-top:250px;">
     
@@ -121,8 +121,7 @@
             </ul>
         </nav>
         <!-- 페이징 UI 끝 -->
-
-        <!-- 문의사항 등록 버튼 -->
+         <!-- 문의사항 등록 버튼 -->
         <div class="mt-4">
 			<!-- 로그인한 사용자에게만 등록 버튼 표시 -->
 			<a th:if="${#authentication != null and #authentication.authenticated}" 
@@ -131,6 +130,7 @@
 			<a th:if="${#authentication == null or !#authentication.authenticated}" 
 			   th:href="@{/login}" class="btn btn-primary-custom">문의사항 등록 (로그인 필요)</a>
         </div>
+
     </div>
     
     <!-- 푸터 삽입 -->

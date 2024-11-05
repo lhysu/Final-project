@@ -54,7 +54,7 @@
         <!-- 공지사항 이미지 -->
         <div class="row my-4">
             <div class="col-12 text-center">
-                <img th:src="@{'/uploadimgPath/' + ${vo2.notice_img}}" alt="Notice Image" class="img-fluid notice-image">
+                <img th:src="@{'/uploadimgPath/' + ${vo2.notice_img}}" alt="Notice Image" class="img-fluid notice-image" onerror="this.style.display='none';">
             </div>
         </div>
         
