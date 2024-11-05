@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <title>리뷰상세</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 160px; }
+        
+        #selectOneTable {
+            width: 100%; /* 테이블 너비를 100%로 설정 */
+            border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+            margin: 20px 0; /* 상하 마진 설정 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+        }
+
+        #selectOneTable thead {
+            color: black; /* 헤더 글자색 */
+        }
+
+        #selectOneTable th,
+        #selectOneTable td {
+            padding: 15px; /* 셀 내 여백 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+        }
+
+        #selectOneTable tbody tr:hover {
+            background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+        }
+
+        #selectOneTable img {
+            border-radius: 5px; /* 이미지 모서리 둥글게 */
+        }
+
+        #selectOneTable tfoot {
+            background-color: #f8f9fa; /* 푸터 배경색 */
+            font-weight: bold; /* 푸터 글자 두껍게 */
+        }
+
+        #selectOneTable tfoot .btn {
+            margin: 0; /* 버튼 마진 설정 */
+        }
+    </style>
+</head>
+<body>
+
+		<!-- 헤더 시작 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 헤더 끝 -->
+	
+	<div th:fragment="content" class = "content">
+		<table id="selectOneTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
+            <thead>
+                <tr>
+                    <th>리뷰번호</th>
+					<th>회원아이디</th>
+					<th>상품이름</th>
+					<th>리뷰이미지</th>
+					<th>리뷰내용</th>
+					<th>별점</th>
+					<th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[[${vo2.review_num}]]</td>
+                    <td>[[${vo2.member_id}]]</td>
+                    <td th:utext="${vo2.product_name}"></td>     
+                    <th:block th:if="${vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="${vo2.review_img}" alt=""></td>
+                    </th:block>
+                    
+                    <th:block th:if="${!vo2.review_img.startsWith('http')}">
+                        <td><img style="width: 100px;" th:src="|/uploadimgPath/${vo2.review_img}|" alt=""></td>
+                    </th:block>
+                    <td>[[${vo2.content}]]</td>
+                    <td>[[${vo2.rating}]]</td>
+                    <td th:text="${#dates.format(vo2.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" style="text-align: left;">
+                        <div style="display: flex; justify-content: flex-start; gap: 10px; margin-top: 10px;">
+                            <a th:href="|/admin/review/update?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰수정</a> 
+                            <a th:href="|/admin/review/delete?review_num=${vo2.review_num}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">리뷰삭제</a>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+	</div>
+	
+	
+	
+	<!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>
