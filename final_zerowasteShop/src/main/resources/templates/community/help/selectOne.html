@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>문의 상세</title>
@@ -81,12 +82,15 @@
         <div class="row my-4">
             <div class="col-12">
                 <!-- 수정 및 삭제 버튼 -->
-                <a th:href="@{'/community/help/update?help_num=' + ${vo2.help_num}}" class="btn btn-primary me-2">
+                <!--  <a th:href="@{'/community/help/update?help_num=' + ${vo2.help_num}}" class="btn btn-primary me-2">
                     <i class="fas fa-edit"></i> 수정
-                </a>
-                <a th:href="@{'/community/help/delete?help_num=' + ${vo2.help_num}}" class="btn btn-danger me-2">
-                    <i class="fas fa-trash-alt"></i> 삭제
-                </a>
+                </a> -->
+                <!-- 삭제 버튼 -->
+				<a th:if="${#authentication.name == vo2.member_id}" 
+				   th:href="@{'/community/help/delete?help_num=' + ${vo2.help_num}}" 
+				   class="btn btn-danger me-2">
+				    <i class="fas fa-trash-alt"></i> 삭제
+				</a>
                 <a th:href="@{'/community/help/selectAll'}" class="btn btn-secondary">
                     <i class="fas fa-list"></i> 목록으로
                 </a>

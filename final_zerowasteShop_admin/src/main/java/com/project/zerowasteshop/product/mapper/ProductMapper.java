@@ -44,5 +44,10 @@ public interface ProductMapper {
     
     // 모든 상품 정보 가져오기
     List<ProductVO> getProducts();
+    
+    /**
+     * 특정 product_num을 기반으로 상품 정보를 조회
+     */
+    ProductVO findProductByNum(Long productNum);
 
 }

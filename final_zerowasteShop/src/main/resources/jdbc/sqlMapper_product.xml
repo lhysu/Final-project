@@ -118,5 +118,10 @@
     <select id="getProducts" resultType="com.project.zerowasteshop.product.model.ProductVO">
         SELECT * FROM product;
     </select>
+    
+     <!-- findProductByNum 매핑 -->
+    <select id="findProductByNum" parameterType="long" resultType="com.project.zerowasteshop.product.model.ProductVO">
+        SELECT * FROM product WHERE product_num = #{productNum}
+    </select>
 
 </mapper>
