@@ -185,6 +185,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		        <input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}" required>
 		    </div>
 		    <div class="form-group">
+		        
+		        <input type="hidden" id="product_num" name="product_num" th:value="${vo2.product_num}" required>
+		    </div>
+		    <div class="form-group">
 		        <label for="product_name">상품이름</label>[[${vo2.product_name}]]
 		        <input type="hidden" id="product_name" name="product_name" th:value="${vo2.product_name}" required>
 		    </div>
