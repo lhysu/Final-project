@@ -42,7 +42,7 @@
   	
   	<select id="searchList" parameterType="string" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
         select * from recyclelife
-        where recycleLife_title like #{searchWord} or recycleLife_content like #{searchWord}
+        where recycleLife_title like #{searchWord} or recycleLife_num like #{searchWord}
         order by recycleLife_num desc
     </select>
   	
