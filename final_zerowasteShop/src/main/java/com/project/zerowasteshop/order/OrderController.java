@@ -174,6 +174,11 @@ public class OrderController {
 			totalPageCount = total_rows/pageBlock;
 		}
 		
+		//구매내역이 없을 때 상품 페이지네이션 수정
+		if(totalPageCount==0) {
+			totalPageCount +=1;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
 		model.addAttribute("totalPageCount",totalPageCount);
 		
 		
