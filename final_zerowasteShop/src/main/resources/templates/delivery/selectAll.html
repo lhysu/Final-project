@@ -83,7 +83,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="vo : ${list}">
+					<th:block th:each="vo : ${Dlist}">
 						<tr>
 							<td><a th:href="|/delivery/selectOne?delivery_num=${vo.delivery_num}|">[[${vo.delivery_num}]]</a></td>
 							<td>[[${vo.merchant_uid}]]</td>

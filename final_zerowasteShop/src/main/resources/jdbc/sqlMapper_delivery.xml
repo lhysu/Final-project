@@ -37,5 +37,11 @@
 	  <update id="updateDeliveryState">
 	  	update delivery set delivery_status=#{delivery_status} where merchant_uid = #{merchant_uid}	  
 	  </update>
+	  
+	  <select id="selectAllByUserId" parameterType="String" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	    SELECT delivery_num, merchant_uid, product_name, delivery_status
+	    FROM delivery
+	    WHERE member_id = #{user_id}
+		</select>
   
   </mapper>

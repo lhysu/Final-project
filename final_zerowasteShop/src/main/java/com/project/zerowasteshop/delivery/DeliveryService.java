@@ -74,4 +74,8 @@ public class DeliveryService {
 		mapper.saveDelivery(deliveryInfo);
 		
 	}
+
+	public List<DeliveryVO> selectAllByUserId(String user_id) {
+		return mapper.selectAllByUserId(user_id);
+	}
 }

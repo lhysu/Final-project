@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.zerowasteshop.recyclelife.RecycleLifeVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -42,13 +43,17 @@ public class DeliveryController {
 		
 	
 	@GetMapping("/delivery/selectAll")
-	public String selectAll(Model model,
+	public String selectAll(Model model, HttpSession session,
 			@RequestParam(defaultValue = "1") int cpage,
             @RequestParam(defaultValue = "5") int pageBlock) {
 		log.info("/delivery/selectAll");
 		log.info("cpage : {}", cpage);
         log.info("pageBlock : {}", pageBlock);
 		
+        String user_id = (String) session.getAttribute("user_id"); // session에서 user_id 가져오기
+        List<DeliveryVO> Dlist = service.selectAllByUserId(user_id); // user_id별 데이터 조회
+        model.addAttribute("Dlist", Dlist);
+        
 		List<DeliveryVO> list = service.selectAllPageBlock(cpage, pageBlock);
 		log.info("list.size() : [}", list.size());
 		
