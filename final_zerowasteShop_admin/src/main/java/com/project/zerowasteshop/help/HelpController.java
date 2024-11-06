@@ -140,7 +140,7 @@ public class HelpController {
         model.addAttribute("cpage", cpage);
         model.addAttribute("searchWord", searchWord);
 
-        return "community/help/searchList";
+        return "community/help/selectAll";
     }
 
     // h_insertOK(HelpVO) : String
