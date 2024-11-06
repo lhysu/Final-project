@@ -4,6 +4,10 @@
   
   <mapper namespace="com.project.zerowasteshop.recyclelife.RecycleLifeMapper">
   
+    <select id="getPost" parameterType="int" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+    SELECT * FROM recyclelife WHERE recycleLife_num = #{recycleLife_num}
+	</select>
+  
   	<insert id="insertOK" parameterType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
   		insert into recyclelife (member_id, recycleLife_title, recycleLife_content, recycleLife_views, recycleLife_likes, recycleLife_img, recycleLife_wdate)
   		values (#{member_id}, #{recycleLife_title}, #{recycleLife_content}, #{recycleLife_views}, #{recycleLife_likes}, #{recycleLife_img}, NOW())
@@ -56,20 +60,21 @@
 	    LIMIT 3
 	</select>
 	
-	
+	<!-- 좋아요 증가 -->
     <update id="increaseLikeCount" parameterType="int">
         UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes + 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
 	
-	
+	<!-- 좋아요 감소 -->
     <update id="decreaseLikeCount" parameterType="int">
         UPDATE recyclelife
         SET recycleLife_likes = recycleLife_likes - 1
         WHERE recycleLife_num = #{recycleLife_num}
     </update>
-   
+
+    <!-- 좋아요 수 조회 -->
     <select id="getLikeCount" parameterType="int" resultType="Integer">
         SELECT recycleLife_likes
         FROM recyclelife
