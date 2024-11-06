@@ -56,11 +56,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    color: #ffcc00; /* 별 색상 */
 		    font-size: 18px; /* 별 크기 */
 		}
-        .button-container {
+        #cartForm {
             margin-top: 20px;
         }
         
-		.button-container a {
+		#cartForm button {
 		    margin-right: 10px; /* 버튼 간격 */
 		    padding: 10px 20px; /* 버튼 패딩 */
 		    border-radius: 5px; /* 버튼 모서리 둥글게 */
@@ -80,7 +80,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    transition: background-color 0.3s, transform 0.2s; /* 애니메이션 효과 */
 		}
 		
-		.button-container a:hover {
+		#cartForm button:hover {
 		    background-color: #007bff; /* 호버 색상 */
 		    color: white; /* 호버 시 글자색 */
 		    transform: translateY(-2px); /* 호버 시 약간 위로 이동 */
@@ -265,7 +265,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     				<h5 class="mb-3" style="color: green;">탄소 중립 포인트 : [[${vo2.point}]]</h5>
                 </div>
                 <div class="button-container">
-                    <a th:href="|/cart/insertOK?product_num=${vo2.product_num}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary	">장바구니 추가</a>
+                    
+                    <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
+				        <input type="hidden" name="product_num" th:value="${vo2.product_num}">
+				        <input type="hidden" name="count" id="quantityInput" th:value="${vo2.count}">
+				        <input type="hidden" name="price" th:value="${vo2.price}">
+				        <input type="hidden" name="product_img" th:value="${vo2.product_img}">
+				        <input type="hidden" name="product_name" th:value="${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}">
+				        
+				        <button type="submit" class="btn btn-primary">장바구니 추가</button> <!-- type="submit" 추가 -->
+				    </form>
                     <form id="buyNowForm" action="/order/order" method="POST" style="display:inline;">
 				        <input type="hidden" name="product_num" th:value="${vo2.product_num}">
 				        <input type="hidden" name="member_id" th:value="${session.user_id}">
@@ -378,6 +387,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         
      // 'quantityInput' hidden input에 새로운 수량 업데이트
         document.getElementById('quantityInput').value = currentQuantity;
+       
      	// AJAX 요청으로 수량 저장
         //updateQuantityInProduct(quantityElement.id.split('-')[1], currentQuantity);
     }
