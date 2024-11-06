@@ -79,12 +79,16 @@ public class ReviewService {
 //	}
 	
 
-//	public ProductVO selectProduct(ReviewVO vo) {
-//		return mapper.selectProduct(vo);
-//	}
+	public ProductVO selectProduct(ReviewVO vo) {
+		return mapper.selectProduct(vo);
+	}
 
 	public int updateProductRating(int product_num, double rating) {
 		return mapper.updateProductRating(product_num, rating);
+	}
+	
+	public int updateProductRating2(int product_num) {
+		return mapper.updateProductRating2(product_num);
 	}
 
 

@@ -12,8 +12,8 @@ public interface ReviewMapper {
 
 //	//추상메소드명(예:insertOK)이 sqlMapper_*.xml 문서의 id와 같아야한다.
 //	public int insertOK(ReviewVO vo);
-//
-//	public ProductVO selectProduct(ReviewVO vo);
+
+	public ProductVO selectProduct(ReviewVO vo);
 //
 //	public ReviewVO selectOne(ReviewVO vo);
 	public ReviewVO selectOneAdmin(ReviewVO vo);
@@ -35,4 +35,5 @@ public interface ReviewMapper {
 //	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock, String userID);
 
 	public int updateProductRating(int product_num, double rating);
+	public int updateProductRating2(int product_num);
 }

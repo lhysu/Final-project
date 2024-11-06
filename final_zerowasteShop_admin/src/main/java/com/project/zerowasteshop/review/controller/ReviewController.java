@@ -77,8 +77,16 @@ public class ReviewController {
  	}
 
  	@GetMapping("/admin/review/delete")
- 	public String deleteAdmin() {
+ 	public String deleteAdmin(ReviewVO vo, Model model) {
  		log.info("/admin/review/delete");
+ 		
+ 		log.info("vo:{}", vo);
+
+ 		ReviewVO vo2 = service.selectOneAdmin(vo);
+ 		log.info("vo2:{}", vo2);
+
+ 		model.addAttribute("vo2", vo2);
+ 		
  		return "admin/review/delete";
  	}
  	
@@ -366,6 +374,11 @@ public class ReviewController {
  		}
 
  		int result = service.updateOKAdmin(vo);
+ 		
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		service.updateProductRating2(vo2.getProduct_num());
+ 		log.info("vo2:{}", vo2);
+ 		
  		log.info("result:{}", result);
  		if (result == 1) {
  			return "redirect:/admin/review/selectOne?review_num=" + vo.getReview_num();
@@ -394,6 +407,11 @@ public class ReviewController {
  		log.info("vo:{}", vo);
 
  		int result = service.deleteOKAdmin(vo);
+ 		
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		service.updateProductRating2(vo2.getProduct_num());
+ 		log.info("vo2:{}", vo2);
+ 		
  		log.info("result:{}", result);
  		if (result == 1) {
  			return "redirect:/admin/review/selectAll";
