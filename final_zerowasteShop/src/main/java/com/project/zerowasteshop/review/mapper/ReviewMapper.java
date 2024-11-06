@@ -41,4 +41,5 @@ public interface ReviewMapper {
 //	public List<ReviewVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
 
 	public int updateProductRating(int product_num, double rating);
+	public int updateProductRating2(int product_num);
 }
