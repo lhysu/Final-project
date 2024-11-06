@@ -62,14 +62,9 @@
             </div>
             
             <div class="mb-3">
-                <p>현재 이미지:</p>
-                <img th:src="@{'/images/' + ${vo2.notice_img}}" alt="Notice Image" class="img-fluid mb-3" style="max-width: 200px;">
-            </div>
-            
-            <div class="mb-3">
                 <label for="file" class="form-label">이미지 변경:</label>
                 <input type="file" id="file" name="file" class="form-control" accept="image/*">
-                <div class="form-text">이미지 파일을 선택하세요 (선택 사항).</div>
+                <div class="form-text">이미지 파일을 선택하세요 (선택 사항). 기존 이미지를 유지하려면 선택하지 마세요.</div>
             </div>
             
             <div class="d-flex justify-content-between">
