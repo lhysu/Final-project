@@ -108,6 +108,7 @@
             <div class="col-12">
                 <h1 th:text="${vo2.recycleLife_title}">게시글 제목</h1>
                 <p class="text-muted">
+                	작성자: <span th:text="${vo2.member_id}"></span> |
                     작성일: <span th:text="${#dates.format(vo2.recycleLife_wdate, 'yyyy-MM-dd HH:mm')}"></span> |
                     조회수: <span th:text="${vo2.recycleLife_views}"></span> |
    					<button id="likeButton" th:text="${recycleLife_likes > 0 ? '좋아요' : '좋아요'}"
@@ -138,10 +139,12 @@
         <!-- 수정, 삭제, 목록으로 버튼 -->
         <div class="row my-4">
             <div class="col-12">
-                <a th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
+                <a th:if="${#authentication.name == vo2.member_id}"
+                th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
                     <i class="fas fa-edit"></i> 수정
                 </a>
-                <a th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
+                <a th:if="${#authentication.name == vo2.member_id}"
+                th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
                     <i class="fas fa-trash-alt"></i> 삭제
                 </a>               
                 <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary">
@@ -163,12 +166,14 @@
 	    <th:block th:each="comment : ${comments}">
 	    	<a>
 	    		<span th:text="${comment.lifeComment_num}"></span> |
-	            <span th:text="${comment.lifeComment_wdate}"></span> |
-	            <a th:href="|/community/recycleLifeComment/update?lifeComment_num=${comment.lifeComment_num}|"
-    			class="btn btn-link" sec:authorize="isAuthenticated()">수정</a> |
+	            <span th:text="${comment.lifeComment_wdate}"></span> 
+	            <a th:if="${#authentication.name == comment.member_id}"
+	            th:href="|/community/recycleLifeComment/update?lifeComment_num=${comment.lifeComment_num}|"
+    			class="btn btn-link" sec:authorize="isAuthenticated()">수정</a> 
     			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
      			</div>
  				<button type="button" class="btn btn-link" data-bs-toggle="modal" 
+     			th:if="${#authentication.name == comment.member_id}"
      			data-bs-target="#deleteModal" data-lifeComment_num="${comment.lifeComment_num}" sec:authorize="isAuthenticated()">삭제</button>
             </a>
             <p>
