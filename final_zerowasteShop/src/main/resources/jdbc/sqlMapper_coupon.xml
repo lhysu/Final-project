@@ -7,7 +7,7 @@
 
 	<!-- 내가 보유한 쿠폰 검색 -->
 	<select id="selectAll" resultType="com.project.zerowasteshop.coupon.CouponVO">
-		select * from coupon where member_id = #{user_id} order by coupon_code desc
+		select * from coupon where member_id = #{user_id} and used = 0 order by coupon_code desc
 	</select>
 	
 	<!-- 쿠폰 코드 확인 -->
