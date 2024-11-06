@@ -58,7 +58,7 @@ public class DonateItemController {
 		
 		
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
 		return "community/donateItem/selectAll";
 	}
@@ -105,7 +105,7 @@ public class DonateItemController {
 		
 		
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
 		return "community/donateItem/selectAll";
 	}
