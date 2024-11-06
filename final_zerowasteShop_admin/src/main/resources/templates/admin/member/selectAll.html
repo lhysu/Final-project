@@ -140,11 +140,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	    
 	    <table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
 	        <thead>
+	        <tr>
 	        <th>회원번호</th>
 	        <th>아이디</th>
 	        <th>이름</th>
 	        <th>보유포인트</th>
 	        <th>관리자여부</th>
+	        </tr>
 	        </thead>
 	        <tbody>
 	        <th:block th:each="vo:${list}">
@@ -157,19 +159,68 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			</th:block>
 	        </tbody>
 	       <tfoot>
+	       <tr>
 	        <td colspan="5">
-	      	<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
-	      		<th:block th:if="${param.searchKey==null}">
-			      	<a th:href="|/admin/ad_selectAll?cpage=${i}|">[[${i}]]</a>
-				</th:block>
-	      		<th:block th:if="${param.searchKey!=null}">
-	      			<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
-			      	<a th:href="|/admin/ad_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+	      	<nav>
+			<ul class="pagination justify-content-center">
+				<th:block th:if="${param.searchKey!=null}">
+					<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+				<li class="page-item"
+					th:classappend="${cpage == 1} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/admin/ad_searchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+				</li>
 					</th:block>
 				</th:block>
-				   	
-	      	</th:block>
+				<th:block th:if="${param.searchKey==null}">
+
+				<li class="page-item"
+					th:classappend="${cpage == 1} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/admin/ad_selectAll?cpage=${cpage - 1}|">이전</a>
+				</li>
+				</th:block>
+				<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+					<th:block th:if="${param.searchKey==null}">
+						<li class="page-item"
+							th:classappend="${i == cpage} ? 'active'"><a
+							class="page-link"
+							th:href="|/admin/ad_selectAll?cpage=${i}|">[[${i}]]</a></li>
+					</th:block>
+					<th:block th:if="${param.searchKey!=null}">
+						<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+							<li class="page-item"
+								th:classappend="${i == cpage} ? 'active'"><a
+								class="page-link"
+								th:href="|/admin/ad_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+							</li>
+						</th:block>
+					</th:block>
+				</th:block>
+				<th:block th:if="${param.searchKey!=null}">
+					<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+				<li class="page-item"
+					th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/admin/ad_searchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+				</li>
+					</th:block>
+				</th:block>
+				<th:block th:if="${param.searchKey==null}">
+
+				<li class="page-item"
+					th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/admin/ad_selectAll?cpage=${cpage + 1}|">다음</a>
+				</li>
+				</th:block>
+			</ul>
+		</nav>
 	      </td>
+	      </tr>
 	        </tfoot>
 	
 	    </table> 
