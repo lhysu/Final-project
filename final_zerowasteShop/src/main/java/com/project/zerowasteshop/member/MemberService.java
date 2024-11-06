@@ -80,6 +80,10 @@ public class MemberService {
 		
 	}
 
+	public int getPointsByUserId(String user_id) {
+		return mapper.getPointsByUserId(user_id);
+	}
+
 
 
 }

@@ -80,21 +80,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/user/myPage")
-	public String myPage(Model model, HttpSession session) {
-		log.info("/myPage");
-		
-		String user_id = (String) session.getAttribute("user_id");
-		log.info("user_id : {}", user_id);
-		
-		// 포인트 조회
-	    if (user_id != null) {
-	        int points = service.getPointsByUserId(user_id);
-	        model.addAttribute("points", points);
-	    } else {
-	        // user_id가 없는 경우 로그인 페이지로 리다이렉트
-	        return "redirect:/login"; 
-	    }
-				
+	public String myPage(Model model) {
+		log.info("/myPage");			
 		return "user/myPage";
 	}
 	

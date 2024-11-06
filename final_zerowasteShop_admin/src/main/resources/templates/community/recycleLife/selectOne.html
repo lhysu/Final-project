@@ -123,7 +123,7 @@
 		<!-- 이미지 -->
         <div class="row my-4">
             <div class="col-12 text-center">
-                <img th:src="@{'/upload_img/' + ${vo2.recycleLife_img}}" alt="recycleLife_Image" 
+                <img th:src="@{'/uploadimgPath/' + ${vo2.recycleLife_img}}" alt="recycleLife_Image" 
                 class="img-fluid recycleLife-image" onerror="this.style.display='none'">
             </div>
         </div>
@@ -137,13 +137,9 @@
             </div>
         </div>
         
-        <!-- 수정, 삭제, 목록으로 버튼 -->
+        <!-- 삭제, 목록으로 버튼 -->
         <div class="row my-4">
             <div class="col-12">
-                <a
-                th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
-                    <i class="fas fa-edit"></i> 수정
-                </a>
                 <a 
                 th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
                     <i class="fas fa-trash-alt"></i> 삭제

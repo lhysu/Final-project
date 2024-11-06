@@ -30,6 +30,13 @@ public class MemberController {
 	@GetMapping({"/member/m_selectOne"})
 	public String m_selectOne(Model model,MemberVO vo) {
 		log.info("/member/m_selectOne");
+		
+		String user_id = (String) session.getAttribute("user_id");
+		log.info("user_id : {}", user_id);
+		
+		int points = service.getPointsByUserId(user_id);
+        model.addAttribute("points", points);
+		
 		return "user/myPage";
 	}
 	
