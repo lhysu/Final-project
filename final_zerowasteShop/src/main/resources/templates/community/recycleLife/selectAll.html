@@ -95,7 +95,7 @@
     <div class="gallery" style="display: flex; justify-content: space-between;">
         <div class="gallery-item" th:each="post : ${post}">
             <a th:href="@{/community/recycleLife/selectOne(recycleLife_num=${post.recycleLife_num})}">
-                <img th:src="|/upload_img/thumb_${post.recycleLife_img}|" alt="썸네일 이미지">   
+                <img th:src="|/uploadimgPath/thumb_${post.recycleLife_img}|" alt="썸네일 이미지">   
                 <p>조회수
                     <span th:text="${post.recycleLife_views}">0</span> 좋아요
                     <span th:text="${post.recycleLife_likes}">0</span>
@@ -122,9 +122,6 @@
                  	        	
         </form>
         	</div>	
-		<!-- <form action="/community/recycleLife/insert">
-			<input type="submit" value="글쓰기">
-		</form> -->
 		
 		<div class="container my-4">
 		<table id="insertTable" class="table table-striped table-bordered">
@@ -147,23 +144,7 @@
 						<td>[[${vo.recycleLife_views}]]</td>
 					</tr>
 				</th:block>
-			</tbody>
-			
-			<!-- 페이지 처리 -->
-			<!-- <tfoot>
-			<td colspan="4">
-      			<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
-      			<th:block th:if="${param.searchKey==null}">
-		      		<a th:href="|/community/recycleLife/selectAll?cpage=${i}|">[[${i}]]</a>
-				</th:block>
-      			<th:block th:if="${param.searchKey!=null}">
-      			<th:block th:with="searchKey=${param.searchKey}, searchWord=${param.searchWord}">
-		      		<a th:href="|/community/recycleLife/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
-				</th:block>
-				</th:block>		   	
-      			</th:block>
-      		</td>
-			</tfoot> -->			
+			</tbody>					
 		</table>
 		
 		<!-- 페이징 UI -->

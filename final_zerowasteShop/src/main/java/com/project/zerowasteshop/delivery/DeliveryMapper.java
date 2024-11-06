@@ -35,6 +35,8 @@ public interface DeliveryMapper {
 	public void saveDelivery(DeliveryVO deliveryInfo);
 
 	public void updateDeliveryState(String merchant_uid, String delivery_status);
+
+	public List<DeliveryVO> selectAllByUserId(String user_id);
 	
 
 }

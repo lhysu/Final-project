@@ -173,13 +173,13 @@ public class RecycleLifeController {
 		log.info("/community/recycleLife/insertOK");
 		log.info("vo : {}", vo);
 
-		log.info(realPath);
+		log.info("파일 저장 경로 : ", realPath);
 		
 		String member_id = (String) session.getAttribute("user_id");
 
         MultipartFile file = vo.getFile();
         String originName = file.getOriginalFilename();
-        log.info("originName:{}", originName);
+        log.info("originName : {}", originName);
 
         if (originName == null || originName.isEmpty()) {
             vo.setRecycleLife_img("default.png");
@@ -191,6 +191,7 @@ public class RecycleLifeController {
 
             File f = new File(realPath, saveName);
             file.transferTo(f);
+            log.info("저장 경로 확인 : " + f.getAbsolutePath()); // 저장 경로 확인 로그
 
             // 썸네일 생성
             BufferedImage originalImage = ImageIO.read(f);
