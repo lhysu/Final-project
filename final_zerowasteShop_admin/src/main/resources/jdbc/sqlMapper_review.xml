@@ -78,17 +78,27 @@
 		WHERE review_num = #{review_num};
 	</select>
 	
-	<!-- <select id="selectProduct"
+	<select id="selectProduct"
 		resultType="com.project.zerowasteshop.product.model.ProductVO">
 		SELECT * 
 		FROM product  
 		WHERE product_num = #{product_num};
-	</select> -->
+	</select>
 	
 	<update id = "updateProductRating">
 		UPDATE product
 		SET rating = #{rating}
 		where product_num = #{product_num}
+	</update>
+	
+	<update id = "updateProductRating2">
+		UPDATE product
+		SET rating = (
+		    SELECT AVG(rating)
+		    FROM review
+		    WHERE product_num = #{product_num}
+		)
+		WHERE product_num = #{product_num};
 	</update>
 
 	<!-- <insert id="insertOK">

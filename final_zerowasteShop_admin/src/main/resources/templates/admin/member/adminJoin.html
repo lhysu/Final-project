@@ -113,7 +113,8 @@ $(function (){
 
     $("#btn_idCheck").click(function(){
         console.log("click...")
-        let url2="http://localhost:8833/api/idCheck";
+        /* let url2="http://localhost:8833/api/idCheck"; */
+        let url2="http://223.130.138.123:8833/api/idCheck";
         $.ajax({
             url:url2,
             data:{member_id:$("#member_id").val()},
@@ -153,7 +154,7 @@ $(function (){
 			<label for="member_id" class="form-label">아이디</label>
 			<div class="row">
 				<div class="memberJoin col-md-8">
-		        <input type="text" class="form-control" name="member_id" id="member_id" value="hello" style="float:left" placeholder="아이디를 입력하세요" required>
+		        <input type="text" class="form-control" name="member_id" id="member_id" style="float:left" placeholder="아이디를 입력하세요" required>
 		        <div class="invalid-feedback">아이디를 입력해주세요</div>
 		        </div>
 		        <div class="col-md-4 d-flex">
@@ -166,7 +167,7 @@ $(function (){
         <div class="item">
 	        <label for="pw" class="form-label"> 비밀번호</label>
 	        <div class="memberJoin">
-	        	<input type="password" class="form-control" name="pw" id="pw" value="hi1234" placeholder="비밀번호를 입력하세요" required>
+	        	<input type="password" class="form-control" name="pw" id="pw" placeholder="비밀번호를 입력하세요" required>
 	        	<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 	        	<div class="invalidPW pw-under-text hide">8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요</div>
 	        </div>
@@ -175,7 +176,7 @@ $(function (){
         <div class="item">
 	        <label for="pwCheck" class="form-label"> 비밀번호 확인</label>
 	        <div class="memberJoin">
-	        	<input type="password" class="form-control" name="pwCheck" id="pwCheck" value="hi1234" placeholder="비밀번호를 입력하세요" required>
+	        	<input type="password" class="form-control" name="pwCheck" id="pwCheck" placeholder="비밀번호를 입력하세요" required>
 	        	<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 	        	<div class="wrongPW pw-under-text hide ">비밀번호가 일치하지 않습니다.</div>
 	        </div>
@@ -184,7 +185,7 @@ $(function (){
 		<div class="item">
 			<label for="name" class="form-label"> 이름</label>
 			<div class="memberJoin">
-	        	<input type="text" class="form-control" name="name" id="name" value="kim" placeholder="이름을 입력하세요" required>
+	        	<input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력하세요" required>
 	        	<div class="invalid-feedback">이름을 입력해주세요</div>
 	        </div>
 		</div>
@@ -193,7 +194,7 @@ $(function (){
 	       	<label for="email" class="form-label">이메일</label>
 		    <div >
 		    <div class="emailCheck-text col-md-8">
-        		<input type="hidden" class="form-control" name="email" id="email" value="zerocfinal33@naver.com" style="float:left" placeholder="이메일을 입력해주세요">
+        		<input type="hidden" class="form-control" name="email" id="email" style="float:left" placeholder="이메일을 입력해주세요">
         	</div>
         	<div class="col-md-4 d-flex">
         		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="sendEmailCode" >인증번호 받기</button>
@@ -210,7 +211,7 @@ $(function (){
     	<div class="item">
 	        <label for="phone_number" class="form-label"> 전화번호</label>
 	        <div class="memberJoin">
-	        	<input type="text" class="form-control" name="phone_number" id="phone_number" value="012-3456-7889" placeholder="전화번호를 입력하세요">
+	        	<input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="전화번호를 입력하세요">
 			</div>
 		</div>
 

@@ -58,8 +58,15 @@ public class ReviewController {
  	}
 
  	@GetMapping("/review/delete")
- 	public String delete() {
+ 	public String delete(ReviewVO vo, Model model) {
  		log.info("/review/delete");
+ 		
+ 		log.info("vo:{}", vo);
+
+ 		ReviewVO vo2 = service.selectOne(vo);
+ 		log.info("vo2:{}", vo2);
+
+ 		model.addAttribute("vo2", vo2);
  		return "review/delete";
  	}
 
@@ -178,6 +185,7 @@ public class ReviewController {
  		log.info("List size: {}", list.size());
  		for (ReviewVO review : list) {
  		    log.info("Review: {}, Product Name: {}", review.getReview_num(), review.getProduct_name());
+ 		    log.info("review{}",review);
  		}
  		
  		// 디비로부터 얻은 검색결과의 모든 행수
@@ -340,6 +348,11 @@ public class ReviewController {
  		}
 
  		int result = service.updateOK(vo);
+
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		service.updateProductRating2(vo2.getProduct_num());
+ 		log.info("vo2:{}", vo2);
+ 		
  		log.info("result:{}", result);
  		if (result == 1) {
  			return "redirect:/review/selectOne?review_num=" + vo.getReview_num();
@@ -354,6 +367,11 @@ public class ReviewController {
  		log.info("vo:{}", vo);
 
  		int result = service.deleteOK(vo);
+ 		
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		service.updateProductRating2(vo2.getProduct_num());
+ 		log.info("vo2:{}", vo2);
+ 		
  		log.info("result:{}", result);
  		if (result == 1) {
  			return "redirect:/review/selectAll";

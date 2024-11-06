@@ -71,6 +71,16 @@
 		SET rating = #{rating}
 		where product_num = #{product_num}
 	</update>
+	
+	<update id = "updateProductRating2">
+		UPDATE product
+		SET rating = (
+		    SELECT AVG(rating)
+		    FROM review
+		    WHERE product_num = #{product_num}
+		)
+		WHERE product_num = #{product_num};
+	</update>
 
 	<insert id="insertOK">
 		insert into review(member_id, product_num, content, rating, review_img, createdDate)
