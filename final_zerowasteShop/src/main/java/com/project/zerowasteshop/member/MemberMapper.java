@@ -29,6 +29,8 @@ public interface MemberMapper {
 
 	public MemberVO emailCheck(String email);
 
+	public void addPoints(String member_id, int addPoints);
+
 
 
 }

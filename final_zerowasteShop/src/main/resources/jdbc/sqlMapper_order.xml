@@ -33,6 +33,11 @@
 	select final_price from `order` where merchant_uid = #{merchant_uid}
 </select>
 
+<!-- 총 상품 금액 얻어오기 -->
+<select id="getTotalPrice" resultType="int">
+	select total_price from `order` where merchant_uid = #{merchant_uid}
+</select>
+
 <!-- 주문 정보 저장 -->
 <insert id="saveOrder">
 	insert into `order`(merchant_uid,member_id, coupon_code,points, postcode, address,address_detail,tel,reusing,discount,delivery_fee,delivery_memo,total_price,final_price,order_state)

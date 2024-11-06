@@ -160,5 +160,9 @@ public class OrderService {
 		
 	}
 
+	public int getTotalPrice(String merchant_uid) {
+		return mapper.getTotalPrice(merchant_uid);
+	}
+
 
 }

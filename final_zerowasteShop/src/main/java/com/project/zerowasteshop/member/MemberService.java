@@ -80,6 +80,13 @@ public class MemberService {
 		
 	}
 
+	//상품 구매 후 포인트 적립
+	public void addPoints(String member_id, int addPoints) {
+		MemberVO vo = mapper.selectOne(member_id);
+		addPoints = vo.getPoints()+ addPoints;
+		mapper.addPoints(member_id,addPoints);		
+	}
+
 
 
 }

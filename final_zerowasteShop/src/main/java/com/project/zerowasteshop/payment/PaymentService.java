@@ -63,6 +63,8 @@ public class PaymentService {
 
             // 2. 주문 금액 검증
             int orderAmount = orderService.getOrderAmount(merchant_uid);
+            
+            // 결제 성공한다면
             if (paymentInfo.getPaid_amount() == orderAmount && "paid".equals(paymentInfo.getPay_status())) {
                 
                 // 3. 결제 정보 저장 및 운송장 번호 생성
@@ -81,8 +83,12 @@ public class PaymentService {
                     couponService.updateCouponStatus(coupon_code, 1); // 사용됨으로 표시
                 }
 
-                // 4. 포인트 차감
+                // 4. 포인트 차감 및 구매한 양의 비례하는 포인트 누적
                 memberService.deductPoints(member_id, points_used);
+                int addPoints = orderService.getTotalPrice(merchant_uid)/148;
+                log.info("addPoints:{}",addPoints);
+                                
+                memberService.addPoints(member_id,addPoints);
 
                 // 5. 배송 정보 생성 및 저장
                 DeliveryVO deliveryInfo = new DeliveryVO();                                    
