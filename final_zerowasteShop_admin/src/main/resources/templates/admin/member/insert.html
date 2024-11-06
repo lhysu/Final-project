@@ -122,7 +122,8 @@ $(function (){
 
     $("#btn_idCheck").click(function(){
         console.log("click...")
-        let url2="http://localhost:8833/api/idCheck";
+        /* let url2="http://localhost:8833/api/idCheck"; */
+        let url2="http://223.130.138.123:8833/api/idCheck";
         $.ajax({
             url:url2,
             data:{member_id:$("#member_id").val()},
