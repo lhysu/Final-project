@@ -52,9 +52,9 @@
 
 <select id="getSearchTotalRowsPname" resultType="java.lang.Integer">
 	select count(*) total_rows 
-	from `order` o
-	join product p on o.product_num = p.product_num
-	where product_name like #{searchWord}
+	from order_item i
+	join product p on i.product_num = p.product_num
+	where p.product_name like #{searchWord}
 </select>
 
 <!--베스트셀러 select문  -->
