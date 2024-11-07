@@ -228,7 +228,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<div class="flex-container">
                     <a th:href="|/likeList/insertOK?product_num=${vo2.product_num}&price=${vo2.price}&product_img=${vo2.product_img}&product_name=${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white" style="margin-top: 10px;">상품 찜하기</a>
                     <div class="d-flex my-1 justify-content-center" style = "margin:10px !important; margin-top : 20px!important">
-					    <th:block th:if="${vo2.rating != null}">
+					    <th:block th:if="${vo2.rating != 0}">
 					        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo2.rating)}, halfStar=${vo2.rating - T(java.lang.Math).floor(vo2.rating)}">
 					            <!-- 전체 별 출력 -->
 					            <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
@@ -246,6 +246,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					            </th:block>
 					        </th:block>
 					        
+					    </th:block>
+					    
+					    <th:block th:if="${vo2.rating == 0}">
+					    	<!-- 전체 별 출력 -->
+					       	<i class="fas fa-star text-primary"></i>
+					        <i class="fas fa-star"></i>
+					        <i class="fas fa-star"></i>
+					        <i class="fas fa-star"></i>
+					        <i class="fas fa-star"></i>
 					    </th:block>
 					</div>
                 </div>

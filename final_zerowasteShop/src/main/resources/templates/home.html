@@ -350,7 +350,7 @@
                                 <div class="py-3">
                                     <a th:href="|/product/detail?product_num=${product.product_num}|" class="h5" th:text="${product.product_name}"></a>
                                     <div class="d-flex my-1 justify-content-center">
-                                        <th:block th:if="${product.rating != null}">
+                                        <th:block th:if="${product.rating != 0}">
                                             <th:block th:with="fullStars=${T(java.lang.Math).floor(product.rating)}, halfStar=${product.rating - T(java.lang.Math).floor(product.rating)}">
                                                 <!-- 전체 별 출력 -->
                                                 <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
@@ -367,7 +367,16 @@
                                                     </th:block>
                                                 </th:block>
                                             </th:block>
-                                        </th:block>
+	                                        </th:block>
+	                                        
+	              						    <th:block th:if="${product.rating == 0}">
+										    	<!-- 전체 별 출력 -->
+										       	<i class="fas fa-star text-primary"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										    </th:block>
                                     </div>
                                     <h4 class="mb-3">[[${product.price}]]원</h4>
                                     <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
@@ -447,7 +456,7 @@
 				                <div class="py-3">
 				                    <a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:text="${vo.product_name}"></a>
 				                    <div class="d-flex my-1 justify-content-center">
-				                        <th:block th:if="${vo.rating != null}">
+				                        <th:block th:if="${vo.rating != 0}">
 				                            <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
 				                                <!-- 전체 별 출력 -->
 				                                <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
@@ -465,6 +474,15 @@
 				                                </th:block>
 				                            </th:block>
 				                        </th:block>
+				                        
+				                        	<th:block th:if="${vo.rating == 0}">
+										    	<!-- 전체 별 출력 -->
+										       	<i class="fas fa-star text-primary"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										        <i class="fas fa-star"></i>
+										    </th:block>
 				                    </div>
 				                    <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
 				                    <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
