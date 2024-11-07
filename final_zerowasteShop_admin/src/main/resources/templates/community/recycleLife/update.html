@@ -69,7 +69,8 @@
             
             <div class="mb-3">
                 <p>현재 이미지 : </p>
-                <img th:src="@{'/images/' + ${vo2.recycleLife_img}}" alt="RecycleLife Image" class="img-fluid mb-3" style="max-width: 200px;">
+                <img th:src="@{'/uploadimgPath/' + ${vo2.recycleLife_img}}" alt="RecycleLife Image" class="img-fluid mb-3" style="max-width: 200px;"
+                onerror="this.style.display='none'">
             </div>
             
             <div class="mb-3">
