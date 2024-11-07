@@ -127,7 +127,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			            	<div class="py-3">
 			                	<a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:utext="${vo.product_name}"></a>
 			                    	<div class="d-flex my-1 justify-content-center">
-									    <th:block th:if="${vo.rating != null}">
+									    <th:block th:if="${vo.rating != 0}">
 									        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
 									            <!-- 전체 별 출력 -->
 									            <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
@@ -146,10 +146,27 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									        </th:block>
 									        
 									    </th:block>
+									    
+									    <th:block th:if="${vo.rating == 0}">
+									    	<!-- 전체 별 출력 -->
+									       	<i class="fas fa-star text-primary"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									    </th:block>
 									</div>
 							</div>
 			                         <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
-			                     <a th:href="|/cart/insertOK?product_num=${vo.product_num}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name.replace('[', '%5B').replace(']', '%5D')}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+			                     <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
+							        <input type="hidden" name="product_num" th:value="${vo.product_num}">
+							        <input type="hidden" name="count" value="1">
+							        <input type="hidden" name="price" th:value="${vo.price}">
+							        <input type="hidden" name="product_img" th:value="${vo.product_img}">
+							        <input type="hidden" name="product_name" th:value="${vo.product_name.replace('[', '%5B').replace(']', '%5D')}">
+							        
+							        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button> <!-- type="submit" 추가 -->
+							    </form>
 			                </div>
 			        </div>
 			    </div>             
