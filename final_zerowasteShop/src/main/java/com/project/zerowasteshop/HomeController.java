@@ -80,8 +80,15 @@ public class HomeController {
 	}
 	
 	@GetMapping("/user/myPage")
-	public String myPage(Model model) {
-		log.info("/myPage");			
+	public String myPage(Model model, HttpSession session) {
+		log.info("/myPage");	
+		
+		String user_id = (String) session.getAttribute("user_id");
+		log.info("user_id : {}", user_id);
+		
+		int points = service.getPointsByUserId(user_id);
+        model.addAttribute("points", points);
+		
 		return "user/myPage";
 	}
 	
