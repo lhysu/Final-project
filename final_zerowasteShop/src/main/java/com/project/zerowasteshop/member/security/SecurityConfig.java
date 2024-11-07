@@ -26,7 +26,7 @@ public class SecurityConfig {
 				"/community/event/selectAll","/community/event/selectOne",
 				"/community/notice/selectAll","/community/notice/selectOne", 
 				"/community/help/selectAll","/community/help/selectOne", 
-				"/community/recycleTip/selectAll","/community/recycleTip/selectOne" 
+				"/community/recycleTip/selectAll","/community/recycleTip/selectOne","/uploadimgPath/**"
 				};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음

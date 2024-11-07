@@ -612,7 +612,7 @@ ALTER TABLE `finalproject`.`order`
 ADD CONSTRAINT `FK_ORDER_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE CASCADE
+  ON DELETE SET NULL
   ON UPDATE CASCADE;
 
 #주문 상세에서 주문 참조
