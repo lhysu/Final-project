@@ -343,8 +343,8 @@ public class ProductController {
  		log.info(realPath);
 
  		String originName = vo.getFile().getOriginalFilename();
- 		log.info("originName:{}", originName);
-
+ 		log.info("originName.length():{}", originName.length());
+ 		log.info("vo.getProduct_img:{}", vo.getProduct_img());
  		if (originName.length() == 0) {// 넘어온 파일이 없을때 default.png 할당
  			vo.setProduct_img(vo.getProduct_img());
  		} else {
