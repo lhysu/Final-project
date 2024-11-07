@@ -506,8 +506,8 @@
 			            <img th:src="${item.product_img}" alt="Product Image" width="50">
 			            <input type="hidden" class="product_num" th:value="${item.product_num}"> <!-- 상품 번호 -->
 			            <span class="product_name" th:text="${item.product_name}">[[${item.product_name}]]</span>
-			            <span class="price" th:text="${item.price}">[[${item.price}]]</span> <!-- 상품 가격 -->
-			            <input type="hidden" class="quantity" th:value="${item.count}"> <!-- 상품 수량 -->
+			            <span class="price" th:text="${item.price}+'원'"></span> <!-- 상품 가격 -->
+			            <input type="hidden" class="quantity" th:value="${item.count}"><span class="quantity-display">[[${item.count}]]개</span> <!-- 상품 수량 -->
 			        </div>
 			    </div>
 			</div>
