@@ -116,7 +116,8 @@ public class RecycleLifeCommentController {
 	}
 	
 	@PostMapping("/community/recycleLifeComment/deleteOK") 
-	public String deleteOK(RecycleLifeCommentVO vo) {
+	public String deleteOK(RecycleLifeCommentVO vo, 
+			@RequestParam("recycleLife_num") int recycleLife_num) {
 	log.info("/community/recycleLifeComment/deleteOK"); 
 	log.info("vo : {}", vo);
 	
@@ -124,14 +125,15 @@ public class RecycleLifeCommentController {
 	log.info("result : {}", result);
 	
 	if(result == 1) { 
-		return "redirect:/community/recycleLife/selectAll";
+		return "redirect:/community/recycleLife/selectOne?recycleLife_num=" + vo.getRecycleLife_num();
 	} else { 
 		return "redirect:/community/recycleLifeComment/delete?lifeComment_num=" + vo.getLifeComment_num(); 
 		} 
 	}
 	
 	@PostMapping("/community/recycleLifeComment/updateOK") 
-	public String updateOK(RecycleLifeCommentVO vo) {
+	public String updateOK(RecycleLifeCommentVO vo, 
+			@RequestParam("recycleLife_num") int recycleLife_num) {
 	log.info("/community/recycleLifeComment/updateOK"); 
 	log.info("vo : {}", vo);
 	
@@ -139,7 +141,7 @@ public class RecycleLifeCommentController {
 	log.info("result : {}", result);
 	
 	if(result == 1) { 
-		return "redirect:/community/recycleLife/selectAll";
+		return "redirect:/community/recycleLife/selectOne?recycleLife_num=" + vo.getRecycleLife_num();
 	} else { 
 		return "redirect:/community/recycleLifeComment/update?lifeComment_num=" + vo.getLifeComment_num(); 
 		}	
