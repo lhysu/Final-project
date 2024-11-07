@@ -85,6 +85,10 @@ public class MemberService {
 		MemberVO vo = mapper.selectOne(member_id);
 		addPoints = vo.getPoints()+ addPoints;
 		mapper.addPoints(member_id,addPoints);		
+
+	public int getPointsByUserId(String user_id) {
+		return mapper.getPointsByUserId(user_id);
+
 	}
 
 

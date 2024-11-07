@@ -122,9 +122,10 @@
      <!-- findProductByNum 매핑 -->
     <select id="findProductByNum" parameterType="long" resultType="com.project.zerowasteshop.product.model.ProductVO">
         SELECT * FROM product WHERE product_num = #{productNum}
-    </select>
+    </select>   
     
-    <select id="getPointsByUserId" parameterType="string" resultType="int">
+    <!-- 내 포인트 조회 -->
+	<select id="getPointsByUserId" parameterType="string" resultType="int">
     SELECT points
     FROM member
     WHERE member_id = #{user_id}

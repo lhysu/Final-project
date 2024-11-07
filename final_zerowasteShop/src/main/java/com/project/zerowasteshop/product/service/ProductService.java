@@ -110,4 +110,5 @@ public class ProductService {
 		return mapper.getPointsByUserId(user_id);
 	}
 
+
 }

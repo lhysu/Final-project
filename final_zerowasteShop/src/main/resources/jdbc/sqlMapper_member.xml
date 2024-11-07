@@ -55,4 +55,12 @@
 	<update id="updatePW">
 		update member set pw=#{temppw} where member_id=#{member_id} and name=#{name} and email=#{email} and adCheck=false
 	</update>
+	
+	<!-- 내 포인트 조회 -->
+	<select id="getPointsByUserId" parameterType="string" resultType="int">
+    SELECT points
+    FROM member
+    WHERE member_id = #{user_id}
+	</select>
+	
 </mapper>

@@ -31,6 +31,7 @@ public interface MemberMapper {
 
 	public void addPoints(String member_id, int addPoints);
 
+	public int getPointsByUserId(String user_id);
 
 
 }
