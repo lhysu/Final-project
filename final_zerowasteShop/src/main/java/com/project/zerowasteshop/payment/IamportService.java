@@ -3,12 +3,15 @@ package com.project.zerowasteshop.payment;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.zerowasteshop.delivery.DeliveryMapper;
+import com.project.zerowasteshop.member.MemberMapper;
+import com.project.zerowasteshop.member.MemberVO;
 import com.project.zerowasteshop.order.OrderMapper;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -34,6 +37,9 @@ public class IamportService {
 	
 	@Autowired
 	DeliveryMapper deliveryMapper;
+	
+	@Autowired
+	MemberMapper memberMapper;
 	
 
     private static final String IMP_KEY = "4265656253258734";
@@ -93,7 +99,7 @@ public class IamportService {
     }
     
     // 결제 취소 로직
-    public boolean cancelPayment(String merchant_uid, int amount,String delivery_state) {
+    public boolean cancelPayment(String merchant_uid, int amount,String delivery_state,String user_id) {
     	log.info("merchant_uid:{}", merchant_uid);
     	log.info("amount:{}", amount);
     	log.info("delivery_state:{}", delivery_state);
@@ -151,6 +157,12 @@ public class IamportService {
                 if (responseData != null && "cancelled".equals(responseData.get("status"))) {
                     // 결제 취소나 환불이 성공하면 order,order_item,payment 테이블에 상태 반영
                 	if (delivery_state.equals("배송준비중")) {
+                		//취소 완료 후 구매 했을 때 생긴 포인트 회수
+                		int removePoints = orderMapper.getTotalPrice(merchant_uid)/148;
+                		MemberVO vo = memberMapper.selectOne(user_id);
+                		removePoints = vo.getPoints()-removePoints;
+                		memberMapper.addPoints(user_id, removePoints);
+                		
                 		updateOrderState(merchant_uid,"결제취소");
                         updatePaymentStatus(merchant_uid,"결제취소");
                         updateDeliveryState(merchant_uid,"배송취소"); // 배송취소 반영
