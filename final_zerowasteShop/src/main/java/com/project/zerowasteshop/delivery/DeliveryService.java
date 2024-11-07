@@ -58,15 +58,15 @@ public class DeliveryService {
 	public List<DeliveryVO> searchListPageBlock(String searchKey, String searchWord, 
 			int cpage, int pageBlock) {
 		
-		int startRow = (cpage - 1) * pageBlock + 1;
-		int endRow = startRow + pageBlock - 1;
+		int startRow = (cpage - 1) * pageBlock;
+		//int endRow = startRow + pageBlock - 1;
 		log.info("startRow:{}", startRow);
-		log.info("endRow:{}", endRow);
+		log.info("pageBlock:{}", pageBlock);
 
 		if (searchKey.equals("product_name")) {
-			return mapper.searchListPageBlockProduct_name("%"+searchWord+"%", startRow, endRow);
+			return mapper.searchListPageBlockProduct_name("%"+searchWord+"%", startRow, pageBlock);
 		} else {
-			return mapper.searchListPageBlockTracking_num("%"+searchWord +"%", startRow, endRow);
+			return mapper.searchListPageBlockTracking_num("%"+searchWord +"%", startRow, pageBlock);
 		}	
 	}
 
