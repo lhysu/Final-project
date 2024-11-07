@@ -285,11 +285,7 @@ public class ReviewController {
  	public String insertOK(ReviewVO vo) throws IllegalStateException, IOException {
  		log.info("/review/insertOK");
  		log.info("vo:{}", vo);
- 		
- 		ProductVO vo2 = service.selectProduct(vo);
- 		log.info("vo2:{}", vo2);
- 		double rating = ( vo.getRating() + vo2.getRating() ) / 2;
- 		service.updateProductRating(vo2.getProduct_num(), rating);
+
  		// 스프링프레임워크에서 사용하던 리얼패스사용불가.
  		// String realPath = context.getRealPath("resources/upload_img");
 
@@ -313,6 +309,11 @@ public class ReviewController {
 
  		int result = service.insertOK(vo);
  		log.info("result:{}", result);
+ 		
+ 		ProductVO vo2 = service.selectProduct(vo);
+ 		service.updateProductRating2(vo2.getProduct_num());
+ 		log.info("vo2:{}", vo2);
+ 		
  		if (result == 1) {
  			return "redirect:/product/detail?product_num=" + vo.getProduct_num();
  		} else {
