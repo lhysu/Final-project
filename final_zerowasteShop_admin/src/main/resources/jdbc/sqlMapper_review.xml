@@ -5,6 +5,31 @@
 
 <mapper namespace="com.project.zerowasteshop.review.mapper.ReviewMapper">
 
+	<select id="searchListPageBlockMember_id"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		select rnum, review_num, member_id, product_name, review_img, content, rating, createdDate from
+		(select row_number() over(order by review_num asc) as
+		rnum, review_num, member_id, product_name, review_img, content, rating, createdDate from review where member_id like #{searchWord}) as temp
+		where rnum between #{startRow} and #{endRow}
+	</select>
+
+	<select id="searchListPageBlockProduct_name"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		select rnum, review_num, member_id, product_name, review_img, content, rating, createdDate from
+		(select row_number() over(order by review_num asc) as
+		rnum, review_num, member_id, product_name, review_img, content, rating, createdDate from review where product_name like #{searchWord}) as temp
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getSearchTotalRowsMember_id" resultType="int">
+		select count(*) total_rows
+		from review where member_id like #{searchWord} 
+	</select>
+	
+	<select id="getSearchTotalRowsProduct_name" resultType="int">
+		select count(*) total_rows
+		from review where product_name like #{searchWord} 
+	</select>
 	
 	<update id = "updateProductName">
 		UPDATE review r
