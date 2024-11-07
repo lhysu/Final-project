@@ -77,19 +77,33 @@ public class RecycleTipController {
         log.info("cpage: {}", cpage);
         log.info("pageBlock: {}", pageBlock);
 
+        // 페이지 번호 유효성 검사
+        if (cpage < 1) cpage = 1;
+
+        // 게시물 목록 조회
         List<RecycleTipVO> list = service.selectAllPageBlock(cpage, pageBlock);
         log.info("list.size(): {}", list.size());
 
         model.addAttribute("list", list);
-        model.addAttribute("cpage", cpage); // cpage를 모델에 추가
+        model.addAttribute("cpage", cpage);
 
         // 총 페이지 수 계산
         int total_rows = service.getTotalRows();
         log.info("total_rows: {}", total_rows);
-        int totalPageCount = (int) Math.ceil((double) total_rows / pageBlock);
+        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+        if (totalPageCount < 1) totalPageCount = 1;
         log.info("totalPageCount: {}", totalPageCount);
 
+        // 페이지네이션의 시작 페이지와 끝 페이지 계산
+        int pageGroupSize = 5; // 페이지 그룹 크기
+        int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+        int endPage = startPage + pageGroupSize - 1;
+        if (endPage > totalPageCount) endPage = totalPageCount;
+
+        // 모델에 필요한 속성 추가
         model.addAttribute("totalPageCount", totalPageCount);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "community/recycleTip/selectAll";
     }
@@ -106,18 +120,34 @@ public class RecycleTipController {
         log.info("cpage: {}", cpage);
         log.info("pageBlock: {}", pageBlock);
 
+        // 페이지 번호 유효성 검사
+        if (cpage < 1) cpage = 1;
+
+        // 검색 결과 조회
         List<RecycleTipVO> list = service.searchListPageBlock(searchField, searchWord, cpage, pageBlock);
         log.info("list.size(): {}", list.size());
 
         model.addAttribute("list", list);
-        model.addAttribute("cpage", cpage); // cpage를 모델에 추가
+        model.addAttribute("cpage", cpage);
 
         int total_rows = service.getSearchTotalRows(searchField, searchWord);
         log.info("total_rows: {}", total_rows);
-        int totalPageCount = (int) Math.ceil((double) total_rows / pageBlock);
+        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+        if (totalPageCount < 1) totalPageCount = 1;
         log.info("totalPageCount: {}", totalPageCount);
 
+        // 페이지네이션의 시작 페이지와 끝 페이지 계산
+        int pageGroupSize = 5;
+        int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+        int endPage = startPage + pageGroupSize - 1;
+        if (endPage > totalPageCount) endPage = totalPageCount;
+
+        // 모델에 필요한 속성 추가
         model.addAttribute("totalPageCount", totalPageCount);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchWord", searchWord);
 
         return "community/recycleTip/selectAll";
     }
