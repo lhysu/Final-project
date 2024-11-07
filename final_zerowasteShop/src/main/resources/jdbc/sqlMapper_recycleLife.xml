@@ -40,11 +40,32 @@
   		select count(*) total_rows from recyclelife
   	</select>
   	
-  	<select id="searchList" parameterType="string" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+  	<select id="searchList" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
         select * from recyclelife
         where recycleLife_title like #{searchWord} or recycleLife_num like #{searchWord}
         order by recycleLife_num desc
     </select>
+    
+    <select id="getSearchTotalRowsByNum" resultType="int">
+		select count(*) total_rows from recyclelife 
+		where recycleLife_num like #{searchWord}
+	</select>
+	
+	<select id="getSearchTotalRowsByTitle" resultType="int">
+		select count(*) total_rows from recyclelife 
+		where recycleLife_title like #{searchWord}	
+	</select>
+	
+	<select id="searchListPageBlockByNum" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+		select * from recyclelife where recycleLife_num like #{searchWord} 
+		order by recycleLife_num desc limit #{startRow},#{pageBlock}
+		
+	</select>
+	
+	<select id="searchListPageBlockByTitle" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
+		select * from recyclelife where recycleLife_title like #{searchWord} 
+		order by recycleLife_num desc limit #{startRow},#{pageBlock}	
+	</select>
   	
   	<update id="increaseViews">
 	  update recyclelife

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.zerowasteshop.donateitem.DonateItemVO;
 import com.project.zerowasteshop.recyclelife.RecycleLifeVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -64,13 +65,11 @@ public class DeliveryController {
         log.info("total_rows:{}", total_rows);
         int totalPageCount = 0;
 
-        if (total_rows / pageBlock == 0) {
-            totalPageCount = 1;
-        } else if (total_rows % pageBlock == 0) {
-            totalPageCount = total_rows / pageBlock;
-        } else {
-            totalPageCount = total_rows / pageBlock + 1;
-        }
+        if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
         log.info("totalPageCount:{}", totalPageCount);
 
         model.addAttribute("totalPageCount", totalPageCount);
@@ -81,13 +80,36 @@ public class DeliveryController {
 	@GetMapping("/delivery/searchList")
 	public String searchList(Model model,
 			@RequestParam(defaultValue = "delivery_num") String searchKey,
-			@RequestParam(defaultValue = "1") String searchWord) {
+			@RequestParam(defaultValue = "1") String searchWord,
+			@RequestParam(defaultValue = "1")int cpage,
+			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/delivery/searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
+		log.info("cpage : {}",cpage);
+		log.info("pageBlock : {}",pageBlock);
 		
-		List<DeliveryVO> list = service.searchList(searchKey, searchWord);
+		//List<DeliveryVO> list = service.searchList(searchKey, searchWord);
+		List<DeliveryVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
 		log.info("list.size() : {}", list.size());
+		
+		//DB로부터 얻은 검색결과의 모든 행수
+		int total_rows=service.getSearchTotalRows(searchKey,searchWord);	
+		log.info("total_rows:{}",total_rows);
+		
+		//int pageBlock=5;	//1개페이지에서 보여질 행수-파라미터로 받으면 된다.
+		int totalPageCount=0;	
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가 
+		if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
+		
+		
+		model.addAttribute("totalPageCount",totalPageCount);
 		
 		model.addAttribute("list", list);
 		
