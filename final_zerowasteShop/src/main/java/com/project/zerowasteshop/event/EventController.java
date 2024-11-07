@@ -78,9 +78,13 @@ public class EventController {
                               @RequestParam(defaultValue = "1") int cpage,
                               @RequestParam(defaultValue = "5") int pageBlock) {
         log.info("/community/event/selectAll");
-        log.info("cpage:{}", cpage);
+        log.info("cpage:{}", cpage);    
         log.info("pageBlock:{}", pageBlock);
 
+        // 페이지 번호가 1보다 작은 경우 1로 설정
+        if (cpage < 1) cpage = 1;
+
+        // 이벤트 목록 조회
         List<EventVO> list = service.selectAllPageBlock(cpage, pageBlock);
         log.info("list.size():{}", list.size());
 
@@ -89,52 +93,64 @@ public class EventController {
         // 총 페이지 수 계산
         int total_rows = service.getTotalRows();
         log.info("total_rows:{}", total_rows);
-        int totalPageCount = 0;
 
-        if (total_rows / pageBlock == 0) {
-            totalPageCount = 1;
-        } else if (total_rows % pageBlock == 0) {
-            totalPageCount = total_rows / pageBlock;
-        } else {
-            totalPageCount = total_rows / pageBlock + 1;
-        }
+        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock; // 올바른 총 페이지 수 계산
+        if (totalPageCount < 1) totalPageCount = 1; // 총 페이지 수가 최소 1이 되도록 보장
         log.info("totalPageCount:{}", totalPageCount);
 
+        // 페이지네이션의 시작 페이지와 끝 페이지 계산
+        int pageGroupSize = 5; // 페이지 그룹 크기 (한 번에 표시할 페이지 수)
+        int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+        int endPage = startPage + pageGroupSize - 1;
+        if (endPage > totalPageCount) endPage = totalPageCount;
+
+        // 모델에 필요한 속성 추가
         model.addAttribute("totalPageCount", totalPageCount);
+        model.addAttribute("cpage", cpage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "community/event/selectAll";
     }
 
     @GetMapping("/community/event/searchList")
     public String e_searchList(Model model,
-                                        @RequestParam(defaultValue = "") String searchWord,
-                                        @RequestParam(defaultValue = "1") int cpage,
-                                        @RequestParam(defaultValue = "5") int pageBlock) {
+                                @RequestParam(defaultValue = "") String searchWord,
+                                @RequestParam(defaultValue = "1") int cpage,
+                                @RequestParam(defaultValue = "5") int pageBlock) {
         log.info("/event/searchListPageBlock");
         log.info("searchWord:{}", searchWord);
         log.info("cpage:{}", cpage);
         log.info("pageBlock:{}", pageBlock);
 
+        // 페이지 번호가 1보다 작은 경우 1로 설정
+        if (cpage < 1) cpage = 1;
+
+        // 검색 결과 조회
         List<EventVO> list = service.searchListPageBlock(searchWord, cpage, pageBlock);
         log.info("list.size():{}", list.size());
 
         model.addAttribute("list", list);
 
-		int total_rows = service.getSearchTotalRows(searchWord);
-		log.info("total_rows:{}", total_rows);
-		int totalPageCount = 0;
+        int total_rows = service.getSearchTotalRows(searchWord);
+        log.info("total_rows:{}", total_rows);
 
-		// 총행카운트와 페이지블럭을 나눌때의 알고리즘을 추가기
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
-		} else {
-			totalPageCount = total_rows / pageBlock + 1;
-		}
-		log.info("totalPageCount:{}", totalPageCount);
+        int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+        if (totalPageCount < 1) totalPageCount = 1;
+        log.info("totalPageCount:{}", totalPageCount);
 
-		model.addAttribute("totalPageCount", totalPageCount);
+        // 페이지네이션의 시작 페이지와 끝 페이지 계산
+        int pageGroupSize = 5;
+        int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+        int endPage = startPage + pageGroupSize - 1;
+        if (endPage > totalPageCount) endPage = totalPageCount;
+
+        // 모델에 필요한 속성 추가
+        model.addAttribute("totalPageCount", totalPageCount);
+        model.addAttribute("cpage", cpage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("searchWord", searchWord);
 
         return "community/event/selectAll";
     }

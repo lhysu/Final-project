@@ -74,70 +74,87 @@ public class NoticeController {
         return "community/notice/selectOne";
     }
 
-    @GetMapping("/community/notice/selectAll")
-    public String n_selectAll(Model model,
-                              @RequestParam(defaultValue = "1") int cpage,
-                              @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/community/notice/selectAll 요청");
-        log.info("cpage:{}", cpage);
-        log.info("pageBlock:{}", pageBlock);
-
-        List<NoticeVO> list = service.selectAllPageBlock(cpage, pageBlock);
-        log.info("list.size():{}", list.size());
-
-        model.addAttribute("list", list);
-
-        // 총 페이지 수 계산
-        int total_rows = service.getTotalRows();
-        log.info("total_rows:{}", total_rows);
-        int totalPageCount = 0;
-
-        if (total_rows == 0) {
-            totalPageCount = 1;
-        } else if (total_rows % pageBlock == 0) {
-            totalPageCount = total_rows / pageBlock;
-        } else {
-            totalPageCount = total_rows / pageBlock + 1;
-        }
-        log.info("totalPageCount:{}", totalPageCount);
-
-        model.addAttribute("totalPageCount", totalPageCount);
-
-        return "community/notice/selectAll";
-    }
-
-    @GetMapping("/community/notice/searchList")
-    public String n_searchList(Model model,
-                               @RequestParam(defaultValue = "") String searchWord,
-                               @RequestParam(defaultValue = "1") int cpage,
-                               @RequestParam(defaultValue = "5") int pageBlock) {
-        log.info("/community/notice/searchList 요청");
-        log.info("searchWord:{}", searchWord);
-        log.info("cpage:{}", cpage);
-        log.info("pageBlock:{}", pageBlock);
-
-        List<NoticeVO> list = service.searchListPageBlock(searchWord, cpage, pageBlock);
-        log.info("list.size():{}", list.size());
-
-        model.addAttribute("list", list);
-
-        int total_rows = service.getSearchTotalRows(searchWord);
-        log.info("total_rows:{}", total_rows);
-        int totalPageCount = 0;
-
-        if (total_rows == 0) {
-            totalPageCount = 1;
-        } else if (total_rows % pageBlock == 0) {
-            totalPageCount = total_rows / pageBlock;
-        } else {
-            totalPageCount = total_rows / pageBlock + 1;
-        }
-        log.info("totalPageCount:{}", totalPageCount);
-
-        model.addAttribute("totalPageCount", totalPageCount);
-
-        return "community/notice/selectAll";
-    }
+	@GetMapping("/community/notice/selectAll")
+	public String n_selectAll(Model model,
+	                          @RequestParam(defaultValue = "1") int cpage,
+	                          @RequestParam(defaultValue = "5") int pageBlock) {
+	    log.info("/community/notice/selectAll 요청");
+	    log.info("cpage:{}", cpage);
+	    log.info("pageBlock:{}", pageBlock);
+	
+	    // 페이지 번호 유효성 검사
+	    if (cpage < 1) cpage = 1;
+	
+	    // 공지사항 목록 조회
+	    List<NoticeVO> list = service.selectAllPageBlock(cpage, pageBlock);
+	    log.info("list.size():{}", list.size());
+	
+	    model.addAttribute("list", list);
+	
+	    // 총 페이지 수 계산
+	    int total_rows = service.getTotalRows();
+	    log.info("total_rows:{}", total_rows);
+	
+	    int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+	    if (totalPageCount < 1) totalPageCount = 1;
+	    log.info("totalPageCount:{}", totalPageCount);
+	
+	    // 페이지네이션의 시작 페이지와 끝 페이지 계산
+	    int pageGroupSize = 5; // 페이지 그룹 크기
+	    int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+	    int endPage = startPage + pageGroupSize - 1;
+	    if (endPage > totalPageCount) endPage = totalPageCount;
+	
+	    // 모델에 필요한 속성 추가
+	    model.addAttribute("totalPageCount", totalPageCount);
+	    model.addAttribute("cpage", cpage);
+	    model.addAttribute("startPage", startPage);
+	    model.addAttribute("endPage", endPage);
+	
+	    return "community/notice/selectAll";
+	}
+	
+	@GetMapping("/community/notice/searchList")
+	public String n_searchList(Model model,
+	                           @RequestParam(defaultValue = "") String searchWord,
+	                           @RequestParam(defaultValue = "1") int cpage,
+	                           @RequestParam(defaultValue = "5") int pageBlock) {
+	    log.info("/community/notice/searchList 요청");
+	    log.info("searchWord:{}", searchWord);
+	    log.info("cpage:{}", cpage);
+	    log.info("pageBlock:{}", pageBlock);
+	
+	    // 페이지 번호 유효성 검사
+	    if (cpage < 1) cpage = 1;
+	
+	    // 검색 결과 조회
+	    List<NoticeVO> list = service.searchListPageBlock(searchWord, cpage, pageBlock);
+	    log.info("list.size():{}", list.size());
+	
+	    model.addAttribute("list", list);
+	
+	    int total_rows = service.getSearchTotalRows(searchWord);
+	    log.info("total_rows:{}", total_rows);
+	
+	    int totalPageCount = (total_rows + pageBlock - 1) / pageBlock;
+	    if (totalPageCount < 1) totalPageCount = 1;
+	    log.info("totalPageCount:{}", totalPageCount);
+	
+	    // 페이지네이션의 시작 페이지와 끝 페이지 계산
+	    int pageGroupSize = 5;
+	    int startPage = ((cpage - 1) / pageGroupSize) * pageGroupSize + 1;
+	    int endPage = startPage + pageGroupSize - 1;
+	    if (endPage > totalPageCount) endPage = totalPageCount;
+	
+	    // 모델에 필요한 속성 추가
+	    model.addAttribute("totalPageCount", totalPageCount);
+	    model.addAttribute("cpage", cpage);
+	    model.addAttribute("startPage", startPage);
+	    model.addAttribute("endPage", endPage);
+	    model.addAttribute("searchWord", searchWord);
+	
+	    return "community/notice/selectAll";
+	}
 
     @PostMapping("/community/notice/insertOK")
     public String n_insertOK(NoticeVO vo) throws IllegalStateException, IOException {
