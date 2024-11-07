@@ -91,7 +91,7 @@ public class AdminController {
 		
 		
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage",cpage);
 		model.addAttribute("list", list);
 		return "admin/member/selectAll";
 	}

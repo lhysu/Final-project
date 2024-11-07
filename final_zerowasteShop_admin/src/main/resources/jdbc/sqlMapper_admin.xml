@@ -36,6 +36,11 @@
 		where name like #{searchWord}	
 	</select>
 	
+	<select id="getSearchTotalRowsAdcheck" resultType="int">
+		select count(*) total_rows from member 
+		where adCheck=true	
+	</select>
+	
 	<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.member.MemberVO">
 		select * from member where member_id like #{searchWord} 
 		order by member_num desc limit #{startRow},#{pageBlock}

@@ -1,12 +1,6 @@
 package com.project.zerowasteshop.donateitem;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +52,7 @@ public class DonateItemController {
 		
 		
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
 		return "community/donateItem/selectAll";
 	}
@@ -105,7 +99,7 @@ public class DonateItemController {
 		
 		
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
 		return "community/donateItem/selectAll";
 	}
