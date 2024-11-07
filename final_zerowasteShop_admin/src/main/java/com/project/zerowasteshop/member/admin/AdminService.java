@@ -69,8 +69,10 @@ public class AdminService {
 	public int getSearchTotalRows(String searchKey, String searchWord) {
 		if(searchKey.equals("member_id")) {
 			return mapper.getSearchTotalRowsId("%"+searchWord+"%");
+		}else if(searchKey.equals("adCheck")){
+			return mapper.getSearchTotalRowsAdcheck("%"+searchWord+"%");		
 		}else {
-			return mapper.getSearchTotalRowsName("%"+searchWord+"%");		
+			return mapper.getSearchTotalRowsName("%"+searchWord+"%");
 		}
 	}
 

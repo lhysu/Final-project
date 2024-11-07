@@ -276,7 +276,7 @@ public class CartController {
 // 		return "cart/selectOne";
 // 	}
 
- 	@GetMapping("/cart/insertOK")
+ 	@PostMapping("/cart/insertOK")
  	public String insertOK(CartVO vo) throws IllegalStateException, IOException {
  		log.info("/cart/insertOK");
 		vo.setMember_id((String)session.getAttribute("user_id"));

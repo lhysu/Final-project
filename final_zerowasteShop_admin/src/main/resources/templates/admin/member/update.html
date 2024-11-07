@@ -122,7 +122,8 @@ $(function (){
 
     $("#btn_idCheck").click(function(){
         console.log("click...")
-        let url2="http://localhost:8833/api/idCheck";
+        /* let url2="http://localhost:8833/api/idCheck"; */
+        let url2="http://223.130.138.123:8833/api/idCheck";
         $.ajax({
             url:url2,
             data:{member_id:$("#member_id").val()},
@@ -191,7 +192,7 @@ $(function (){
         <th:block th:if="${vo2.adCheck==true}">
         <tr>
         <th>비밀번호</th>
-        <td><input type="text" id="pw" class="form-control" name="pw" placeholder="비밀번호를 입력하세요" required>
+        <td><input type="password" id="pw" class="form-control" name="pw" placeholder="비밀번호를 입력하세요" required>
         	<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
         </td>
         </tr>

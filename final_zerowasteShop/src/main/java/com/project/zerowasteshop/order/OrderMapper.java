@@ -43,5 +43,7 @@ public interface OrderMapper {
      */
     List<BestsellerDTO> findTopSellingProducts(int limit);
 
+	int getTotalPrice(String merchant_uid);
+
 
 }

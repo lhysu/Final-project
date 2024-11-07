@@ -515,7 +515,7 @@ ADD CONSTRAINT `FK_help_member`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;
   
 #리뷰에서 회원, 상품 참조
 ALTER TABLE `finalproject`.`review` 
@@ -538,7 +538,7 @@ ADD CONSTRAINT `FK_CART_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION,
+  ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_CART_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -571,12 +571,20 @@ ADD CONSTRAINT `FK_DELIVERY_PAYMENT`
   REFERENCES `finalproject`.`payment` (`pay_num`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-
 ADD CONSTRAINT `FK_DELIVERY_ORDER`
   FOREIGN KEY (`merchant_uid`)
   REFERENCES `finalproject`.`order` (`merchant_uid`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION;
+  ALTER TABLE `finalproject`.`delivery` 
+ADD INDEX `FK_DELIVERY_MEMBER_idx` (`member_id` ASC) VISIBLE;
+;
+ALTER TABLE `finalproject`.`delivery` 
+ADD CONSTRAINT `FK_DELIVERY_MEMBER`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `finalproject`.`member` (`member_id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
   
 # 결제에서 상품,회원,쿠폰,주문 참조
 ALTER TABLE `finalproject`.`payment` 
@@ -586,14 +594,24 @@ ALTER TABLE `finalproject`.`payment`
 ADD CONSTRAINT `FK_PAYMENT_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+;
   
 # 주문에서 상품,회원,쿠폰 참조
 ALTER TABLE `finalproject`.`order` 
   ADD CONSTRAINT `FK_ORDER_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+ALTER TABLE `finalproject`.`order` 
+  ADD INDEX `FK_ORDER_MEMBER_idx` (`member_id` ASC) VISIBLE;
+  ;
+ALTER TABLE `finalproject`.`order` 
+ADD CONSTRAINT `FK_ORDER_MEMBER`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
@@ -608,6 +626,7 @@ ADD CONSTRAINT `FK_ITEM_ORDER`
   REFERENCES `finalproject`.`order` (`merchant_uid`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
+
 ADD CONSTRAINT `FK_ITEM_PRODUCT`
   FOREIGN KEY (`product_num`)
   REFERENCES `finalproject`.`product` (`product_num`)
@@ -623,7 +642,7 @@ ADD CONSTRAINT `FK_COUPON_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;
   
 # '재활용품 분리방법 댓글'에서 재활용품 분리방법, 회원 참조
 ALTER TABLE `finalproject`.`recycletipcomment` 
@@ -640,7 +659,7 @@ ADD CONSTRAINT `FK_TIPCOMMENT_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;
   
 # '기부 가능 물품'에서 회원 참조
 ALTER TABLE `finalproject`.`donateitem` 
@@ -648,7 +667,7 @@ ADD CONSTRAINT `FK_DONATE_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;
   
 # '재활용 라이프'에서 회원 참조
 ALTER TABLE `finalproject`.`recyclelife` 
@@ -659,7 +678,7 @@ ADD CONSTRAINT `FK_RECYCLELIFE_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;
   
 # '재활용 라이프 댓글'에서 재활용 라이프,회원 참조
 ALTER TABLE `finalproject`.`recyclelifecomment` 
@@ -676,4 +695,4 @@ ADD CONSTRAINT `FK_LIFECOMMENT_MEMBER`
   FOREIGN KEY (`member_id`)
   REFERENCES `finalproject`.`member` (`member_id`)
   ON DELETE CASCADE
-  ON UPDATE NO ACTION;
+  ON UPDATE CASCADE;

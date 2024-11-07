@@ -46,4 +46,6 @@ public interface AdminMapper {
 
 	public int userUpdateOK(MemberVO vo);
 
+	public int getSearchTotalRowsAdcheck(String string);
+
 }
