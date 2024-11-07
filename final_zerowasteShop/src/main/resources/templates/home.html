@@ -370,10 +370,15 @@
                                         </th:block>
                                     </div>
                                     <h4 class="mb-3">[[${product.price}]]원</h4>
-                                    <a th:href="|/cart/insertOK?product_num=${product.product_num}&member_id=${session.user_id}&price=${product.price}&product_img=${product.product_img}&product_name=${product.product_name}|" 
-                                       class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                    </a>
+                                    <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
+								        <input type="hidden" name="product_num" th:value="${product.product_num}">
+								        <input type="hidden" name="count" value="1">
+								        <input type="hidden" name="price" th:value="${product.price}">
+								        <input type="hidden" name="product_img" th:value="${product.product_img}">
+								        <input type="hidden" name="product_name" th:value="${product.product_name.replace('[', '%5B').replace(']', '%5D')}">
+							        
+							        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button> <!-- type="submit" 추가 -->
+							    </form>
                                 </div>
                             </div>
                         </div>
@@ -462,9 +467,15 @@
 				                        </th:block>
 				                    </div>
 				                    <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
-				                    <a th:href="|/cart/insertOK?product_num=${vo.product_num}&member_id=${session.user_id}&price=${vo.price}&product_img=${vo.product_img}&product_name=${vo.product_name}|" 
-				                       class="btn border border-secondary rounded-pill px-3 text-primary">
-				                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+				                    <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
+								        <input type="hidden" name="product_num" th:value="${vo.product_num}">
+								        <input type="hidden" name="count" value="1">
+								        <input type="hidden" name="price" th:value="${vo.price}">
+								        <input type="hidden" name="product_img" th:value="${vo.product_img}">
+								        <input type="hidden" name="product_name" th:value="${vo.product_name.replace('[', '%5B').replace(']', '%5D')}">
+							        
+							        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button> <!-- type="submit" 추가 -->
+							    </form>
 				                    </a>
 				                </div>
 				            </div>
