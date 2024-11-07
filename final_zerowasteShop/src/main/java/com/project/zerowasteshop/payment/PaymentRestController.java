@@ -33,11 +33,14 @@ public class PaymentRestController {
 	IamportService iamportService;
 
 	@PostMapping("/payment/refund")
-	public ResponseEntity<Map<String, Object>> refund(@RequestBody Map<String, Object> requestData) {
+	public ResponseEntity<Map<String, Object>> refund(@RequestBody Map<String, Object> requestData,
+			HttpSession session) {
 		
 		String merchant_uid = (String) requestData.get("merchant_uid");
 	    int amount = Integer.parseInt(requestData.get("amount").toString());
 	    String delivery_state = (String) requestData.get("delivery_state");
+	    String user_id = (String) session.getAttribute("user_id");
+	    
 		Map<String, Object> response = new HashMap<>();
 
 		log.info("merchant_uid:{}", merchant_uid);
@@ -46,7 +49,7 @@ public class PaymentRestController {
 		
 		try {
 			// 포트원 결제 취소 API 호출
-			boolean refundResult = iamportService.cancelPayment(merchant_uid, amount,delivery_state);
+			boolean refundResult = iamportService.cancelPayment(merchant_uid, amount,delivery_state,user_id);
 			response.put("success", refundResult);
 			log.info("refundResult:{}", refundResult);
 			return ResponseEntity.ok(response);

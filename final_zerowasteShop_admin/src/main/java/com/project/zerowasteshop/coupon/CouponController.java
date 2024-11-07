@@ -56,7 +56,7 @@ public class CouponController {
 	@GetMapping("/admin/coupon/searchList")
 	public String ad_couponSearchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
-			@RequestParam(defaultValue = "9")String searchWord,
+			@RequestParam(defaultValue = "#")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage
 			,@RequestParam(defaultValue = "5")int pageBlock) {
 		log.info("/member/searchList");
@@ -83,6 +83,10 @@ public class CouponController {
 			totalPageCount = total_rows/pageBlock;
 		}
 		
+		if(totalPageCount==0) {
+			totalPageCount +=1;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
 		model.addAttribute("totalPageCount",totalPageCount);
 		
 		return "admin/coupon/selectAll";

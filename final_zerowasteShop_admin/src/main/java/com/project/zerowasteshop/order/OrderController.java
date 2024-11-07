@@ -62,7 +62,7 @@ public class OrderController {
 		} else {
 			totalPageCount = total_rows/pageBlock;
 		}
-		
+		log.info("totalPageCount:{}",totalPageCount);
 		model.addAttribute("totalPageCount",totalPageCount);
 		
 		
@@ -73,7 +73,7 @@ public class OrderController {
 	@GetMapping("/admin/order/searchList")
 	public String ad_orderSearchList(Model model,
 			@RequestParam(defaultValue = "member_id")String searchKey,
-			@RequestParam(defaultValue = "9")String searchWord,
+			@RequestParam(defaultValue = "#")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "5")int pageBlock) {
 		log.info("/admin/order/searchList");
@@ -99,7 +99,12 @@ public class OrderController {
 		} else {
 			totalPageCount = total_rows/pageBlock;
 		}
+		log.info("totalPageCount:{}",totalPageCount);
 		
+		// 원활한 페이지네이션을 위해 추가
+		if(totalPageCount==0) {
+			totalPageCount += 1;
+		}
 		model.addAttribute("totalPageCount",totalPageCount);
 		
 		return "admin/order/selectAll";
