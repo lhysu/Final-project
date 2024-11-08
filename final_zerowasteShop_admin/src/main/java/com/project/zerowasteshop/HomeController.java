@@ -90,4 +90,9 @@ public class HomeController {
 		return "user/login";
 	}
 	
+	@GetMapping("/PrivacyPolicy")
+	public String PrivacyPolicy() {
+		log.info("/PrivacyPolicy");
+		return "PrivacyPolicy";
+	}
 }
