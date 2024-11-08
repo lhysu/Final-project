@@ -90,4 +90,11 @@ public class HomeController {
 		return "user/login";
 	}
 	
+	//이용약관 이동
+	@GetMapping("/terms")
+	public String terms() {
+		log.info("/terms");
+		return "terms";
+	}
+	
 }
