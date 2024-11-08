@@ -47,6 +47,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
        <h1 class="mb-4">재활용 라이프 게시판 댓글 수정</h1>
        <form th:action="@{/community/recycleLifeComment/updateOK}" method="post" 
         class="needs-validation" novalidate>
+         <input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}">
         <input type="hidden" name="lifeComment_num" th:value="${vo2.lifeComment_num}"/>
        <div class="mb-3">
                 <label for="lifeComment_content" class="form-label">내용 : </label>

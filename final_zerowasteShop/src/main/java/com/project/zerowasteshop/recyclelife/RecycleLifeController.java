@@ -88,6 +88,7 @@ public class RecycleLifeController {
 		RecycleLifeVO vo2 = service.selectOne(vo);
 		log.info("vo2:{}", vo2);
 		model.addAttribute("vo2", vo2);
+		
 		// 댓글 목록 조회
 		List<RecycleLifeCommentVO> list = commentService.selectAll(vo.getRecycleLife_num());
 		log.info("list : {}", list);
