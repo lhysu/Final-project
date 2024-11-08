@@ -20,7 +20,9 @@ public class SecurityConfig {
 		//화이트 리스트를 미리 배열에 넣어두기
 		String[] whiteList= {"/member/required_login","/member/denied","/member/expired", "login/mailConfirm",
 				"/member/login_fail","/member/login_success","/api/**","/admin/ad_login",
-				"/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/admin/adminJoin","/admin/adminInsert"};
+				"/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img","/admin/adminJoin","/admin/adminInsert",
+				"/error"
+				};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		httpSecurity
