@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title th:text="${vo2.recycleLife_title}">재활용 라이프 게시글 상세</title>
+<link rel="stylesheet" href="/css/main.css">
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .recycleLife-image {
+            max-width: 100%;
+            height: auto;
+        }
+        
+    </style>
+    
+    <script>
+    // 기본 좋아요 상태 설정
+    let isLiked = false;
+
+    function toggleLike(recycleLife_num) {
+        fetch("/community/recycleLife/selectOne", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `recycleLife_num=${recycleLife_num}&isLiked=${isLiked}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(updatedLikes => {
+            // 좋아요 수 업데이트
+            document.getElementById("likeCount").innerText = updatedLikes;
+
+            // 좋아요 상태 반전
+            isLiked = !isLiked;
+
+            // 버튼 텍스트 업데이트
+            document.getElementById("likeButton").innerText = isLiked ? "좋아요" : "좋아요";
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+<script>
+    // 모달이 열릴 때 실행되는 이벤트 리스너
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // 모달을 여는 버튼
+        var lifeCommentNum = button.data('lifeComment_num'); // data-lifeComment_num 속성에서 값 읽기
+        var modal = $(this);
+        
+        // 모달의 hidden input과 메시지 업데이트
+        modal.find('#lifeCommentNum').val(lifeCommentNum);
+        modal.find('#deleteConfirmMessage').text(lifeCommentNum + '번 댓글을 정말 삭제하시겠습니까?');
+    });
+    
+</script>
+
+</head>
+<body>
+ 
+	<!-- Header -->
+    <div th:replace="~{header_community :: header}"></div>
+	
+	<div class="container my-4" style="padding-top : 150px">
+        <!-- 게시글 제목, 작성일, 조회수 -->
+        <div class="row">
+            <div class="col-12">
+                <h1 th:text="${vo2.recycleLife_title}">게시글 제목</h1>
+                <p class="text-muted">
+                	작성자: <span th:text="${vo2.member_id}"></span> |
+                    작성일: <span th:text="${#dates.format(vo2.recycleLife_wdate, 'yyyy-MM-dd HH:mm')}"></span> |
+                    조회수: <span th:text="${vo2.recycleLife_views}"></span> |
+   					<button id="likeButton" th:text="${recycleLife_likes > 0 ? '좋아요' : '좋아요'}"
+   					class="btn btn-primary"
+           			th:onclick="'toggleLike(' + ${recycleLife_num} + ', ' + (${recycleLife_likes > 0}) + ')'">
+       				좋아요</button>
+       				<span id="likeCount" th:text="${recycleLife_likes}"></span>
+       				</p>
+            </div>
+        </div>
+
+		<!-- 이미지 -->
+        <div class="row my-4">
+            <div class="col-12 text-center">
+                <img th:src="@{'/uploadimgPath/' + ${vo2.recycleLife_img}}"
+               alt="RecycleLife Image" class="img-fluid recycletip-image" 
+               onerror="this.style.display='none';">
+            </div>
+        </div>
+        
+        <!-- 내용 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-4">
+                    <p th:utext="${vo2.recycleLife_content}"></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 수정, 삭제, 목록으로 버튼 -->
+        <div class="row my-4">
+            <div class="col-12">
+                <a th:if="${#authentication.name == vo2.member_id}"
+                th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
+                    <i class="fas fa-edit"></i> 수정
+                </a>
+                <a th:if="${#authentication.name == vo2.member_id}"
+                th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
+                    <i class="fas fa-trash-alt"></i> 삭제
+                </a>               
+                <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary">
+                    <i class="fas fa-list"></i> 목록으로
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    	<!-- 지우면 빈 페이지 에러가 남 -->
+    	<div class="container my-6">  	
+    	<table id="insertTable" class="table table-striped table-bordered">
+    		<th:block th:each="vo : ${list}"></th:block> 		
+    	</table>
+ 		</div>
+ 		
+		<div class="container my-6">
+	    <h5>댓글 목록</h5>   
+	    <th:block th:each="comment : ${comments}">
+	    	<a>
+	    		<span th:text="${comment.lifeComment_num}"></span> |
+	            <span th:text="${comment.lifeComment_wdate}"></span> 
+	            <a th:if="${#authentication.name == comment.member_id}"
+	            th:href="|/community/recycleLifeComment/update?lifeComment_num=${comment.lifeComment_num}|"
+    			class="btn btn-link" sec:authorize="isAuthenticated()">수정</a> 
+    			<div th:replace="~{community/recycleLifeComment/delete :: deleteModalFragment}">
+     			</div>
+ 				<button type="button" class="btn btn-link" data-bs-toggle="modal" 
+     			th:if="${#authentication.name == comment.member_id}"
+     			data-bs-target="#deleteModal" data-lifeComment_num="${comment.lifeComment_num}" sec:authorize="isAuthenticated()">삭제</button>
+            </a>
+            <p>
+            <span th:text="${comment.member_id}"></span> 
+            <span th:text="${comment.lifeComment_content}"></span>
+            </p>        
+	      </th:block>	      
+		</div>
+		
+ 		<!-- 댓글 작성 폼 -->
+ 		<form class="container my-4" th:action="@{/community/recycleLifeComment/insertOK}" 
+ 		method="post" name="lifeComment_content">
+ 		<h5>댓글 작성</h5>
+ 		<label for="member_id" style="padding-bottom : 10px">작성자 [[${session.user_id}]]</label>
+        <input type="hidden" id="member_id" name="member_id" th:value ="${session.user_id}" required>
+        <input type="hidden" name="recycleLife_num" th:value="${vo2.recycleLife_num}" required>
+        <input type="hidden" name="lifeComment_id" th:value="${lifeComment_id}" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>        
+ 		<div class="form-group">        
+        <textarea class="form-control" id="content" rows="3" name="lifeComment_content" placeholder="댓글을 입력하세요" required></textarea>
+    	</div>
+       <button type="submit" class="btn btn-success mt-2" sec:authorize="isAuthenticated()">작성하기</button>
+ 		</form>
+ 		
+ 		<!-- 부트스트랩 JS 및 의존성 추가 (CDN 사용 권장) -->
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+		<!-- 폼 유효성 검증 스크립트 (부트스트랩 제공) -->
+	    <script>
+	        (function () {
+	            'use strict'
+	            var forms = document.querySelectorAll('.needs-validation')
+	            Array.prototype.slice.call(forms)
+	                .forEach(function (form) {
+	                    form.addEventListener('submit', function (event) {
+	                        if (!form.checkValidity()) {
+	                            event.preventDefault()
+	                            event.stopPropagation()
+	                        }
+	                        form.classList.add('was-validated')
+	                    }, false)
+	                })
+	        })()
+	    </script>
+ 		
+		<!-- Footer -->
+		<div th:replace="footer :: footer"></div>
+				
+</body>
+</html>

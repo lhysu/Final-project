@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>DonateItem</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+       /* 현재 페이지 번호 강조 스타일 */
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .current {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        th,td{
+        	text-align: center;
+        }
+        #btn-insert{
+        	margin-left:auto;
+        }
+    </style>
+</head>
+<body >
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header :: header}"></div>
+    <!-- 해더 끝 -->
+
+
+	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+		<h1><a th:href="@{/community/donateItem/d_selectAll}">기부가능 물품 신청</a></h1>
+		</div>
+		<form action="/community/donateItem/d_searchList">
+			<div class=" mx-auto mb-2" >
+				<div class="d-flex align-items-center">	
+				    <select name="searchKey" class="btn btn-primary dropdown-toggle me-2">
+				        <option value="member_id" >작성자</option>
+				        <option value="donateItem_item">기부물품</option>
+				    </select>
+				    <input type="text" name="searchWord" style="width:300px;" class="form-control">
+				    <input type="submit" value="검색" class="btn btn-primary ms-2">
+				   
+				   <!-- <a th:href="|/donateItem/d_insert|" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" id="btn-insert" style="float: right;">신청하기</a> -->
+			    
+			    </div>
+			    
+		    </div>
+		</form>
+		    
+	    <table class="table table-striped table-bordered">
+	        <thead class="table-dark ">
+		        <tr>
+			        <th>글번호</th>
+			        <th style="width: 50%;">제목</th>
+			        <th>작성자</th>
+			        <th>작성일자</th>
+			        <th>처리상태</th>
+		        </tr>
+	        </thead>
+	        
+	        <tbody>
+	        <th:block th:each="vo:${list}">
+	            <tr><td>[[${vo.donateItem_num}]]</td>
+	                <td style="width: 50%;"><a th:href="|/community/donateItem/d_selectOne?donateItem_num=${vo.donateItem_num}|" class="text-decoration-none">[[${vo.donateItem_title}]]</a></td>
+	                <td>[[${vo.member_id}]]</td>
+	                <td th:text="${#dates.format(vo.donateItem_wdate, 'yyyy-MM-dd HH:mm')}"></td>
+	                <td>[[${vo.donate_state}]]</td>
+	            </tr>
+			</th:block>
+	        </tbody>
+	
+	    </table>
+	    
+	    <nav>
+			<ul class="pagination justify-content-center">
+				<th:block th:if="${param.searchKey!=null}">
+					<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+				<li class="page-item"
+					th:classappend="${cpage == 1} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/community/donateItem/d_searchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+				</li>
+					</th:block>
+				</th:block>
+				<th:block th:if="${param.searchKey==null}">
+
+				<li class="page-item"
+					th:classappend="${cpage == 1} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/community/donateItem/d_selectAll?cpage=${cpage - 1}|">이전</a>
+				</li>
+				</th:block>
+				<th:block th:each="i:${#numbers.sequence(1,totalPageCount)}">
+					<th:block th:if="${param.searchKey==null}">
+						<li class="page-item"
+							th:classappend="${i == cpage} ? 'active'"><a
+							class="page-link"
+							th:href="|/community/donateItem/d_selectAll?cpage=${i}|">[[${i}]]</a></li>
+					</th:block>
+					<th:block th:if="${param.searchKey!=null}">
+						<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+							<li class="page-item"
+								th:classappend="${i == cpage} ? 'active'"><a
+								class="page-link"
+								th:href="|/community/donateItem/d_searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+							</li>
+						</th:block>
+					</th:block>
+				</th:block>
+				<th:block th:if="${param.searchKey!=null}">
+					<th:block
+							th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+				<li class="page-item"
+					th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/community/donateItem/d_searchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+				</li>
+					</th:block>
+				</th:block>
+				<th:block th:if="${param.searchKey==null}">
+
+				<li class="page-item"
+					th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					<a class="page-link"
+					th:href="|/community/donateItem/d_selectAll?cpage=${cpage + 1}|">다음</a>
+				</li>
+				</th:block>
+			</ul>
+		</nav>
+
+	</div>
+
+	<!-- Footer Start -->
+	<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
+
+	
+</body>
+</html>

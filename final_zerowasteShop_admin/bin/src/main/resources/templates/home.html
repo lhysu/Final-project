@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <title>제로웨이스트 샵</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com"  crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 웹페이지 로딩 스피너 시작 -->
+    <div id="spinner"
+        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- 웹페이지 로딩 스피너 끝 -->
+
+
+    <!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+    
+    <!-- 검색 모달창 시작 -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">검색 모달창 타이틀</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="키워드 입력란"
+                            aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 검색 모달창 끝 -->
+
+
+    <!-- 
+        히어로 섹션 시작
+        히어로 이미지: 웹사이트에서 화면을 가득 채우는 큰 배너 이미지.
+    -->
+    <div class="container-fluid py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-12 col-lg-7">
+                    <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
+                    <h1 class="mb-5 display-3 text-primary">Organic Veggies, Fruits Foods</h1>
+                    <div class="position-relative mx-auto">
+                        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number"
+                            placeholder="Search">
+                        <button type="submit"
+                            class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
+                            style="top: 0; right: 25%;">Submit Now</button>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-5">
+                    <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active rounded">
+                                <img src="img/hero-img-1.png" class="img-fluid w-100 h-100 bg-secondary rounded"
+                                    alt="First slide">
+                                <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+                            </div>
+                            <div class="carousel-item rounded">
+                                <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                                <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselId"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 히어로 섹션 끝 -->
+
+
+    <!-- 과일 섹션 시작 -->
+	<div class="container-fluid fruite py-5">
+	    <!-- 내부 컨테이너 시작 -->
+	    <div class="container py-5">
+	        <!-- 탭 클래스 시작 -->
+	        <div class="tab-class text-center">
+	            <!-- 제목과 탭 메뉴를 담는 행(row) 시작 -->
+	            <div class="row g-4">
+	                <!-- 제목 영역: 섹션의 제목을 표시 -->
+	                <div class="col-lg-4 text-start">
+	                    <h1>Our Organic Products</h1>
+	                </div>
+	                <!-- 탭 메뉴 영역: 제품 카테고리 탭 -->
+	                <div class="col-lg-8 text-end">
+	                    <!-- 네비게이션 탭 메뉴 시작 -->
+	                    <ul class="nav nav-pills d-inline-flex text-center mb-5">
+	                        <!-- 탭 아이템: 전체 제품 -->
+	                        <li class="nav-item">
+	                            <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill"
+	                                href="#tab-1">
+	                                <span class="text-dark" style="width: 130px;">모두보기</span>
+	                            </a>
+	                        </li>
+	                        <!-- 탭1 아이템 -->
+	                        <li class="nav-item">
+	                            <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
+	                                <span class="text-dark" style="width: 130px;">카테고리1</span>
+	                            </a>
+	                        </li>
+	                        <!-- 탭2 아이템 -->
+	                        <li class="nav-item">
+	                            <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-3">
+	                                <span class="text-dark" style="width: 130px;">카테고리2</span>
+	                            </a>
+	                        </li>
+	                        <!-- 탭3 아이템 -->
+	                        <li class="nav-item">
+	                            <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-4">
+	                                <span class="text-dark" style="width: 130px;">카테고리3</span>
+	                            </a>
+	                        </li>
+	                        <!-- 탭4 아이템 -->
+	                        <li class="nav-item">
+	                            <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-5">
+	                                <span class="text-dark" style="width: 130px;">카테고리4</span>
+	                            </a>
+	                        </li>
+	                    </ul>
+	                    <!-- 네비게이션 탭 메뉴 끝 -->
+	                </div>
+	            </div>
+	            <!-- 제목과 탭 메뉴를 담는 행(row) 끝 -->
+	
+	            <!-- 탭 콘텐츠 시작 -->
+	            <div class="tab-content">
+	                <!-- 첫 번째 탭 패널 -->
+	                <div id="tab-1" class="tab-pane fade show p-0 active">
+	                    <!-- 제품 리스트를 담는 행(row) 시작 -->
+	                    <div class="row g-4">
+	                        <div class="col-lg-12">
+	                            <div class="row g-4">
+	                                <!-- 제품 아이템 시작 -->
+	                                <div class="col-md-6 col-lg-4 col-xl-3">
+	                                    <!-- 제품 카드 -->
+	                                    <div class="rounded position-relative fruite-item">
+	                                        <!-- 제품 이미지 영역 -->
+	                                        <div class="fruite-img">
+	                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+	                                                alt="">
+	                                        </div>
+	                                        <!-- 제품 카테고리 라벨 -->
+	                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+	                                            style="top: 10px; left: 10px;">카테고리1</div>
+	                                        <!-- 제품 정보 영역 -->
+	                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+	                                            <h4>Grapes</h4>
+	                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+	                                                eiusmod te incididunt</p>
+	                                            <!-- 가격 및 장바구니 버튼 -->
+	                                            <div class="d-flex justify-content-between flex-lg-wrap">
+	                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+	                                                <a href="#"
+	                                                    class="btn border border-secondary rounded-pill px-3 text-primary">
+	                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 제품 아이템 끝 -->
+	                                <!-- 다른 제품 아이템들도 동일한 구조로 반복 -->
+	                                <!-- ... -->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!-- 제품 리스트를 담는 행(row) 끝 -->
+	                </div>
+	                <!-- 첫 번째 탭 패널 끝 -->
+	
+	                <!-- 두 번째 탭 패널 -->
+	                <div id="tab-2" class="tab-pane fade show p-0">
+	                    <!-- 제품 리스트를 담는 행(row) 시작 -->
+	                    <div class="row g-4">
+	                        <div class="col-lg-12">
+	                            <div class="row g-4">
+	                                <!-- 제품 아이템 시작 -->
+	                                <div class="col-md-6 col-lg-4 col-xl-3">
+	                                    <!-- 제품 카드 -->
+	                                    <div class="rounded position-relative fruite-item">
+	                                        <!-- 제품 이미지 영역 -->
+	                                        <div class="fruite-img">
+	                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+	                                                alt="">
+	                                        </div>
+	                                        <!-- 제품 카테고리 라벨 -->
+	                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+	                                            style="top: 10px; left: 10px;">카테고리1</div>
+	                                        <!-- 제품 정보 영역 -->
+	                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+	                                            <h4>Grapes</h4>
+	                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+	                                                eiusmod te incididunt</p>
+	                                            <!-- 가격 및 장바구니 버튼 -->
+	                                            <div class="d-flex justify-content-between flex-lg-wrap">
+	                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+	                                                <a href="#"
+	                                                    class="btn border border-secondary rounded-pill px-3 text-primary">
+	                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 제품 아이템 끝 -->
+	                                <!-- 다른 제품 아이템들도 동일한 구조로 반복 -->
+	                                <!-- ... -->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!-- 제품 리스트를 담는 행(row) 끝 -->
+	                </div>
+	                <!-- 두 번째 탭 패널 끝 -->
+	
+	                <!-- 세 번째 탭 패널 -->
+	                <div id="tab-3" class="tab-pane fade show p-0">
+	                    <!-- 제품 리스트를 담는 행(row) 시작 -->
+	                    <div class="row g-4">
+	                        <div class="col-lg-12">
+	                            <div class="row g-4">
+	                                <!-- 제품 아이템 시작 -->
+	                                <div class="col-md-6 col-lg-4 col-xl-3">
+	                                    <!-- 제품 카드 -->
+	                                    <div class="rounded position-relative fruite-item">
+	                                        <!-- 제품 이미지 영역 -->
+	                                        <div class="fruite-img">
+	                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+	                                                alt="">
+	                                        </div>
+	                                        <!-- 제품 카테고리 라벨 -->
+	                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+	                                            style="top: 10px; left: 10px;">카테고리2</div>
+	                                        <!-- 제품 정보 영역 -->
+	                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+	                                            <h4>Grapes</h4>
+	                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+	                                                eiusmod te incididunt</p>
+	                                            <!-- 가격 및 장바구니 버튼 -->
+	                                            <div class="d-flex justify-content-between flex-lg-wrap">
+	                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+	                                                <a href="#"
+	                                                    class="btn border border-secondary rounded-pill px-3 text-primary">
+	                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 제품 아이템 끝 -->
+	                                <!-- 다른 제품 아이템들도 동일한 구조로 반복 -->
+	                                <!-- ... -->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!-- 제품 리스트를 담는 행(row) 끝 -->
+	                </div>
+	                <!-- 세 번째 탭 패널 끝 -->
+	
+	                <!-- 네 번째 탭 패널 -->
+	                <div id="tab-4" class="tab-pane fade show p-0">
+	                    <!-- 제품 리스트를 담는 행(row) 시작 -->
+	                    <div class="row g-4">
+	                        <div class="col-lg-12">
+	                            <div class="row g-4">
+	                                <!-- 제품 아이템 시작 -->
+	                                <div class="col-md-6 col-lg-4 col-xl-3">
+	                                    <!-- 제품 카드 -->
+	                                    <div class="rounded position-relative fruite-item">
+	                                        <!-- 제품 이미지 영역 -->
+	                                        <div class="fruite-img">
+	                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+	                                                alt="">
+	                                        </div>
+	                                        <!-- 제품 카테고리 라벨 -->
+	                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+	                                            style="top: 10px; left: 10px;">카테고리3</div>
+	                                        <!-- 제품 정보 영역 -->
+	                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+	                                            <h4>Grapes</h4>
+	                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+	                                                eiusmod te incididunt</p>
+	                                            <!-- 가격 및 장바구니 버튼 -->
+	                                            <div class="d-flex justify-content-between flex-lg-wrap">
+	                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+	                                                <a href="#"
+	                                                    class="btn border border-secondary rounded-pill px-3 text-primary">
+	                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 제품 아이템 끝 -->
+	                                <!-- 다른 제품 아이템들도 동일한 구조로 반복 -->
+	                                <!-- ... -->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!-- 제품 리스트를 담는 행(row) 끝 -->
+	                </div>
+	                <!-- 네 번째 탭 패널 끝 -->
+	
+	                <!-- 다섯 번째 탭 패널 -->
+	                <div id="tab-5" class="tab-pane fade show p-0">
+	                    <!-- 제품 리스트를 담는 행(row) 시작 -->
+	                    <div class="row g-4">
+	                        <div class="col-lg-12">
+	                            <div class="row g-4">
+	                                <!-- 제품 아이템 시작 -->
+	                                <div class="col-md-6 col-lg-4 col-xl-3">
+	                                    <!-- 제품 카드 -->
+	                                    <div class="rounded position-relative fruite-item">
+	                                        <!-- 제품 이미지 영역 -->
+	                                        <div class="fruite-img">
+	                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+	                                                alt="">
+	                                        </div>
+	                                        <!-- 제품 카테고리 라벨 -->
+	                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+	                                            style="top: 10px; left: 10px;">카테고리4</div>
+	                                        <!-- 제품 정보 영역 -->
+	                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+	                                            <h4>Grapes</h4>
+	                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+	                                                eiusmod te incididunt</p>
+	                                            <!-- 가격 및 장바구니 버튼 -->
+	                                            <div class="d-flex justify-content-between flex-lg-wrap">
+	                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+	                                                <a href="#"
+	                                                    class="btn border border-secondary rounded-pill px-3 text-primary">
+	                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 제품 아이템 끝 -->
+	                                <!-- 다른 제품 아이템들도 동일한 구조로 반복 -->
+	                                <!-- ... -->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!-- 제품 리스트를 담는 행(row) 끝 -->
+	                </div>
+	                <!-- 다섯 번째 탭 패널 끝 -->
+	            </div>
+	            <!-- 탭 콘텐츠 끝 -->
+	        </div>
+	        <!-- 탭 클래스 끝 -->
+	    </div>
+	    <!-- 내부 컨테이너 끝 -->
+	</div>
+	<!-- 과일 섹션 끝 -->
+
+
+
+    <!-- 아이템 섹션의 전체 컨테이너 시작 -->
+	<div class="container-fluid service py-5">
+	    <!-- 중앙 정렬을 위한 내부 컨테이너 시작 -->
+	    <div class="container py-5">
+	        <!-- 아이템들을 담는 행(row) 시작 -->
+	        <div class="row g-4 justify-content-center">
+	            <!-- 첫 번째 아이템 시작 -->
+	            <div class="col-md-6 col-lg-4">
+	                <a href="#">
+	                    <!-- 아이템 카드 시작 -->
+	                    <div class="service-item bg-secondary rounded border border-secondary">
+	                        <!-- 이미지 -->
+	                        <img src="img/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
+	                        <!-- 내용 컨테이너 시작 -->
+	                        <div class="px-4 rounded-bottom">
+	                            <!-- 내용 박스 시작 -->
+	                            <div class="service-content bg-primary text-center p-4 rounded">
+	                                <!-- 제목 -->
+	                                <h5 class="text-white">Fresh Apples</h5>
+	                                <!-- 할인 정보 -->
+	                                <h3 class="mb-0">20% OFF</h3>
+	                            </div>
+	                            <!-- 내용 박스 끝 -->
+	                        </div>
+	                        <!-- 내용 컨테이너 끝 -->
+	                    </div>
+	                    <!-- 아이템 카드 끝 -->
+	                </a>
+	            </div>
+	            <!-- 첫 번째 아이템 끝 -->
+	
+	            <!-- 두 번째 아이템 시작 -->
+	            <div class="col-md-6 col-lg-4">
+	                <a href="#">
+	                    <div class="service-item bg-dark rounded border border-dark">
+	                        <img src="img/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
+	                        <div class="px-4 rounded-bottom">
+	                            <div class="service-content bg-light text-center p-4 rounded">
+	                                <h5 class="text-primary">Tasty Fruits</h5>
+	                                <h3 class="mb-0">Free delivery</h3>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </a>
+	            </div>
+	            <!-- 두 번째 아이템 끝 -->
+	
+	            <!-- 세 번째 아이템 시작 -->
+	            <div class="col-md-6 col-lg-4">
+	                <a href="#">
+	                    <div class="service-item bg-primary rounded border border-primary">
+	                        <img src="img/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
+	                        <div class="px-4 rounded-bottom">
+	                            <div class="service-content bg-secondary text-center p-4 rounded">
+	                                <h5 class="text-white">Exotic Vegetable</h5>
+	                                <h3 class="mb-0">Discount $30</h3>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </a>
+	            </div>
+	            <!-- 세 번째 아이템 끝 -->
+	        </div>
+	        <!-- 아이템들을 담는 행(row) 끝 -->
+	    </div>
+	    <!-- 중앙 정렬을 위한 내부 컨테이너 끝 -->
+	</div>
+	<!-- 아이템 섹션의 전체 컨테이너 끝 -->
+
+
+    <!-- Vesitable Shop Start-->
+    <div class="container-fluid vesitable py-5">
+        <div class="container py-5">
+            <h1 class="mb-0">Fresh Organic Vegetables</h1>
+            <div class="owl-carousel vegetable-carousel justify-content-center">
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Parsely</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Parsely</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-3.png" class="img-fluid w-100 rounded-top bg-light" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Banana</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Bell Papper</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Potatoes</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Parsely</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Potatoes</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; right: 10px;">Vegetable</div>
+                    <div class="p-4 rounded-bottom">
+                        <h4>Parsely</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vesitable Shop End -->
+
+
+    <!-- Banner Section Start-->
+    <div class="container-fluid banner bg-secondary my-5">
+        <div class="container py-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="py-4">
+                        <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
+                        <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
+                        <p class="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition
+                            injected humour, or non-characteristic words etc.</p>
+                        <a href="#"
+                            class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative">
+                        <img src="img/baner-1.png" class="img-fluid w-100 rounded" alt="">
+                        <div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute"
+                            style="width: 140px; height: 140px; top: 0; left: 0;">
+                            <h1 style="font-size: 100px;">1</h1>
+                            <div class="d-flex flex-column">
+                                <span class="h2 mb-0">50$</span>
+                                <span class="h4 text-muted mb-0">kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner Section End -->
+
+
+    <!-- Bestsaler Product Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5" style="max-width: 700px;">
+                <h1 class="display-4">Bestseller Products</h1>
+                <p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which
+                    looks reasonable.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-1.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-2.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-3.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-4.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-5.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="p-4 rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img src="img/best-product-6.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="h5">Organic Tomato</a>
+                                <div class="d-flex my-3">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star text-primary"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mb-3">3.12 $</h4>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="text-center">
+                        <img src="img/fruite-item-1.jpg" class="img-fluid rounded" alt="">
+                        <div class="py-4">
+                            <a href="#" class="h5">Organic Tomato</a>
+                            <div class="d-flex my-3 justify-content-center">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="mb-3">3.12 $</h4>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="text-center">
+                        <img src="img/fruite-item-2.jpg" class="img-fluid rounded" alt="">
+                        <div class="py-4">
+                            <a href="#" class="h5">Organic Tomato</a>
+                            <div class="d-flex my-3 justify-content-center">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="mb-3">3.12 $</h4>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="text-center">
+                        <img src="img/fruite-item-3.jpg" class="img-fluid rounded" alt="">
+                        <div class="py-4">
+                            <a href="#" class="h5">Organic Tomato</a>
+                            <div class="d-flex my-3 justify-content-center">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="mb-3">3.12 $</h4>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="text-center">
+                        <img src="img/fruite-item-4.jpg" class="img-fluid rounded" alt="">
+                        <div class="py-2">
+                            <a href="#" class="h5">Organic Tomato</a>
+                            <div class="d-flex my-3 justify-content-center">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="mb-3">3.12 $</h4>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bestsaler Product End -->
+
+
+    <!-- Footer Start -->
+    <div th:replace="footer :: footer"></div>
+    <!-- Footer End -->
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright bg-dark py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site
+                            Name</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 my-auto text-center text-md-end text-white">
+                    <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                    <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                    <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
+            class="fa fa-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

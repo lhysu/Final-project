@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의 상세</title>
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <style>
+        .help-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 헤더 삽입 -->
+    <div th:replace="~{header :: header}"></div>
+    
+    <div class="container my-5" style="padding-top:250px;">
+        <!-- 문의 유형, 작성자, 작성일, 조회수 -->
+        <div class="row">
+            <div class="col-12">
+                <h1 th:text="${vo2.inquiry_type}">문의 유형</h1>
+                <p class="text-muted">
+                    작성자: <span th:text="${vo2.member_id}"></span> |
+                    작성일: <span th:text="${#dates.format(vo2.created_at, 'yyyy-MM-dd HH:mm')}"></span> |
+                    조회수: <span th:text="${vo2.help_views}"></span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 문의 이미지 -->
+        <div class="row my-4">
+            <div class="col-12 text-center">
+                <img th:if="${vo2.help_img != null}" th:src="@{'/uploadimgPath/' + ${vo2.help_img}}" alt="Help Image" class="img-fluid help-image" onerror="this.style.display='none';">
+            </div>
+        </div>
+        
+        <!-- 문의 내용 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-4">
+                    <p th:utext="${vo2.inquiry_text}"></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 관리자 답변 (있을 경우) -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4>관리자 답변</h4>
+                <div class="border p-3 bg-light">
+                    <p th:if="${vo2.response != null}" th:utext="${vo2.response}"></p>
+                    <p th:if="${vo2.response == null}">아직 답변이 등록되지 않았습니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 수정, 삭제, 목록으로 버튼 -->
+        <div class="row my-4">
+            <div class="col-12">
+                <!-- 수정 및 삭제 버튼 -->
+                <a th:href="@{'/community/help/update?help_num=' + ${vo2.help_num}}" class="btn btn-primary me-2">
+                    <i class="fas fa-edit"></i> 수정
+                </a>
+                <a th:href="@{'/community/help/delete?help_num=' + ${vo2.help_num}}" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt"></i> 삭제
+                </a>
+                <a th:href="@{'/community/help/selectAll'}" class="btn btn-secondary">
+                    <i class="fas fa-list"></i> 목록으로
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 삽입 -->
+    <div th:replace="footer :: footer"></div>
+
+    <!-- 부트스트랩 JS 및 의존성 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

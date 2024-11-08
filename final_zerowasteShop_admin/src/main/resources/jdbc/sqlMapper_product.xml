@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.product.mapper.ProductMapper">
+
+	<update id="updateProductQuantity" parameterType="map">
+        UPDATE product
+        SET count = #{count}
+        WHERE product_num = #{product_num}
+    </update>
+
+	<select id="selectAllPageBlock"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		select * from product order by product_num asc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows
+		from product
+	</select>
+	
+	<select id="searchListPageBlockCompany"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		select rnum, product_num, product_name, price, point , company, product_img, category, rating from
+		(select row_number() over(order by product_num asc) as
+		rnum, product_num, product_name, price, point , company, product_img, category, rating from product where company like #{searchWord}) as temp
+		where rnum between #{startRow} and #{endRow}
+	</select>
+
+	<select id="searchListPageBlockProduct_name"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		select rnum, product_num, product_name, price, point , company, product_img, category, rating from
+		(select row_number() over(order by product_num asc) as
+		rnum, product_num, product_name, price, point , company, product_img, category, rating from product where product_name like #{searchWord}) as temp
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getSearchTotalRowsCompany" resultType="int">
+		select count(*) total_rows
+		from product where company like #{searchWord} 
+	</select>
+	
+	<select id="getSearchTotalRowsProduct_name" resultType="int">
+		select count(*) total_rows
+		from product where product_name like #{searchWord} 
+	</select>
+	
+	<select id="selectOne"
+		resultType="com.project.zerowasteshop.product.model.ProductVO">
+		select * from product where product_num=#{product_num}
+	</select>
+	
+	<select id="selectAllReview"
+		resultType="com.project.zerowasteshop.review.model.ReviewVO">
+		SELECT * 
+	    FROM review
+	    WHERE product_num = #{product_num}
+	    ORDER BY review_num ASC
+	</select>
+
+	<insert id="insertOK">
+		insert into product(product_name, price, point, company, product_img, category)
+		values(#{product_name},#{price},#{point},#{company},#{product_img},#{category})
+	</insert>
+	
+	<update id="updateOK">
+		update product set
+		product_name=#{product_name}, price=#{price}, point=#{point}, company=#{company}, product_img=#{product_img}, category=#{category}
+		where product_num=#{product_num}
+	</update>	
+	
+	<delete id="deleteOK">
+		delete from product where product_num=#{product_num}
+	</delete>
+	
+	<!-- <select id="selectAll"
+		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		select * from cart order by num desc
+	</select>
+
+	<select id="searchListName"
+		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		select * from cart where name like #{searchWord} order by
+		num desc
+	</select>
+
+	<select id="searchListId"
+		resultType="com.project.zerowasteshop.cart.model.CartVO">
+		select * from cart where id like #{searchWord} order by
+		num desc
+	</select>
+	
+	
+
+
+	
+	
+	<select id="getSearchTotalRowsId" resultType="int">
+		select count(*) total_rows
+		from cart where id like #{searchWord} 
+	</select>
+	
+	<select id="getSearchTotalRowsName" resultType="int">
+		select count(*) total_rows
+		from cart where name like #{searchWord} 
+	</select>
+ -->
+	
+	<!-- 상품 정보 저장 -->
+    <insert id="insertProduct" parameterType="com.project.zerowasteshop.product.model.ProductVO">
+        INSERT INTO product (product_name, price, point, company, product_img, category, rating)
+        VALUES (#{product_name}, #{price}, #{point}, #{company}, #{product_img}, #{category}, #{rating});
+    </insert>
+
+    <!-- 모든 상품 정보 조회 -->
+    <select id="getProducts" resultType="com.project.zerowasteshop.product.model.ProductVO">
+        SELECT * FROM product;
+    </select>
+    
+     <!-- findProductByNum 매핑 -->
+    <select id="findProductByNum" parameterType="long" resultType="com.project.zerowasteshop.product.model.ProductVO">
+        SELECT * FROM product WHERE product_num = #{productNum}
+    </select>
+
+</mapper>

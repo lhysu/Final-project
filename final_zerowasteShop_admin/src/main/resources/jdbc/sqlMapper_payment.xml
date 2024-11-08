@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.payment.PaymentMapper">
+
+<!-- 결제 정보 조회 -->
+<select id="getPaymentInfo" resultType="com.project.zerowasteshop.payment.PaymentVO">
+	select * from payment where merchant_uid = #{merchantUid}
+</select>
+
+</mapper>

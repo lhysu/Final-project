@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.zerowasteshop.delivery.DeliveryMapper">
+  
+  	  <select id="selectAllPageBlock" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  	  	select * from delivery order by delivery_num desc limit #{startRow}, #{pageBlock}
+  	  </select>
+  
+	  <select id="getTotalRows" resultType="int">
+	  		select count(*) total_rows from delivery
+	  	</select>
+  
+	  <select id="selectAll" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	  	select * from delivery order by delivery_num desc
+	  </select>
+	  
+	  <select id="selectOne" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	  	select * from delivery where delivery_num=#{delivery_num} 
+	  </select>
+  
+  	  <select id="searchListDelivery_num" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  		select * from delivery where delivery_num like #{searchWord} order by delivery_num desc
+  	  </select>
+  	  
+  	  <select id="searchListTracking_num" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+  		select * from delivery where tracking_num like #{searchWord} order by tracking_num desc
+  	  </select>
+  	  
+  	  <!-- 배송 정보 저장 -->
+	  <insert id="saveDelivery">
+	    insert into delivery(pay_num,product_name,member_id, merchant_uid,tracking_num, courier, delivery_status,shipped_date,delivery_date)
+	    values(#{pay_num},#{product_name},#{member_id},#{merchant_uid},#{tracking_num},#{courier},#{delivery_status},#{shipped_date},#{delivery_date})
+	  </insert>
+	  
+	  <update id="updateDeliveryState">
+	  	update delivery set delivery_status=#{delivery_status} where merchant_uid = #{merchant_uid}	  
+	  </update>
+	  
+	  <select id="selectAllByUserId" parameterType="String" resultType="com.project.zerowasteshop.delivery.DeliveryVO">
+	    SELECT delivery_num, merchant_uid, product_name, delivery_status
+	    FROM delivery
+	    WHERE member_id = #{user_id}
+		</select>
+  
+  </mapper>

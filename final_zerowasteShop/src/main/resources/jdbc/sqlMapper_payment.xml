@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.payment.PaymentMapper">
+
+<!-- 결제 상태 업데이트 -->
+<update id="updatePaymentStatus">
+	update payment set pay_status=#{pay_status}
+	where merchant_uid = #{merchant_uid}
+</update>
+
+<!-- 결제 정보 저장 -->
+<insert id="savePayment" parameterType="com.project.zerowasteshop.payment.PaymentVO">
+    INSERT INTO payment (merchant_uid, imp_uid, paid_amount, pay_method, pay_status, tracking_number)
+    VALUES (#{merchant_uid}, #{imp_uid}, #{paid_amount}, #{pay_method}, #{pay_status}, #{tracking_number});
+</insert>
+
+<!-- 결제 정보 조회 -->
+<select id="getPaymentInfo" resultType="com.project.zerowasteshop.payment.PaymentVO">
+	select * from payment where merchant_uid = #{merchantUid}
+</select>
+
+</mapper>

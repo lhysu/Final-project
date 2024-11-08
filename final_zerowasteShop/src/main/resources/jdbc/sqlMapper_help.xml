@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.help.HelpMapper">
+
+    <!-- 단일 문의 조회 -->
+    <select id="selectOne" parameterType="com.project.zerowasteshop.help.HelpVO" resultType="com.project.zerowasteshop.help.HelpVO">
+        SELECT * FROM help WHERE help_num = #{help_num}
+    </select>
+
+    <!-- 모든 문의 조회 -->
+    <select id="selectAll" resultType="com.project.zerowasteshop.help.HelpVO">
+        SELECT * FROM help ORDER BY help_num DESC
+    </select>
+
+    <!-- 페이징 처리를 위한 문의 조회 -->
+    <select id="selectAllPageBlock" parameterType="map" resultType="com.project.zerowasteshop.help.HelpVO">
+        SELECT * FROM help ORDER BY help_num DESC LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <!-- 문의 검색 -->
+    <select id="searchList" parameterType="string" resultType="com.project.zerowasteshop.help.HelpVO">
+        SELECT * FROM help
+        WHERE inquiry_text LIKE #{searchWord} OR inquiry_type LIKE #{searchWord}
+        ORDER BY help_num DESC
+    </select>
+
+    <!-- 검색 결과에 대한 페이징 처리 -->
+	<select id="searchListPageBlock" parameterType="map" resultType="com.project.zerowasteshop.help.HelpVO">
+	    SELECT * FROM help
+	    WHERE inquiry_text LIKE #{searchWord}
+	       OR inquiry_type LIKE #{searchWord}
+	       OR member_id LIKE #{searchWord}
+	    ORDER BY help_num DESC LIMIT #{startRow}, #{pageBlock}
+	</select>
+
+    <!-- 문의 추가 -->
+    <insert id="insertOK" parameterType="com.project.zerowasteshop.help.HelpVO">
+        INSERT INTO help (member_id, inquiry_type, inquiry_text, help_img, created_at, status, help_views)
+        VALUES (#{member_id}, #{inquiry_type}, #{inquiry_text}, #{help_img}, NOW(), 'Pending', 0)
+    </insert>
+
+    <!-- 문의 삭제 -->
+    <delete id="deleteOK" parameterType="com.project.zerowasteshop.help.HelpVO">
+        DELETE FROM help WHERE help_num = #{help_num}
+    </delete>
+
+    <!-- 문의 업데이트 -->
+    <update id="updateOK" parameterType="com.project.zerowasteshop.help.HelpVO">
+	    UPDATE help
+	    SET response = #{response},
+	        status = #{status},
+	        responded_at = NOW(),
+	        help_img = #{help_img}
+	    WHERE help_num = #{help_num}
+    </update>
+
+    <!-- 전체 문의 수 가져오기 -->
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) FROM help
+    </select>
+
+    <!-- 검색 결과의 총 행 수 가져오기 -->
+    <select id="getSearchTotalRows" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM help
+        WHERE inquiry_text LIKE #{searchWord} OR inquiry_type LIKE #{searchWord}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="incrementViewCount" parameterType="int">
+        UPDATE help
+        SET help_views = help_views + 1
+        WHERE help_num = #{help_num}
+    </update>
+
+</mapper>

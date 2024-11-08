@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentMapper">
+  
+	<select id="selectCommentsByPost" parameterType="int" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+	    SELECT * FROM recyclelifecomment WHERE recycleLife_num = #{recycleLife_num}
+	</select>
+	
+	<select id="getCommentsByPost" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+    SELECT * FROM recyclelifecomment WHERE recycleLife_num = #{recycleLife_num}
+	</select>
+  
+  	<insert id="insertOK" parameterType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+  		insert into recyclelifecomment (recycleLife_num, member_id, lifeComment_content)
+  		values (#{recycleLife_num}, #{member_id}, #{lifeComment_content})
+  	</insert>
+  	
+  	<update id="updateOK">
+  		update recyclelifecomment set 
+  		lifeComment_content = #{lifeComment_content}
+  		where lifeComment_num = #{lifeComment_num}
+  	</update>
+  	
+  	<delete id="deleteOK">
+  		delete from recyclelifecomment where lifeComment_num=#{lifeComment_num}
+  	</delete>
+  	
+  	<!-- 댓글 조회 -->
+  	<select id="selectAll" >
+  		select * from recyclelifecomment 
+  		where recycleLife_num=20
+  		order by LifeComment_num desc
+  	</select>
+  	
+  	<select id="selectOne" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+  		select * from recyclelifecomment where lifeComment_num = #{lifeComment_num}
+  	</select>
+  	
+  	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.recyclelifecomment.RecycleLifeCommentVO">
+  		select * from recyclelifecomment order by recycleLife_num desc limit #{startRow}, #{pageBlock}
+  	</select>
+  	
+  	<select id="getTotalRows" resultType="int">
+  		select count(*) total_rows from recyclelifecomment
+  	</select>
+  	
+  </mapper>

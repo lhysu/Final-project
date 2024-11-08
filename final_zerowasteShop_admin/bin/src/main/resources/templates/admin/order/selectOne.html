@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 상세 - 관리자 페이지</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- 구글 웹 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+	rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+<!-- CSS 라이브러리 -->
+<link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
+	rel="stylesheet">
+
+
+<!-- 부트스트랩 -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- 템플릿 CSS파일 -->
+<link href="/css/style.css" rel="stylesheet">
+
+<!-- 페이지네이션 가로 처리 -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+/* 기본 설정 */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 컨텐츠 여백 */
+.content {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 제목 스타일 */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #81c408;
+    border-bottom: 2px solid #81c408;
+    padding-bottom: 5px;
+}
+
+/* 레이블과 값 스타일 */
+.details div {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 10px;
+}
+
+.details label {
+    width: 180px; /* label의 고정 너비 설정 */
+    font-weight: bold;
+    color: #555;
+}
+
+.details span {
+    color: #333;
+    flex: 1; /* 남은 공간을 차지하도록 설정 */
+}
+
+/* 테이블 스타일 */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.item-table th, .item-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-table thead th {
+    background-color: #81c408;
+    color: #fff;
+    font-weight: 600;
+}
+
+.item-table tbody tr:hover {
+    background-color: #f9fafb;
+    transition: background-color 0.3s ease; /* 부드러운 색상 전환 효과 */
+}
+
+.item-table td {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 결제 상세 스타일 */
+.payment-details {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+/* 페이지네이션 */
+.pagination .page-item .page-link {
+    color: #81c408;
+    margin: 0 2px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #81c408;
+    border-color: #81c408;
+    color: #fff;
+}
+
+</style>
+</head>
+<body>
+
+	<!-- 헤더 시작 -->
+	<div th:replace="header :: header"></div>
+	<!-- 헤더 끝 -->
+			
+    <div class="content" th:fragment="content" style="margin-top: 300px;">
+        <!-- 주문 상세 -->
+        <div class="order-details">
+            <div class="section-title">주문 상세</div>
+            <div class="details">
+                <div>
+                    <label>주문번호:</label>
+                    <span>[[${order.merchant_uid}]]</span>
+                </div>
+                <div>
+                    <label>회원ID:</label>
+                    <span>[[${order.member_id}]]</span>
+                </div>
+                <div>
+                    <label>사용한 쿠폰 코드:</label>
+                    <span>[[${order.coupon_code}]]</span>
+                </div>
+                <div>
+                    <label>사용한 포인트:</label>
+                    <span>[[${order.points}]]</span>
+                </div>
+                <div>
+                    <label>우편번호 :</label>
+                    <span>[[${order.postcode}]]</span>
+                </div>
+                <div>
+                    <label>주소:</label>
+                    <span>[[${order.address}]]</span>
+                </div>
+                <div>
+                    <label>상세한 주소:</label>
+                    <span>[[${order.address_detail}]]</span>
+                </div>
+                <div>
+                    <label>연락처:</label>
+                    <span>[[${order.tel}]]</span>
+                </div>
+                <div>
+                    <label>배송 요청 사항:</label>
+                    <span>[[${order.delivery_memo}]]</span>
+                </div>
+                <div>
+                    <label>주문 상태:</label>
+                    <span>[[${order.order_state}]]</span>
+                </div>
+                <div class="section-title">주문한 상품 목록</div>
+            <table class="item-table">
+                <thead>
+                    <tr>
+                        <th>상품번호</th>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>가격</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${order_item}">
+                        <td>[[${item.product_num}]]</td>
+                        <td>[[${item.product_name}]]</td>
+                        <td>[[${item.quantity}]]</td>
+                        <td>[[${item.price}]]원</td>
+                    </tr>
+                </tbody>
+            </table>
+ 
+            </div>           
+        </div>
+
+        <!-- 결제 상세 -->
+        <div class="payment-details mt-5">
+            <div class="section-title">결제 상세</div>
+            <div class="details">
+                <div>
+                    <label>포트원 고유결제번호:</label>
+                    <span>[[${payment.imp_uid}]]</span>
+                </div>
+                <div>
+                    <label>결제금액:</label>
+                    <span>[[${payment.paid_amount}]]원</span>
+                </div>
+                <div>
+                    <label>결제수단:</label>
+                    <span>[[${payment.pay_method}]]</span>
+                </div>
+                <div>
+                    <label>결제날짜:</label>
+                    <span>[[${payment.pay_date}]]</span>
+                </div>
+                <div>
+                    <label>결제상태:</label>
+                    <span>[[${payment.pay_status}]]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>

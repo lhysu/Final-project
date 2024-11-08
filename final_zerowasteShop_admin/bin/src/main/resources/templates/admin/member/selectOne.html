@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Admin Page</title>
+<!-- Modal css -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet"> 
+    
+     <style>
+        .position-relative {
+		    display: flex;
+		    flex-wrap: wrap; /* 줄 바꿈을 허용하여 버튼들이 겹치지 않도록 함 */
+		    justify-content: flex-start; /* 왼쪽 정렬 */
+		}
+		
+		.position-relative > div {
+		    flex: 1; /* 요소가 공간을 균등하게 차지하도록 설정 */
+		}
+		
+		@media (max-width: 768px) {
+		    .position-relative {
+		        flex-direction: column; /* 작은 화면에서는 세로로 배치 */
+		        align-items: flex-start; /* 왼쪽 정렬 */
+		    }
+		
+		    .position-relative > div {
+		        width: 100%; /* 각 버튼이 전체 너비를 차지하도록 설정 */
+		        margin-bottom: 10px; /* 버튼 간의 간격 */
+		    }
+		}
+        
+        .position-relative {
+		    display: flex; /* 플렉스 박스 모델 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		}
+		
+		select {
+			margin-right : 5px;
+		}
+		
+		#selectAllTable {
+		    width: 100%; /* 테이블 너비를 100%로 설정 */
+		    border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+		    margin: 20px 0; /* 상하 마진 설정 */
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+		}
+		
+		#selectAllTable thead {
+		    
+		    color: black; /* 헤더 글자색 */
+		}
+		
+		#selectAllTable th,
+		#selectAllTable td {
+		    padding: 15px; /* 셀 내 여백 */
+		    text-align: center; /* 텍스트 가운데 정렬 */
+		    border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+		}
+		
+		
+
+		
+		#selectAllTable tfoot {
+		    background-color: #f8f9fa; /* 푸터 배경색 */
+		    font-weight: bold; /* 푸터 글자 두껍게 */
+		}
+		
+		.pagination {
+		    margin: 0; /* 페이지네이션 마진 제거 */
+		    padding: 10px 0; /* 상하 패딩 추가 */
+		}
+		
+		.pagination .page-item .page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.pagination .page-item .page-link:hover {
+		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+		}
+		th{
+			background-color: #a1cd51;
+			color: white;}
+    </style>
+</head>
+<body>
+
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header_admin :: header}"></div>
+    <!-- 해더 끝 -->
+
+	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
+		<div class="row g-4 mb-2">
+            <!-- 제목 영역: 섹션의 제목을 표시 -->
+            <h1>회원 상세</h1>
+		</div>
+		<div class="mb-3">
+		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate;">
+	    	<tr>
+	        <th>회원번호</th>
+	        <td>[[${vo2.member_num}]]</td>
+	        </tr>
+	        
+	        <tr>
+	        <th>아이디</th>
+	        <td>[[${vo2.member_id}]]</td>
+	        </tr>
+	        
+	        
+	        <tr>
+	        <th>이름</th>
+	        <td>[[${vo2.name}]]</td>
+	        </tr>
+	        
+	        
+	        <tr>
+	        <th>비밀번호</th>
+	        <td>[[${vo2.pw}]]</td>
+	        </tr>
+	        
+	        <tr>
+	        <th>이메일</th>
+	        <td>[[${vo2.email}]]	
+	        </td>
+	        </tr>
+	        
+	        <tr>
+	        <th>전화번호</th>
+	        <td>[[${vo2.phone_number}]]	
+	        </td>
+	        </tr>
+	        
+	        <tr>
+	        <th>주소</th>
+	        <td>[[${vo2.postcode}]] [[${vo2.address}]] [[${vo2.address_detail}]]	
+	        </td>
+	        </tr>
+	        
+	        <tr>
+	        <th>회원가입 일시</th>
+	        <td>[[${vo2.signup_date}]]	
+	        </td>
+	        </tr>
+	        
+	        <tr>
+	        <th>보유 포인트</th>
+	        <td>[[${vo2.points}]]	
+	        </td>
+	        </tr>
+	        
+	        <tr>
+	        <th>관리자 여부</th>
+	        <td>[[${vo2.adCheck}]]	
+	        </td>
+	        </tr>
+	          
+        
+	</table>
+	</div>	
+	<a th:href="|/admin/ad_update?member_num=${vo2.member_num}|" class="btn btn-primary">회원 수정</a>
+	
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+ 	 회원 삭제
+	</button>
+	</div>
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">회원 삭제</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        정말 회원(회원 번호: [[${vo2.member_num}]], ID: [[${vo2.member_id}]] )을 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+	        <button type="button" class="btn btn-primary" onclick="clickDel(deleteForm)">예</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<form name="deleteForm">
+		<input type="hidden" id="member_num" name="member_num" th:value="${vo2.member_num}">
+	</form>
+	
+	<script>
+		function clickDel(formName){
+			formName.action = "/admin/ad_deleteOK";
+			formName.method="post";
+			formName.submit();
+		}
+	
+	</script>
+	
+	
+	
+<!-- Modal js -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+<!-- Footer Start -->
+	<div th:replace="~{footer :: footer}"></div>
+	<!-- Footer End -->
+	
+</body>
+</html>

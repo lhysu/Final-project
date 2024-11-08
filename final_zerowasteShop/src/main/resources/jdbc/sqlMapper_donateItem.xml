@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.donateitem.DonateItemMapper">
+
+	<select id = "selectAll" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem order by donateItem_num desc
+	</select>
+	
+	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem order by donateItem_num desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from donateitem 
+	</select>
+	
+	<select id="selectOne" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem where donateItem_num=#{donateItem_num}
+	</select>
+	
+	<select id="searchListId" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem where member_id like #{searchWord} order by donateItem_num desc
+	</select>
+	
+	<select id="searchListItem" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem where donateItem_item like #{searchWord} order by donateItem_num desc
+	</select>
+	
+	<select id="getSearchTotalRowsId" resultType="int">
+		select count(*) total_rows from donateitem 
+		where member_id like #{searchWord}
+	</select>
+	
+	<select id="getSearchTotalRowsItem" resultType="int">
+		select count(*) total_rows from donateitem 
+		where donateItem_item like #{searchWord}	
+	</select>
+	
+	<select id="searchListPageBlockId" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem where member_id like #{searchWord} 
+		order by donateItem_num desc limit #{startRow},#{pageBlock}
+		
+	</select>
+	
+	<select id="searchListPageBlockItem" resultType="com.project.zerowasteshop.donateitem.DonateItemVO">
+		select * from donateitem where donateItem_item like #{searchWord} 
+		order by donateItem_num desc limit #{startRow},#{pageBlock}	
+	</select>
+	
+<!--	<update id="updateOK">
+		update donateitem set donate_state=#{donate_state} where donateItem_num=#{donateItem_num} 
+	</update>-->
+	<delete id="deleteOK">
+		delete from donateitem where donateItem_num=#{donateItem_num}
+	</delete> 
+	<insert id="insertOK">
+		insert into donateitem(member_id,donateItem_title,donateItem_content,donateItem_address,donateItem_item,donateItem_img) 
+		values(#{member_id},#{donateItem_title},#{donateItem_content},#{donateItem_address},#{donateItem_item},#{donateItem_img})
+	</insert>
+</mapper>

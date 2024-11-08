@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>쿠폰 수정 및 삭제</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .content { margin : 152px; }
+        
+        .position-relative {
+		    display: flex;
+		    flex-wrap: wrap; /* 줄 바꿈을 허용하여 버튼들이 겹치지 않도록 함 */
+		    justify-content: flex-start; /* 왼쪽 정렬 */
+		}
+		
+		.position-relative > div {
+		    flex: 1; /* 요소가 공간을 균등하게 차지하도록 설정 */
+		}
+		
+		@media (max-width: 768px) {
+		    .position-relative {
+		        flex-direction: column; /* 작은 화면에서는 세로로 배치 */
+		        align-items: flex-start; /* 왼쪽 정렬 */
+		    }
+		
+		    .position-relative > div {
+		        width: 100%; /* 각 버튼이 전체 너비를 차지하도록 설정 */
+		        margin-bottom: 10px; /* 버튼 간의 간격 */
+		    }
+		}
+        
+        .position-relative {
+		    display: flex; /* 플렉스 박스 모델 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		}
+		
+		select {
+			margin-right : 5px;
+		}
+		
+		#selectAllTable {
+		    width: 100%; /* 테이블 너비를 100%로 설정 */
+		    border-collapse: collapse; /* 테이블 셀 간의 경계 합치기 */
+		    margin: 20px 0; /* 상하 마진 설정 */
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+		}
+		
+		#selectAllTable thead {
+		    
+		    color: black; /* 헤더 글자색 */
+		}
+		
+		#selectAllTable th,
+		#selectAllTable td {
+		    padding: 15px; /* 셀 내 여백 */
+		    text-align: center; /* 텍스트 가운데 정렬 */
+		    border-bottom: 1px solid #dee2e6; /* 하단 경계선 추가 */
+		}
+		
+		#selectAllTable tbody tr:hover {
+		    background-color: #f1f1f1; /* 행에 마우스 오버 시 색상 변경 */
+		}
+		
+		#selectAllTable img {
+		    border-radius: 5px; /* 이미지 모서리 둥글게 */
+		}
+		
+		#selectAllTable tfoot {
+		    background-color: #f8f9fa; /* 푸터 배경색 */
+		    font-weight: bold; /* 푸터 글자 두껍게 */
+		}
+		
+		.pagination {
+		    margin: 0; /* 페이지네이션 마진 제거 */
+		    padding: 10px 0; /* 상하 패딩 추가 */
+		}
+		
+		.pagination .page-item .page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.pagination .page-item .page-link:hover {
+		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+		}
+    </style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+       		$(function() {
+            // 폼의 submit 이벤트를 가로채서 AJAX 요청을 보냄
+            $('#updateCoupon').on('submit', function(event) {
+                event.preventDefault();  // 기본 폼 제출 방지
+
+                var formData = $(this).serialize(); // 폼 데이터를 직렬화
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/coupon/updateOK',  // AJAX로 보낼 URL
+                    data: formData,
+                    success: function(response) {
+                        // 성공 시 메시지 처리
+                        if (response.status === 'success') {
+                            alert(response.message);  // 성공 메시지 표시
+                            //리다이렉트
+                            window.location.href = '/admin/coupon/selectAll'
+                        } else {
+                            alert(response.message);  // 실패 메시지 표시
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('서버와의 통신 중 오류가 발생했습니다.');
+                    }
+                });
+            });
+            
+            //삭제 버튼 클릭 시 이벤트 실행
+            $('#deleteCoupon').on('click',function(event){
+            	event.preventDefault();
+            	
+            	var couponCode = $('#coupon_code').val();
+            	
+            	if(confirm('정말로 이 쿠폰을 삭제하시겠습니까?')){
+            		$.ajax({
+            			type : 'POST',
+            			url : '/admin/coupon/delete',
+            			data : {coupon_code : couponCode},
+            			success : function(response){
+            				if(response.status==='success'){
+            					alert(response.message);
+            					window.location.href = '/admin/coupon/selectAll';				
+            				} else {
+            					alert(response.message);
+            				}
+            			},
+            			error : function(xhr,status,error){
+            				console.error('Error:',error);
+            				alert("서버와의 통신 중 오류가 발생했습니다.");
+            			}
+            		});
+            	}
+            })
+        });
+    </script>
+</head>
+<body>
+
+	<!-- 헤더 시작 -->
+	 <div th:replace="~{header :: header}"></div>
+    <!-- 해더 끝 -->
+    
+	<div th:fragment="content" style="margin-top: 300px;">
+    <form id="updateCoupon" action="/coupon/updateOK" method="post">
+        <h2>쿠폰 수정 및 삭제</h2>
+        <table id="selectAllTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px;">
+            <tr>
+                <td><label for="coupon_code">쿠폰코드</label></td>
+                <td>[[${vo2.coupon_code}]]<input type="hidden" id="coupon_code" name="coupon_code" th:value="${vo2.coupon_code}"></td>
+            </tr>
+            <tr>
+                <td><label for="member_id">회원ID</label></td>
+                <td>[[${vo2.member_id}]]<input type="hidden" id="member_id" name="member_id" th:value="${vo2.member_id}"></td>
+            </tr>
+            <tr>
+                <td><label for="coupon_name">쿠폰명</label></td>
+                <td><input type="text" id="coupon_name" name="coupon_name" class="form-control" th:value="${vo2.coupon_name}"></td>
+            </tr>
+            <tr>
+                <td><label for="use_sdate">사용가능 시작날짜</label></td>
+                <td><input type="datetime-local" id="use_sdate" name="use_sdate" class="form-control" th:value="${vo2.use_sdate}"></td>
+            </tr>
+            <tr>
+                <td><label for="use_edate">사용가능 종료날짜</label></td>
+                <td><input type="datetime-local" id="use_edate" name="use_edate" class="form-control" th:value="${vo2.use_edate}"></td>
+            </tr>
+            <tr>
+                <td><label for="discount_rate">할인율</label></td>
+                <td><input type="text" id="discount_rate" name="discount_rate" class="form-control" th:value="${vo2.discount_rate}"></td>
+            </tr>
+            <tr>
+                <td><label for="used">사용여부</label></td>
+                <td>[[${vo2.used}]]<input type="hidden" id="used" name="used" th:value="${vo2.used}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-end">
+                    <!-- 버튼들을 한 줄에 배치 -->
+                    <input type="submit" value="수정완료" class="btn btn-primary text-white me-2">
+                    <button id="deleteCoupon" class="btn btn-danger">쿠폰 삭제</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+	
+	<!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <title>상품 목록 페이지</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+		body {
+		    font-family: 'Open Sans', sans-serif;
+		    background-color: #f8f9fa; /* 배경색 설정 */
+		}
+		
+		h4 {
+		    color: #333; /* 제목 색상 */
+		}
+		
+		.content {
+		    padding: 20px;
+		    background-color: #ffffff; /* 콘텐츠 배경색 */
+		    border-radius: 8px; /* 모서리 둥글게 */
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+		}
+		
+		.text-center {
+		    transition: transform 0.2s; /* 호버 시 애니메이션 효과 */
+		}
+		
+		.text-center:hover {
+		    transform: scale(1.05); /* 호버 시 약간 커지기 */
+		}
+		
+		.img-fluid {
+		    border-radius: 8px; /* 이미지 모서리 둥글게 */
+		}
+		
+		.btn {
+		    transition: background-color 0.3s, color 0.3s; /* 버튼 호버 애니메이션 */
+		}
+		
+		.btn:hover {
+		    background-color: #007bff; /* 호버 시 배경색 변경 */
+		    color: #fff; /* 호버 시 텍스트 색상 변경 */
+		}
+		
+		.pagination {
+		    margin-top: 20px; /* 페이지네이션 여백 */
+		}
+		
+		.page-item.active .page-link {
+		    background-color: #007bff; /* 활성 페이지 색상 */
+		    color: white; /* 활성 페이지 텍스트 색상 */
+		}
+		
+		.page-link {
+		    color: #007bff; /* 페이지 링크 색상 */
+		}
+		
+		.page-link:hover {
+		    color: #0056b3; /* 페이지 링크 호버 색상 */
+		    text-decoration: underline; /* 호버 시 밑줄 */
+		}
+		
+		.position-relative {
+		    margin-bottom: 20px; /* 검색창 여백 */
+		}
+	    .search-result {
+	        background-color: white; /* 배경색 설정 */
+	        padding: 20px; /* 패딩 추가 */
+	        border-radius: 8px; /* 모서리 둥글게 */
+	        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	    }
+	    
+	    .search-keyword {
+	        font-size: 1.5rem; /* 글자 크기 조정 */
+	        color: #333; /* 텍스트 색상 */
+	        font-weight: bold; /* 글씨 두껍게 */
+	    }
+    </style>
+</head>
+<body>
+	<!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+    
+	<div class="search-result" style="margin-top: 230px;">
+	    <th:block th:if="${param.searchWord.contains('주방') || param.searchWord.contains('욕실') || param.searchWord.contains('문구') || param.searchWord.contains('여행') || param.searchWord.contains('비건')}">
+	        <span class="search-keyword">카테고리 : [[${param.searchWord}]]</span>
+	    </th:block>
+	</div>
+	
+	<div class ="content" th:fragment="content">
+		<div class="row">
+			<th:block th:each="vo : ${list}">
+				<div class="col-md-6 col-lg-6 col-xl-3" style = "width : 23.5%; margin : 12px !important">
+                 	<div class="text-center">
+                     	<img style="width: 100px;" th:src="${vo.product_img}" th:if="${vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
+                     	<img style="width: 100px;" th:src="|/uploadimgPath/${vo.product_img}|" th:if="${!vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
+			            	<div class="py-3">
+			                	<a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:utext="${vo.product_name}"></a>
+			                    	<div class="d-flex my-1 justify-content-center">
+									    <th:block th:if="${vo.rating != 0}">
+									        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
+									            <!-- 전체 별 출력 -->
+									            <th:block th:each="star : ${#numbers.sequence(1, fullStars)}">
+									                <i class="fas fa-star text-primary"></i>
+									            </th:block>
+									            <!-- 반 별 출력 -->
+									            <th:block th:if="${halfStar >= 0.5 && fullStars < 5}">
+									                <i class="fas fa-star-half-alt text-primary"></i>
+									            </th:block>
+									            <!-- 빈 별 출력 -->
+									            <th:block th:if="${fullStars + (halfStar >= 0.5 && fullStars < 5 ? 1 : 0) != 5}">
+										            <th:block th:each="star : ${#numbers.sequence(fullStars + (halfStar >= 0.5 && fullStars < 5 ? 2 : 1), 5)}">
+										                <i class="fas fa-star"></i>
+										            </th:block>
+									            </th:block>
+									        </th:block>
+									        
+									    </th:block>
+									    
+									    <th:block th:if="${vo.rating == 0}">
+									    	<!-- 전체 별 출력 -->
+									       	<i class="fas fa-star text-primary"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									        <i class="fas fa-star"></i>
+									    </th:block>
+									</div>
+							</div>
+			                         <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
+			                     <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
+							        <input type="hidden" name="product_num" th:value="${vo.product_num}">
+							        <input type="hidden" name="count" value="1">
+							        <input type="hidden" name="price" th:value="${vo.price}">
+							        <input type="hidden" name="product_img" th:value="${vo.product_img}">
+							        <input type="hidden" name="product_name" th:value="${vo.product_name.replace('[', '%5B').replace(']', '%5D')}">
+							        
+							        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button> <!-- type="submit" 추가 -->
+							    </form>
+			                </div>
+			        </div>
+			    </div>             
+			</th:block>
+			
+			
+			<nav>
+				<ul class="pagination justify-content-center">
+	  				<th:block th:if="${param.searchWord == null}">
+	  					<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+	                      	<a class="page-link" th:href="|/product/show?cpage=${cpage - 1}|">이전</a>
+	                  	</li>
+					<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+						<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+	                          	<a class="page-link" th:href="|/product/show?cpage=${i}|">[[${i}]]</a>
+	                      	</li>	
+					</th:block>
+					<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+	                       <a class="page-link" th:href="|/product/show?cpage=${cpage + 1}|">다음</a>
+	                   </li>
+					</th:block>
+								
+								
+					<th:block th:if="${param.searchWord != null}">
+						<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+		   					<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+		                       	<a class="page-link" th:href="|/product/showSearchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">이전</a>
+		                   	</li>
+							<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+								<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+		                           	<a class="page-link" th:href="|/product/showSearchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">[[${i}]]</a>
+		                       	</li>	
+							</th:block>
+							<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+		                        <a class="page-link" th:href="|/product/showSearchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">다음</a>
+		                    </li>
+						</th:block>
+					</th:block>	
+				</ul>
+			</nav>
+					
+		</div>
+	</div>
+	
+	<!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>

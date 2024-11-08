@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>구매 페이지</title>
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <!-- 페이지네이션 가로 처리 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    /* 기본적인 페이지 설정 */
+    .order-body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 20px;
+    }
+
+  
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    /* 메인 콘텐츠 영역 */
+    .content {
+        margin: 20px auto;
+        padding: 40px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        background-color: #ffffff;
+        max-width: 800px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 우편번호, 주소 및 상세주소 행 스타일 */
+    #postcode, #address, #address_detail {
+        display: inline-block;
+        width: calc(70% - 20px);
+        margin-bottom: 10px;
+    }
+    
+    /* 라벨 텍스트 */
+    label {
+        font-weight: 600;
+        color: #333;
+        display: inline-block;
+        width: 120px; /* 라벨 넓이 설정 */
+        text-align: left; /* 가운데 정렬 */
+    }
+
+    /* 텍스트 입력 및 선택 박스 스타일 */
+    input[type="text"],
+    select {
+        width: 50%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* 버튼 스타일 */
+    button, #applyPointsBtn {
+        background-color: #81c408;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: 600;
+       
+    }
+    
+    /* 우편번호 찾기 버튼 스타일 */
+    #findPostcode {
+        background-color: #81c408;
+        color: white;
+        border: none;
+        padding: 10px 15px; /* 크기를 작게 조정 */
+        border-radius: 5px;
+        margin-left: 125px;
+        cursor: pointer;
+        font-size: 14px; /* 폰트 크기 조정 */
+    }
+    
+     /* 주문 상품 이미지와 텍스트 정렬 */
+    .order-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .order-item img {
+        width: 100px; /* 이미지 크기 조정 */
+        height: 100px;
+        border-radius: 8px;
+        margin-right: 15px;
+    }
+
+    /* 가격과 수량 스타일 */
+    .price, .quantity-display, .product_name {
+        font-size: 15px;
+        font-weight: 400;
+        color: #333;
+        margin-left: 10px;
+    }
+    
+  
+    /* 버튼 호버 효과 */
+    button:hover, #applyPointsBtn:hover {
+        background-color: #28a745;
+    }
+
+    #applyPointsBtn {
+        margin-left: 10px;
+    }
+
+    /* 주문 요약 섹션 */
+    .order-summary {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .order-summary p {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-top: 1px solid #eee;
+    }
+
+    /* 최종 가격 강조 */
+    .final_price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d9534f;
+    }
+    
+    /* 메모 영역 */
+    #custom_memo_div {
+        margin-top: 10px;
+    }
+
+    /* 주문 항목 이미지 스타일 */
+    .order-items img {
+        border-radius: 10px;
+    }
+</style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 카카오 주소 API 스크립트 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    
+    <!-- 아임포트 API 스크립트 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    
+    <!-- 회원 id ,상품번호, 내가 보유한 포인트 가져오기 --> 
+    <script th:inline="javascript">
+    	const member_id = /*[[${member_id}]]*/ ""; // 이와 같이 문자열 값으로 할당
+    	const product_num = /*[[${product_num}]]*/ ""; // 이와 같이 문자열 값으로 할당
+    	const maxPoints = /*[[${points}]]*/ ""; // 이와 같이 문자열 값으로 할당
+    </script>
+    
+    <script>
+ 	// 숫자를 3자리마다 콤마를 추가하고 원 단위를 붙이는 함수
+    function formatPrice(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    
+	let totalPointsUsed = 0;  // 총 사용된 포인트 누적 변수
+ 	
+        $(function() {
+        	       	       	
+            // 다음 주소 API를 사용하여 우편번호 찾기 기능 구현
+            $('#findPostcode').on('click', function() {
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        var roadAddr = data.roadAddress; // 도로명 주소
+                        var jibunAddr = data.jibunAddress; // 지번 주소
+                        var postCode = data.zonecode; // 우편번호
+
+                        document.getElementById('postcode').value = postCode;
+                        document.getElementById("address").value = roadAddr !== '' ? roadAddr : jibunAddr;
+
+                        document.getElementById("address_detail").focus();  // 상세 주소에 포커스
+                    }
+                }).open();
+            });
+            
+            // 쿠폰 선택하면 비동기로 적용
+            $('#couponSelect').on('change', function() {
+                var selectedCoupon = $(this).val();  // 선택한 쿠폰 코드 가져오기
+                var totalPrice = $('#total_price').text().replace(',', '').replace('원', '');  // 원래 가격 가져오기
+                var points = totalPointsUsed;  // 이미 사용한 포인트 적용
+                
+                if (selectedCoupon) {
+                    // 선택한 쿠폰이 있는 경우에만 요청
+                    $.ajax({
+                        type: 'POST',
+                        url: '/order/applyCoupon',  // 서버에서 쿠폰을 적용하는 API 엔드포인트
+                        data: { couponCode: selectedCoupon,
+                        		totalPrice : totalPrice,
+                        		points : points},  // 선택한 쿠폰 코드 전달
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // 할인 금액을 성공적으로 적용한 경우
+                                $('#discount').text(formatPrice(response.discountAmount) + '원');
+                                $('#final_price').text(formatPrice(response.finalPrice) + '원');
+                                alert('쿠폰이 성공적으로 적용되었습니다.');
+                            } else {
+                                // 실패한 경우 처리
+                                alert('쿠폰 적용에 실패했습니다. 다시 시도해주세요.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('쿠폰 적용 오류:', error);
+                            alert('서버와의 통신 중 오류가 발생했습니다.');
+                        }
+                    });
+                } else {
+                    // 선택한 쿠폰이 없을 때 (초기 선택 상태)
+                    alert('적용할 쿠폰을 선택해주세요.');
+                }
+            });
+      
+            
+            // 포인트 적용 버튼 클릭 시
+	            $('#applyPointsBtn').on('click', function() {
+			        let points = parseInt($('#points').val());  // 입력된 포인트
+			        let remainingPoints = maxPoints - totalPointsUsed;  // 남은 사용 가능 포인트
+			
+			        // 남은 포인트보다 입력값이 클 경우, 남은 포인트로 설정
+			        if (points > remainingPoints) {
+			            alert("보유한 포인트보다 많은 값을 사용할 수 없습니다. 최대 사용 가능한 포인트는 " + remainingPoints + "p입니다.");
+			            points = remainingPoints;
+			            $('#points').val(points);
+			        }
+			
+			        // 포인트 적용 후 총 할인 금액 및 최종 결제 금액 업데이트
+			        if (points > 0) {
+			            let finalPrice = $('#final_price').text().replace(',', '').replace('원', '');  // 쿠폰 적용 후 금액
+			            let currentDiscount = $('#discount').text().replace(',', '').replace('원', '');  // 현재 할인 금액
+			
+			            $.ajax({
+			                type: 'POST',
+			                url: '/order/applyPoints',
+			                data: { points: points, finalPrice: finalPrice, currentDiscount: currentDiscount },
+			                success: function(response) {
+			                    $('#discount').text(formatPrice(response.totalDiscount) + '원');  // 총 할인 금액 표시
+			                    $('#final_price').text(formatPrice(response.finalPrice) + '원');  // 최종 결제 금액 표시
+			                    totalPointsUsed += points;  // 사용된 포인트 누적
+			                    $('#remainingPoints').text((maxPoints - totalPointsUsed) + "p");  // 남은 보유 포인트 업데이트
+			                    $('#points').val('');  // 입력창 초기화
+			                },
+			                error: function(xhr) {
+			                    alert('포인트 적용 중 오류 발생');
+			                }
+			            });
+			        }
+			    });
+            
+            //배송 요청 사항 직접 입력 시 구현
+            	$('#delivery_memo').on('change',function(){
+            		if($(this).val()==='custom'){
+            			 $('#custom_memo_div').show(); // 직접 입력 필드 표시
+            		} else{
+            			$('#custom_memo_div').hide(); // 다른 옵션 선택 시 숨김
+                        $('#custom_memo').val(''); // 직접 입력 필드 값 초기화
+            		}
+            	});
+            
+           	
+
+	        // 아임포트 결제 요청 함수
+	            $('#orderForm').on('submit', function(event) {
+	                event.preventDefault();  // 기본 폼 제출 방지
+	                
+	                var delivery_memo = $('#delivery_memo').val();
+	                if (delivery_memo ==='custom'){
+	                	delivery_memo = $('#custom_memo').val();
+	                }
+	                
+	             // 주문 상품 리스트 생성 (여러 상품이 있을 경우 배열로 처리)
+	                var orderItems = [];
+
+	                // 예시: 상품 정보를 배열에 추가
+	                $('.order-item').each(function() {
+	                    var productNum = $(this).find('.product_num').val();  // 상품 번호
+	                    var product_name = $(this).find('.product_name').text(); //.val()이 아니라 .text()로 적어야한다.
+	                    var quantity = $(this).find('.quantity').val();  // 수량
+	                    var price = $(this).find('.price').text().replace(',', '').replace('원', '');  // 상품 가격
+	                    
+
+	                    // 주문 항목 추가
+	                    orderItems.push({
+	                        product_num: productNum,
+	                        product_name: product_name,
+	                        quantity: quantity,
+	                        price: price
+	                        
+	                    });
+	                });
+
+	                // 주문 정보를 먼저 서버에 전송
+	                var orderData = {
+	                	member_id : member_id,
+	                	coupon_code: $('#couponSelect').val(),  // 선택한 쿠폰 코드
+	                    product_name: $('#product_name').text(),
+	                    total_price: $('#total_price').text().replace(',', '').replace('원', ''),  // 상품 총액
+	                    discount: $('#discount').text().replace(',', '').replace('원', ''),  // 할인 총액
+	                    delivery_fee: $('#delivery_fee').text().replace(',', '').replace('원', ''),  // 배송비
+	                    points: totalPointsUsed,  // 사용한 포인트
+	                    address: $('#address').val(),  // 배송 주소
+	                    address_detail: $('#address_detail').val(),  // 상세 주소
+	                    postcode: $('#postcode').val(),  // 우편번호
+	                    tel : $('#tel').val(),
+	                    reusing: $('#reusing').is(':checked'),  // 재사용 포장재 여부
+	                    delivery_memo: delivery_memo,  // 배송 요청사항
+	                    orderItems : orderItems
+	                };
+
+	                $.ajax({
+	                    type: 'POST',
+	                    url: '/order/create',  // 서버의 주문 생성 엔드포인트
+	                    contentType: 'application/json',
+	                    data: JSON.stringify(orderData),
+	                    success: function(response) {
+	                        var merchantUid = response.merchantUid;  // 서버로부터 주문 번호(merchant_uid)를 응답받음
+	                        var finalAmount = response.finalAmount;  // 서버로부터 받은 최종 결제 금액
+	                        // 2단계: 결제 요청
+	                        var IMP = window.IMP;
+	                        IMP.init('imp57000577');  // 아임포트 가맹점 식별 코드
+
+	                        IMP.request_pay({
+	                            pg: 'html5_inicis',  // 결제 대행사
+	                            pay_method: 'card',  // 결제 방식
+	                            merchant_uid: merchantUid,  // 서버에서 받은 주문 번호 사용
+	                            name: '주문명: 결제 테스트',
+	                            amount: finalAmount,  // 최종 결제 금액
+	                            buyer_email: 'test@example.com',
+	                            buyer_name: '홍길동',
+	                            buyer_tel: '010-1234-5678',
+	                            buyer_addr: '서울특별시 강남구 삼성동',
+	                            buyer_postcode: '123-456'
+	                        }, function(rsp) {
+	                            if (rsp.success) {
+	                            	console.log('결제 응답 객체:', rsp.pay_method);  // 전체 응답 객체 확인
+	                                // 결제 성공 시 서버로 결제 정보 전송
+	                                $.ajax({
+	                                    url: '/order/pay',
+	                                    method: 'POST',
+	                                    data: {
+	                                        imp_uid: rsp.imp_uid,
+	                                        merchant_uid: merchantUid,  // 주문 생성 시 사용한 주문 번호를 다시 전송
+	                                        paid_amount: rsp.paid_amount,
+	                                        pay_method : rsp.pay_method,	                     
+	                                      	member_id : member_id,
+	                                      	points_used : totalPointsUsed
+	                                    },
+	                                    success: function(response) {
+	                                        if (response.status === 'success') {
+	                                            alert('결제가 완료되었습니다.');
+	                                            window.location.href = '/payment/payment?merchant_uid=' + merchantUid;  // 결제 완료 페이지로 이동
+	                                        } else {
+	                                            alert('결제 검증에 실패했습니다.');
+	                                        }
+	                                    }
+	                                });
+	                            } else {
+	                                alert('결제에 실패하였습니다. 에러 내용: ' + rsp.error_msg);
+	                            }
+	                        });
+	                    },
+	                    error: function(xhr, status, error) {
+	                        alert('주문 생성 중 오류가 발생했습니다.');
+	                        console.error('주문 생성 오류:', error);
+	                    }
+	                });
+	            });
+	        });
+    </script>
+</head>
+<body class="order-body">
+	<!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+    
+	<h1>주문/결제</h1>
+    <div class="content" th:fragment="content" style="margin-top : 270px">
+        
+        <form id="orderForm" action="/order/pay" method="post">
+            <div class=deliveryInfo>
+	            <h2>배송지 정보</h2>
+	            
+	            <label for="name">주문자 명:</label>
+	            <input type="text" id="name" class="name" th:value="${name}">
+	            
+	            <br>
+	            
+	            <label for="tel">연락처 : </label>
+	            <input type="text" id="tel" class="tel" th:value="${tel}" >
+	            
+	            <br>
+	            
+	            <label for="postcode">우편번호</label>
+	            <input type="text" id="postcode" name="postcode"  th:value="${postcode}" placeholder="우편번호" readonly />
+	            <button type="button" id="findPostcode">우편번호 찾기</button>
+	            
+	            <br>
+	            
+	            <label for="address">주소</label>
+	            <input type="text" id="address" name="address" th:value="${address}" placeholder="주소" readonly />
+	            
+	            <br>
+	            
+	            <label for="address_detail">상세주소</label>
+	            <input type="text" id="address_detail" name="address_detail" th:value="${address_detail}" placeholder="상세주소" />
+	            
+	            <br>
+	            
+	            <label for="delivery_memo">배송 요청 사항</label>
+	            <select id="delivery_memo" name="delivery_memo">
+	            	<option value="문 앞에 두고 가세요">문 앞에 두고 가세요</option>
+                	<option value="배송 전에 미리 연락 주세요">배송 전에 미리 연락 주세요</option>
+                	<option value="직접 수령할게요">직접 수령할게요</option>
+                	<option value="경비실에 맡겨 주세요">경비실에 맡겨 주세요</option>
+                	<option value="요청사항 없음">요청사항 없음</option>
+                	<option value="custom">직접 입력</option>       
+	            </select>
+	            
+	            <div id="custom_memo_div" style="display:none; margin-top: 5px;">
+    				<label for="custom_memo">요청사항 입력:</label>
+    				<input type="text" id="custom_memo" name="custom_memo" placeholder="요청 사항을 입력하세요">
+				</div>	            	            
+            </div>
+            
+            <hr>
+                      	                   
+            <div class="order-items" style="margin-top: 20px !important;">
+			    <h2>주문 상품</h2>
+			    <div class="order-item">
+			    	<img th:src="${product.product_img}" alt="Product Image" width="100">
+			        <input type="hidden" id = "product_num" class="product_num" th:value="${product.product_num}">  <!-- 상품 번호 -->
+			        <span class="product_name">[[${product.product_name}]]</span>
+			        <span class="price">[[${product.price}]]원</span> <!-- 상품 가격 -->
+			        <input type="hidden" class="quantity" th:value="${quantity}"><span class="quantity-display">[[${quantity}]]개</span>  <!-- 상품 수량 -->
+			    </div>
+			</div>
+            
+<!--             <div class="order-items">
+    		Thymeleaf 반복문을 사용해 주문 상품 리스트 출력
+    			<div th:each="item : ${orderItems}" class="order-item">
+    				<img th:src="${product_img}" alt="Product Image" width="50">
+        			<input type="hidden" class="product-num" th:value="${item.product_num}">  상품 번호
+        			<span class="product-name" th:text="${item.product_name}">상품명</span>
+        			<span class="price" th:text="${item.price}">10,000원</span> 상품 가격
+        			<input type="number" class="quantity" th:value="${item.quantity}" min="1">  상품 수량
+    			</div>
+			</div> -->
+			
+			<hr>
+			
+            <div class="reusingRequest" style="margin-top: 20px !important;">
+            	<h3>재사용 포장재 반납 신청</h3>
+            	<input type="checkbox" id="reusing" name="resuing">
+            	<label for="reusing">반납 신청</label>
+            </div>
+            
+            <hr>
+
+	        <h3>쿠폰 적용</h3>        
+	        <!-- 쿠폰 선택 -->
+	        <select id="couponSelect" name="couponSelect">
+	        	<option value="" th:if="${#lists.isEmpty(coupons)}" >사용 가능한 쿠폰이 없어요</option>
+				<option value="" th:if="${!#lists.isEmpty(coupons)}">쿠폰을 선택하세요</option>
+	        
+	        	<option th:each="coupon : ${coupons}"
+	        			th:value="${coupon.coupon_code}"
+	        			th:text="${coupon.coupon_name}">
+	        	</option>
+	        </select>
+	        
+	        <hr>
+	
+	        <h3>보유 포인트(<span id="remainingPoints">[[${points}]]p</span>)</h3>
+	        <input type="text" id="points" name="points" placeholder="1000">
+	        <button type="button" id="applyPointsBtn">사용하기</button>
+            
+            <hr>
+            <div class="order-summary">
+            <p>총 상품 금액: <span id="total_price">[[${product.price}]]원</span></p>
+            <p>총 할인 금액: <span id="discount">0원</span></p>
+            <p>배송비: <span id="delivery_fee">0원</span></p>
+            <p class="final_price">최종 결제 금액: <span id="final_price">[[${product.price}]]원</span></p>
+        	</div>
+            <hr>
+            
+            <div style="text-align: right;">
+            	<button type="submit" >결제하기</button>           
+            </div>
+            
+        </form>
+    </div>
+    
+    <!-- Footer Start -->
+	<div th:replace="footer :: footer"></div>
+	<!-- Footer End -->
+</body>
+</html>

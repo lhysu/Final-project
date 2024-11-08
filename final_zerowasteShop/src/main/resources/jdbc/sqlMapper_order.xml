@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.zerowasteshop.order.OrderMapper">
+
+<delete id="deleteOrderItem">
+	delete from order_item where merchant_uid = #{merchant_uid}
+</delete>
+
+<delete id="deleteOrder">
+	delete from `order` where merchant_uid = #{merchant_uid}
+</delete>
+
+<select id="selectOneOrder" resultType="com.project.zerowasteshop.order.OrderVO">
+	select * from `order` where merchant_uid = #{merchant_uid}
+</select>
+
+<select id="selectOneItem" resultType="com.project.zerowasteshop.order.OrderItemVO">
+	select * from order_item where merchant_uid = #{merchant_uid}
+</select>
+
+<!-- 쿠폰 코드 확인 -->
+<select id="getAvailableCouponsForUser" resultType="com.project.zerowasteshop.coupon.CouponVO">
+	select c.*
+	from coupon c
+	where member_id = #{member_id} and used = 0
+</select>
+
+<!-- 최종 주문 금액 얻어오기 -->
+<select id="getOrderAmount" resultType="int">
+	select final_price from `order` where merchant_uid = #{merchant_uid}
+</select>
+
+<!-- 총 상품 금액 얻어오기 -->
+<select id="getTotalPrice" resultType="int">
+	select total_price from `order` where merchant_uid = #{merchant_uid}
+</select>
+
+<!-- 주문 정보 저장 -->
+<insert id="saveOrder">
+	insert into `order`(merchant_uid,member_id, coupon_code,points, postcode, address,address_detail,tel,reusing,discount,delivery_fee,delivery_memo,total_price,final_price,order_state)
+	values(#{merchant_uid},#{member_id},#{coupon_code},#{points},#{postcode},#{address},#{address_detail},#{tel},#{reusing},#{discount},#{delivery_fee},#{delivery_memo},#{total_price},#{final_price},#{order_state})
+</insert>
+
+<!-- 주문 상태 업데이트 -->
+<update id="updateOrderState">
+	update `order` set order_state = #{orderState} where merchant_uid = #{merchant_uid}
+</update>
+
+<!-- 주문 상세 정보 저장 -->
+<insert id="saveOrderItem" parameterType="com.project.zerowasteshop.order.OrderItemVO">
+    INSERT INTO order_item (merchant_uid, product_num,product_name, quantity, price)
+    VALUES (#{merchant_uid}, #{product_num},#{product_name}, #{quantity}, #{price});
+</insert>
+
+<!-- 재사용 포장재 반납 업데이트 -->
+<update id="updateReusing" parameterType="map">
+	update `order` set reusing = #{reusing} where member_id = #{member_id}
+</update>
+
+<!-- 나의 구매 내역 정보 불러오기 -->
+<select id="selectAllPageBlockByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
+    SELECT DISTINCT o.merchant_uid, o.order_date, p.product_name, p.price, p.point, p.product_img, 
+                    i.quantity, i.product_num, d.delivery_status, d.delivery_date,i.order_item_id,o.order_state,o.final_price
+    FROM (
+        SELECT *
+        FROM `order`
+        WHERE member_id = #{userId}
+    ) o
+    JOIN order_item i ON o.merchant_uid = i.merchant_uid
+    JOIN product p ON i.product_num = p.product_num
+    LEFT JOIN delivery d ON d.merchant_uid = o.merchant_uid  <!-- delivery 테이블을 LEFT JOIN으로 추가 -->
+    ORDER BY o.order_date DESC
+    LIMIT #{startRow}, #{pageBlock}
+</select>
+
+<select id="getTotalRowsByUser" resultType="int">
+    select count(*) total_rows from `order`
+    WHERE member_id = #{userId}
+</select>
+
+<select id="selectAllByUser" resultType="com.project.zerowasteshop.order.OrderJoinProductVO">
+    SELECT DISTINCT o.merchant_uid, p.product_name, p.price, p.point, p.product_img, i.quantity, i.product_num
+    FROM `order` o
+    JOIN order_item i ON o.merchant_uid = i.merchant_uid
+    JOIN product p ON i.product_num = p.product_num
+    where o.merchant_uid = #{merchant_uid} 
+    ORDER BY o.merchant_uid DESC
+</select>
+
+<!--베스트셀러 select문  -->
+<select id="findTopSellingProducts" resultType="com.project.zerowasteshop.order.BestsellerDTO" parameterType="int">
+    SELECT 
+        product_num, 
+        SUM(quantity) AS total_sales 
+    FROM 
+        order_item 
+    GROUP BY 
+        product_num 
+    ORDER BY 
+        total_sales DESC 
+    LIMIT #{limit}
+</select>
+
+</mapper>
