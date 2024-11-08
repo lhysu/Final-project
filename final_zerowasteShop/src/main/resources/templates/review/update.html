@@ -209,13 +209,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<th:block th:if="${!vo2.review_img.startsWith('http')}">
 					<img style="width: 100px;" th:src="|/uploadimgPath/${vo2.review_img}|" alt="">
 				</th:block>
-		        <input type="file" id="file" name="file" required>
+		        <input type="file" id="file" name="file">
 		        <th:block th:if="${vo2.review_img.startsWith('http')}">
 		        	<input type="hidden" id="review_img" name="review_img" th:value="${vo2.review_img}" style="width: 100px;">
 				</th:block>
 				
 				<th:block th:if="${!vo2.review_img.startsWith('http')}">
-					<input type="hidden" id="review_img" name="review_img" th:value="|/uploadimgPath/${vo2.review_img}|" style="width: 100px;">
+					<input type="hidden" id="review_img" name="review_img" th:value="${vo2.review_img}" style="width: 100px;">
 				</th:block>
 		        
 		    </div>

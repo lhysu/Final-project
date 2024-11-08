@@ -78,6 +78,29 @@ public class ReviewService {
 //		return mapper.selectAllPageBlock(startRow, pageBlock, userID);
 //	}
 	
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		if (searchKey.equals("member_id")) {
+			return mapper.getSearchTotalRowsMember_id("%" + searchWord + "%");
+		} else {
+			return mapper.getSearchTotalRowsProduct_name("%" + searchWord + "%");
+		}
+	}
+
+	public List<ReviewVO> searchListPageBlock(String searchKey, String searchWord, 
+			int cpage, int pageBlock) {
+		// 오라클인경우 rownum으로 읽어 올 시작행과 끝행을 얻어내는 알고리즘이 필요하다.
+		// 예:1페이지(1-5),2페이지(6-10),3페이지(11-15)
+		int startRow = (cpage - 1) * pageBlock + 1;
+		int endRow = startRow + pageBlock - 1;
+		log.info("startRow:{}", startRow);
+		log.info("endRow:{}", endRow);
+
+		if (searchKey.equals("member_id")) {
+			return mapper.searchListPageBlockMember_id("%" + searchWord + "%",startRow,endRow);
+		} else {
+			return mapper.searchListPageBlockProduct_name("%" + searchWord + "%",startRow,endRow);
+		}
+	}
 
 	public ProductVO selectProduct(ReviewVO vo) {
 		return mapper.selectProduct(vo);

@@ -34,6 +34,15 @@ public interface ReviewMapper {
 	
 //	public List<ReviewVO> selectAllPageBlock(int startRow, int pageBlock, String userID);
 
+	public int getSearchTotalRowsMember_id(String searchWord);
+
+	public int getSearchTotalRowsProduct_name(String searchWord);
+
+	public List<ReviewVO> searchListPageBlockMember_id(String searchWord, int startRow, int endRow);
+
+	public List<ReviewVO> searchListPageBlockProduct_name(String searchWord, int startRow, int endRow);
+
+	
 	public int updateProductRating(int product_num, double rating);
 	public int updateProductRating2(int product_num);
 }

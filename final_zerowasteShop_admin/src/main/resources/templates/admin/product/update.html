@@ -132,13 +132,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<th:block th:if="${!vo2.product_img.startsWith('http')}">
 					<img style="width: 100px;" th:src="|/uploadimgPath/${vo2.product_img}|" alt="">
 				</th:block>
-		        <input type="file" id="file" name="file" required>
+		        <input type="file" id="file" name="file">
 		        <th:block th:if="${vo2.product_img.startsWith('http')}">
 		        	<input type="hidden" id="prdouct_img" name="product_img" th:value="${vo2.product_img}" style="width: 100px;">
 				</th:block>
 				
 				<th:block th:if="${!vo2.product_img.startsWith('http')}">
-					<input type="hidden" id="prdouct_img" name="product_img" th:value="|/uploadimgPath/${vo2.product_img}|" style="width: 100px;">
+					<input type="hidden" id="prdouct_img" name="product_img" th:value="${vo2.product_img}" style="width: 100px;">
 				</th:block>
 		        
 		    </div>
