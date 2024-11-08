@@ -98,6 +98,10 @@ span{
 	font-size: 10pt;
 	
 }
+.pw-under-text2{
+	color: green;
+	font-size: 10pt;
+}
 
 .hide{
 	display: none;
@@ -205,6 +209,7 @@ $(function (){
         	<div class=" col-md-4 d-flex">
         		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="checkEmailCode" >인증번호 확인</button>
         	</div>
+        	<div class="auth-msg pw-under-text2 hide">인증되었습니다.</div>
 	    </div>
        	</div>
     
@@ -329,6 +334,7 @@ $(function (){
 					const result2=document.getElementById('result').innerHTML;
 					if(result2=="사용가능한 아이디"){
 						target.disabled=false;
+						document.querySelector('.auth-msg').classList.remove('hide');
 						}
 					else{
 						alert("아이디 중복 확인 후 다시 이메일을 인증해주세요.")
