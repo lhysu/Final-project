@@ -289,7 +289,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				        <input type="hidden" name="member_id" th:value="${session.user_id}">
 				        <input type="hidden" name="price" th:value="${vo2.price}">
 				        <input type="hidden" name="product_name" th:value="${vo2.product_name}">
-				        <input type="hidden" name="quantity" id="buyNowQuantityInput">
+				        <input type="hidden" name="quantity" id="buyNowQuantityInput" th:value="${vo2.count}">
 				        
 				        <button type="button" onclick="submitBuyNowForm()" style="background-color: #ff6600; border: none; color: black; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
 				            바로 구매
