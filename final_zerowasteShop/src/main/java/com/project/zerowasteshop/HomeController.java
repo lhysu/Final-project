@@ -104,4 +104,9 @@ public class HomeController {
 		return "terms";
 	}
 	
+	@GetMapping("/PrivacyPolicy")
+	public String PrivacyPolicy() {
+		log.info("/PrivacyPolicy");
+		return "PrivacyPolicy";
+	}
 }
