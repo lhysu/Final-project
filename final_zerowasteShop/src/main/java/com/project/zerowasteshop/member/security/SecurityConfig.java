@@ -23,10 +23,11 @@ public class SecurityConfig {
 				"/member/login_fail","/member/login_success","/member/selectId","/member/selectPw","/api/**",
 				"/member/insert_fail","/img/**","/css/**","/js/**","/lib/**","/scss/**","/upload_img/**","/product/**",
 				"/community/donateItem/**","/community/recycleLife/**","/community/recycleLifeComment/**",
-				"/community/event/selectAll","/community/event/selectOne",
-				"/community/notice/selectAll","/community/notice/selectOne", 
-				"/community/help/selectAll","/community/help/selectOne", 
-				"/community/recycleTip/selectAll","/community/recycleTip/selectOne","/uploadimgPath/**"
+				"/community/event/selectAll","/community/event/selectOne","/community/event/searchList",
+				"/community/notice/selectAll","/community/notice/selectOne","/community/notice/searchList",
+				"/community/help/selectAll","/community/help/selectOne","/community/help/searchList", 
+				"/community/recycleTip/selectAll","/community/recycleTip/selectOne","/community/recycleTip/searchList",
+				"/uploadimgPath/**"
 				};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음

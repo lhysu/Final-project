@@ -126,7 +126,7 @@
 			                    <input type="hidden" name="tipComment_num" th:value="${comment.tipComment_num}" />
 			                    <input type="hidden" name="recycleTip_num" th:value="${vo2.recycleTip_num}" />
 			                    <input type="hidden" name="member_id" th:value="${#authentication.name}" /> <!-- 현재 로그인한 사용자 ID -->
-			                    <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+			                    <button type="submit" class="btn btn-sm btn-danger" sec:authorize="isAuthenticated()">삭제</button>
 			                </form>
 			            </div>
 			        </div>

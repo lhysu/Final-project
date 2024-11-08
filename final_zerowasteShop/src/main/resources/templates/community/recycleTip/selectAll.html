@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Recycle Tip 목록</title>
@@ -72,6 +72,11 @@
             pointer-events: none;
             opacity: 0.5;
         }
+
+        /* 선택 박스의 최대 너비 설정 */
+        form .form-select {
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -83,9 +88,9 @@
         <h1 class="mb-4"><a th:href="@{/community/recycleTip/selectAll}" >Recycle Tip 목록</a></h1>
         
         <!-- 검색 폼 -->
-        <form th:action="@{/community/recycleTip/searchList}" method="get" class="row g-3 mb-4">
-            <div class="col-md-4">
-                <select name="searchField" class="form-select">
+        <form th:action="@{/community/recycleTip/searchList}" method="get" class="row g-3 mb-4 align-items-center">
+            <div class="col-md-3">
+                <select name="searchField" class="form-select" style="max-width: 100%;">
                     <option value="recycleTip_title" th:selected="${searchField == 'recycleTip_title'}">제목</option>
                     <option value="recycleTip_content" th:selected="${searchField == 'recycleTip_content'}">내용</option>
                 </select>
@@ -93,9 +98,11 @@
             <div class="col-md-6">
                 <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" th:value="${searchWord}">
             </div>
-            <div class="col-md-2 d-flex">
-                <button type="submit" class="btn btn-primary-custom w-100">검색</button>
-                <a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" th:href="@{/community/recycleTip/selectAll}" class="btn btn-secondary ms-2">검색 초기화</a>
+            <div class="col-md-3 d-flex">
+                <button type="submit" class="btn btn-primary-custom me-2 flex-grow-1">검색</button>
+                <a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" 
+                   th:href="@{/community/recycleTip/selectAll}" 
+                   class="btn btn-secondary flex-grow-1">검색 초기화</a>
             </div>
         </form>
         
