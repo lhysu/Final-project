@@ -196,19 +196,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			</label>
 			
 			<input type="hidden"  name="donateItem_num" id="donateItem_num" th:value="${vo2.donateItem_num}">
-			<input type="submit" class="btn btn-primary my-3 mx-3" value="확인"> 
+			<input type="submit" class="btn btn-primary my-3 mx-3 text-white" value="확인"> 
 
 		</form>
 
 
 		
 	
-	<!-- 게시글 삭제 -->
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" style="float: right;" data-toggle="modal" data-target="#staticBackdrop">
- 	 글 삭제
-	</button>
-
+	<!-- 수정, 삭제, 목록으로 버튼 -->
+        <div class="row my-4">
+            <div class="col-12">
+				<button type="button" class="btn btn-danger me-2" data-toggle="modal" data-target="#staticBackdrop">
+			 	 	<i class="fas fa-trash-alt"></i>글 삭제
+				</button>
+				<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary text-white"  >
+      				<i class="fas fa-list "></i> 목록으로
+   				 </a>
+			</div>
+		</div>
 	
 
 	
@@ -226,8 +231,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	        신청 내역을 삭제하시겠습니까?
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-	        <button type="button" class="btn btn-primary" onclick="clickDel(deleteForm)">예</button>
+	        <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">아니오</button>
+	        <button type="button" class="btn btn-primary text-white" onclick="clickDel(deleteForm)">예</button>
 	      </div>
 	    </div>
 	  </div>
@@ -246,9 +251,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 	</script>
 
-	<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary" >
-      	<i class="fas fa-list"></i> 목록으로
-    </a>
 	
 	</div>
 		
