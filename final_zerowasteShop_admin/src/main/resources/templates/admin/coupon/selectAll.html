@@ -34,8 +34,6 @@
 <!-- 템플릿 CSS파일 -->
 <link href="/css/style.css" rel="stylesheet">
 
-<!-- 페이지네이션 가로 처리 -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 .content {
@@ -157,24 +155,24 @@ select {
 		</div>	
 
 
-		<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex justify-content-between align-items-center" style = "padding-bottom : 10px ">
 			<!-- 첫 번째 검색 폼 -->
 			<form action="/admin/coupon/searchList"
 				class="d-flex align-items-center">
 				<select name="searchKey"
-					class="btn btn-secondary dropdown-toggle me-2 text-white">
+					class="btn btn-secondary dropdown-toggle me-2 text-white" style="font-weight: normal;">
 					<option value="member_id">회원ID</option>
 					<option value="used">사용여부</option>
 				</select> <input type="text" name="searchWord"
-					class="form-control border-2 border-secondary py-3 px-4 rounded-pill me-2"
+					class="form-control"
 					style="max-width: 400px;"> <input type="submit" value="검색"
-					class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">
+					class="btn btn-primary text-white ms-2" style="font-weight: normal;">
 			</form>
 
 			<!-- 두 번째 쿠폰 생성 폼 -->
 			<form action="/admin/coupon/create" class="d-flex align-items-center">
 				<input type="submit" value="쿠폰생성"
-					class="btn btn-secondary dropdown-toggle me-2 text-white">
+					class="btn btn-secondary dropdown-toggle me-2 text-white" style="font-weight: normal;">
 			</form>
 		</div>
 
