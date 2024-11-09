@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Recycle Tip 목록</title>
+    <title>분리수거 팁</title>
     <!-- 구글 웹 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,27 +84,27 @@
     <!-- 헤더 삽입 -->
     <div th:replace="~{header_community :: header}"></div>      
     
-    <div class="container my-4" style="padding-top:250px;">
-        <h1 class="mb-4"><a th:href="@{/community/recycleTip/selectAll}" >Recycle Tip 목록</a></h1>
+    <div class="container my-4" style="padding-top:160px;">
+        <h1 class="mb-4"><a th:href="@{/community/recycleTip/selectAll}" >분리수거 팁</a></h1>
         
         <!-- 검색 폼 -->
-        <form th:action="@{/community/recycleTip/searchList}" method="get" class="row g-3 mb-4 align-items-center">
-            <div class="col-md-3">
-                <select name="searchField" class="form-select" style="max-width: 100%;">
-                    <option value="recycleTip_title" th:selected="${searchField == 'recycleTip_title'}">제목</option>
-                    <option value="recycleTip_content" th:selected="${searchField == 'recycleTip_content'}">내용</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" th:value="${searchWord}">
-            </div>
-            <div class="col-md-3 d-flex">
-                <button type="submit" class="btn btn-primary-custom me-2 flex-grow-1">검색</button>
-                <a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" 
-                   th:href="@{/community/recycleTip/selectAll}" 
-                   class="btn btn-secondary flex-grow-1">검색 초기화</a>
-            </div>
-        </form>
+		<form th:action="@{/community/recycleTip/searchList}" method="get" class="row g-3 mb-4">
+		    <div class="col-md-2">
+		        <select name="searchField" class="form-select" style="max-width: 100%; background-color:#ffb524; color:white; font-weight:bold;">
+		            <option value="recycleTip_title" th:selected="${searchField == 'recycleTip_title'}">제목</option>
+		            <option value="recycleTip_content" th:selected="${searchField == 'recycleTip_content'}">내용</option>
+		        </select>
+		    </div>
+		    <div class="col-md-6">
+		        <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" th:value="${searchWord}">
+		    </div>
+		    <div class="col-md-4 d-flex">
+		        <button type="submit" class="btn btn-primary-custom me-2">검색</button>
+		        <!--<a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" 
+		           th:href="@{/community/recycleTip/selectAll}" 
+		           class="btn btn-secondary" style="color:white">검색 초기화</a>-->
+		    </div>
+		</form>
         
         <!-- 게시물 목록 테이블 -->
         <table class="table table-striped table-bordered">
