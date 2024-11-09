@@ -34,7 +34,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 200px; }
+        .content { margin : 300px;
+        			margin-top : 180px;
+         }
         
         .position-relative {
 		    display: flex;
@@ -164,16 +166,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		</div>	
 		
 		<form action="/admin/product/searchList">
-		    <div class="position-relative mx-auto" style="margin-left: 50px !important;">
+		    <div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
 		        <div class="d-flex align-items-center">
 		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2" style="color:white">
 		                <option value="company" style="color:white">제조사</option>
 		                <option value="product_name" style="color:white">상품이름</option>
 		            </select>
 		            <input class="form-control" type="text" name="searchWord" style="width : 300px">
-		            <button type="submit" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white" style="white-space: nowrap; margin-left : 10px">검색</button>		           
-		            <a th:href="|/admin/product/insert|" class="btn btn-secondary" style="white-space: nowrap; margin-left : 10px; color : white">상품등록</a>
+		            <button type="submit" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white" style="white-space: nowrap; margin-left : 10px">검색</button>		          
 		        </div>
+		        <a th:href="|/admin/product/insert|" class="btn btn-secondary" style="white-space: nowrap; color : white; float: right !important">상품등록</a>
 		    </div>
 		</form>
 	    

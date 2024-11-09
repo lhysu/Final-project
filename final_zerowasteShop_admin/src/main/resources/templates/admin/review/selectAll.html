@@ -34,7 +34,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 152px; }
+        .content { margin : 300px;
+        			margin-top : 180px;
+         }
         
         .position-relative {
 		    display: flex;
@@ -149,7 +151,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	 <div th:replace="~{header :: header}"></div>
     <!-- 해더 끝 -->
     
-	<div class ="content" th:fragment="content" style="margin-top : 200px">
+	<div class ="content" th:fragment="content">
 	
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
@@ -157,7 +159,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		</div>
 		
 		<form action="/admin/review/searchList">
-		    <div class="position-relative mx-auto" style="margin-left: 50px !important;">
+		    <div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
 		        <div class="d-flex align-items-center">
 		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2" style="color:white">
 		                <option value="member_id" style="color:white">회원아이디</option>
