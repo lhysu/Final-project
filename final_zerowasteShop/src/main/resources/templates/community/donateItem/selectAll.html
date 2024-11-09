@@ -34,12 +34,26 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-       /* 현재 페이지 번호 강조 스타일 */
-        .pagination .page-item.active .page-link {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-            color: white;
+       /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+     
 
         .current {
             font-weight: bold;
@@ -67,14 +81,14 @@
 		<form action="/community/donateItem/d_searchList">
 			<div class=" mx-auto mb-2" >
 				<div class="d-flex align-items-center">	
-				    <select name="searchKey" class="btn btn-primary dropdown-toggle me-2">
+				    <select name="searchKey" class="btn btn-secondary dropdown-toggle text-white me-2">
 				        <option value="member_id" >작성자</option>
 				        <option value="donateItem_item">기부물품</option>
 				    </select>
 				    <input type="text" name="searchWord"  style="width:300px;" class="form-control">
-				    <input type="submit" value="검색" class="btn btn-primary ms-2">
+				    <input type="submit" value="검색" class="btn btn-primary ms-2 text-white">
 				   
-				   <a th:href="|/donateItem/d_insert|" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" id="btn-insert" style="float: right;">신청하기</a>
+				   <a th:href="|/donateItem/d_insert|" class="btn btn-secondary text-white ms-2" id="btn-insert" style="float: right;">신청하기</a>
 			    
 			    </div>
 			    
