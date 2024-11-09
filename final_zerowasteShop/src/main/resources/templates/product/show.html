@@ -70,24 +70,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    background-color: #007bff; /* 호버 시 배경색 변경 */
 		    color: #fff; /* 호버 시 텍스트 색상 변경 */
 		}
-		
-		.pagination {
-		    margin-top: 20px; /* 페이지네이션 여백 */
-		}
-		
-		.page-item.active .page-link {
-		    background-color: #007bff; /* 활성 페이지 색상 */
-		    color: white; /* 활성 페이지 텍스트 색상 */
-		}
-		
-		.page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
-		
-		.page-link:hover {
-		    color: #0056b3; /* 페이지 링크 호버 색상 */
-		    text-decoration: underline; /* 호버 시 밑줄 */
-		}
+		 
 		
 		.position-relative {
 		    margin-bottom: 20px; /* 검색창 여백 */
@@ -104,6 +87,53 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	        color: #333; /* 텍스트 색상 */
 	        font-weight: bold; /* 글씨 두껍게 */
 	    }
+	    
+	    /* 현재 페이지 번호 강조 스타일 */
+        .pagination .page-item.active .page-link {
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+            color: white;
+        }
+
+        .current {
+            font-weight: bold;
+
+        }
+        
+        .btn-primary-custom {
+            color: white !important;
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+        }
+
+        /* 테이블 셀 너비 조정 */
+        table th, table td:not(:nth-child(2)) {
+            text-align: center;
+        }
+        table th:not(:nth-child(2)), table td:not(:nth-child(2)) {
+            white-space: nowrap;
+            width: 1%; /* 열 너비 최소화 */
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -173,7 +203,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			</th:block>
 			
 			
-			<nav>
+			<nav aria-label="Page navigation" style="margin:10px">
 				<ul class="pagination justify-content-center">
 	  				<th:block th:if="${param.searchWord == null}">
 	  					<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
@@ -207,6 +237,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					</th:block>	
 				</ul>
 			</nav>
+			
 					
 		</div>
 	</div>

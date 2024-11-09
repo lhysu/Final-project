@@ -96,7 +96,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		
 		#selectAllTable tfoot {
 		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
 		}
 		
 		.pagination {
@@ -104,13 +103,47 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    padding: 10px 0; /* 상하 패딩 추가 */
 		}
 		
-		.pagination .page-item .page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
 		
-		.pagination .page-item .page-link:hover {
-		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
-		}
+		
+		/* 현재 페이지 번호 강조 스타일 */
+        .pagination .page-item.active .page-link {
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+            color: white;
+        }
+
+        .current {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .btn-primary-custom {
+            color: white !important;
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+        }
+
+
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -156,7 +189,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<tfoot>
 				<tr>
 					<td colspan="8">
-						<nav>
+						<nav aria-label="Page navigation">
 			    			<ul class="pagination justify-content-center">
 			    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
 			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage - 1}|">이전</a>
@@ -184,6 +217,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						
 							</ul>
 						</nav>
+
 		
 					</td>
 				</tr>
