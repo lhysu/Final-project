@@ -73,7 +73,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="gallery" style="display: flex; justify-content: space-between;">
         <div class="gallery-item" th:each="post : ${post}">
             <a th:href="@{/community/recycleLife/selectOne(recycleLife_num=${post.recycleLife_num})}">
-                <img th:src="|/upload_img/thumb_${post.recycleLife_img}|" alt="썸네일 이미지" onerror="this.style.display='none'">   
+                <img th:src="@{'/uploadimgPath/' + ${post.recycleLife_img}}" alt="썸네일 이미지" onerror="this.style.display='none'">   
                 <p>조회수
                     <span th:text="${post.recycleLife_views}">0</span> 좋아요
                     <span th:text="${post.recycleLife_likes}">0</span>
