@@ -33,6 +33,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
         .content { margin : 152px; }
         
         .position-relative {
@@ -76,6 +86,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		#selectAllTable thead {
 		    
 		    color: black; /* 헤더 글자색 */
+		}
+		
+		#selectAllTable th {
+		    white-space: nowrap; /* 줄 바꿈 방지 */
+		    min-width: 100px; /* 최소 너비 설정 (필요에 따라 조정) */
 		}
 		
 		#selectAllTable th,
@@ -151,7 +166,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 헤더 끝 -->
     
 	<div class ="content" th:fragment="content" style="margin-top : 240px">
-	<h2>내가 쓴 리뷰</h2>
+	<h2 class="font-gmarket">내가 쓴 리뷰</h2>
 	
 		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
 			<thead>

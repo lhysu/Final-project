@@ -31,6 +31,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link href="/css/style.css" rel="stylesheet">
     
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
         .content { margin : 300px;
         			margin-top : 180px;
          }
@@ -152,7 +162,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>리뷰 관리</h1>
+            <h1 class="font-gmarket">리뷰 관리</h1>
 		</div>
 		
 		<form action="/admin/review/searchList">
