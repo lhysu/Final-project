@@ -79,7 +79,7 @@
     <!-- 헤더 삽입-->
     <div th:replace="~{header :: header}"></div>     
     
-    <div class="container my-4" style="padding-top:250px;">
+    <div class="container my-4" style="padding-top:160px;">
         <h1 class="mb-4"><a th:href="@{/community/event/selectAll}" >이벤트</a></h1>
         
         <!-- 검색 폼 추가 -->
@@ -90,7 +90,7 @@
             </div>
             <div class="col-md-4 d-flex">
                 <button type="submit" class="btn btn-primary-custom me-2">검색</button>
-                <a th:if="${searchWord}" th:href="@{/community/event/selectAll}" class="btn btn-secondary">검색 초기화</a>
+                <a th:href="@{/community/event/insert}" class="btn btn-secondary" style="color:white;">이벤트 등록</a>
             </div>
         </form>
         
@@ -161,10 +161,6 @@
         </nav>
         <!-- 페이징 UI 끝 -->
 
-        <!-- 새 이벤트 등록 버튼 -->
-        <div class="mt-4">
-            <a th:href="@{/community/event/insert}" class="btn btn-primary-custom">새 이벤트 등록</a>
-        </div>
     </div>
     
     <!-- 푸터 삽입 -->
