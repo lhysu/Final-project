@@ -117,7 +117,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>회원 상세</h1>
+            <h1 style="font-family: 'GmarketSansMedium';">회원 상세</h1>
 		</div>
 		<div class="mb-3">
 		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate;">
@@ -188,7 +188,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <div class="row my-4">
             <div class="col-12">
                 <a th:href="@{'/admin/ad_update?member_num=' + ${vo2.member_num}}" class="btn btn-primary me-2 text-white">
-                    <i class="fas fa-edit"></i> 회원수정
+                    <i class="fas fa-edit"></i> 회원 수정
                 </a>
                 <button type="button" class="btn btn-danger me-2" data-toggle="modal" data-target="#staticBackdrop">
 			 	 <i class="fas fa-trash-alt"></i> 회원 삭제
@@ -207,7 +207,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">회원 삭제</h5>
+	        <h5 class="modal-title" id="staticBackdropLabel" style="font-family: 'GmarketSansMedium';">회원 삭제</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

@@ -96,7 +96,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div class="container my-4 " th:fragment="content" style = "padding-top : 160px; padding-bottom : 50px;">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-		<h1>기부가능 물품 신청 내역</h1>
+		<h1 style="font-family: 'GmarketSansMedium';">기부가능 물품 신청 내역</h1>
 		<hr>
 		</div>
 		<div>
@@ -205,7 +205,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <div class="row my-4">
             <div class="col-12">
 				<button type="button" class="btn btn-danger me-2" data-toggle="modal" data-target="#staticBackdrop">
-			 	 	<i class="fas fa-trash-alt"></i>글 삭제
+			 	 	<i class="fas fa-trash-alt"></i> 글 삭제
 				</button>
 				<a th:href="@{'/community/donateItem/d_selectAll'}" class="btn btn-secondary text-white"  >
       				<i class="fas fa-list "></i> 목록으로
@@ -220,7 +220,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">기부가능 물품 신청 내역 삭제</h5>
+	        <h5 class="modal-title" id="staticBackdropLabel" style="font-family: 'GmarketSansMedium';">기부가능 물품 신청 내역 삭제</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
