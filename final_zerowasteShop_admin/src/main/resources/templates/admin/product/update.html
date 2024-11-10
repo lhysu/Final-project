@@ -33,6 +33,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
         .position-relative {
 		    display: flex; /* 플렉스 박스 모델 사용 */
 		    align-items: center; /* 수직 가운데 정렬 */
@@ -101,7 +111,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div th:fragment="content" style = "margin-top : 160px">
 
 		<form class="custom-form" action="/admin/product/updateOK" method="post" enctype="multipart/form-data">
-		    <h2>상품 수정</h2>
+		    <h2 class="font-gmarket">상품 수정</h2>
 		    <div class="form-group">
 		        <label for="product_num">상품번호</label>[[${param.product_num}]]
 		        <input type="hidden" id="product_num" name="product_num" th:value="${param.product_num}" required>

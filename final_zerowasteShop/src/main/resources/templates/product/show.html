@@ -32,9 +32,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     
     
     <style>
-    
+		/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
 		body {
-		    font-family: 'Open Sans', sans-serif;
+		    font-family: 'Open Sans', sans-serif, 'GmarketSansMedium';
 		    background-color: #f8f9fa; /* 배경색 설정 */
 		}
 		
@@ -93,10 +102,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             border-color: #81c408; /* 원하는 테두리 색 */
             color: white;
         }
-
         .current {
             font-weight: bold;
-
         }
         
         .btn-primary-custom {
@@ -104,7 +111,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             background-color: #81c408; /* 원하는 배경색 */
             border-color: #81c408; /* 원하는 테두리 색 */
         }
-
         /* 테이블 셀 너비 조정 */
         table th, table td:not(:nth-child(2)) {
             text-align: center;
@@ -113,22 +119,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             white-space: nowrap;
             width: 1%; /* 열 너비 최소화 */
         }
-
         /* Pagination styles */
         .pagination {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
-
         .pagination .page-item {
             margin: 0 2px;
         }
-
         .pagination .page-link {
             border-radius: 5px;
         }
-
         .pagination .page-item.disabled .page-link {
             pointer-events: none;
             opacity: 0.5;
@@ -154,7 +156,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                      	<img style="width: 250px;" th:src="${vo.product_img}" th:if="${vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
                      	<img style="width: 100px;" th:src="|/uploadimgPath/${vo.product_img}|" th:if="${!vo.product_img.startsWith('http')}" class="img-fluid rounded" alt="">
 			            	<div class="py-3">
-			                	<a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5" th:utext="${vo.product_name}"></a>
+			                	<a th:href="|/product/detail?product_num=${vo.product_num}|" class="h5 font-gmarket" th:utext="${vo.product_name}"></a>
 			                    	<div class="d-flex my-1 justify-content-center">
 									    <th:block th:if="${vo.rating != 0}">
 									        <th:block th:with="fullStars=${T(java.lang.Math).floor(vo.rating)}, halfStar=${vo.rating - T(java.lang.Math).floor(vo.rating)}">
@@ -186,7 +188,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									    </th:block>
 									</div>
 							</div>
-			                         <h4 class="mb-3" style = "color: #45595b;">[[${vo.price}]]원</h4>
+			                         <h4 class="mb-3 font-gmarket" style = "color: #45595b;">[[${vo.price}]]원</h4>
 			                     <form id="cartForm" action="/cart/insertOK" method="POST" style="display:inline;">
 							        <input type="hidden" name="product_num" th:value="${vo.product_num}">
 							        <input type="hidden" name="count" value="1">
