@@ -46,12 +46,13 @@
 }
 
 /* 구매 내역 제목 */
-h1 {
+#myPurchase {
     font-size: 24px;
     color: #333;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
+    
 }
 
 /* 주문 상자 */
@@ -252,7 +253,7 @@ function requestRefund(button) {
 	<!-- 헤더 끝 -->
 	
 	<div class="content" th:fragment="content" style="margin-top: 300px;">
-		<h1>나의 구매내역</h1>			
+		<h1 id="myPurchase"  style="font-family: 'GmarketSansMedium';">나의 구매내역</h1>			
 		<div th:each="entry : ${groupedOrders}">
         <div class="order-box">
             <div class="order-header">
