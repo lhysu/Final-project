@@ -70,6 +70,25 @@ public class RecycleLifeService {
 	public RecycleLifeVO getPost(int recycleLife_num) {
 		return mapper.getPost(recycleLife_num);
 	}
+	
+	public List<RecycleLifeVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
+		int startRow=(cpage-1)*pageBlock;	//mysql은 limit처리 시 0행부터 시작 (+1 안해도 됨)
+
+		
+		if(searchKey.equals("recycleLife_num")) {
+			return mapper.searchListPageBlockByNum("%"+searchWord+"%",startRow,pageBlock);
+		}else {
+			return mapper.searchListPageBlockByTitle("%"+searchWord+"%",startRow,pageBlock);		
+		}
+	}
+
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		if(searchKey.equals("recycleLife_num")) {
+			return mapper.getSearchTotalRowsByNum("%"+searchWord+"%");
+		}else {
+			return mapper.getSearchTotalRowsByTitle("%"+searchWord+"%");		
+		}
+	}
 
 }
 
