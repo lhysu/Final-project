@@ -54,7 +54,8 @@
     font-size: 40px;
     color: #81c408;
     margin-bottom: 10px;
-    padding-top: 50px
+    padding-top: 50px;
+    font-family: 'GmarketSansMedium';
 }
 #login-form > input{
     width: 100%;
@@ -101,25 +102,17 @@
 	<form id="login-form" action="/member/memberCheckOK" method="post">
 	      <input type="text" class="form-control" name="member_id" id="member_id"  placeholder="아이디를 입력하세요">
 	      <input type="password" class="form-control" name="pw" id="pw"  placeholder="비밀번호를 입력하세요">
-	      <button type="submit" class="btn btn-primary w-100 text-white" value="확인">확인</button>
+	      <button type="submit" class="btn btn-primary w-100 text-white mt-4" value="확인" >확인</button>
 
 	</form>
 	
  	</div>
- 	
- 	<div  style="position: absolute; left: 15px; bottom: 10px;">
- 	<a th:href="|/home|" >HOME</a>
- 	</div>
- 	
- 	<div  style="position: absolute; right: 15px; bottom: 10px;">
- 	<a href="http://localhost:8833/admin/ad_login" id="admin-login" target="_blank" >관리자 로그인</a>
- 	<!-- target="_blank" 추가하면 링크가 새창으로 열림 -->
  	</div>
  	
 	
 </div>
 </div>
-</div>
+
 	<!-- Footer Start -->
 		<div th:replace="~{footer :: footer}"></div>
 	<!-- Footer End -->

@@ -29,9 +29,6 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
     <style>
     label{
     	font-weight: bold;
@@ -48,7 +45,7 @@
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-		<h1>기부가능 물품 신청</h1>
+		<h1 style="font-family: 'GmarketSansMedium';">기부가능 물품 신청</h1>
 		<hr>
 		</div>
 	
@@ -98,7 +95,8 @@
 		    </div>
 		  </div>
        </div>
-	<input type="submit" class="btn border-secondary py-3 px-5 text-uppercase w-30 text-primary" value="신청완료">
+	<input type="submit" class="btn btn-primary me-2 text-white" value="신청완료">
+	<button type="reset" class="btn btn-secondary text-white">초기화</button>
 		
 	
 	</form>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <title>개인정보보호정책</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- 구글 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com"  crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS 라이브러리 -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- 부트스트랩 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 템플릿 CSS파일 -->
+    <link href="/css/style.css" rel="stylesheet">
+    
+    <style>
+        /* 슬라이드 이미지에 오버레이 추가 */
+        .carousel-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* 반투명 검정 오버레이 */
+            z-index: 1;
+        }
+        
+        .carousel-item img {
+            position: relative;
+            z-index: 0;
+        }
+        
+        body {
+            padding-top: 150px; /* 헤더의 실제 높이에 맞게 조정 */
+        }
+        
+        .slider-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 2.5/1;
+            object-fit: cover;
+            border-radius: 25px;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+
+        .slider-nav:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .prev {
+            left: 24px;
+        }
+
+        .next {
+            right: 24px;
+        }
+
+        .slider-indicators {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 이미지 컨테이너 스타일 */
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* 비율을 4:3으로 설정 (높이 / 너비 * 100%) */
+            overflow: hidden;
+            border-radius: 8px; /* 이미지의 모서리를 둥글게 */
+        }
+        
+        /* 이미지 스타일 */
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지가 컨테이너를 완전히 채우도록 설정 */
+            object-position: center; /* 이미지의 중앙을 기준으로 자름 */
+        }
+
+        @media (max-width: 768px) {
+            .slider-nav {
+                width: 32px;
+                height: 32px;
+            }
+
+            .prev {
+                left: 12px;
+            }
+
+            .next {
+                right: 12px;
+            }
+        }
+
+        /* 개인정보 보호정책 스타일 */
+        .privacy-policy {
+            margin: 20px;
+            line-height: 1.6; /* 줄 간격 조정 */
+            font-size: 16px; /* 폰트 크기 조정 */
+        }
+
+        .privacy-policy h2 {
+            margin-top: 30px;
+            font-size: 24px; /* 제목 크기 조정 */
+            font-weight: 600; /* 두꺼운 글씨 */
+        }
+
+        .privacy-policy p {
+            margin: 10px 0; /* 단락 간격 조정 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 시작 -->
+    <div th:replace="header :: header"></div>
+    <!-- 헤더 끝 -->
+
+    <div class="privacy-policy" style = "margin : 100px; margin-top : 50px !important">
+        <h1>제로씨 쇼핑몰 개인정보 보호정책</h1>
+        <p>본 개인정보 보호정책은 제로씨 쇼핑몰(이하 "회사")이 고객의 개인정보를 어떻게 수집, 이용, 보관 및 보호하는지를 설명합니다. 회사는 고객의 개인정보를 소중히 여기며, 관련 법령을 준수하여 안전하게 처리합니다.</p>
+
+        <h2>1. 개인정보 수집 항목</h2>
+        <p>회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다:</p>
+        <ul>
+            <li>이름</li>
+            <li>연락처 (전화번호, 이메일)</li>
+            <li>주소</li>
+            <li>결제 정보</li>
+            <li>서비스 이용 기록</li>
+        </ul>
+
+        <h2>2. 개인정보 수집 및 이용 목적</h2>
+        <p>회사는 수집한 개인정보를 다음의 목적으로 이용합니다:</p>
+        <ul>
+            <li>서비스 제공 및 관리</li>
+            <li>고객 문의 및 상담 응대</li>
+            <li>마케팅 및 홍보 활동</li>
+            <li>서비스 개선 및 연구 분석</li>
+        </ul>
+
+        <h2>3. 개인정보의 보관 및 파기</h2>
+        <p>회사는 고객의 개인정보를 수집 및 이용 목적이 달성된 후에는 지체 없이 파기합니다. 다만, 관련 법령에 따라 일정 기간 보관해야 하는 정보는 법령에서 정한 기간 동안 보관합니다.</p>
+
+        <h2>4. 개인정보의 제3자 제공</h2>
+        <p>회사는 고객의 개인정보를 외부에 제공하지 않으며, 제공이 필요한 경우 사전에 고객의 동의를 받습니다.</p>
+
+        <h2>5. 고객의 권리</h2>
+        <p>고객은 언제든지 자신의 개인정보에 대한 열람, 수정, 삭제를 요청할 수 있습니다. 이러한 요청은 고객센터를 통해 가능합니다.</p>
+
+        <h2>6. 개인정보 보호를 위한 기술적/관리적 조치</h2>
+        <p>회사는 고객의 개인정보를 보호하기 위해 다음과 같은 조치를 취하고 있습니다:</p>
+        <ul>
+            <li>데이터 암호화</li>
+            <li>접근 권한 관리</li>
+            <li>정기적인 보안 점검</li>
+        </ul>
+
+        <h2>7. 개인정보 보호정책의 변경</h2>
+        <p>본 정책은 법령 또는 회사의 정책에 따라 변경될 수 있으며, 변경 시 웹사이트에 공지합니다.</p>
+    </div>
+
+
+    <!-- Footer Start -->
+    <div th:replace="footer :: footer"></div>
+    <!-- Footer End -->
+    
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
+            class="fa fa-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

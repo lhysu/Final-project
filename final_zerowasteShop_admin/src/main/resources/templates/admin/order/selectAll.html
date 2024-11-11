@@ -34,12 +34,11 @@
 <!-- 템플릿 CSS파일 -->
 <link href="/css/style.css" rel="stylesheet">
 
-<!-- 페이지네이션 가로 처리 -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+
 
 <style>
 .content {
-	margin: 152px;
+	margin: auto;
 }
 
 .position-relative {
@@ -79,6 +78,34 @@ select {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
 }
 
+#selectAllTable th:nth-child(1), #selectAllTable td:nth-child(1) {
+    width: 10%; /* 주문번호 */
+}
+
+#selectAllTable th:nth-child(2), #selectAllTable td:nth-child(2) {
+    width: 30%; /* 상품명 - 넓게 설정 */
+}
+
+#selectAllTable th:nth-child(3), #selectAllTable td:nth-child(3) {
+    width: 10%; /* 회원ID */
+}
+
+#selectAllTable th:nth-child(4), #selectAllTable td:nth-child(4) {
+    width: 10%; /* 주문수량 */
+}
+
+#selectAllTable th:nth-child(5), #selectAllTable td:nth-child(5) {
+    width: 15%; /* 총가격 */
+}
+
+#selectAllTable th:nth-child(6), #selectAllTable td:nth-child(6) {
+    width: 15%; /* 주소 */
+}
+
+#selectAllTable th:nth-child(7), #selectAllTable td:nth-child(7) {
+    width: 10%; /* 주문상태 */
+}
+
 #selectAllTable thead {
 	color: black; /* 헤더 글자색 */
 }
@@ -102,17 +129,42 @@ select {
 	font-weight: bold; /* 푸터 글자 두껍게 */
 }
 
+/* 현재 페이지 번호 강조 스타일 */
+.pagination .page-item.active .page-link {
+    background-color: #81c408; /* 원하는 배경색 */
+    border-color: #81c408; /* 원하는 테두리 색 */
+    color: white;
+}
+
+.current {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.btn-primary-custom {
+    color: white !important;
+    background-color: #81c408; /* 원하는 배경색 */
+    border-color: #81c408; /* 원하는 테두리 색 */
+}
+
+/* Pagination styles */
 .pagination {
-	margin: 0; /* 페이지네이션 마진 제거 */
-	padding: 10px 0; /* 상하 패딩 추가 */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.pagination .page-item .page-link {
-	color: #007bff; /* 페이지 링크 색상 */
+.pagination .page-item {
+    margin: 0 2px;
 }
 
-.pagination .page-item .page-link:hover {
-	background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+.pagination .page-link {
+    border-radius: 5px;
+}
+
+.pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>
 </head>
@@ -122,20 +174,20 @@ select {
 	 <div th:replace="~{header :: header}"></div>
     <!-- 해더 끝 -->
 	
-	<div class="content" th:fragment="content" style="margin-top :250px">
+	<div class="content container" th:fragment="content" style = "padding-top : 190px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>주문 관리</h1>
+            <h1 style="font-family: 'GmarketSansMedium';">주문 관리</h1>
 		</div>
 		<form action="/admin/order/searchList" >
 			<div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
 				<div class="d-flex align-items-center">
-					<select name="searchKey" class="btn btn-secondary dropdown-toggle me-2">
+					<select name="searchKey" class="btn btn-secondary dropdown-toggle me-2 text-white" style="font-weight: normal;">
 						<option value="member_id">회원ID</option>
 						<option value="product_name">상품명</option>
 					</select> 
-			<input type="text" name="searchWord" class="form-control border-2 border-secondary py-3 px-4 rounded-pill me-2" style="max-width: 400px;"> 
-			<input type="submit" value="검색" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">
+			<input type="text" name="searchWord" class="form-control" style="max-width: 400px;"> 
+			<input type="submit" value="검색" class="btn btn-primary text-white ms-2" style="font-weight: normal;">
 				</div>
 			</div>
 		</form>

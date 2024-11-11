@@ -62,6 +62,7 @@
     margin-bottom: 10px;
     padding-top: 30px;
     padding-bottom: 15px;
+    font-family: 'GmarketSansMedium';
 }
 .memberJoin > input{
     width: 100%;
@@ -201,13 +202,13 @@ $(function (){
         		<input type="hidden" class="form-control" name="email" id="email" value="zerocfinal33@naver.com" style="float:left">
         	</div>
         	<div class="col-md-4 d-flex">
-        		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="sendEmailCode" >인증번호 받기</button>
+        		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="sendEmailCode" >인증코드 받기</button>
         	</div>
 	    <div class="emailCheck-text col-md-8">
         		<input type="text" class="form-control" name="verificationCode" id="verificationCode" style="float:left" placeholder="이메일 인증 코드를 입력해주세요">
         	</div>
         	<div class=" col-md-4 d-flex">
-        		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="checkEmailCode" >인증번호 확인</button>
+        		<button type="button" class="memberjoin-btn btn btn-primary text-white mx-2 w-100" id="checkEmailCode" >인증코드 확인</button>
         	</div>
         	<div class="auth-msg pw-under-text2 hide">인증되었습니다.</div>
 	    </div>
@@ -305,7 +306,7 @@ $(function (){
 			         "email" : $("#email").val()
 			      },
 			      success : function(data){
-			         alert("관리자 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+			         alert("관리자 이메일로 인증코드 발송이 완료되었습니다. \n 확인부탁드립니다.")
 			         code=data;
 			      }
 			   })
@@ -313,7 +314,7 @@ $(function (){
 			
 			$("#checkEmailCode").click(function() {
 				if(!$("#verificationCode").val()){
-					alert("인증번호가 입력되지 않았습니다.");
+					alert("인증코드가 입력되지 않았습니다.");
 				}else chekEmailConfirm(code, $("#verificationCode"));
 				
 			})

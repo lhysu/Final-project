@@ -31,9 +31,6 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
     <style>
     label{
     	font-weight: bold;
@@ -74,7 +71,7 @@
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-			<h1>내 정보 수정 및 관리</h1>
+			<h1 style="font-family: 'GmarketSansMedium';">내 정보 수정 및 관리</h1>
 		<hr>
 		</div>
 	
@@ -155,12 +152,12 @@
         </div>	
         
         <div align="center">
-		<input type="submit" class="btn border-secondary py-3 px-5 text-uppercase w-30 text-primary mb-3" value="수정완료">
+		<button type="submit" class="btn btn-primary me-2 mb-3 text-white"><i class="fas fa-edit"></i>수정완료</button>
 		</div>
 		<hr>
 		<div align="right" >
 		<!-- Button trigger modal -->
-		<button type="button" class=" btn-delete btn btn-primary mt-3" data-toggle="modal" data-target="#staticBackdrop">
+		<button type="button" class=" btn-delete btn btn-primary mt-3 text-white" data-toggle="modal" data-target="#staticBackdrop">
 	 	 회원 탈퇴
 		</button>
         </div>        
@@ -265,7 +262,7 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
+	        <h5 class="modal-title" id="staticBackdropLabel" style="font-family: 'GmarketSansMedium';">회원 탈퇴</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

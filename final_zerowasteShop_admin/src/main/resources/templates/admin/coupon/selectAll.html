@@ -34,12 +34,10 @@
 <!-- 템플릿 CSS파일 -->
 <link href="/css/style.css" rel="stylesheet">
 
-<!-- 페이지네이션 가로 처리 -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 .content {
-	margin: 152px;
+	margin: auto;
 }
 
 .position-relative {
@@ -102,17 +100,44 @@ select {
 	font-weight: bold; /* 푸터 글자 두껍게 */
 }
 
+
+
+/* 현재 페이지 번호 강조 스타일 */
+.pagination .page-item.active .page-link {
+    background-color: #81c408; /* 원하는 배경색 */
+    border-color: #81c408; /* 원하는 테두리 색 */
+    color: white;
+}
+
+.current {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.btn-primary-custom {
+    color: white !important;
+    background-color: #81c408; /* 원하는 배경색 */
+    border-color: #81c408; /* 원하는 테두리 색 */
+}
+
+/* Pagination styles */
 .pagination {
-	margin: 0; /* 페이지네이션 마진 제거 */
-	padding: 10px 0; /* 상하 패딩 추가 */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.pagination .page-item .page-link {
-	color: #007bff; /* 페이지 링크 색상 */
+.pagination .page-item {
+    margin: 0 2px;
 }
 
-.pagination .page-item .page-link:hover {
-	background-color: #e9ecef; /* 페이지 링크 호버 색상 */
+.pagination .page-link {
+    border-radius: 5px;
+}
+
+.pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>
 </head>
@@ -123,31 +148,31 @@ select {
     <!-- 해더 끝 -->
 
 
-	<div class="content" th:fragment="content" style="margin-top :250px">
+	<div class="content container" th:fragment="content" style = "padding-top : 167px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>쿠폰 관리</h1>
+            <h1 style="font-family: 'GmarketSansMedium';">쿠폰 관리</h1>
 		</div>	
 
 
-		<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex justify-content-between align-items-center" style = "padding-bottom : 10px ">
 			<!-- 첫 번째 검색 폼 -->
 			<form action="/admin/coupon/searchList"
 				class="d-flex align-items-center">
 				<select name="searchKey"
-					class="btn btn-secondary dropdown-toggle me-2">
+					class="btn btn-secondary dropdown-toggle me-2 text-white" style="font-weight: normal;">
 					<option value="member_id">회원ID</option>
 					<option value="used">사용여부</option>
 				</select> <input type="text" name="searchWord"
-					class="form-control border-2 border-secondary py-3 px-4 rounded-pill me-2"
+					class="form-control"
 					style="max-width: 400px;"> <input type="submit" value="검색"
-					class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">
+					class="btn btn-primary text-white ms-2" style="font-weight: normal;">
 			</form>
 
 			<!-- 두 번째 쿠폰 생성 폼 -->
 			<form action="/admin/coupon/create" class="d-flex align-items-center">
 				<input type="submit" value="쿠폰생성"
-					class="btn btn-secondary dropdown-toggle me-2">
+					class="btn btn-secondary dropdown-toggle me-2 text-white" style="font-weight: normal;">
 			</form>
 		</div>
 
@@ -180,7 +205,7 @@ select {
 			<tfoot>
 				<tr>
 					<td colspan="7">
-						<nav>
+						<nav aria-label="Page navigation">
 							<ul class="pagination justify-content-center">
 								<th:block th:if="${param.searchKey!=null}">
 									<th:block

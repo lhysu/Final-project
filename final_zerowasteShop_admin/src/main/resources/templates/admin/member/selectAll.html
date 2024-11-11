@@ -30,8 +30,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
         
@@ -95,21 +93,27 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		
 		#selectAllTable tfoot {
 		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
 		}
 		
-		.pagination {
-		    margin: 0; /* 페이지네이션 마진 제거 */
-		    padding: 10px 0; /* 상하 패딩 추가 */
-		}
-		
-		.pagination .page-item .page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
-		
-		.pagination .page-item .page-link:hover {
-		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
-		}
+		/* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -121,20 +125,20 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<div class="container my-4" th:fragment="content" style = "padding-top : 160px ">
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>회원 관리</h1>
+            <h1 style="font-family: 'GmarketSansMedium';">회원 관리</h1>
 		</div>	
 		<form action="/admin/ad_searchList" >		
 			<div class="position-relative mx-auto mb-2" >
 				<div class="d-flex align-items-center">
-	    			<select name="searchKey" class="btn btn-primary dropdown-toggle me-2" >
+	    			<select name="searchKey" class="btn btn-secondary dropdown-toggle text-white me-2" >
 				        <option value="member_id">아이디</option>
 				        <option value="name">이름</option>
 				        <option value="adCheck">관리자아이디</option>
 				    </select>
 		        <input class="form-control" type="text" name="searchWord" style="width:300px;">
-		        <button type="submit" class="btn btn-primary ms-2">Search</button>
+		        <button type="submit" class="btn btn-primary text-white ms-2">검색</button>
 		    	</div>
-		    	<a th:href="|/admin/ad_insert|" class="btn btn-primary border-2 border-secondary py-2 px-3 rounded-pill text-white ms-2" style="float: right;">회원생성</a>
+		    	<a th:href="|/admin/ad_insert|" class="btn btn-secondary text-white ms-2" style="float: right;">회원생성</a>
 	    	</div>
 	    </form>
 	    

@@ -80,7 +80,7 @@
     <!-- 헤더 삽입-->
     <div th:replace="~{header_community :: header}"></div>     
     
-    <div class="container my-4" style="padding-top:250px;">
+    <div class="container my-4" style="padding-top:160px;">
         <h1 class="mb-4"><a th:href="@{/community/notice/selectAll}" >공지사항</a></h1>
         
         <!-- 검색 폼 추가 -->
@@ -91,7 +91,6 @@
             </div>
             <div class="col-md-4 d-flex">
                 <button type="submit" class="btn btn-primary-custom me-2">검색</button>
-                <a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" th:href="@{/community/notice/selectAll}" class="btn btn-secondary">검색 초기화</a>
             </div>
         </form>
         

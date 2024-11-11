@@ -78,9 +78,9 @@
 <body>
     
     <!-- 헤더 삽입 -->
-    <div th:replace="~{header :: header}"></div>     
+    <div th:replace="~{header_community :: header}"></div>       
     
-    <div class="container my-4" style="padding-top:250px;">
+    <div class="container my-4" style="padding-top:160px;">
         <h1 class="mb-4"><a th:href="@{/community/help/selectAll}" >고객센터</a></h1>
         
         <!-- 검색 폼 -->
@@ -91,7 +91,12 @@
             </div>
             <div class="col-md-4 d-flex">
                 <button type="submit" class="btn btn-primary-custom me-2">검색</button>
-                <a th:if="${searchWord != null and !#strings.isEmpty(searchWord)}" th:href="@{/community/help/selectAll}" class="btn btn-secondary">검색 초기화</a>
+					<!-- 로그인한 사용자에게만 등록 버튼 표시 -->
+					<a th:if="${#authentication != null and #authentication.authenticated}" 
+					   th:href="@{/community/help/insert}"  class="btn btn-secondary" style="color:white;">문의사항 등록</a>
+					<!-- 로그인하지 않은 사용자에게는 로그인 페이지로 연결되는 버튼 표시 -->
+					<a th:if="${#authentication == null or !#authentication.authenticated}" 
+					   th:href="@{/login}"  class="btn btn-secondary" style="color:white;">문의사항 등록 (로그인 필요)</a>
             </div>
         </form>
         
@@ -166,14 +171,7 @@
         </nav>
         <!-- 페이징 UI 끝 -->
         
-         <div class="mt-4">
-			<!-- 로그인한 사용자에게만 등록 버튼 표시 -->
-			<a th:if="${#authentication != null and #authentication.authenticated}" 
-			   th:href="@{/community/help/insert}" class="btn btn-primary-custom">문의사항 등록</a>
-			<!-- 로그인하지 않은 사용자에게는 로그인 페이지로 연결되는 버튼 표시 -->
-			<a th:if="${#authentication == null or !#authentication.authenticated}" 
-			   th:href="@{/login}" class="btn btn-primary-custom">문의사항 등록 (로그인 필요)</a>
-        </div>
+
 
     </div>
     

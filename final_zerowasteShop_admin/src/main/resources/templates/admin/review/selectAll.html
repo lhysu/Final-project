@@ -30,11 +30,20 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
     <style>
-        .content { margin : 152px; }
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
+        .content { margin : 300px;
+        			margin-top : 180px;
+         }
         
         .position-relative {
 		    display: flex;
@@ -96,7 +105,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		
 		#selectAllTable tfoot {
 		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
 		}
 		
 		.pagination {
@@ -104,13 +112,45 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    padding: 10px 0; /* 상하 패딩 추가 */
 		}
 		
-		.pagination .page-item .page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
-		
-		.pagination .page-item .page-link:hover {
-		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
-		}
+		/* 현재 페이지 번호 강조 스타일 */
+        .pagination .page-item.active .page-link {
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+            color: white;
+        }
+
+        .current {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .btn-primary-custom {
+            color: white !important;
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+        }
+
+
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -118,22 +158,22 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	 <div th:replace="~{header :: header}"></div>
     <!-- 해더 끝 -->
     
-	<div class ="content" th:fragment="content" style="margin-top : 200px">
+	<div class ="content" th:fragment="content">
 	
 		<div class="row g-4 mb-2">
             <!-- 제목 영역: 섹션의 제목을 표시 -->
-            <h1>리뷰 관리</h1>
+            <h1 class="font-gmarket">리뷰 관리</h1>
 		</div>
 		
 		<form action="/admin/review/searchList">
-		    <div class="position-relative mx-auto" style="margin-left: 50px !important;">
+		    <div class="position-relative mx-auto" style="margin-bottom: 10px !important;">
 		        <div class="d-flex align-items-center">
-		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2">
-		                <option value="member_id">회원아이디</option>
-		                <option value="product_name">상품이름</option>
+		            <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2" style="color:white">
+		                <option value="member_id" style="color:white">회원아이디</option>
+		                <option value="product_name" style="color:white">상품이름</option>
 		            </select>
-		            <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill me-2" type="text" name="searchWord" placeholder="Search">
-		            <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 rounded-pill text-white">Search</button>
+		            <input class="form-control" type="text" name="searchWord" style="width : 300px">
+		            <button type="submit" class="btn btn-primary text-white ms-2" style="white-space: nowrap; margin-left : 10px">검색</button>
 		        </div>
 		    </div>
 		</form>
@@ -173,7 +213,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<tfoot>
 				<tr>
 					<td colspan="8">
-						<nav>
+						<nav aria-label="Page navigation">
 			    			<ul class="pagination justify-content-center">
 			                    
 								<th:block th:if="${param.searchWord == null}">

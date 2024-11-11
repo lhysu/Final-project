@@ -30,10 +30,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
     
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
         .content { margin : 152px; }
         
         .position-relative {
@@ -79,6 +88,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    color: black; /* 헤더 글자색 */
 		}
 		
+		#selectAllTable th {
+		    white-space: nowrap; /* 줄 바꿈 방지 */
+		    min-width: 100px; /* 최소 너비 설정 (필요에 따라 조정) */
+		}
+		
 		#selectAllTable th,
 		#selectAllTable td {
 		    padding: 15px; /* 셀 내 여백 */
@@ -96,7 +110,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		
 		#selectAllTable tfoot {
 		    background-color: #f8f9fa; /* 푸터 배경색 */
-		    font-weight: bold; /* 푸터 글자 두껍게 */
 		}
 		
 		.pagination {
@@ -104,13 +117,47 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		    padding: 10px 0; /* 상하 패딩 추가 */
 		}
 		
-		.pagination .page-item .page-link {
-		    color: #007bff; /* 페이지 링크 색상 */
-		}
 		
-		.pagination .page-item .page-link:hover {
-		    background-color: #e9ecef; /* 페이지 링크 호버 색상 */
-		}
+		
+		/* 현재 페이지 번호 강조 스타일 */
+        .pagination .page-item.active .page-link {
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+            color: white;
+        }
+
+        .current {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .btn-primary-custom {
+            color: white !important;
+            background-color: #81c408; /* 원하는 배경색 */
+            border-color: #81c408; /* 원하는 테두리 색 */
+        }
+
+
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -119,7 +166,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 헤더 끝 -->
     
 	<div class ="content" th:fragment="content" style="margin-top : 240px">
-	<h2>내가 쓴 리뷰</h2>
+	<h2 class="font-gmarket">내가 쓴 리뷰</h2>
 	
 		<table id="selectAllTable" style = "margin : 0 auto; border-collapse: separate; border-spacing : 10px">
 			<thead>
@@ -156,7 +203,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<tfoot>
 				<tr>
 					<td colspan="8">
-						<nav>
+						<nav aria-label="Page navigation">
 			    			<ul class="pagination justify-content-center">
 			    				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
 			                        <a class="page-link" th:href="|/review/selectAll?cpage=${cpage - 1}|">이전</a>
@@ -184,6 +231,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						
 							</ul>
 						</nav>
+
 		
 					</td>
 				</tr>

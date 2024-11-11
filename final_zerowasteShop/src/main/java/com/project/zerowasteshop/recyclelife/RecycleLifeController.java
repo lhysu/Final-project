@@ -70,7 +70,8 @@ public class RecycleLifeController {
 		log.info("totalPageCount:{}",totalPageCount);
 			
 		model.addAttribute("totalPageCount",totalPageCount);
-        
+		model.addAttribute("cpage", cpage);
+		
         // 조회수 Top3 게시물 조회
         List<RecycleLifeVO> post = service.selectTopViews();
 		model.addAttribute("post", post);
@@ -127,19 +128,19 @@ public class RecycleLifeController {
 	
 	@GetMapping("/community/recycleLife/searchList")
 	public String searchList(Model model,
-			@RequestParam(defaultValue = "recycleLife_num") String searchKey,
-			@RequestParam(defaultValue = "") String searchWord,
+			@RequestParam(defaultValue = "recycleLife_num")String searchKey,
+			@RequestParam(defaultValue = "")String searchWord,
 			@RequestParam(defaultValue = "1")int cpage,
 			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/community/recycleLife/searchList");
-		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
+		log.info("searchWord : {}", searchWord);
 		log.info("cpage : {}",cpage);
 		log.info("pageBlock : {}",pageBlock);
 		
-		//List<RecycleLifeVO> list = service.searchList(searchKey, searchWord);
+//		List<RecycleLifeVO> list = service.searchList(searchKey,searchWord);
 		List<RecycleLifeVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
-		log.info("list.size() : {}", list.size());
+		log.info("list.size():{}",list.size());
 		
 		//DB로부터 얻은 검색결과의 모든 행수
 		int total_rows=service.getSearchTotalRows(searchKey,searchWord);	
@@ -155,9 +156,9 @@ public class RecycleLifeController {
 			totalPageCount=total_rows/pageBlock;
 		}
 		log.info("totalPageCount:{}",totalPageCount);
-						
+				
 		model.addAttribute("totalPageCount",totalPageCount);
-		
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
 		
 		return "community/recycleLife/selectAll";

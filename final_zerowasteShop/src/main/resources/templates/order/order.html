@@ -441,7 +441,7 @@
         
         <form id="orderForm" action="/order/pay" method="post">
             <div class=deliveryInfo>
-	            <h2>배송지 정보</h2>
+	            <h2 style="font-family: 'GmarketSansMedium';">배송지 정보</h2>
 	            
 	            <label for="name">주문자 명:</label>
 	            <input type="text" id="name" class="name" th:value="${name}">
@@ -488,7 +488,7 @@
             <hr>
                       	                   
             <div class="order-items" style="margin-top: 20px !important;">
-			    <h2>주문 상품</h2>
+			    <h2 style="font-family: 'GmarketSansMedium';">주문 상품</h2>
 			    
 			    <div th:if="${product != null}"> 
 				    <div class="order-item">
@@ -515,14 +515,14 @@
 			<hr>
 			
             <div class="reusingRequest" style="margin-top: 20px !important;">
-            	<h3>재사용 포장재 반납 신청</h3>
+            	<h3 style="font-family: 'GmarketSansMedium';">재사용 포장재 반납 신청</h3>
             	<input type="checkbox" id="reusing" name="resuing">
             	<label for="reusing">반납 신청</label>
             </div>
             
             <hr>
 
-	        <h3>쿠폰 적용</h3>        
+	        <h3 style="font-family: 'GmarketSansMedium';">쿠폰 적용</h3>        
 	        <!-- 쿠폰 선택 -->
 	        <select id="couponSelect" name="couponSelect">
 	        	<option value="" th:if="${#lists.isEmpty(coupons)}" >사용 가능한 쿠폰이 없어요</option>
@@ -536,8 +536,8 @@
 	        
 	        <hr>
 	
-	        <h3>보유 포인트(<span id="remainingPoints">[[${points}]]p</span>)</h3>
-	        <input type="text" id="points" name="points" placeholder="1000">
+	        <h3 style="font-family: 'GmarketSansMedium';">보유 포인트(<span id="remainingPoints">[[${points}]]p</span>)</h3>
+	        <input type="text" id="points" name="points" placeholder="0">
 	        <button type="button" id="applyPointsBtn">사용하기</button>
 	        <p>- 쿠폰과 포인트 사용후 결제 취소나 단순 변심 환불할 경우 복구 불가능합니다.</p>
             

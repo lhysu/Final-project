@@ -52,6 +52,25 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	        background-color: #81c408; /* 원하는 배경색 */
    			border-color: #81c408; /* 원하는 테두리 색 */
 		}
+		        .gallery {
+            display: flex;
+            justify-content: space-around;;
+            margin: 20px;
+        }
+        .gallery-item {
+            text-align: center;
+            width: 30%;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .image-title {
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -73,7 +92,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="gallery" style="display: flex; justify-content: space-between;">
         <div class="gallery-item" th:each="post : ${post}">
             <a th:href="@{/community/recycleLife/selectOne(recycleLife_num=${post.recycleLife_num})}">
-                <img th:src="|/upload_img/thumb_${post.recycleLife_img}|" alt="썸네일 이미지" onerror="this.style.display='none'">   
+                <img th:src="@{'/uploadimgPath/' + ${post.recycleLife_img}}" alt="썸네일 이미지" onerror="this.style.display='none'">   
                 <p>조회수
                     <span th:text="${post.recycleLife_views}">0</span> 좋아요
                     <span th:text="${post.recycleLife_likes}">0</span>

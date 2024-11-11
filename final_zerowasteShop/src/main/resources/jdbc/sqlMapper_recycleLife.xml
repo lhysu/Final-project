@@ -29,20 +29,20 @@
   	</select>
   	
   	<select id="selectOne" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
-  		select * from recyclelife where recycleLife_num = #{recycleLife_num}
+  		select * from recycleLife where recycleLife_num = #{recycleLife_num}
   	</select>
   	
   	<select id="selectAllPageBlock" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
-  		select * from recyclelife order by recycleLife_num desc limit #{startRow}, #{pageBlock}
+  		select * from recycleLife order by recycleLife_num desc limit #{startRow}, #{pageBlock}
   	</select>
   	
   	<select id="getTotalRows" resultType="int">
-  		select count(*) total_rows from recyclelife
+  		select count(*) from recycleLife
   	</select>
   	
   	<select id="searchList" resultType="com.project.zerowasteshop.recyclelife.RecycleLifeVO">
-        select * from recyclelife
-        where recycleLife_title like #{searchWord} or recycleLife_num like #{searchWord}
+        select * from recycleLife
+        WHERE ${searchField} LIKE #{searchWord}
         order by recycleLife_num desc
     </select>
     
@@ -101,5 +101,6 @@
         FROM recyclelife
         WHERE recycleLife_num = #{recycleLife_num}
     </select>
+    
 	
   </mapper>

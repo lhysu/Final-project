@@ -30,11 +30,9 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        .content { margin : 152px; }
+        .content { margin : auto; }
         
         .position-relative {
 		    display: flex;
@@ -178,7 +176,7 @@
 	 <div th:replace="~{header :: header}"></div>
     <!-- 해더 끝 -->
     
-	<div th:fragment="content" style="margin-top: 300px;">
+	<div class="content container" th:fragment="content" style = "padding-top : 190px ">
     <form id="updateCoupon" action="/coupon/updateOK" method="post">
         <h2>쿠폰 수정 및 삭제</h2>
         <table id="selectAllTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px;">
@@ -213,8 +211,12 @@
             <tr>
                 <td colspan="2" class="text-end">
                     <!-- 버튼들을 한 줄에 배치 -->
-                    <input type="submit" value="수정완료" class="btn btn-primary text-white me-2">
-                    <button id="deleteCoupon" class="btn btn-danger">쿠폰 삭제</button>
+                    <button type="submit" class="btn btn-primary text-white me-2">
+			            <i class="fas fa-edit"></i> 수정완료
+			        </button>
+                    <button id="deleteCoupon" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt"></i> 쿠폰삭제
+                    </button>
                 </td>
             </tr>
         </table>

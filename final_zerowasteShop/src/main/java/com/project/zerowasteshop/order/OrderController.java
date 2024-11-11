@@ -48,6 +48,10 @@ public class OrderController {
 			@RequestParam("product_name")String product_name,
 			@RequestParam("quantity")int quantity,
 			HttpSession session) {
+		log.info("product_num:{}",product_num);
+		log.info("price:{}",price);
+		log.info("product_name:{}",product_name);
+		log.info("quantity:{}",quantity);
 		//로그인 정보 불러오기
 		String user_id = (String) session.getAttribute("user_id");
 		

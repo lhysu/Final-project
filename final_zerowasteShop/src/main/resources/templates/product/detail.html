@@ -30,10 +30,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
 		.content {
 		    margin: 300px; /* 중앙 정렬 */
 		    padding: 30px;
@@ -263,15 +271,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <div class="product-title" th:utext="${vo2.product_name}"></div>
                 <div class="description">
                     <div class="price-quantity-container">
-				        <h1 th:id="'total-' + ${vo2.product_num}">[[${vo2.count} * ${vo2.price}]]원</h1>
+				        <h1 th:id="'total-' + ${vo2.product_num}" class="font-gmarket">[[${vo2.count} * ${vo2.price}]]원</h1>
 				        <div class="quantity-selector">
-				            <div class="button" th:onclick="changeQuantity(-1, [[${vo2.price}]], this)">-</div>
-				            <div class="number" th:id="'quantity-' + ${vo2.product_num}">[[${vo2.count}]]</div>
-				            <div class="button" th:onclick="changeQuantity(1, [[${vo2.price}]], this)">+</div>
+				            <div class="button font-gmarket" th:onclick="changeQuantity(-1, [[${vo2.price}]], this)">-</div>
+				            <div class="number font-gmarket" th:id="'quantity-' + ${vo2.product_num}">[[${vo2.count}]]</div>
+				            <div class="button font-gmarket" th:onclick="changeQuantity(1, [[${vo2.price}]], this)">+</div>
 				        </div>
 				    </div>
-                    <h5 class="mb-3" style="color: #28a745;">판매자 : [[${vo2.company}]]</h5>
-    				<h5 class="mb-3" style="color: green;">탄소 중립 포인트 : [[${vo2.point}]]</h5>
+                    <h5 class="mb-3 font-gmarket" style="color: #28a745;">판매자 : [[${vo2.company}]]</h5>
+    				<h5 class="mb-3 font-gmarket" style="color: green;">탄소 중립 포인트 : [[${vo2.point}]]</h5>
                 </div>
                 <div class="button-container">
                     
@@ -282,16 +290,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				        <input type="hidden" name="product_img" th:value="${vo2.product_img}">
 				        <input type="hidden" name="product_name" th:value="${vo2.product_name.replace('[', '%5B').replace(']', '%5D')}">
 				        
-				        <button type="submit" class="btn btn-primary">장바구니 추가</button> <!-- type="submit" 추가 -->
+				        <button type="submit" class="btn btn-primary font-gmarket" style="color : white">장바구니 추가</button> <!-- type="submit" 추가 -->
 				    </form>
                     <form id="buyNowForm" action="/order/order" method="POST" style="display:inline;">
 				        <input type="hidden" name="product_num" th:value="${vo2.product_num}">
 				        <input type="hidden" name="member_id" th:value="${session.user_id}">
 				        <input type="hidden" name="price" th:value="${vo2.price}">
 				        <input type="hidden" name="product_name" th:value="${vo2.product_name}">
-				        <input type="hidden" name="quantity" id="buyNowQuantityInput">
+				        <input type="hidden" name="quantity" id="buyNowQuantityInput" th:value="${vo2.count}">
 				        
-				        <button type="button" onclick="submitBuyNowForm()" style="background-color: #ff6600; border: none; color: black; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+				        <button type="button" onclick="submitBuyNowForm()" style="background-color: #ff6600; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
 				            바로 구매
 				        </button>
 				    </form>
@@ -338,7 +346,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<!-- 로그인 상태에 따라 리뷰 작성 폼을 조건부로 표시 -->
 		<div th:if="${session.user_id != null}">
             <form class="review-form mt-4" action="/review/insertOK" method="post" enctype="multipart/form-data"> <!-- form 태그로 변경 -->
-		        <h5>리뷰 작성</h5>
+		        <h5 class="font-gmarket">리뷰 작성</h5>
 		        <div class="form-group">
 				    <label for="member_id">회원아이디</label>
 				    <span th:if="${session.user_id != null}">[[${session.user_id}]]</span>

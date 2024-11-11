@@ -30,10 +30,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
     <style>
+    	/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
+    
         .content { margin : 140px; }
         
         .position-relative {
@@ -170,7 +178,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <!-- 헤더 끝 -->
     
 	<div class="content" th:fragment="content" style="margin-top: 240px">
-	<h2>내 찜 목록</h2>
+	<h2 class="font-gmarket">내 찜 목록</h2>
         <table id="selectAllTable" style="margin: 0 auto; border-collapse: separate; border-spacing: 10px">
             <thead>
                 <tr>
