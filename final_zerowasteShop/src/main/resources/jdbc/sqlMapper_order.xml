@@ -77,7 +77,9 @@
 </select>
 
 <select id="getTotalRowsByUser" resultType="int">
-    select count(*) total_rows from `order`
+    select count(*) total_rows 
+    from `order` o
+    join order_item i on o.merchant_uid = i.merchant_uid
     WHERE member_id = #{userId}
 </select>
 
