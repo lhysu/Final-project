@@ -29,10 +29,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
-    
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         /* 현재 페이지 번호 강조 스타일 */
         .pagination .page-item.active .page-link {
@@ -51,6 +48,17 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	        background-color: #81c408; /* 원하는 배경색 */
    			border-color: #81c408; /* 원하는 테두리 색 */
 		}
+		
+		/*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
     </style>
 </head>
 
