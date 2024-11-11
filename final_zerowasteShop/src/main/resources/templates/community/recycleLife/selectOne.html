@@ -31,9 +31,6 @@
     <!-- 템플릿 CSS파일 -->
     <link href="/css/style.css" rel="stylesheet">
     
-    <!-- 페이지네이션 가로 처리 -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
     
@@ -48,7 +45,16 @@
             max-width: 100%;
             height: auto;
         }
-        
+        /*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
     </style>
     
     <script>
@@ -112,7 +118,7 @@
                     작성일: <span th:text="${#dates.format(vo2.recycleLife_wdate, 'yyyy-MM-dd HH:mm')}"></span> |
                     조회수: <span th:text="${vo2.recycleLife_views}"></span> |
    					<button id="likeButton" th:text="${recycleLife_likes > 0 ? '좋아요' : '좋아요'}"
-   					class="btn btn-primary"
+   					class="btn btn-primary" style="color: white;"
            			th:onclick="'toggleLike(' + ${recycleLife_num} + ', ' + (${recycleLife_likes > 0}) + ')'">
        				좋아요</button>
        				<span id="likeCount" th:text="${recycleLife_likes}"></span>
@@ -142,14 +148,16 @@
         <div class="row my-4">
             <div class="col-12">
                 <a th:if="${#authentication.name == vo2.member_id}"
-                th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" sec:authorize="isAuthenticated()">
+                th:href="@{'/community/recycleLife/update?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-primary me-2" 
+                sec:authorize="isAuthenticated()" style="color: white;">
                     <i class="fas fa-edit"></i> 수정
                 </a>
                 <a th:if="${#authentication.name == vo2.member_id}"
-                th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" sec:authorize="isAuthenticated()">
+                th:href="@{'/community/recycleLife/delete?recycleLife_num=' + ${vo2.recycleLife_num}}" class="btn btn-danger me-2" 
+                sec:authorize="isAuthenticated()" style="color: white;">
                     <i class="fas fa-trash-alt"></i> 삭제
                 </a>               
-                <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary">
+                <a th:href="@{'/community/recycleLife/selectAll'}" class="btn btn-secondary" style="color: white;">
                     <i class="fas fa-list"></i> 목록으로
                 </a>
             </div>

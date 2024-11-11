@@ -44,7 +44,11 @@ public class RecycleLifeService {
 	}
 
 	public List<RecycleLifeVO> searchList(String searchKey, String searchWord) {
-		return mapper.searchList("%" + searchWord + "%");
+		if(searchKey.equals("recycleLife_num")) {
+			return mapper.searchListByNum("%"+searchWord+"%");
+		}else {
+			return mapper.searchListByTitle("%"+searchWord+"%");
+		}
 	}
 
 	public void increaseViews(int recycleLife_num) {
@@ -77,23 +81,20 @@ public class RecycleLifeService {
 		log.info("startRow:{}",startRow);
 		log.info("pageBlock:{}",pageBlock);
 		
-		if(searchKey.equals("recycleLife_title")) {
+		if(searchKey.equals("recycleLife_num")) {
 			return mapper.searchListPageBlockByNum("%"+searchWord+"%",startRow,pageBlock);
 		}else {
 			return mapper.searchListPageBlockByTitle("%"+searchWord+"%",startRow,pageBlock);		
-		}		
+		}
 	}
 
 	public int getSearchTotalRows(String searchKey, String searchWord) {
-		
-		if(searchKey.equals("recycleLife_title")) {
+		if(searchKey.equals("recycleLife_num")) {
 			return mapper.getSearchTotalRowsByNum("%"+searchWord+"%");
 		}else {
 			return mapper.getSearchTotalRowsByTitle("%"+searchWord+"%");		
 		}
 	}
 
-}
-
-	
+}	
 
