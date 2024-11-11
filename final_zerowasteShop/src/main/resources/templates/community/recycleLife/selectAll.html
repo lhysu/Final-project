@@ -135,9 +135,9 @@
         <form th:action="@{/community/recycleLife/searchList}" method="get" class="row g-3 mb-4">
         <div class="mx-auto mb-1" >
 				<div class="d-flex align-items-center">
-                <select name="searchField" class="btn btn-secondary dropdown-toggle me-2" style="max-width: 100%; color: white;">
+                <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2" style="max-width: 100%; color: white;">
                     <option value="recycleLife_num" style="color: white;">번호</option>
-                    <option value="recycleLife_content" style="color: white;">내용</option>
+                    <option value="recycleLife_title" style="color: white;">제목</option>
                 </select>
             
                 <input type="text" name="searchWord" class="form-control me-2" placeholder="검색어를 입력하세요" 
@@ -146,7 +146,7 @@
             
                 <button type="submit" class="btn btn-primary-custom me-2" >검색</button>
                 <a th:if="${searchWord}" th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">검색 초기화</a>
-                <a th:href="@{/community/recycleLife/insert}" class="btn btn-secondary" sec:authorize="isAuthenticated()">글쓰기</a>
+                <a th:href="@{/community/recycleLife/insert}" class="btn btn-secondary" sec:authorize="isAuthenticated()" style="color: white;">글쓰기</a>
             </div>
               </div>   	        	
         </form>
