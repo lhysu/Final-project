@@ -52,7 +52,53 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	        background-color: #81c408; /* 원하는 배경색 */
    			border-color: #81c408; /* 원하는 테두리 색 */
 		}
-		        .gallery {
+		
+		/* 테이블 셀 너비 조정 */
+        table th, table td:not(:nth-child(2)) {
+            text-align: center;
+        }
+        table th:not(:nth-child(2)), table td:not(:nth-child(2)) {
+            white-space: nowrap;
+            width: 1%; /* 열 너비 최소화 */
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 5px;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* 선택 박스의 최대 너비 설정 */
+        form .form-select {
+            max-width: 100%;
+        }
+        
+        /*** Font ***/
+		@font-face {
+		    font-family: 'GmarketSansMedium';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+        .font-gmarket {
+            font-family: 'GmarketSansMedium', sans-serif;
+        }
+		
+		.gallery {
             display: flex;
             justify-content: space-around;;
             margin: 20px;
@@ -104,21 +150,30 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     </div>
 </div>
 				
+				
+				
 		<!-- 검색 폼 추가 -->
 		<div class="container my-4" >
         <form th:action="@{/community/recycleLife/searchList}" method="get" class="row g-3 mb-4">
-            <div class="col-md-8">
-                <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" 
-                       th:value="${searchWord}">
-            </div>
-            <div class="col-md-4 d-flex">
-                <button type="submit" class="btn btn-primary-custom me-2">검색</button>
+        <div class="mx-auto mb-1" >
+				<div class="d-flex align-items-center">
+                <select name="searchKey" class="btn btn-secondary dropdown-toggle me-2" style="max-width: 100%; color: white;">
+                    <option value="recycleLife_num" style="color: white;">번호</option>
+                    <option value="recycleLife_title" style="color: white;">제목</option>
+                </select>
+            
+                <input type="text" name="searchWord" class="form-control me-2" placeholder="검색어를 입력하세요" 
+                       th:value="${searchWord}" style="height: 100%; max-width: 250px;">
+            
+            
+                <button type="submit" class="btn btn-primary-custom me-2" >검색</button>
                 <a th:if="${searchWord}" th:href="@{/community/recycleLife/selectAll}" class="btn btn-secondary">검색 초기화</a>
-                <!-- <a th:href="@{/community/recycleLife/insert}" class="btn btn-secondary">글쓰기</a> -->
+                
             </div>
-                 	        	
+              </div>   	        	
         </form>
-        	</div>	
+        </div>
+        		
 		
 		<div class="container my-4">
 		<table id="insertTable" class="table table-striped table-bordered">
@@ -134,8 +189,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<tbody>
 				<th:block th:each="vo : ${list}">
 					<tr>
-						<td><a th:href="|/community/recycleLife/selectOne?recycleLife_num=${vo.recycleLife_num}|">[[${vo.recycleLife_num}]]</a></td>
-						<td>[[${vo.recycleLife_title}]]</td>
+						<td>[[${vo.recycleLife_num}]]</td>
+						<td><a th:href="|/community/recycleLife/selectOne?recycleLife_num=${vo.recycleLife_num}|">[[${vo.recycleLife_title}]]</a></td>
 						<td>[[${vo.member_id}]]</td>
 						<td>[[${vo.recycleLife_wdate}]]</td>
 						<td>[[${vo.recycleLife_views}]]</td>
@@ -144,18 +199,69 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			</tbody>			
 		</table>
 		
-		<!-- 페이징 UI -->
-	        <nav aria-label="Page navigation">
-	            <ul class="pagination justify-content-center" style="display:flex;">
-	                <!-- 페이지 번호 링크 -->
-	                <li th:each="pageNum : ${#numbers.sequence(1, totalPageCount)}" 
-	                    th:class="${pageNum == cpage} ? 'page-item active' : 'page-item'">
-	                    <a class="page-link" 
-	                       th:href="@{/community/recycleLife/selectAll(cpage=${pageNum})}" 
-	                       th:text="${pageNum}">1</a>
-	                </li>
-	            </ul>
-	        </nav>
+		<!-- 페이징 UI 시작 -->
+		<nav>
+			<ul class="pagination justify-content-center">
+				<th:block th:if="${param.searchWord == null}">
+				<!-- 이전 페이지 버튼 -->
+				<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+					<a class="page-link"
+					   th:href="|/community/recycleLife/selectAll?cpage=${cpage - 1}|">
+						이전
+					</a>
+				</li>
+		
+				<!-- 페이지 번호 -->
+				<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+					<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+						<a class="page-link"
+					   th:href="|/community/recycleLife/selectAll?cpage=${i}|">
+					    [[${i}]]
+					</a>
+					</li>
+				</th:block>
+		
+				<!-- 다음 페이지 버튼 -->
+				<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+					<a class="page-link"
+					   th:href="|/community/recycleLife/selectAll?cpage=${cpage + 1}|">
+						다음
+					</a>
+				</li>
+				</th:block>
+				
+				<th:block th:if="${param.searchWord != null}">
+					<th:block th:with="searchKey=${param.searchKey},searchWord=${param.searchWord}">
+						<!-- 이전 페이지 버튼 -->
+						<li class="page-item" th:classappend="${cpage == 1} ? 'disabled'">
+							<a class="page-link"
+							   th:href="|/community/recycleLife/searchList?cpage=${cpage - 1}&searchKey=${searchKey}&searchWord=${searchWord}|">
+								이전
+							</a>
+						</li>
+				
+						<!-- 페이지 번호 -->
+						<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+							<li class="page-item" th:classappend="${i == cpage} ? 'active'">
+								<a class="page-link"
+							   th:href="|/community/recycleLife/searchList?cpage=${i}&searchKey=${searchKey}&searchWord=${searchWord}|">
+							    [[${i}]]
+							</a>
+							</li>
+						</th:block>
+				
+						<!-- 다음 페이지 버튼 -->
+						<li class="page-item" th:classappend="${cpage == totalPageCount} ? 'disabled'">
+							<a class="page-link"
+							   th:href="|/community/recycleLife/searchList?cpage=${cpage + 1}&searchKey=${searchKey}&searchWord=${searchWord}|">
+								다음
+							</a>
+						</li>
+					</th:block>
+				</th:block>
+			</ul>
+		</nav>
+		<!-- 페이징 UI 끝 -->
 
 	</div>
 
