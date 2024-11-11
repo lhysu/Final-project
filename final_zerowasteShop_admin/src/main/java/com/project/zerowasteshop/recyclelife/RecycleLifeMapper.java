@@ -37,5 +37,19 @@ import org.apache.ibatis.annotations.Param;
 
 	public RecycleLifeVO getPost(int recycleLife_num);
 
+	public List<RecycleLifeVO> searchListPageBlockByNum(String searchWord, int startRow, int pageBlock);
 
+	public List<RecycleLifeVO> searchListPageBlockByTitle(String searchWord, int startRow, int pageBlock);
+
+	public int getSearchTotalRowsByNum(String searchWord);
+
+	public int getSearchTotalRowsByTitle(String searchWord);
+
+	public List<RecycleLifeVO> searchListPageBlock(String searchWord, int startRow, int pageBlock);
+
+	public int getSearchTotalRows(String searchWord);
+
+	public List<RecycleLifeVO> searchListByNum(String searchWord);
+
+	public List<RecycleLifeVO> searchListByTitle(String searchWord);
 }

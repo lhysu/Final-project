@@ -42,7 +42,7 @@ public class RecycleLifeController {
 	@GetMapping("/community/recycleLife/selectAll")
 	public String selectAll(Model model,
 			@RequestParam(defaultValue = "1") int cpage,
-            @RequestParam(defaultValue = "5") int pageBlock) {
+            @RequestParam(defaultValue = "10") int pageBlock) {
 		log.info("/community/recycleLife/selectAll");
 		log.info("cpage : {}", cpage);
         log.info("pageBlock : {}", pageBlock);
@@ -53,21 +53,30 @@ public class RecycleLifeController {
 		
 		model.addAttribute("list", list);
 		
-		// 총 페이지 수 계산
-        int total_rows = service.getTotalRows();
-        log.info("total_rows:{}", total_rows);
-        int totalPageCount = 0;
+		//DB로부터 얻은 검색결과의 모든 행수
+		int total_rows=service.getTotalRows();	
+		log.info("total_rows:{}",total_rows);
+		
+		//int pageBlock=5;	//1개페이지에서 보여질 행수-파라미터로 받으면 된다.
+		int totalPageCount=0;	
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가 
+		if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
+			
+		model.addAttribute("totalPageCount",totalPageCount);
+		model.addAttribute("cpage", cpage);
+		
+ 		// 페이지네이션 범위 계산	
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
 
-        if (total_rows / pageBlock == 0) {
-            totalPageCount = 1;
-        } else if (total_rows % pageBlock == 0) {
-            totalPageCount = total_rows / pageBlock;
-        } else {
-            totalPageCount = total_rows / pageBlock + 1;
-        }
-        log.info("totalPageCount:{}", totalPageCount);
-
-        model.addAttribute("totalPageCount", totalPageCount);
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
         
         // 조회수 Top3 게시물 조회
         List<RecycleLifeVO> post = service.selectTopViews();
@@ -127,15 +136,41 @@ public class RecycleLifeController {
 	@GetMapping("/community/recycleLife/searchList")
 	public String searchList(Model model,
 			@RequestParam(defaultValue = "recycleLife_num") String searchKey,
-			@RequestParam(defaultValue = "1") String searchWord) {
+			@RequestParam(defaultValue = "")String searchWord,
+			@RequestParam(defaultValue = "1")int cpage,
+			@RequestParam(defaultValue = "10")int pageBlock) {
 		log.info("/community/recycleLife/searchList");
 		log.info("searchWord : {}", searchWord);
 		log.info("searchKey : {}", searchKey);
 		
-		List<RecycleLifeVO> list = service.searchList(searchKey, searchWord);
+		List<RecycleLifeVO> list = service.searchListPageBlock(searchKey,searchWord,cpage,pageBlock);
 		log.info("list.size() : {}", list.size());
 		
+		//DB로부터 얻은 검색결과의 모든 행수
+		int total_rows=service.getSearchTotalRows(searchKey,searchWord);	
+		log.info("total_rows:{}",total_rows);
+		
+		//int pageBlock=5;	//1개페이지에서 보여질 행수-파라미터로 받으면 된다.
+		int totalPageCount=0;	
+		
+		//총 행카운트와 페이지블럭을 나눌 때의 알고리즘을 추가 
+		if(total_rows%pageBlock!=0) {
+			totalPageCount=total_rows/pageBlock+1;
+		}else {
+			totalPageCount=total_rows/pageBlock;
+		}
+		log.info("totalPageCount:{}",totalPageCount);
+				
+		model.addAttribute("totalPageCount",totalPageCount);
+		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
+		
+ 		// 페이지네이션 범위 계산	
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
 		
 		return "community/recycleLife/selectAll";
 	}

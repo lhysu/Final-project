@@ -72,6 +72,13 @@ public class RecycleLifeController {
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("cpage", cpage);
 		
+ 		// 페이지네이션 범위 계산	
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
+		
         // 조회수 Top3 게시물 조회
         List<RecycleLifeVO> post = service.selectTopViews();
 		model.addAttribute("post", post);
@@ -160,6 +167,13 @@ public class RecycleLifeController {
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("cpage", cpage);
 		model.addAttribute("list", list);
+		
+ 		// 페이지네이션 범위 계산	
+ 	    int startPage = Math.max(1, cpage - 4); // 현재 페이지 기준으로 시작 페이지
+ 	    int endPage = Math.min(totalPageCount, startPage + 9); // 10개 페이지 표시
+
+ 	    model.addAttribute("startPage", startPage);
+ 	    model.addAttribute("endPage", endPage);
 		
 		return "community/recycleLife/selectAll";
 	}

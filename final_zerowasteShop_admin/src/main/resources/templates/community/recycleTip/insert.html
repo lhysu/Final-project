@@ -38,6 +38,10 @@
             font-weight: bold;
             text-decoration: underline;
         }
+        
+        .btn-primary, .btn-secondary {
+        	color:white;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +89,7 @@
                     <button type="reset" class="btn btn-secondary">초기화</button>
                 </div>
                 <div>
-                    <a th:href="@{/community/recycleTip/selectAll}" class="btn btn-link">목록으로</a>
+                    <a th:href="@{/community/recycleTip/selectAll}" class="btn btn-secondary">목록으로</a>
                 </div>
             </div>
         </form>
