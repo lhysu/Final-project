@@ -132,7 +132,7 @@
         		<input type="text" class="form-control" name="email" id="email" style="float:left" placeholder="이메일을 입력해주세요">
         	</div>
         	<div class="col-md-4 d-flex">
-        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2" id="sendEmailCode" >인증번호 받기</button>
+        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2" id="sendEmailCode" >인증코드 받기</button>
         	</div>
 	    </div>
 	    
@@ -141,7 +141,7 @@
         		<input type="text" class="form-control" name="verificationCode" id="verificationCode" style="float:left" placeholder="이메일 인증 코드를 입력해주세요">
         	</div>
         	<div class=" col-md-4 d-flex">
-        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2 " id="checkEmailCode" >인증번호 확인</button>
+        		<button type="button" class="emailCheck-btn btn btn-primary text-white mx-2 " id="checkEmailCode" >인증코드 확인</button>
         	</div>
 	    </div>
 	    
@@ -178,7 +178,7 @@
 				    	  if(data=="-1"){
 				    		  alert("해당 이메일을 가진 회원이 존재하지 않습니다.");
 				    	  }else{
-				    		  alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+				    		  alert("해당 이메일로 인증코드 발송이 완료되었습니다. \n 확인부탁드립니다.")
 						      code=data;  
 				    	  }
 				         
@@ -191,12 +191,12 @@
 			
 			$("#checkEmailCode").click(function() {
 				if(!$("#verificationCode").val()){
-					alert("인증번호가 입력되지 않았습니다.");
+					alert("인증코드가 입력되지 않았습니다.");
 				}else chekEmailConfirm(code, $("#verificationCode"));
 				
 			})
 			
-			// 이메일 인증번호 체크 함수
+			// 이메일 인증코드 체크 함수
 			function chekEmailConfirm(data, $memailconfirm){
 					
 				if (data != $("#verificationCode").val()) { //
